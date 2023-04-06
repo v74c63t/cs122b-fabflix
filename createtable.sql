@@ -26,12 +26,19 @@ create table if not exists genres(
    name varchar(32) not null
 );
 
-create table if not exists stars_in_movies(
-    genreId varchar(10) not null,
+create table if not exists genres_in_movies(
+    genreId integer not null,
     movieId varchar(10) not null,
     foreign key (genreId) references genres(id),
     foreign key (movieId) references movies(id)
 );
+
+create table if not exists creditcards(
+    id varchar(20) primary key,
+    firstName varchar(50) not null,
+    lastName varchar(50) not null,
+    expirationDate date not null
+    );
 
 create table if not exists customers(
     id integer primary key auto_increment,
@@ -51,13 +58,6 @@ create table if not exists sales(
    saleDate date not null,
    foreign key (customerId) references customers(id),
    foreign key (movieId) references movies(id)
-);
-
-create table if not exists creditcards(
-    id varchar(20) primary key,
-    firstName varchar(50) not null,
-    lastName varchar(50) not null,
-    expirationDate date not null
 );
 
 create table if not exists ratings
