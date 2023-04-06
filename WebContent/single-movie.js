@@ -18,7 +18,7 @@ function getParameterByName(target) {
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
-
+// note: have to modify and adjust to use code
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");

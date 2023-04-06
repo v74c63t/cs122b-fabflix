@@ -1,6 +1,7 @@
 
 function handleMovieResult(resultData) {
     let moviesTableBodyElem = jQuery("#movies_table_body");
+    // add rest
 }
 
 jQuery.ajax({
