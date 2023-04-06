@@ -1,0 +1,38 @@
+.page-headers{
+    text-align: center;
+    padding-top: 10px;
+    font-family: Verdana;
+    color: darkblue;
+    padding-bottom: 10px;
+}
+
+.fabflix{
+    font-family: Luminari;
+    color: seashell;
+}
+
+.background{
+    background-color: lightslategray;
+}
+
+thead {
+    font-family: Impact;
+    color: darkred;
+}
+
+tbody {
+    color:white;
+}
+
+/*table{*/
+/*    border-radius: 10px;*/
+/*    border-color: darkslategray;*/
+/*    border-collapse: collapse;*/
+/*}*/
+
+table{
+    border: 3px solid darkgray;
+    border-collapse: collapse;
+}
+
+
