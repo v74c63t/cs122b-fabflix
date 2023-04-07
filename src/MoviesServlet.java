@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/stars"
@@ -98,11 +99,14 @@ public class MoviesServlet extends HttpServlet {
 
                 ResultSet newRS = statement2.executeQuery(query);
 
-                JsonArray starsArray = new JsonArray();
+//                JsonArray starsArray = new JsonArray();
+                ArrayList<String> starsArray = new ArrayList<>();
 
                 while (newRS.next()) {
                     starsArray.add(newRS.getString("name"));
                 }
+                newRS.close();
+                String stars = String.join(", ", starsArray);
 
                 // New Query for getting top 3 genres
                 query = String.join("",
@@ -114,12 +118,14 @@ public class MoviesServlet extends HttpServlet {
 
                 newRS = statement2.executeQuery(query);
 
-                JsonArray genresArray = new JsonArray();
+//                JsonArray genresArray = new JsonArray();
+                ArrayList<String> genresArray = new ArrayList<>();
 
                 while (newRS.next()) {
                     genresArray.add(newRS.getString("name"));
                 }
-
+                newRS.close();
+                String genres = String.join(", ", genresArray);
 
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
@@ -128,13 +134,14 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_title", movie_title);
                 jsonObject.addProperty("movie_year", movie_year);
                 jsonObject.addProperty("movie_director", movie_director);
-                jsonObject.addProperty("movie_stars", starsArray.toString());
-                jsonObject.addProperty("movie_genres", genresArray.toString());
+                jsonObject.addProperty("movie_stars", stars);
+                jsonObject.addProperty("movie_genres", genres);
 
                 jsonArray.add(jsonObject);
             }
             rs.close();
             statement.close();
+            statement2.close();
 
             // Log to localhost log
             request.getServletContext().log("getting " + jsonArray.size() + " results");
