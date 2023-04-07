@@ -91,7 +91,7 @@ public class MoviesServlet extends HttpServlet {
 
                 // New Query for getting top 3 stars
                 query = String.join("",
-                        "SELECT name ",
+                        "SELECT starId, name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
                         "WHERE sim.movieId='", movie_id, "' ",
                         "AND s.id=sim.starId ",
@@ -103,7 +103,7 @@ public class MoviesServlet extends HttpServlet {
                 ArrayList<String> starsArray = new ArrayList<>();
 
                 while (newRS.next()) {
-                    starsArray.add(newRS.getString("name"));
+                    starsArray.add(newRS.getString("starId") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 String stars = String.join(", ", starsArray);

@@ -1,16 +1,39 @@
 
+// To handle all hyperlinks
+function htmlHREF(html_page, id, name) {
+    return '<a href=' + html_page + '.html?id=' + id + '">'
+        + name +
+        '</a>';
+}
+
 function handleMovieResult(resultData) {
     let moviesTableBodyElem = jQuery("#movies_table_body");
-    console.log(resultData)
 
     // add rest
-    // for (let i = 0; i < Math.min(20, resultData.length); i++) {
-    //     let rowHTML = "";
-    //     rowHTML +="<tr>"
-    //     rowHTML +=
-    //         "<th>" +
-    //         "<a href='single-movie.html?id' + resultData[i]["
-    // }
+    for (let i = 0; i < Math.min(20, resultData.length); i++) {
+        let starsArray = resultData[i]["movie_stars"].split(", ");
+        let rowHTML = "";
+        rowHTML +="<tr>"
+        rowHTML +=
+            "<th>" +
+            htmlHREF("single-movie", resultData[i]["movie_id"],resultData[i]["movie_title"]) +
+            "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>"
+        rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>"
+        // rowHTML += "<th>" + resultData[i]["movie_stars"] + "</th>"
+        rowHTML += "<th>"
+
+        for (let stars in starsArray) {
+            let starsArr = starsArray[stars].split("|");
+            rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";
+        }
+        rowHTML += "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>"
+        rowHTML += "</tr>";
+
+        moviesTableBodyElem.append(rowHTML);
+    }
 }
 
 jQuery.ajax({
