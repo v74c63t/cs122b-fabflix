@@ -37,6 +37,22 @@ public class MoviesServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     // note: have to modify and adjust to use code
+    // SQL Query probably something like this
+//    select id, title, year, director, rating
+//    from movies as m, ratings as r
+//    where m.id=r.movieId
+//    order by rating desc
+//    limit 20;
+// execute in the while loop while going through result set and creating the json object
+//    select g.name as genre
+//    from genres g, genres_in_movies gim
+//    where gim.genreId = g.id and gim.movieId = ?
+//    limit 3;
+//
+//    select s.name as star
+//    from stars s, stars_in_movies sim
+//    where sim.starId = s.id and sim.movieId = ?
+//    limit 3;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json"); // Response mime type
