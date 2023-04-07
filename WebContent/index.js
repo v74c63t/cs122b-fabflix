@@ -1,7 +1,16 @@
 
 function handleMovieResult(resultData) {
     let moviesTableBodyElem = jQuery("#movies_table_body");
+    console.log(resultData)
+
     // add rest
+    // for (let i = 0; i < Math.min(20, resultData.length); i++) {
+    //     let rowHTML = "";
+    //     rowHTML +="<tr>"
+    //     rowHTML +=
+    //         "<th>" +
+    //         "<a href='single-movie.html?id' + resultData[i]["
+    // }
 }
 
 jQuery.ajax({

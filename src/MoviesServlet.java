@@ -49,8 +49,15 @@ public class MoviesServlet extends HttpServlet {
 
             // Declare our statement
             Statement statement = conn.createStatement();
+            // Declare statement for inner query
+            Statement statement2 = conn.createStatement();
 
-            String query = "SELECT * from stars";
+            String query = String.join("",
+                    "SELECT rating, id, title, year, director ",
+                    "FROM movies AS m, ratings AS r ",
+                    "WHERE m.id=r.movieId ",
+                    "ORDER BY rating DESC ",
+                    "LIMIT 20");
 
             // Perform the query
             ResultSet rs = statement.executeQuery(query);
@@ -59,15 +66,54 @@ public class MoviesServlet extends HttpServlet {
 
             // Iterate through each row of rs
             while (rs.next()) {
-                String star_id = rs.getString("id");
-                String star_name = rs.getString("name");
-                String star_dob = rs.getString("birthYear");
+                String movie_rating = rs.getString("rating");
+                String movie_id = rs.getString("id");
+                String movie_title = rs.getString("title");
+                String movie_year = rs.getString("year");
+                String movie_director = rs.getString("director");
+
+                // New Query for getting top 3 stars
+                query = String.join("",
+                        "SELECT name ",
+                        "FROM stars AS s, stars_in_movies AS sim ",
+                        "WHERE sim.movieId='", movie_id, "' ",
+                        "AND s.id=sim.starId ",
+                        "LIMIT 3");
+
+                ResultSet newRS = statement2.executeQuery(query);
+
+                JsonArray starsArray = new JsonArray();
+
+                while (newRS.next()) {
+                    starsArray.add(newRS.getString("name"));
+                }
+
+                // New Query for getting top 3 genres
+                query = String.join("",
+                        "SELECT name ",
+                        "FROM genres AS g, genres_in_movies AS gim ",
+                        "WHERE gim.movieId='", movie_id, "' ",
+                        "AND g.id=gim.genreId ",
+                        "LIMIT 3");
+
+                newRS = statement2.executeQuery(query);
+
+                JsonArray genresArray = new JsonArray();
+
+                while (newRS.next()) {
+                    genresArray.add(newRS.getString("name"));
+                }
+
 
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("star_id", star_id);
-                jsonObject.addProperty("star_name", star_name);
-                jsonObject.addProperty("star_dob", star_dob);
+                jsonObject.addProperty("movie_rating", movie_rating);
+                jsonObject.addProperty("movie_id", movie_id);
+                jsonObject.addProperty("movie_title", movie_title);
+                jsonObject.addProperty("movie_year", movie_year);
+                jsonObject.addProperty("movie_director", movie_director);
+                jsonObject.addProperty("movie_stars", starsArray.toString());
+                jsonObject.addProperty("movie_genres", genresArray.toString());
 
                 jsonArray.add(jsonObject);
             }
