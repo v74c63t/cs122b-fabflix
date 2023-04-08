@@ -7,7 +7,7 @@
 <h4>TomCat</h4>
 <p>Username: admin<br>Password: mypassword</p>
 <h4>MySQL</h4>
-<p>Username: mytestuser<br>Password: My6$Password<br>Create Datebase file: createtable.sql</p>
+<p>Username: mytestuser<br>Password: My6$Password<br>Create Datebase file: create_table.sql</p>
 <h3>Contributions</h3>
 <h4>Vanessa</h4>
 <ul>
