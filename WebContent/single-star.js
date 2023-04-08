@@ -28,8 +28,16 @@ function handleResult(resultData) {
     let starInfoElement = jQuery("#star_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
-    starInfoElement.append("<p>Star Name: " + resultData[0]["star_name"] + "</p>" +
-        "<p>Date Of Birth: " + resultData[0]["star_dob"] + "</p>");
+    console.log(resultData[0]["star_dob"]);
+    if(resultData[0]["star_dob"] != null){
+        starInfoElement.append("<div><strong>" + resultData[0]["star_name"] + "</strong><span style='font-size: 24px'> (" +
+            + resultData[0]["star_dob"] + ")</span></div>");
+    }
+    else{
+        console.log("here");
+        starInfoElement.append("<div><strong>" + resultData[0]["star_name"] + "</strong><span style='font-size: 24px'> (" +
+            "N/A)</span></div>");
+    }
 
     console.log("handleResult: populating movie table from resultData");
 

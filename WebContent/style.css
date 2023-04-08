@@ -15,6 +15,13 @@
     background-color: lightslategray;
 }
 
+.page-titles{
+    padding-left: 10px;
+    padding-right: 10px;
+    color: darkslateblue;
+    font-family: Helvetica;
+}
+
 thead {
     font-family: 'Montserrat', sans-serif;
 }
