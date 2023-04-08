@@ -28,6 +28,7 @@ function handleMovieResult(resultData) {
             let starsArr = starsArray[stars].split("|");
             rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";
         }
+        rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>"
         rowHTML += "</tr>";
