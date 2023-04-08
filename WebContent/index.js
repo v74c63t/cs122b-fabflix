@@ -1,7 +1,7 @@
 
 // To handle all hyperlinks
 function htmlHREF(html_page, id, name) {
-    return '<a href="' + html_page + '.html?id=' + id + '">' +
+    return '<a style="color:darkturquoise;" href="' + html_page + '.html?id=' + id + '">' +
         name +     // display star_name for the link text
         '</a>';
 }
