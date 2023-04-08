@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-// Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
+// Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-movie"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
 public class SingleMovieServlet extends HttpServlet {
     private static final long serialVersionUID = 2L;
@@ -37,7 +37,7 @@ public class SingleMovieServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    // note: have to modify and adjust to use code
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json"); // Response mime type
@@ -106,7 +106,7 @@ public class SingleMovieServlet extends HttpServlet {
                 statement2.close();
                 String stars = String.join(", ", starsArray);
 
-                // Repreat query execution for genres
+                // Repeat query execution for genres
                 query = String.join("",
                         "SELECT name as genres ",
                         "FROM genres AS g, genres_in_movies AS gim ",
