@@ -15,10 +15,10 @@
 <ul>
   <li>SQL Tables</li>
   <li>Project Setup</li>
-  <li>Single Move Page (HTML/js)</li>
-  <li>Single Star Page (HTML/js)</li>
+  <li>Single Move Page, Single Star Page (HTML/js)</li>
   <li>CSS Stylesheet</li>
   <li>Making Revisions/Style Changes to Other Pages</li>
+  <li>Debugging</li>
 </ul>
 <h4>Haver</h4>
 <ul>
@@ -27,4 +27,5 @@
   <li>Top 20 Page (HTML/js)</li>
   <li>CSS Stylesheet</li>
   <li>Making Revisions/Style Changes to Other Pages</li>
+  <li>Debugging</li>
 </ul>
