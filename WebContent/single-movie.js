@@ -27,7 +27,7 @@ function handleResult(resultData) {
     let movieInfoElement = jQuery("#movie_info");
 
     console.log("SOMETHING", resultData[0]["movie_title"]);
-    movieInfoElement.append("<div><i><strong>" + resultData[0]["movie_title"] + "</strong></i><span class='page-title-sub-info'> (" +
+    movieInfoElement.append("<div style='padding-left: 80px;'><i><strong>" + resultData[0]["movie_title"] + "</strong></i><span class='page-title-sub-info'> (" +
          + resultData[0]["movie_year"]+ ")</span></div>");
 
     console.log("handleResult: populating movie table from resultData");
