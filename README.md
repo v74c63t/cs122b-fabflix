@@ -14,12 +14,13 @@
   <li>Single Star Page (HTML/js)</li>
   <li>Project Setup</li>
   <li>CSS Stylesheet</li>
-  <li>Making Revisions to Other Pages</li>
+  <li>Making Revisions/Style Changes to Other Pages</li>
 </ul>
 <h4>Haver</h4>
 <ul>
+  <li>SQL Tables</li>
   <li>Servlets</li>
   <li>Top 20 Page (HTML/js)</li>
   <li>CSS Stylesheet</li>
-  <li>Making Revisions to Other Pages</li>
+  <li>Making Revisions/Style Changes to Other Pages</li>
 </ul>
