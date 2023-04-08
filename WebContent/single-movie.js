@@ -46,7 +46,7 @@ function handleResult(resultData) {
         rowHTML += "<th>";
         for (let stars in starsArray) {
             let starsArr = starsArray[stars].split("|");
-            rowHTML += "<a href='single-star.html?id=" + starsArr[0]
+            rowHTML += "<a style='color:darkturquoise;' href='single-star.html?id=" + starsArr[0]
                 + "'>" + starsArr[1] + "</a>" + ", ";
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
