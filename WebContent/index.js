@@ -1,8 +1,8 @@
 
 // To handle all hyperlinks
 function htmlHREF(html_page, id, name) {
-    return '<a href=' + html_page + '.html?id=' + id + '">'
-        + name +
+    return '<a href="' + html_page + '.html?id=' + id + '">' +
+        name +     // display star_name for the link text
         '</a>';
 }
 
@@ -13,10 +13,10 @@ function handleMovieResult(resultData) {
     for (let i = 0; i < Math.min(20, resultData.length); i++) {
         let starsArray = resultData[i]["movie_stars"].split(", ");
         let rowHTML = "";
-        rowHTML +="<tr>"
+        rowHTML += "<tr>"
         rowHTML +=
             "<th>" +
-            htmlHREF("single-movie", resultData[i]["movie_id"],resultData[i]["movie_title"]) +
+            htmlHREF("single-movie", resultData[i]["movie_id"], resultData[i]["movie_title"]) +
             "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>"

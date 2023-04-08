@@ -1,13 +1,13 @@
 .page-headers{
     text-align: center;
     padding-top: 10px;
-    font-family: Verdana;
+    font-family: Verdana, serif;
     color: darkblue;
     padding-bottom: 10px;
 }
 
 .fabflix{
-    font-family: Luminari;
+    font-family: Luminari, serif;
     color: seashell;
 }
 
@@ -16,8 +16,7 @@
 }
 
 thead {
-    font-family: Impact;
-    color: darkred;
+    font-family: 'Montserrat', sans-serif;
 }
 
 tbody {

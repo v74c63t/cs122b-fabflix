@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
@@ -55,8 +56,11 @@ public class SingleMovieServlet extends HttpServlet {
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
-            String query = "SELECT * from stars as s, stars_in_movies as sim, movies as m " +
-                    "where m.id = sim.movieId and sim.starId = s.id and s.id = ?";
+            String query = String.join("",
+                    "SELECT movieId, rating, title, year, director ",
+                    "FROM movies AS m, ratings AS r ",
+                    "WHERE m.id=? ",
+                    "AND m.id=r.movieId");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
@@ -72,26 +76,63 @@ public class SingleMovieServlet extends HttpServlet {
 
             // Iterate through each row of rs
             while (rs.next()) {
-
-                String starId = rs.getString("starId");
-                String starName = rs.getString("name");
-                String starDob = rs.getString("birthYear");
-
                 String movieId = rs.getString("movieId");
                 String movieTitle = rs.getString("title");
                 String movieYear = rs.getString("year");
                 String movieDirector = rs.getString("director");
 
-                // Create a JsonObject based on the data we retrieve from rs
+                // Construct query for getting all stars
+                // with parameter represented as "?"
+                query = String.join("",
+                        "SELECT starId, name as stars ",
+                        "FROM stars AS s, stars_in_movies AS sim ",
+                        "WHERE sim.movieId=? ",
+                        "AND sim.starId=s.id");
 
+                // Declare statement for inner queries
+                PreparedStatement statement2 = conn.prepareStatement(query);
+                // Putting id value as parameter in query
+                statement2.setString(1, id);
+                // Execute inner query
+                ResultSet newRS = statement2.executeQuery();
+
+                ArrayList<String> starsArray = new ArrayList<>();
+
+                while (newRS.next()) {
+                    starsArray.add(newRS.getString("starId") + "|" + newRS.getString("stars"));
+                }
+                newRS.close();
+                statement2.close();
+                String stars = String.join(", ", starsArray);
+
+                // Repreat query execution for genres
+                query = String.join("",
+                        "SELECT name as genres ",
+                        "FROM genres AS g, genres_in_movies AS gim ",
+                        "WHERE gim.movieId=? ",
+                        "AND gim.genreId=g.id");
+
+                statement2 = conn.prepareStatement(query);
+                statement2.setString(1, id);
+                newRS = statement2.executeQuery();
+
+                ArrayList<String> genresArray = new ArrayList<>();
+
+                while (newRS.next()) {
+                    genresArray.add(newRS.getString("genres"));
+                }
+                newRS.close();
+                statement2.close();
+                String genres = String.join(", ", genresArray);
+
+                // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("star_id", starId);
-                jsonObject.addProperty("star_name", starName);
-                jsonObject.addProperty("star_dob", starDob);
                 jsonObject.addProperty("movie_id", movieId);
                 jsonObject.addProperty("movie_title", movieTitle);
                 jsonObject.addProperty("movie_year", movieYear);
                 jsonObject.addProperty("movie_director", movieDirector);
+                jsonObject.addProperty("movie_stars", stars);
+                jsonObject.addProperty("movie_genres", genres);
 
                 jsonArray.add(jsonObject);
             }

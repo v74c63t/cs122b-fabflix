@@ -20,7 +20,6 @@ function getParameterByName(target) {
  */
 // note: have to modify and adjust to use code
 function handleResult(resultData) {
-
     console.log("handleResult: populating star info from resultData");
 
     // populate the star info h3
@@ -28,8 +27,9 @@ function handleResult(resultData) {
     let movieInfoElement = jQuery("#movie_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
+    console.log("SOMETHING", resultData[0]["movie_title"]);
     movieInfoElement.append("<p>Movie Title: " + resultData[0]["movie_title"] + "</p>" +
-        "<p>(" + resultData[0]["year"] + ")</p>");
+        "<p>" + resultData[0]["movie_year"] + "</p>");
 
     console.log("handleResult: populating movie table from resultData");
 
