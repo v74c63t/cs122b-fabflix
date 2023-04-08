@@ -24,6 +24,8 @@ function handleResult(resultData) {
 
     // populate the star info h3
     // find the empty h3 body by id "star_info"
+    let movieTitle = jQuery("#movie_title");
+    movieTitle.append(resultData[0]["movie_title"]);
     let movieInfoElement = jQuery("#movie_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
