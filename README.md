@@ -1,1 +1,1 @@
-Vanessa Tang
+CS122B Project 1
