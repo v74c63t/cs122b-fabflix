@@ -57,10 +57,10 @@ public class SingleMovieServlet extends HttpServlet {
 
             // Construct a query with parameter represented by "?"
             String query = String.join("",
-                    "SELECT movieId, rating, title, year, director ",
-                    "FROM movies AS m, ratings AS r ",
-                    "WHERE m.id=? ",
-                    "AND m.id=r.movieId");
+                    "SELECT id as movieId, rating, title, year, director ",
+                    "FROM movies LEFT JOIN ratings ",
+                    "ON movies.id=ratings.movieId ",
+                    "WHERE movies.id=? ");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);

@@ -27,7 +27,7 @@ function handleResult(resultData) {
     let movieInfoElement = jQuery("#movie_info");
 
     console.log("SOMETHING", resultData[0]["movie_title"]);
-    movieInfoElement.append("<div><strong>" + resultData[0]["movie_title"] + "</strong><span style='font-size: 24px;'> (" +
+    movieInfoElement.append("<div><i><strong>" + resultData[0]["movie_title"] + "</strong></i><span style='font-size: 24px;'> (" +
          + resultData[0]["movie_year"]+ ")</span></div>");
 
     console.log("handleResult: populating movie table from resultData");
@@ -51,8 +51,14 @@ function handleResult(resultData) {
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_rating"] +
-            " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>"
+        if(resultData[0]["star_dob"] != null){
+            rowHTML += "<th>" + resultData[i]["movie_rating"] +
+                " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
+        }
+        else{
+            rowHTML += "<th>" +
+                "N/A <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
+        }
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
