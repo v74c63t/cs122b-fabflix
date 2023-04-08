@@ -1,5 +1,7 @@
 <h1>CS122B Project 1</h1>
 <h3>Instructions</h3>
+<h4>Deployment</h4>
+<p>Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.</p>
 <h4>Demo</h4>
 <p>URL: </p>
 <h4>AWS</h4>
