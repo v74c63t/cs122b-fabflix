@@ -4,7 +4,7 @@
     font-family: Verdana, serif;
     color: darkblue;
     padding-bottom: 10px;
-    -webkit-text-stroke: 0.5px lightsalmon;
+    -webkit-text-stroke: 1.25px black;
 }
 
 .fabflix{
@@ -22,7 +22,17 @@
     padding-right: 10px;
     color: darkblue;
     font-family: Verdana, serif;
-    -webkit-text-stroke: 0.01em lightsalmon;
+    -webkit-text-stroke: 1.25px black;
+}
+
+.page-title-sub-info {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+    color: darkblue;
+    font-family: Verdana, serif;
+    -webkit-text-stroke: 0.75px black;
 }
 
 thead {

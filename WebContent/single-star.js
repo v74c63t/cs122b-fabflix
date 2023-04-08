@@ -30,7 +30,7 @@ function handleResult(resultData) {
     let starInfoElement = jQuery("#star_info");
 
     if(resultData[0]["star_dob"] != null){
-        starInfoElement.append("<div><i><strong>" + resultData[0]["star_name"] + "</strong></i><span style='font-size: 24px'> (" +
+        starInfoElement.append("<div><i><strong>" + resultData[0]["star_name"] + "</strong></i><span class='page-title-sub-info'> (" +
             + resultData[0]["star_dob"] + ")</span></div>");
     }
     else{
