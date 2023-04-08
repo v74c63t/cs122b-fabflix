@@ -24,11 +24,12 @@
 }
 
 thead {
-    font-family: 'Montserrat', sans-serif;
+    font-family: Helvetica;
 }
 
 tbody {
     color:white;
+    font-family: 'Montserrat', serif;
 }
 
 /*table{*/
