@@ -39,7 +39,6 @@ function handleResult(resultData) {
     }
 
     console.log("handleResult: populating movie table from resultData");
-    console.log(resultData);
 
     // Populate table
     let starMovieTableBodyElement = jQuery("#star_movie_table_body");
@@ -53,7 +52,6 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
         rowHTML += "</tr>";
-        console.log(rowHTML);
         // Append the row created to the table body, which will refresh the page
         starMovieTableBodyElement.append(rowHTML);
     }
