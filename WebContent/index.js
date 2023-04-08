@@ -30,7 +30,7 @@ function handleMovieResult(resultData) {
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>"
+        rowHTML += "<th>" + resultData[i]["movie_rating"] + ' <span class="fa fa-star rating"></span>' + "</th>"
         rowHTML += "</tr>";
 
         moviesTableBodyElem.append(rowHTML);
