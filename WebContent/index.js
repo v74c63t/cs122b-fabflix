@@ -9,7 +9,6 @@ function htmlHREF(html_page, id, name) {
 function handleMovieResult(resultData) {
     let moviesTableBodyElem = jQuery("#movies_table_body");
 
-    // add rest
     for (let i = 0; i < Math.min(20, resultData.length); i++) {
         let starsArray = resultData[i]["movie_stars"].split(", ");
         let rowHTML = "";
@@ -21,9 +20,9 @@ function handleMovieResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>"
         rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>"
-        // rowHTML += "<th>" + resultData[i]["movie_stars"] + "</th>"
         rowHTML += "<th>"
 
+        // iterate through stars to link star names to their respective single star page
         for (let stars in starsArray) {
             let starsArr = starsArray[stars].split("|");
             rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";

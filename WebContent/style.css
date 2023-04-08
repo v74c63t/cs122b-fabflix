@@ -29,14 +29,8 @@ thead {
 
 tbody {
     color:white;
-    font-family: 'Montserrat', serif;
+    font-family: 'Montserrat', sans-serif;
 }
-
-/*table{*/
-/*    border-radius: 10px;*/
-/*    border-color: darkslategray;*/
-/*    border-collapse: collapse;*/
-/*}*/
 
 table{
     border: 3px solid darkgray;

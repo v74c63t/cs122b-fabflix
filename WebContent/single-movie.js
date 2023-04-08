@@ -18,17 +18,14 @@ function getParameterByName(target) {
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
-// note: have to modify and adjust to use code
+
 function handleResult(resultData) {
     console.log("handleResult: populating star info from resultData");
 
-    // populate the star info h3
-    // find the empty h3 body by id "star_info"
     let movieTitle = jQuery("#movie_title");
     movieTitle.append(resultData[0]["movie_title"]);
     let movieInfoElement = jQuery("#movie_info");
 
-    // append two html <p> created to the h3 body, which will refresh the page
     console.log("SOMETHING", resultData[0]["movie_title"]);
     movieInfoElement.append("<div><strong>" + resultData[0]["movie_title"] + "</strong><span style='font-size: 24px;'> (" +
          + resultData[0]["movie_year"]+ ")</span></div>");
@@ -36,9 +33,7 @@ function handleResult(resultData) {
     console.log("handleResult: populating movie table from resultData");
     console.log(resultData);
 
-    // Populate the star table
-    // Find the empty table body by id "movie_table_body"
-
+    // Populate table
     let movieTableBodyElement = jQuery("#single_movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
