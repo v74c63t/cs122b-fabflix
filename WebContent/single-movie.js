@@ -54,7 +54,8 @@ function handleResult(resultData) {
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>"
+        rowHTML += "<th>" + resultData[i]["movie_rating"] +
+            " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>"
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
