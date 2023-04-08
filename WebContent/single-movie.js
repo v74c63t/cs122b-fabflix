@@ -20,18 +20,16 @@ function getParameterByName(target) {
  */
 
 function handleResult(resultData) {
-    console.log("handleResult: populating star info from resultData");
+    console.log("handleResult: populating movie info from resultData");
 
     let movieTitle = jQuery("#movie_title");
     movieTitle.append(resultData[0]["movie_title"]);
     let movieInfoElement = jQuery("#movie_info");
 
-    console.log("SOMETHING", resultData[0]["movie_title"]);
     movieInfoElement.append("<div style='padding-left: 80px;'><i><strong>" + resultData[0]["movie_title"] + "</strong></i><span class='page-title-sub-info'> (" +
          + resultData[0]["movie_year"]+ ")</span></div>");
 
-    console.log("handleResult: populating movie table from resultData");
-    console.log(resultData);
+    console.log("handleResult: populating star table from resultData");
 
     // Populate table
     let movieTableBodyElement = jQuery("#single_movie_table_body");
