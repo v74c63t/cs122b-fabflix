@@ -28,35 +28,34 @@ function handleResult(resultData) {
     let starInfoElement = jQuery("#star_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
-    console.log(resultData[0]["star_dob"]);
     if(resultData[0]["star_dob"] != null){
         starInfoElement.append("<div><strong>" + resultData[0]["star_name"] + "</strong><span style='font-size: 24px'> (" +
             + resultData[0]["star_dob"] + ")</span></div>");
     }
     else{
-        console.log("here");
         starInfoElement.append("<div><strong>" + resultData[0]["star_name"] + "</strong><span style='font-size: 24px'> (" +
             "N/A)</span></div>");
     }
 
     console.log("handleResult: populating movie table from resultData");
+    console.log(resultData);
 
     // Populate the star table
     // Find the empty table body by id "movie_table_body"
-    let movieTableBodyElement = jQuery("#star_movie_table_body");
+    let starMovieTableBodyElement = jQuery("#star_movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + "<a href='single-movie.html?id=" + resultData[i]["movie_id"]
-            + ">" + resultData[i]["movie_title"] + "</a></th>";
+            + "'>" + resultData[i]["movie_title"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
         rowHTML += "</tr>";
-
+        console.log(rowHTML);
         // Append the row created to the table body, which will refresh the page
-        movieTableBodyElement.append(rowHTML);
+        starMovieTableBodyElement.append(rowHTML);
     }
 }
 

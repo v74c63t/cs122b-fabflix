@@ -32,6 +32,7 @@ function handleResult(resultData) {
          + resultData[0]["movie_year"]+ ")</span></div>");
 
     console.log("handleResult: populating movie table from resultData");
+    console.log(resultData);
 
     // Populate the star table
     // Find the empty table body by id "movie_table_body"
