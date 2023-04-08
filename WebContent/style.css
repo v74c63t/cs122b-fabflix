@@ -6,6 +6,18 @@
     padding-bottom: 10px;
     -webkit-text-stroke: 1.25px black;
 }
+#logo {
+    display: flex;
+    background-color: #ff8c00;
+    width: 27px;
+    height: 27px;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-family: 'Sedgwick Ave Display', cursive;
+    margin-right: 5px;
+    border-radius: 3px;
+}
 
 .fabflix{
     font-family: Luminari, serif;
