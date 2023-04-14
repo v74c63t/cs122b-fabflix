@@ -11,7 +11,7 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
+        String username = request.getParameter("email");
         String password = request.getParameter("password");
 
         /* This example only allows username/password to be test/test
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             // Log to localhost log
             request.getServletContext().log("Login failed");
             // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
-            if (!username.equals("anteater")) {
+            if (!username.equals("a@email.com")) {
                 responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
             } else {
                 responseJsonObject.addProperty("message", "incorrect password");
