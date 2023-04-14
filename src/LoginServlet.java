@@ -18,7 +18,7 @@ public class LoginServlet extends HttpServlet {
         /  in the real project, you should talk to the database to verify username/password
         */
         JsonObject responseJsonObject = new JsonObject();
-        if (username.equals("anteater") && password.equals("123456")) {
+        if (username.equals("a@email.com") && password.equals("a2")) {
             // Login success:
 
             // set this user into the session
