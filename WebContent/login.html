@@ -16,9 +16,9 @@
 
     <!--Font Awesome CSS-->
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./login.css"/>
-    <link rel="stylesheet" type="text/css" href="./style.css"/>
-    <title id=movie_title>Login</title>
+    <link rel="stylesheet" href="./login.css"/>
+    <link rel="stylesheet" href="./style.css"/>
+    <title>Login</title>
 </head>
 
 <header>
@@ -39,7 +39,7 @@
 <div id="main-widget">
     <h1><strong>Login</strong></h1>
     <div class="form-widget">
-        <form class="form" action="form" method="POST">
+        <form id="login-form" class="form" action="form" method="POST">
 
             <div class="fill-form">
                 <div class="email-component">
@@ -56,7 +56,6 @@
             <div class="submit-form">
                 <input class="submit-btn" type="submit" value="Login">
                 <br>
-<!--                dont think a register is needed-->
 <!--                <p class="signup-href"><strong>Register</strong></p>-->
             </div>
 
