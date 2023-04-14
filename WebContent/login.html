@@ -17,6 +17,7 @@
     <!--Font Awesome CSS-->
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./login.css"/>
+    <link rel="stylesheet" type="text/css" href="./style.css"/>
     <title id=movie_title>Login</title>
 </head>
 
@@ -36,7 +37,7 @@
 
 <body>
 <div id="main-widget">
-    <h1>Login</h1>
+    <h1><strong>Login</strong></h1>
     <div class="form-widget">
         <form class="form" action="form" method="POST">
 
@@ -55,11 +56,17 @@
             <div class="submit-form">
                 <input class="submit-btn" type="submit" value="Login">
                 <br>
-                <p class="signup-href">Register</p>
+                <p class="signup-href"><strong>Register</strong></p>
             </div>
 
         </form>
     </div>
 </div>
+<div id="login_error_message"></div>
+
+<!-- include jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- include our own JS file -->
+<script src="./login.js"></script>
 </body>
 </html>
