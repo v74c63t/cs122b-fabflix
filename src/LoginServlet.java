@@ -34,9 +34,9 @@ public class LoginServlet extends HttpServlet {
             request.getServletContext().log("Login failed");
             // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
             if (!username.equals("a@email.com")) {
-                responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
+                responseJsonObject.addProperty("message", "User (" + username + ") doesn't exist");
             } else {
-                responseJsonObject.addProperty("message", "incorrect password");
+                responseJsonObject.addProperty("message", "Incorrect password");
             }
         }
         response.getWriter().write(responseJsonObject.toString());
