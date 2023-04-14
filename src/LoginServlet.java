@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
 
             // Iterate through each row of rs
             if(rs.next()) {
-                // not sure whether to keep this information/add ot user obj or not
+                // not sure whether to keep this information/add to user obj or not
 //                String customerId = rs.getString("id");
 //                String customerFirstName = rs.getString("firstName");
 //                String customerLastName = rs.getString("lastName");
