@@ -14,9 +14,13 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ### Vanessa
   - Login Page (JS)
   - Login Filter/Login Servlet
+  - Main Page (JS)
+  - Main Page Servlet
   - Making Revisions/Style Changes to Other Pages
   - Debugging
 ### Haver
   - Login Page (HTML/CSS)
+  - Main Page (HTML/CSS)
+  - Main Page Servlet
   - Making Revisions/Style Changes to Other Pages
   - Debugging
