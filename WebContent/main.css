@@ -14,13 +14,7 @@
     text-align: center;
     color: #ffc107;
     margin: 0;
-    padding: 0;
     padding-bottom: 30px;
-}
-
-.genre-list > h4:hover {
-    color: #d59e01;
-    cursor: pointer;
 }
 
 .title-browse {
@@ -32,7 +26,7 @@
 .alpha-list {
     display: grid;
     text-align: center;
-    grid-template-columns: 225px 225px 225px 225px;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px;
 }
 
 .alpha-list > h4 {
@@ -42,24 +36,14 @@
     padding-bottom: 30px;
 }
 
-.alpha-list > h4:hover {
-    color: #d59e01;
-    cursor: pointer;
-}
-
 .num-list {
     display: grid;
-    grid-template-columns: 225px 225px 225px 225px;
+    grid-template-columns: 100px 100px 100px 100px;
     text-align: center;
 }
 
 .num-list > h4{
     color: #ffc107;
     padding-bottom: 30px;
-}
-
-.num-list > h4:hover {
-    color: #d59e01;
-    cursor: pointer;
 }
 
