@@ -8,7 +8,7 @@ function htmlHREF(html_page, id, name) {
 function handleGenreResult(resultData) {
     console.log("handleResult: populating movies info from resultData");
 
-    let genreList = jQuery("#genre_list");
+    let genreList = jQuery("#genre-list");
 
     for (let i = 0; i < resultData.length; i++) {
         let genre = resultData[i]["genre_name"];
