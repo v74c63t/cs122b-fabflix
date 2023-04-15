@@ -51,29 +51,28 @@ public class MainInitServlet extends HttpServlet {
             Statement statement = conn.createStatement();
 
             String query = String.join("",
-                    "SELECT * ",
-                    "FROM genres ",
-                    "ORDER BY name ASC ");
+                    "SELECT name ",
+                    "FROM genres;");
 
             // Perform the query
             ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();
 
-            ArrayList<String> genresArray = new ArrayList<>();
 
             // Iterate through each row of rs
             while (rs.next()) {
-                genresArray.add(rs.getString("name"));
+                String name = rs.getString("name");
+
+                // Create a JsonObject based on the data we retrieve from rs
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("genre_name", name);
+
+                jsonArray.add(jsonObject);
             }
             rs.close();
             statement.close();
 
-            String genres = String.join(", ", genresArray);
-
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("genres", genres);
-            jsonArray.add(jsonObject);
 
             // Log to localhost log
             request.getServletContext().log("getting " + jsonArray.size() + " results");
