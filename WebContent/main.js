@@ -5,33 +5,6 @@ function htmlHREF(html_page, id, name) {
         '</a>';
 }
 
-function handleGenreResult(resultData) {
-    console.log("handleResult: populating genres info from resultData");
-    console.log(resultData)
-
-    let genreListBodyElem = jQuery("#genre_list");
-
-    for (let i = 0; i < resultData.length; i++) {
-        let genresArray = resultData[i]["genres"].split(", ");
-        let rowHTML = "";
-        rowHTML += "<h4>"
-        rowHTML += "TEST"
-
-        // iterate through stars to link star names to their respective single star page
-        for (let stars in starsArray) {
-            let starsArr = starsArray[stars].split("|");
-            rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";
-        }
-        rowHTML = rowHTML.substring(0,rowHTML.length-3);
-        rowHTML += "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_rating"] +
-            " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>"
-        rowHTML += "</h4>";
-
-        moviesTableBodyElem.append(rowHTML);
-    }
-}
-
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
