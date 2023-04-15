@@ -20,7 +20,7 @@ import java.util.ArrayList;
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/movies"
 @WebServlet(name = "MainInitServlet", urlPatterns = "/api/maininit")
 public class MainInitServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5L;
 
     // Create a dataSource which registered in web.
     private DataSource dataSource;
@@ -63,10 +63,12 @@ public class MainInitServlet extends HttpServlet {
             // Iterate through each row of rs
             while (rs.next()) {
                 String name = rs.getString("name");
+                String id = rs.getString("id");
 
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("genre_name", name);
+                jsonObject.addProperty("genre_id", id);
 
                 jsonArray.add(jsonObject);
             }
