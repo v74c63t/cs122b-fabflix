@@ -14,6 +14,7 @@
     color: #ffc107;
     margin: 0;
     padding: 0;
+    padding-bottom: 30px;
 }
 
 .genre-list > h4:hover {
@@ -23,6 +24,8 @@
 
 .alpha-list {
     display: grid;
+    text-align: center;
+    grid-template-columns: 25px 25px 25px 25px;
 }
 
 .alpha-list > h4{
@@ -40,6 +43,7 @@
 .num-list {
     display: grid;
     grid-template-columns: 225px 225px 225px 225px;
+    text-align: center;
 }
 
 .num-list > h4{
