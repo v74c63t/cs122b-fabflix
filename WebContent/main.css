@@ -1,15 +1,16 @@
 
-.genre_browse {
+.genre-browse {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.genre_list {
+
+.genre-list {
     display: grid;
     grid-template-columns: 225px 225px 225px 225px;
 }
 
-.genre_list > h4{
+.genre-list > h4{
     text-align: center;
     color: #ffc107;
     margin: 0;
@@ -17,41 +18,47 @@
     padding-bottom: 30px;
 }
 
-.genre_list > h4:hover {
+.genre-list > h4:hover {
     color: #d59e01;
     cursor: pointer;
 }
 
-.alpha_list {
+.title-browse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alpha-list {
     display: grid;
     text-align: center;
     grid-template-columns: 225px 225px 225px 225px;
 }
 
-.alpha_list > h4{
+.alpha-list > h4 {
     display: inline-block;
     color: #ffc107;
     margin: 0;
     padding-bottom: 30px;
 }
 
-.alpha_list > h4:hover {
+.alpha-list > h4:hover {
     color: #d59e01;
     cursor: pointer;
 }
 
-.num_list {
+.num-list {
     display: grid;
     grid-template-columns: 225px 225px 225px 225px;
     text-align: center;
 }
 
-.num_list > h4{
+.num-list > h4{
     color: #ffc107;
     padding-bottom: 30px;
 }
 
-.num_list > h4:hover {
+.num-list > h4:hover {
     color: #d59e01;
     cursor: pointer;
 }
