@@ -1,9 +1,9 @@
-# CS122B Project 1
+# CS122B Project 2
 ## Instructions
 ### Deployment
 Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
 ### Demo
-**URL:** `https://youtu.be/Y0Btd6LDIYQ` 
+**URL:** 
 ### AWS
 **URL:** 
 ### TomCat
@@ -12,16 +12,11 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
 ## Contributions
 ### Vanessa
-  - SQL Tables
-  - Project Setup
-  - Single Move Page, Single Star Page (HTML/js)
-  - CSS Stylesheet
+  - Login Page (JS)
+  - Login Filter/Login Servlet
   - Making Revisions/Style Changes to Other Pages
   - Debugging
 ### Haver
-  - SQL Tables
-  - Servlets
-  - Top 20 Page (HTML/js)
-  - CSS Stylesheet
+  - Login Page (HTML/CSS)
   - Making Revisions/Style Changes to Other Pages
   - Debugging
