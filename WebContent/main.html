@@ -1,3 +1,6 @@
+48 lines (44 sloc)  2.01 KB
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,8 +20,10 @@
     <!--Font Awesome CSS-->
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css"/>
-    <title>Login</title>
+    <link rel="stylesheet" href="./main.css"/>
+    <title>Main</title>
 </head>
+
 <body class="background">
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
@@ -40,9 +45,47 @@
     </nav>
 </header>
 
-<!--TO DO-->
+<h1 class="page-headers"><strong><i>Browse by Genre</i></strong></h1>
+<div style="margin-left: 80px; margin-right: 80px;" class="genre-browse">
+    <div class="genre-list">
+        <h4>Action</h4>
+        <h4>Action1</h4>
+        <h4>Action12</h4>
+        <h4>Action123</h4>
+        <h4>Action1234</h4>
+        <h4>Action12345</h4>
+        <h4>Action123456</h4>
+        <h4>Action1234567</h4>
+    </div>
+</div>
 
-<h1 class="page-headers"><strong>Browse by Genre</strong></h1>
-<h1 class="page-headers"><strong>Browse by Title</strong></h1>
+<h1 class="page-headers"><strong><i>Browse by Title</i></strong></h1>
+<div style="margin-left: 80px; margin-right: 80px;" class="title-browse">
+    <div class="alpha-list">
+        <h4>A</h4>
+        <h4>B</h4>
+        <h4>C</h4>
+        <h4>D</h4>
+        <h4>E</h4>
+        <h4>F</h4>
+        <h4>G</h4>
+        <h4>H</h4>
+    </div>
+    <div class="num-list">
+        <h4>0</h4> <h4>1</h4> <h4>2</h4> <h4>3</h4> <h4>4</h4>
+        <h4>5</h4> <h4>6</h4> <h4>7</h4> <h4>8</h4> <h4>9</h4>
+        <h4>*</h4>
+    </div>
+</div>
+<!-- Load jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Load our own JS file -->
+<!-- The path is relative to index.html, since these two files are in the same directory -->
+<!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
+     otherwise the url is relative to the root path-->
+<script src="index.js"></script>
 </body>
 </html>
