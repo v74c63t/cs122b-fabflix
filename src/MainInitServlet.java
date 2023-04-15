@@ -51,7 +51,7 @@ public class MainInitServlet extends HttpServlet {
             Statement statement = conn.createStatement();
 
             String query = String.join("",
-                    "SELECT name ",
+                    "SELECT * ",
                     "FROM genres;");
 
             // Perform the query
@@ -63,12 +63,12 @@ public class MainInitServlet extends HttpServlet {
             // Iterate through each row of rs
             while (rs.next()) {
                 String name = rs.getString("name");
-//                String id = rs.getString("id");
+                String id = rs.getString("id");
 
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("genre_name", name);
-//                jsonObject.addProperty("genre_id", id);
+                jsonObject.addProperty("genre_id", id);
 
                 jsonArray.add(jsonObject);
             }

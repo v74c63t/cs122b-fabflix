@@ -12,7 +12,7 @@ function handleGenreResult(resultData) {
 
     for (let i = 0; i < resultData.length; i++) {
         let genre = resultData[i]["genre_name"];
-        // let genreId = resultData[i]['genre_id'];
+        let genreId = resultData[i]['genre_id'];
         let listHTML = "<h4>" + genre + "</h4>";
         // add in the href later
         genreList.append(listHTML);
