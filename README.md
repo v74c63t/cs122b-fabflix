@@ -5,7 +5,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ### Demo
 **URL:** `https://youtu.be/qxnNAQztqiU` 
 ### AWS
-**URL:** 
+**URL:** `http://54.67.91.117:8080/cs122b-project1`
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
