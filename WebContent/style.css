@@ -3,8 +3,44 @@
     align-items: center;
 }
 
-#navbarSupportedContent {
-    margin-right: 40px;
+#search-component {
+    display: flex;
+    align-items: center;
+}
+
+#search-component > label{
+    margin: 0 0.25rem;
+    outline: none;
+}
+
+#search-component > label > input{
+    padding: 0 3px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+#search-component > label > input:focus{
+    outline: none;
+}
+
+#search-component > label > input[type=text]{
+    padding: 2px 6px;
+}
+
+#search-title {
+    width: 300px;
+}
+
+#search-year {
+    width: 100px;
+}
+
+#search-director {
+    width: 225px;
+}
+
+#search-star {
+    width: 225px;
 }
 
 .page-headers{
