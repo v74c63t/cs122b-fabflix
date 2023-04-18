@@ -47,11 +47,11 @@ public class ResultServlet extends HttpServlet {
 
         // Retrieve parameter id from url request.
         // Testing out Servlet functions
-        String genreId = request.getParameter("genreId");
+        String startTitle = request.getParameter("startTitle");
         Map<String, String[]> paramMap = request.getParameterMap();
 
         // The log message can be found in localhost log
-        request.getServletContext().log("getting genreId: " + genreId);
+        request.getServletContext().log("getting startTitle: " + startTitle);
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -61,26 +61,26 @@ public class ResultServlet extends HttpServlet {
 
             JsonArray jsonArray = new JsonArray();
 
-            if (paramMap.containsKey("genreId")) {
+            if (paramMap.containsKey("startTitle")) {
 //                 Construct a query with parameter represented by "?"
                 String query = String.join("",
-                        "select gim.movieId, title, year, director, rating ",
-                        "from genres_in_movies as gim ",
-                        "join movies as m ",
+                        "select r.movieId, title, year, director, rating ",
+                        "from movies as m ",
                         "join ratings as r ",
                         "on r.movieId = m.id ",
-                        "and m.id = gim.movieId ",
-                        "where genreId= ? ");
+                        "where title like '", startTitle, "%' ",
+                        "order by title asc; ");
 
                 // Declare our statement
-                PreparedStatement statement = conn.prepareStatement(query);
+//                PreparedStatement statement = conn.prepareStatement(query);
+                Statement statement = conn.createStatement();
                 Statement statement2 = conn.createStatement();
 
                 // Set the parameter represented by "?" in the query to the id we get from url,
                 // num 1 indicates the first "?" in the query
-                statement.setString(1, paramMap.get("genreId")[0]);
+//                statement.setString(1, startTitle);
 
-                ResultSet rs = statement.executeQuery();
+                ResultSet rs = statement.executeQuery(query);
 
                 while (rs.next()) {
                     String movie_rating = rs.getString("rating");
