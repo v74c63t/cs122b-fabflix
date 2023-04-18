@@ -93,18 +93,20 @@ public class MoviesServlet extends HttpServlet {
 
                 // New Query for getting top 3 genres
                 query = String.join("",
-                        "SELECT name ",
+                        "SELECT id, name ",
                         "FROM genres AS g, genres_in_movies AS gim ",
                         "WHERE gim.movieId='", movie_id, "' ",
                         "AND g.id=gim.genreId ",
-                        "LIMIT 3");
+                        "ORDER BY name ",
+                        "LIMIT 3;");
 
                 newRS = statement2.executeQuery(query);
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
                 while (newRS.next()) {
-                    genresArray.add(newRS.getString("name"));
+//                    genresArray.add(newRS.getString("name"));
+                    genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 String genres = String.join(", ", genresArray);

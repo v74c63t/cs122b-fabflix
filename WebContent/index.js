@@ -20,9 +20,16 @@ function handleMovieResult(resultData) {
             htmlHREF("single-movie", resultData[i]["movie_id"], resultData[i]["movie_title"]) +
             "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>"
-        rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>"
-        rowHTML += "<th>"
+        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
+        let genresArray = resultData[i]["movie_genres"].split(", ");
+        rowHTML += "<th>";
+        for(let genres in genresArray) {
+            let genre = genresArray[genres].split("|");
+            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + "'>" + genre[1] + "</a>, ";
+        }
+        rowHTML = rowHTML.substring(0,rowHTML.length-3);
+        rowHTML += "</th>";
+        rowHTML += "<th>";
 
         // iterate through stars to link star names to their respective single star page
         for (let stars in starsArray) {
