@@ -15,6 +15,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -56,66 +58,94 @@ public class ResultServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            // Get a connection from dataSource
-
-            // Construct a query with parameter represented by "?"
-            // REPLACE LATER || ONLY TESTING genres
-            String query = "select gim.movieId, title, year, director, rating " +
-                    "from genres_in_movies as gim " +
-                    "join movies as m " +
-                    "join ratings as r " +
-                    "on r.movieId = m.id " +
-                    "and m.id = gim.movieId " +
-                    "where genreId = ?";
-
-            // Declare our statement
-            PreparedStatement statement = conn.prepareStatement(query);
-
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
-            statement.setString(1, genreId);
-
-            // Perform the query
-            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 
-            // Iterate through each row of rs
-//            while (rs.next()) {
+            if (paramMap.containsKey("genreId")) {
+//                 Construct a query with parameter represented by "?"
+                String query = String.join("",
+                        "select gim.movieId, title, year, director, rating ",
+                        "from genres_in_movies as gim ",
+                        "join movies as m ",
+                        "join ratings as r ",
+                        "on r.movieId = m.id ",
+                        "and m.id = gim.movieId ",
+                        "where genreId= ? ");
+
+                // Declare our statement
+                PreparedStatement statement = conn.prepareStatement(query);
+                Statement statement2 = conn.createStatement();
+
+                // Set the parameter represented by "?" in the query to the id we get from url,
+                // num 1 indicates the first "?" in the query
+                statement.setString(1, paramMap.get("genreId")[0]);
+
+                ResultSet rs = statement.executeQuery();
+
+                while (rs.next()) {
+                    String movie_rating = rs.getString("rating");
+                    String movie_id = rs.getString("movieId");
+                    String movie_title = rs.getString("title");
+                    String movie_year = rs.getString("year");
+                    String movie_director = rs.getString("director");
+
+//                    // New Query for getting stars
+                    query = String.join("",
+                            "select starId, name ",
+                            "from stars as s ",
+                            "join stars_in_movies as sim ",
+                            "on id = starId ",
+                            "where sim.movieId='", movie_id, "'");
 //
-//                String starId = rs.getString("starId");
-//                String starName = rs.getString("name");
-//                String starDob = rs.getString("birthYear");
-//
-//                String movieId = rs.getString("movieId");
-//                String movieTitle = rs.getString("title");
-//                String movieYear = rs.getString("year");
-//                String movieDirector = rs.getString("director");
-//                String movieRating = rs.getString("rating");
-//
-                // Create a JsonObject based on the data we retrieve from rs
-//
+                    ResultSet newRS = statement2.executeQuery(query);
+
+                    ArrayList<String> starsArray = new ArrayList<>();
+
+                    while (newRS.next()) {
+                        starsArray.add(newRS.getString("starId") + "|" + newRS.getString("name"));
+                    }
+                    newRS.close();
+                    String stars = String.join(", ", starsArray);
+
+                    // New Query for getting genres
+                    query = String.join("",
+                            "select genreId, name ",
+                            "from genres AS g ",
+                            "join genres_in_movies AS gim ",
+                            "on  g.id = gim.genreId ",
+                            "WHERE gim.movieId='", movie_id, "'",
+                            "ORDER BY name;");
+
+                    newRS = statement2.executeQuery(query);
+
+                    ArrayList<String> genresArray = new ArrayList<>();
+
+                    while (newRS.next()) {
+                        genresArray.add(newRS.getString("genreId") + "|" + newRS.getString("name"));
+                    }
+                    newRS.close();
+                    String genres = String.join(", ", genresArray);
+
+//                    // Create a JsonObject based on the data we retrieve from rs
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("movie_rating", movie_rating);
+                    jsonObject.addProperty("movie_id", movie_id);
+                    jsonObject.addProperty("movie_title", movie_title);
+                    jsonObject.addProperty("movie_year", movie_year);
+                    jsonObject.addProperty("movie_director", movie_director);
+                    jsonObject.addProperty("movie_stars", stars);
+                    jsonObject.addProperty("movie_genres", genres);
+
+                    jsonArray.add(jsonObject);
+                }
+                rs.close();
+                statement.close();
+            }
+//            if (paramMap.containsKey("genreId")) {
 //                JsonObject jsonObject = new JsonObject();
-//                jsonObject.addProperty("star_id", starId);
-//                jsonObject.addProperty("star_name", starName);
-//                jsonObject.addProperty("star_dob", starDob);
-//                jsonObject.addProperty("movie_id", movieId);
-//                jsonObject.addProperty("movie_title", movieTitle);
-//                jsonObject.addProperty("movie_year", movieYear);
-//                jsonObject.addProperty("movie_director", movieDirector);
-//                jsonObject.addProperty("movie_rating", movieRating);
-//
+//                jsonObject.addProperty("genreId", paramMap.get("genreId")[0]);
 //                jsonArray.add(jsonObject);
 //            }
-
-            // TESTING TO GET ALL PARAMTERS of URL
-            for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty(entry.getKey(), Arrays.toString(entry.getValue()));
-                jsonArray.add(jsonObject);
-            }
-            rs.close();
-            statement.close();
 
             // Write JSON string to output
             out.write(jsonArray.toString());
