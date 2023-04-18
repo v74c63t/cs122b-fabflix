@@ -56,6 +56,11 @@ public class LoginFilter implements Filter {
         allowedURIs.add("main.js");
         allowedURIs.add("main.css");
         allowedURIs.add("api/maininit");
+        allowedURIs.add("index.html");
+        allowedURIs.add("index.js");
+        allowedURIs.add("result.html");
+        allowedURIs.add("result.js");
+        allowedURIs.add("api/movies");
     }
 
     public void destroy() {
