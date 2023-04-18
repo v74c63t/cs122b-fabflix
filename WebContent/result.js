@@ -24,6 +24,13 @@ function getURLParams(paramsObj) {
     return urlString
 }
 
+// To handle all hyperlinks
+function htmlHREF(html_page, id, name) {
+    return '<a style="color:darkturquoise;" href="' + html_page + '.html?id=' + id + '">' +
+        name +     // display star_name for the link text
+        '</a>';
+}
+
 /**
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
@@ -35,25 +42,37 @@ function handleResult(resultData) {
 
     let movieTableBodyElement = jQuery("#movies_table_body");
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < resultData.length; i++) {
+    for (let i = 0; i < Math.min(30, resultData.length); i++) {
         let starsArray = resultData[i]["movie_stars"].split(", ");
         let rowHTML = "";
-        rowHTML += "<tr>";
+        rowHTML += "<tr>"
+        rowHTML +=
+            "<th>" +
+            htmlHREF("single-movie", resultData[i]["movie_id"], resultData[i]["movie_title"]) +
+            "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
+        let genresArray = resultData[i]["movie_genres"].split(", ");
         rowHTML += "<th>";
+        for(let genres in genresArray) {
+            let genre = genresArray[genres].split("|");
+            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + "'>" + genre[1] + "</a>, ";
+        }
+        rowHTML = rowHTML.substring(0,rowHTML.length-3);
+        rowHTML += "</th>";
+        rowHTML += "<th>";
+
+        // iterate through stars to link star names to their respective single star page
         for (let stars in starsArray) {
             let starsArr = starsArray[stars].split("|");
-            rowHTML += "<a style='color:darkturquoise;' href='single-star.html?id=" + starsArr[0]
-                + "'>" + starsArr[1] + "</a>" + ", ";
+            rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] +
-            " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
+            " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>"
         rowHTML += "</tr>";
 
-        // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
 }
