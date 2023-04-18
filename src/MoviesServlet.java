@@ -74,11 +74,22 @@ public class MoviesServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
 
                 // New Query for getting top 3 stars
+//                query = String.join("",
+//                        "SELECT starId, name ",
+//                        "FROM stars AS s, stars_in_movies AS sim ",
+//                        "WHERE sim.movieId='", movie_id, "' ",
+//                        "AND s.id=sim.starId ",
+//                        "LIMIT 3");
                 query = String.join("",
-                        "SELECT starId, name ",
+                        "SELECT s.id, s.name ",
+                        "FROM stars AS s, stars_in_movies AS sim ",
+                        "WHERE s.id IN (SELECT s.id ",
                         "FROM stars AS s, stars_in_movies AS sim ",
                         "WHERE sim.movieId='", movie_id, "' ",
+                        "AND s.id=sim.starId) ",
                         "AND s.id=sim.starId ",
+                        "GROUP BY s.id ",
+                        "ORDER BY COUNT(*) DESC, s.name ASC ",
                         "LIMIT 3");
 
                 ResultSet newRS = statement2.executeQuery(query);
@@ -86,7 +97,7 @@ public class MoviesServlet extends HttpServlet {
                 ArrayList<String> starsArray = new ArrayList<>();
 
                 while (newRS.next()) {
-                    starsArray.add(newRS.getString("starId") + "|" + newRS.getString("name"));
+                    starsArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 String stars = String.join(", ", starsArray);
