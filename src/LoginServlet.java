@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             String query = String.join("",
                     "SELECT *",
                     "FROM customers ",
-                    "WHERE email=?;");
+                    "WHERE email=? AND password=?");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
@@ -61,13 +61,13 @@ public class LoginServlet extends HttpServlet {
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
             statement.setString(1, email);
-//            statement.setString(2, password);
+            statement.setString(2, password);
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-                while(rs.next()) {
+//                while(rs.next()) {
                     // not sure whether to keep this information/add to user obj or not
 //                String customerId = rs.getString("id");
 //                String customerFirstName = rs.getString("firstName");
@@ -81,14 +81,31 @@ public class LoginServlet extends HttpServlet {
 //                responseJsonObject.addProperty("customer_last_name", customerLastName);
 //                responseJsonObject.addProperty("customer_cc_id", customerCcId);
 //                responseJsonObject.addProperty("customer_address", customerAddress);
-                    if(rs.getString("password") == password) {
+//                    if(rs.getString("password").equals(password)) {
                         request.getSession().setAttribute("user", new User(email));
                         responseJsonObject.addProperty("status", "success");
                         responseJsonObject.addProperty("message", "success");
-                        break;
-                    }
-                }
-                if (request.getSession().getAttribute("user") == null) {
+//                        break;
+//                    }
+//                }
+//                if (request.getSession().getAttribute("user") == null) {
+//                    // Login fail
+//                    responseJsonObject.addProperty("status", "fail");
+//                    // Log to localhost log
+//                    request.getServletContext().log("Login failed");
+//
+//                    responseJsonObject.addProperty("message", "Incorrect password");
+//                }
+            }
+            else {
+                String query2 = String.join("",
+                        "SELECT *",
+                        "FROM customers ",
+                        "WHERE email=? ");
+                PreparedStatement statement2 = conn.prepareStatement(query2);
+                statement2.setString(1, email);
+                ResultSet rs2 = statement2.executeQuery();
+                if(rs2.next()) {
                     // Login fail
                     responseJsonObject.addProperty("status", "fail");
                     // Log to localhost log
@@ -96,14 +113,16 @@ public class LoginServlet extends HttpServlet {
 
                     responseJsonObject.addProperty("message", "Incorrect password");
                 }
-            }
-            else {
-                // Login fail
-                responseJsonObject.addProperty("status", "fail");
-                // Log to localhost log
-                request.getServletContext().log("Login failed");
+                else {
+                    // Login fail
+                    responseJsonObject.addProperty("status", "fail");
+                    // Log to localhost log
+                    request.getServletContext().log("Login failed");
 
-                responseJsonObject.addProperty("message", "User with that email doesn't exist");
+                    responseJsonObject.addProperty("message", "User with that email doesn't exist");
+                }
+                rs2.close();
+                statement2.close();
             }
         rs.close();
         statement.close();
