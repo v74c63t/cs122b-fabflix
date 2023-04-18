@@ -40,7 +40,15 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
+        // rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
+        let genresArray = resultData[i]["movie_genres"].split(", ");
+        rowHTML += "<th>";
+        for(let genres in genresArray) {
+            let genre = genresArray[genres].split("|");
+            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + "'>" + genre[1] + "</a>, ";
+        }
+        rowHTML = rowHTML.substring(0,rowHTML.length-3);
+        rowHTML += "</th>";
         rowHTML += "<th>";
         for (let stars in starsArray) {
             let starsArr = starsArray[stars].split("|");

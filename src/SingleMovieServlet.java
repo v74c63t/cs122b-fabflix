@@ -84,11 +84,21 @@ public class SingleMovieServlet extends HttpServlet {
 
                 // Construct query for getting all stars
                 // with parameter represented as "?"
+//                query = String.join("",
+//                        "SELECT starId, name as stars ",
+//                        "FROM stars AS s, stars_in_movies AS sim ",
+//                        "WHERE sim.movieId=? ",
+//                        "AND sim.starId=s.id");
                 query = String.join("",
-                        "SELECT starId, name as stars ",
+                        "SELECT s.id, s.name ",
+                        "FROM stars AS s, stars_in_movies AS sim ",
+                        "WHERE s.id IN (SELECT s.id ",
                         "FROM stars AS s, stars_in_movies AS sim ",
                         "WHERE sim.movieId=? ",
-                        "AND sim.starId=s.id");
+                        "AND s.id=sim.starId) ",
+                        "AND s.id=sim.starId ",
+                        "GROUP BY s.id ",
+                        "ORDER BY COUNT(*) DESC, s.name ASC ");
 
                 // Declare statement for inner queries
                 PreparedStatement statement2 = conn.prepareStatement(query);
@@ -100,7 +110,7 @@ public class SingleMovieServlet extends HttpServlet {
                 ArrayList<String> starsArray = new ArrayList<>();
 
                 while (newRS.next()) {
-                    starsArray.add(newRS.getString("starId") + "|" + newRS.getString("stars"));
+                    starsArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 statement2.close();
@@ -108,10 +118,18 @@ public class SingleMovieServlet extends HttpServlet {
 
                 // Repeat query execution for genres
                 query = String.join("",
-                        "SELECT name as genres ",
+                        "SELECT id, name ",
                         "FROM genres AS g, genres_in_movies AS gim ",
                         "WHERE gim.movieId=? ",
-                        "AND gim.genreId=g.id");
+                        "AND g.id=gim.genreId ",
+                        "ORDER BY name ");
+
+
+//                query = String.join("",
+//                        "SELECT name as genres ",
+//                        "FROM genres AS g, genres_in_movies AS gim ",
+//                        "WHERE gim.movieId=? ",
+//                        "AND gim.genreId=g.id");
 
                 statement2 = conn.prepareStatement(query);
                 statement2.setString(1, id);
@@ -119,8 +137,12 @@ public class SingleMovieServlet extends HttpServlet {
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
+//                while (newRS.next()) {
+//                    genresArray.add(newRS.getString("genres"));
+//                }
                 while (newRS.next()) {
-                    genresArray.add(newRS.getString("genres"));
+//                    genresArray.add(newRS.getString("name"));
+                    genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 statement2.close();
