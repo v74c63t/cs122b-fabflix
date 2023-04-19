@@ -58,14 +58,26 @@ public class StartTitleResultServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
 
 //          Construct a query with parameter represented by "?"
-            String query = String.join("",
-                    "select r.movieId, title, year, director, rating ",
-                    "from movies as m ",
-                    "join ratings as r ",
-                    "on r.movieId = m.id ",
-                    "where title like '", startTitle, "%' ",
-                    "order by title asc; ");
+            String query = "";
+            if(startTitle.equals("*")) {
+                query = String.join("",
+                        "select r.movieId, title, year, director, rating ",
+                        "from movies as m ",
+                        "join ratings as r ",
+                        "on r.movieId = m.id ",
+                        "where title REGEXP '^[^A-Za-z0-9]' ",
+                        "order by title asc; ");
 
+            }
+            else{
+                query = String.join("",
+                        "select r.movieId, title, year, director, rating ",
+                        "from movies as m ",
+                        "join ratings as r ",
+                        "on r.movieId = m.id ",
+                        "where title like '", startTitle, "%' ",
+                        "order by title asc; ");
+            }
             // Declare our statement
 //            PreparedStatement statement = conn.prepareStatement(query);
             Statement statement = conn.createStatement();
