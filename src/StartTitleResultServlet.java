@@ -66,7 +66,9 @@ public class StartTitleResultServlet extends HttpServlet {
                         "join ratings as r ",
                         "on r.movieId = m.id ",
                         "where title REGEXP '^[^A-Za-z0-9]' ",
-                        "order by title asc; ");
+                        "order by title asc ",
+                        "limit 25 ",
+                        "offset 0 ");
 
             }
             else{
@@ -76,7 +78,9 @@ public class StartTitleResultServlet extends HttpServlet {
                         "join ratings as r ",
                         "on r.movieId = m.id ",
                         "where title like '", startTitle, "%' ",
-                        "order by title asc; ");
+                        "order by title asc ",
+                        "limit 25 ",
+                        "offset 0 ");
             }
             // Declare our statement
 //            PreparedStatement statement = conn.prepareStatement(query);

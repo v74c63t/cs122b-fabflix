@@ -65,7 +65,9 @@ public class GenreResultServlet extends HttpServlet {
                     "join ratings as r ",
                     "on r.movieId = m.id ",
                     "and m.id = gim.movieId ",
-                    "where genreId= ? ");
+                    "where genreId= ? ",
+                    "limit 25 ",
+                    "offset 0 ");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
