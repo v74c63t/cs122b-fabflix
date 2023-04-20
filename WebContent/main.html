@@ -14,8 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <!--Font Awesome CSS-->
+    <!-- Font Awesome CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+
+    <!-- Other -->
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="main.css"/>
     <title>Main</title>
@@ -43,10 +45,13 @@
             </ul>
         </div>
         <div id="search-component">
-            <label><input  class="search-title" type="text" id="search-title" placeholder="Title"></label>
-            <label><input  class="search-year" type="text" id="search-year" placeholder="Year"></label>
-            <label><input  class="search-director" type="text" id="search-director" placeholder="Director"></label>
-            <label><input  class="search-star" type="text" id="search-star" placeholder="Star"></label>
+            <form>
+                <input  class="search-title" type="text" id="search-title" placeholder="Title">
+                <input  class="search-year" type="text" id="search-year" placeholder="Year">
+                <input  class="search-director" type="text" id="search-director" placeholder="Director">
+                <input  class="search-star" type="text" id="search-star" placeholder="Star">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
     </nav>
 </header>

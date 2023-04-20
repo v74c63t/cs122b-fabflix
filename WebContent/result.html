@@ -41,10 +41,13 @@
             </ul>
         </div>
         <div id="search-component">
-            <label><input  class="search-title" type="text" id="search-title" placeholder="Title"></label>
-            <label><input  class="search-year" type="text" id="search-year" placeholder="Year"></label>
-            <label><input  class="search-director" type="text" id="search-director" placeholder="Director"></label>
-            <label><input  class="search-star" type="text" id="search-star" placeholder="Star"></label>
+            <form>
+                <input  class="search-title" type="text" id="search-title" placeholder="Title">
+                <input  class="search-year" type="text" id="search-year" placeholder="Year">
+                <input  class="search-director" type="text" id="search-director" placeholder="Director">
+                <input  class="search-star" type="text" id="search-star" placeholder="Star">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
     </nav>
     <h1 class="page-headers"><strong>Result</strong></h1>
@@ -66,6 +69,8 @@
             <tbody id=movies_table_body>
             </tbody>
         </table>
+        <div id="pagination">
+        </div>
     </div>
     <!-- Load jQuery and Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

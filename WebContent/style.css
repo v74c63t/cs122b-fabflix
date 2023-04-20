@@ -3,7 +3,7 @@
     align-items: center;
 }
 
-#search-component {
+#search-component form {
     display: flex;
     align-items: center;
 }
@@ -13,17 +13,17 @@
     outline: none;
 }
 
-#search-component > label > input{
+#search-component input,button{
     padding: 0 3px;
     height: 35px;
     border-radius: 5px;
 }
 
-#search-component > label > input:focus{
+#search-component input:focus,button:focus{
     outline: none;
 }
 
-#search-component > label > input[type=text]{
+#search-component input[type=text],button[type=submit]{
     padding: 2px 6px;
 }
 
@@ -41,6 +41,13 @@
 
 #search-star {
     width: 225px;
+}
+
+#search-component button{
+    width: 35px;
+    margin-left: 6px;
+    color: #ff8c00;
+    background: azure;
 }
 
 .page-headers{
