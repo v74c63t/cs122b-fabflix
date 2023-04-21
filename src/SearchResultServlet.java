@@ -71,25 +71,38 @@ public class SearchResultServlet extends HttpServlet {
                     "SELECT DISTINCT movieId, title, year, director, rating " +
                     "FROM starMovies AS sm ");
 
+            ArrayList<String> queryParameters = new ArrayList<String>();
+
             if (!parameterMap.isEmpty()) {
                 query.append("WHERE ");
-                query.append("?=? AND ".repeat(parameterMap.size() - 1));
-                query.append("?=?");
+                Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
+
+                while(itr.hasNext())
+                {
+                    Map.Entry<String, String[]> entry = itr.next();
+                    if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
+                        query.append("? LIKE ? ");
+                    }else if (entry.getKey().equals("year")) {
+                        query.append("? = ? ");
+                    }
+                    queryParameters.add(entry.getKey());
+                    queryParameters.add(entry.getValue()[0]);
+
+                    if (itr.hasNext()) {
+                        query.append("AND ");
+                    }
+                }
             }
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(String.valueOf(query));
             Statement statement2 = conn.createStatement();
 
+
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
-            int key = 1;
-            int val = 1;
-            for (Map.Entry<String, String[]> entry: parameterMap.entrySet()) {
-                statement.setString(key, entry.getKey());
-                statement.setString(val, entry.getValue()[0]);
-                key++;
-                val++;
+            for (int i = 0; i < queryParameters.size(); ++i) {
+                statement.setString(i, queryParameters.get(i));
             }
 
             ResultSet rs = statement.executeQuery(query.toString());
