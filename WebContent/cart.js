@@ -52,7 +52,7 @@ function handleCartInfo(cartEvent) {
      */
     cartEvent.preventDefault();
 
-    $.ajax("api/index", {
+    $.ajax("api/cart", {
         method: "POST",
         data: cart.serialize(),
         success: resultDataString => {
