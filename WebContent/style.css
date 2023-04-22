@@ -50,6 +50,12 @@
     background: azure;
 }
 
+#search-component button:hover{
+    cursor: pointer;
+    color: #ffc107!important;
+    background: darkgray;
+}
+
 .page-headers{
     text-align: center;
     padding-top: 10px;
