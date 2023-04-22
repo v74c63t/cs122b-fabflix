@@ -60,7 +60,7 @@ public class SearchResultServlet extends HttpServlet {
 
 //          Construct a query with parameter represented by "?"
             String query = "WITH starMovies AS " +
-                    "(SELECT m.id AS movieId, title, year, director, starId, name AS starName, rating " +
+                    "(SELECT m.id AS movieId, title, year, director, starId, name AS star, rating " +
                     "FROM movies AS m " +
                     "JOIN stars_in_movies AS sim " +
                     "JOIN stars AS s " +
