@@ -59,53 +59,54 @@ public class SearchResultServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
 
 //          Construct a query with parameter represented by "?"
-            StringBuilder query = new StringBuilder("WITH starMovies AS " +
-                    "(SELECT m.id AS movidId, title, year, director, starId, name AS starName, rating " +
+            String query = "WITH starMovies AS " +
+                    "(SELECT m.id AS movieId, title, year, director, starId, name AS starName, rating " +
                     "FROM movies AS m " +
                     "JOIN stars_in_movies AS sim " +
-                    "JOIN stars AS s" +
+                    "JOIN stars AS s " +
                     "JOIN ratings AS r " +
                     "ON m.id = sim.movieId " +
-                    "AND sim.starId = s.id) " +
+                    "AND sim.starId = s.id " +
                     "AND r.movieId = m.id) " +
                     "SELECT DISTINCT movieId, title, year, director, rating " +
-                    "FROM starMovies AS sm ");
+                    "FROM starMovies AS sm ";
 
             ArrayList<String> queryParameters = new ArrayList<String>();
 
             if (!parameterMap.isEmpty()) {
-                query.append("WHERE ");
+                query = query.concat("WHERE ");
                 Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
 
                 while(itr.hasNext())
                 {
                     Map.Entry<String, String[]> entry = itr.next();
                     if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
-                        query.append("? LIKE ? ");
+                        query = query.concat(entry.getKey().concat(" LIKE ? "));
+                        queryParameters.add("%" + entry.getValue()[0] + "%");
                     }else if (entry.getKey().equals("year")) {
-                        query.append("? = ? ");
+                        query = query.concat(entry.getKey().concat(" = ? "));
+                        queryParameters.add(entry.getValue()[0]);
                     }
-                    queryParameters.add(entry.getKey());
-                    queryParameters.add(entry.getValue()[0]);
 
                     if (itr.hasNext()) {
-                        query.append("AND ");
+                        query = query.concat("AND ");
                     }
                 }
             }
 
             // Declare our statement
-            PreparedStatement statement = conn.prepareStatement(String.valueOf(query));
+            PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
 
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
             for (int i = 0; i < queryParameters.size(); ++i) {
-                statement.setString(i, queryParameters.get(i));
+                statement.setString(i+1, queryParameters.get(i));
             }
+            System.out.println(query);
 
-            ResultSet rs = statement.executeQuery(query.toString());
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 
@@ -117,14 +118,14 @@ public class SearchResultServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
 
                 // New Query for getting stars
-                query = new StringBuilder(String.join("",
+                query = String.join("",
                         "select starId, name ",
                         "from stars as s ",
                         "join stars_in_movies as sim ",
                         "on id = starId ",
-                        "where sim.movieId='", movie_id, "'"));
+                        "where sim.movieId='", movie_id, "'");
 
-                ResultSet newRS = statement2.executeQuery(query.toString());
+                ResultSet newRS = statement2.executeQuery(query);
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
@@ -135,15 +136,15 @@ public class SearchResultServlet extends HttpServlet {
                 String stars = String.join(", ", starsArray);
 
                 // New Query for getting genres
-                query = new StringBuilder(String.join("",
+                query = String.join("",
                         "select genreId, name ",
                         "from genres AS g ",
                         "join genres_in_movies AS gim ",
                         "on  g.id = gim.genreId ",
                         "WHERE gim.movieId='", movie_id, "'",
-                        "ORDER BY name;"));
+                        "ORDER BY name;");
 
-                newRS = statement2.executeQuery(query.toString());
+                newRS = statement2.executeQuery(query);
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
