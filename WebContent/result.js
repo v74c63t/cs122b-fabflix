@@ -85,7 +85,8 @@ function handleResult(resultData) {
         prev.attr("href", prevHref);
     }
     if(resultData.length >= numRecords){
-        if (firstRecord+numRecords < Number(resultData[0]["max_records"])) {
+        console.log(resultData[0]["max_records"]);
+        if (firstRecord+numRecords < parseInt(resultData[0]["max_records"])) {
             nextHref = parsed + 'firstRecord=' + (firstRecord+numRecords).toString();
             next.attr("href", nextHref);
         }
@@ -93,7 +94,7 @@ function handleResult(resultData) {
     }
     let movieTableBodyElement = jQuery("#movies_table_body");
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(30, resultData.length); i++) {
+    for (let i = 0; i < resultData.length; i++) {
         let starsArray = resultData[i]["movie_stars"].split(", ");
         let rowHTML = "";
         rowHTML += "<tr>"
