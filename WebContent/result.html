@@ -53,10 +53,16 @@
 </header>
     <div style="margin-left: 80px; margin-right: 80px;" id="page-title-area">
         <h1 class="page-headers"><strong>Result</strong></h1>
-        <form id="movie-settings-form" class="movie-settings-form" action="#" method="GET">
-            <label for="sort-by">Movies Sorted By</label>
-            <select name="sort-by" id="sort-by">
-                <option value="title ASC rating ASC" selected>Title &uarr; Rating &uarr;</option>
+        <form id="movie-settings-form" name="movie-settings-form" action="result.html" method="GET">
+            <input type="hidden" id="genreId" name="" value="" />
+            <input type="hidden" id="startTitle" name="" value="" />
+            <input type="hidden" id="title" name="" value="" />
+            <input type="hidden" id="year" name="" value="" />
+            <input type="hidden" id="director" name="" value="" />
+            <input type="hidden" id="star" name="" value="" />
+            <label for="sortBy">Movies Sorted By</label>
+            <select name="sortBy" id="sortBy">
+                <option value="title ASC rating ASC">Title &uarr; Rating &uarr;</option>
                 <option value="title ASC rating DESC">Title &uarr; Rating &darr;</option>
                 <option value="title DESC rating ASC">Title &darr; Rating &uarr;</option>
                 <option value="title DESC rating DESC">Title &darr; Rating &darr;</option>
@@ -69,10 +75,11 @@
             <label for="numRecords">Movies Per Page</label>
             <select name="numRecords" id="numRecords">
                 <option value="10">10</option>
-                <option value="25" selected>25</option>
+                <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
+            <input type="hidden" name="firstRecord" value="0" />
             <button type="submit"><i>Apply</i></button>
         </form>
     </div>

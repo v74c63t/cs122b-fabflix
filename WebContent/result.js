@@ -64,7 +64,30 @@ function handleSearch(searchSubmitEvent) {
 function handleResult(resultData) {
     console.log("handleResult: movie info from resultData");
     console.log(resultData)
-
+    if(getParameterByName('genreId')) {
+        $("#genreId").attr('name', 'genreId');
+        $("#genreId").attr('value', getParameterByName('genreId'));
+    }
+    if(getParameterByName('startTitle')) {
+        $("#startTitle").attr('name', 'startTitle');
+        $("#startTitle").attr('value', getParameterByName('startTitle'));
+    }
+    if(getParameterByName('title')) {
+        $("#title").attr('name', 'title');
+        $("#title").attr('value', getParameterByName('title'));
+    }
+    if(getParameterByName('year')) {
+        $("#year").attr('name', 'year');
+        $("#year").attr('value', getParameterByName('year'));
+    }
+    if(getParameterByName('director')) {
+        $("#director").attr('name', 'director');
+        $("#director").attr('value', getParameterByName('director'));
+    }
+    if(getParameterByName('star')) {
+        $("#star").attr('name', 'star');
+        $("#star").attr('value', getParameterByName('star'));
+    }
     let url = window.location.href;
     // assuming that firstRecord would always be the last parameter will adjust if not the case later
     let parsed = url.substring(0,url.indexOf('firstRecord'));
@@ -108,7 +131,7 @@ function handleResult(resultData) {
         rowHTML += "<th>";
         for(let genres in genresArray) {
             let genre = genresArray[genres].split("|");
-            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + '&numRecords=25&firstRecord=0' + "'>" + genre[1] + "</a>, ";
+            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + '&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' + "'>" + genre[1] + "</a>, ";
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
@@ -139,7 +162,7 @@ function handleResult(resultData) {
 let urlRequest = '';
 let servletUrl = '';
 if ( getParameterByName('genreId') ) {
-    urlRequest = 'genreId=' + getParameterByName('genreId')+'&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
+    urlRequest = 'genreId=' + getParameterByName('genreId')+ '&sortBy=' + getParameterByName('sortBy') + '&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
     servletUrl += 'api/by-genre?'
 }else if ( getParameterByName('startTitle') ) {
     urlRequest = 'startTitle=' + getParameterByName('startTitle')+'&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
