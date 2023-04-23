@@ -69,7 +69,7 @@ function handleResult(resultData) {
         rowHTML += "<th>";
         for(let genres in genresArray) {
             let genre = genresArray[genres].split("|");
-            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + "'>" + genre[1] + "</a>, ";
+            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + '&numRecords=25&firstRecord=0' +"'>" + genre[1] + "</a>, ";
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
