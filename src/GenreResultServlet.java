@@ -50,10 +50,10 @@ public class GenreResultServlet extends HttpServlet {
 
         //figure out how to add this info into url
         // firstRecord used for offset
-//        String firstRecord = request.getParameter("firstRecord");
+        String firstRecord = request.getParameter("firstRecord");
         // numRecords decide how many to display on each page
         // used for limit
-//        String numRecords = request.getParameter("numRecords");
+        String numRecords = request.getParameter("numRecords");
 
         // The log message can be found in localhost log
         request.getServletContext().log("getting genreId: " + genreId);
@@ -73,11 +73,11 @@ public class GenreResultServlet extends HttpServlet {
                     "on r.movieId = m.id ",
                     "and m.id = gim.movieId ",
                     "where genreId= ? ",
-//                    "limit=? ",
-//                    "offset+? ");
+                    "limit ", numRecords, " ",
+                    "offset ", firstRecord, " ");
                     // temporary
-                    "limit 25 ",
-                    "offset 0 ");
+//                    "limit 25 ",
+//                    "offset 0 ");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
@@ -87,8 +87,6 @@ public class GenreResultServlet extends HttpServlet {
             // num 1 indicates the first "?" in the query
             statement.setString(1, genreId);
 
-//            statement.setString(2, numRecords);
-//            statement.setString(3, firstRecord);
 
             ResultSet rs = statement.executeQuery();
 

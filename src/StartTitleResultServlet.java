@@ -47,6 +47,11 @@ public class StartTitleResultServlet extends HttpServlet {
         // Retrieve parameter id from url request.
         // Testing out Servlet functions
         String startTitle = request.getParameter("startTitle");
+        // firstRecord used for offset
+        String firstRecord = request.getParameter("firstRecord");
+        // numRecords decide how many to display on each page
+        // used for limit
+        String numRecords = request.getParameter("numRecords");
 
         // The log message can be found in localhost log
         request.getServletContext().log("getting startTitle: " + startTitle);
@@ -67,8 +72,10 @@ public class StartTitleResultServlet extends HttpServlet {
                         "on r.movieId = m.id ",
                         "where title REGEXP '^[^A-Za-z0-9]' ",
                         "order by title asc ",
-                        "limit 25 ",
-                        "offset 0 ");
+                        "limit ", numRecords, " ",
+                        "offset ", firstRecord, " ");
+//                        "limit 25 ",
+//                        "offset 0 ");
 
             }
             else{
@@ -79,8 +86,10 @@ public class StartTitleResultServlet extends HttpServlet {
                         "on r.movieId = m.id ",
                         "where title like '", startTitle, "%' ",
                         "order by title asc ",
-                        "limit 25 ",
-                        "offset 0 ");
+                        "limit ", numRecords, " ",
+                        "offset ", firstRecord, " ");
+//                        "limit 25 ",
+//                        "offset 0 ");
             }
             // Declare our statement
 //            PreparedStatement statement = conn.prepareStatement(query);

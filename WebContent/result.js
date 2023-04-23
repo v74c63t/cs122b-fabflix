@@ -56,7 +56,7 @@ function handleResult(resultData) {
         rowHTML += "<th>";
         for(let genres in genresArray) {
             let genre = genresArray[genres].split("|");
-            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + "'>" + genre[1] + "</a>, ";
+            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + '&numRecords=25&firstRecord=0' + "'>" + genre[1] + "</a>, ";
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
@@ -87,10 +87,10 @@ function handleResult(resultData) {
 let urlRequest = '';
 let servletUrl = '';
 if ( getParameterByName('genreId') ) {
-    urlRequest = 'genreId=' + getParameterByName('genreId')
+    urlRequest = 'genreId=' + getParameterByName('genreId')+'&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
     servletUrl += 'api/by-genre?'
 }else if ( getParameterByName('startTitle') ) {
-    urlRequest = 'startTitle=' + getParameterByName('startTitle')
+    urlRequest = 'startTitle=' + getParameterByName('startTitle')+'&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
     servletUrl += 'api/by-start-title?'
 }else {
     let obj = {}
