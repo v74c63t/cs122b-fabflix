@@ -49,8 +49,10 @@ public class SearchResultServlet extends HttpServlet {
         // Testing out Servlet functions
         Map<String, String[]> parameterMap = request.getParameterMap();
 
+
         // The log message can be found in localhost log
         request.getServletContext().log("getting parameters: " + parameterMap.toString());
+        System.out.println(parameterMap);
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -72,7 +74,8 @@ public class SearchResultServlet extends HttpServlet {
                     "FROM starMovies AS sm ";
 
             ArrayList<String> queryParameters = new ArrayList<String>();
-
+            String limit = "";
+            String offset = "";
             if (!parameterMap.isEmpty()) {
                 query = query.concat("WHERE ");
                 Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
@@ -80,12 +83,24 @@ public class SearchResultServlet extends HttpServlet {
                 while(itr.hasNext())
                 {
                     Map.Entry<String, String[]> entry = itr.next();
+                    System.out.println(entry.getKey());
+                    System.out.println(entry.getValue()[0]);
                     if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
                         query = query.concat(entry.getKey().concat(" LIKE ? "));
                         queryParameters.add("%" + entry.getValue()[0] + "%");
                     }else if (entry.getKey().equals("year")) {
                         query = query.concat(entry.getKey().concat(" = ? "));
                         queryParameters.add(entry.getValue()[0]);
+                    }
+                    else if(entry.getKey().equals("numRecords")) {
+                        query = query.substring(0, query.length()-4);
+                        limit = "LIMIT " + entry.getValue()[0] + " ";
+                        query = query.concat(limit);
+                    }
+                    else if(entry.getKey().equals("firstRecord")){
+                        query = query.substring(0, query.length()-4);
+                        offset = "OFFSET " + entry.getValue()[0] + "; ";
+                        query = query.concat(offset);
                     }
 
                     if (itr.hasNext()) {
@@ -103,6 +118,8 @@ public class SearchResultServlet extends HttpServlet {
             // num 1 indicates the first "?" in the query
             for (int i = 0; i < queryParameters.size(); ++i) {
                 statement.setString(i+1, queryParameters.get(i));
+                System.out.println(i+1);
+                System.out.println(queryParameters.get(i));
             }
             System.out.println(query);
 

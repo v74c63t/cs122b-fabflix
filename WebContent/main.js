@@ -59,6 +59,7 @@ function handleSearch(searchSubmitEvent) {
     for (let i = 0; i < paramArray.length; i++) {
         if (i == paramArray.length-1) {
             url += paramArray[i][0] + "=" + paramArray[i][1];
+            url += "&numRecords=25&firstRecord=0";
         } else {
             url += paramArray[i][0] + "=" + paramArray[i][1] + "&";
         }

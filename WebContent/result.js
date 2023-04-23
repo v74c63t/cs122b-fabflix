@@ -21,6 +21,7 @@ function getURLParams(paramsObj) {
         urlString += (keyVal[0] + '=' + keyVal[1]) + '&';
     }
     urlString = urlString.substring(0,urlString.length-1);
+    urlString += "&numRecords=25&firstRecord=0";
     return urlString
 }
 
@@ -45,7 +46,6 @@ function handleResult(resultData) {
     let parsed = url.substring(0,url.indexOf('firstRecord'));
     let prev = jQuery("#prev");
     let next = jQuery("#next");
-    let page = jQuery("#page");
     let numRecords = parseInt(getParameterByName("numRecords"));
     let firstRecord = parseInt(getParameterByName("firstRecord"));
     let nextHref = '';
