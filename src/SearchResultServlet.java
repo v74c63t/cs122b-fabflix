@@ -49,6 +49,7 @@ public class SearchResultServlet extends HttpServlet {
         // Testing out Servlet functions
         Map<String, String[]> parameterMap = request.getParameterMap();
 
+
         // The log message can be found in localhost log
         request.getServletContext().log("getting parameters: " + parameterMap.toString());
 
@@ -72,7 +73,8 @@ public class SearchResultServlet extends HttpServlet {
                     "FROM starMovies AS sm ";
 
             ArrayList<String> queryParameters = new ArrayList<String>();
-
+            String limit = "";
+            String offset = "";
             if (!parameterMap.isEmpty()) {
                 query = query.concat("WHERE ");
                 Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
@@ -86,6 +88,16 @@ public class SearchResultServlet extends HttpServlet {
                     }else if (entry.getKey().equals("year")) {
                         query = query.concat(entry.getKey().concat(" = ? "));
                         queryParameters.add(entry.getValue()[0]);
+                    }
+                    else if(entry.getKey().equals("numRecords")) {
+                        query = query.substring(0, query.length()-4);
+                        limit = "LIMIT " + entry.getValue()[0] + " ";
+                        query = query.concat(limit);
+                    }
+                    else if(entry.getKey().equals("firstRecord")){
+                        query = query.substring(0, query.length()-4);
+                        offset = "OFFSET " + entry.getValue()[0] + "; ";
+                        query = query.concat(offset);
                     }
 
                     if (itr.hasNext()) {
@@ -133,7 +145,8 @@ public class SearchResultServlet extends HttpServlet {
                         "AND s.id=sim.starId) ",
                         "AND s.id=sim.starId ",
                         "GROUP BY s.id ",
-                        "ORDER BY COUNT(*) DESC, s.name ASC ");
+                        "ORDER BY COUNT(*) DESC, s.name ASC ",
+                        "LIMIT 3; ");
 
                 ResultSet newRS = statement2.executeQuery(query);
 
@@ -152,7 +165,8 @@ public class SearchResultServlet extends HttpServlet {
                         "join genres_in_movies AS gim ",
                         "on  g.id = gim.genreId ",
                         "WHERE gim.movieId='", movie_id, "'",
-                        "ORDER BY name;");
+                        "ORDER BY name ",
+                        "LIMIT 3; ");
 
                 newRS = statement2.executeQuery(query);
 

@@ -1,3 +1,5 @@
+
+let movie_search_form = $("#movie-search-form");
 let cart = $("#cart");
 
 /**
@@ -17,6 +19,28 @@ function handleSessionData(resultDataString) {
 
     // show cart information
     handleCartArray(resultDataJson["previousItems"]);
+}
+
+function handleSearch(searchSubmitEvent) {
+    let paramArray = []
+    $(".search-item").each( function(i, e) {
+        if ($(this)[0].value != "") {
+            paramArray.push([$(this)[0].name, $(this)[0].value]);
+        }
+    })
+
+    searchSubmitEvent.preventDefault();
+
+    let url = "";
+    for (let i = 0; i < paramArray.length; i++) {
+        if (i == paramArray.length-1) {
+            url += paramArray[i][0] + "=" + paramArray[i][1];
+            url += "&numRecords=25&firstRecord=0";
+        } else {
+            url += paramArray[i][0] + "=" + paramArray[i][1] + "&";
+        }
+    }
+    window.location.replace("result.html?" + url);
 }
 
 /**
@@ -72,3 +96,5 @@ $.ajax("api/cart", {
 
 // Bind the submit action of the form to a event handler function
 cart.submit(handleCartInfo);
+
+movie_search_form.submit(handleSearch);

@@ -1,3 +1,5 @@
+
+let movie_search_form = $("#movie-search-form");
 function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
@@ -21,6 +23,7 @@ function getURLParams(paramsObj) {
         urlString += (keyVal[0] + '=' + keyVal[1]) + '&';
     }
     urlString = urlString.substring(0,urlString.length-1);
+    urlString += "&numRecords=25&firstRecord=0";
     return urlString
 }
 
@@ -29,6 +32,28 @@ function htmlHREF(html_page, id, name) {
     return '<a style="color:darkturquoise;" href="' + html_page + '.html?id=' + id + '">' +
         name +     // display star_name for the link text
         '</a>';
+}
+
+function handleSearch(searchSubmitEvent) {
+    let paramArray = []
+    $(".search-item").each( function(i, e) {
+        if ($(this)[0].value != "") {
+            paramArray.push([$(this)[0].name, $(this)[0].value]);
+        }
+    })
+
+    searchSubmitEvent.preventDefault();
+
+    let url = "";
+    for (let i = 0; i < paramArray.length; i++) {
+        if (i == paramArray.length-1) {
+            url += paramArray[i][0] + "=" + paramArray[i][1];
+            url += "&numRecords=25&firstRecord=0";
+        } else {
+            url += paramArray[i][0] + "=" + paramArray[i][1] + "&";
+        }
+    }
+    window.location.replace("result.html?" + url);
 }
 
 /**
@@ -45,7 +70,6 @@ function handleResult(resultData) {
     let parsed = url.substring(0,url.indexOf('firstRecord'));
     let prev = jQuery("#prev");
     let next = jQuery("#next");
-    let page = jQuery("#page");
     let numRecords = parseInt(getParameterByName("numRecords"));
     let firstRecord = parseInt(getParameterByName("firstRecord"));
     let nextHref = '';
@@ -136,3 +160,6 @@ jQuery.ajax({
     url: servletUrl + urlRequest, // Setting request url, which is mapped by SingleMovieServlet
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleMovieServlet
 });
+
+// Binds submit action to handleSearch handler function
+movie_search_form.submit(handleSearch);
