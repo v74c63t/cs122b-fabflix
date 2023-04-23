@@ -1,9 +1,32 @@
 
+let movie_search_form = $("#movie-search-form");
 // To handle all hyperlinks
 function htmlHREF(html_page, id, name) {
     return '<a style="color:darkturquoise;" href="' + html_page + '.html?id=' + id + '">' +
         name +     // display star_name for the link text
         '</a>';
+}
+
+function handleSearch(searchSubmitEvent) {
+    let paramArray = []
+    $(".search-item").each( function(i, e) {
+        if ($(this)[0].value != "") {
+            paramArray.push([$(this)[0].name, $(this)[0].value]);
+        }
+    })
+
+    searchSubmitEvent.preventDefault();
+
+    let url = "";
+    for (let i = 0; i < paramArray.length; i++) {
+        if (i == paramArray.length-1) {
+            url += paramArray[i][0] + "=" + paramArray[i][1];
+            url += "&numRecords=25&firstRecord=0";
+        } else {
+            url += paramArray[i][0] + "=" + paramArray[i][1] + "&";
+        }
+    }
+    window.location.replace("result.html?" + url);
 }
 
 function handleMovieResult(resultData) {
@@ -52,3 +75,5 @@ jQuery.ajax({
     url: "api/movies", // Setting request url, which is mapped by MoviesServlet
     success: (resultData) => handleMovieResult(resultData) // Setting callback function to handle data returned successfully by the MoviesServlet
 });
+
+movie_search_form.submit(handleSearch);
