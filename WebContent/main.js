@@ -15,7 +15,7 @@ function handleGenreResult(resultData) {
     for (let i = 0; i < resultData.length; i++) {
         let genre = resultData[i]["genre_name"];
         let genreId = resultData[i]['genre_id'];
-        let listHTML = "<h4><a style='color: #ffc107;' href='result.html?genreId=" + genreId +'&numRecords=25&firstRecord=0' +  "'>" + genre + "</a></h4>";
+        let listHTML = "<h4><a style='color: #ffc107;' href='result.html?genreId=" + genreId +'&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' +  "'>" + genre + "</a></h4>";
         // add in the href later
         genreList.append(listHTML);
     }
