@@ -66,7 +66,7 @@ public class GenreResultServlet extends HttpServlet {
 
 //          Construct a query with parameter represented by "?"
             String query = String.join("",
-                    "select gim.movieId, title, year, director, rating ",
+                    "select count(*) over() as maxRecords, gim.movieId, title, year, director, rating ",
                     "from genres_in_movies as gim ",
                     "join movies as m ",
                     "join ratings as r ",
@@ -98,6 +98,7 @@ public class GenreResultServlet extends HttpServlet {
                 String movie_title = rs.getString("title");
                 String movie_year = rs.getString("year");
                 String movie_director = rs.getString("director");
+                String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
 //                query = String.join("",
@@ -155,6 +156,7 @@ public class GenreResultServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("max_records", max_records);
 
                 jsonArray.add(jsonObject);
             }

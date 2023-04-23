@@ -61,8 +61,11 @@ function handleResult(resultData) {
         prev.attr("href", prevHref);
     }
     if(resultData.length >= numRecords){
-        nextHref = parsed + 'firstRecord=' + (firstRecord+numRecords).toString();
-        next.attr("href", nextHref);
+        if (firstRecord+numRecords < Number(resultData[0]["max_records"])) {
+            nextHref = parsed + 'firstRecord=' + (firstRecord+numRecords).toString();
+            next.attr("href", nextHref);
+        }
+
     }
     let movieTableBodyElement = jQuery("#movies_table_body");
     // Concatenate the html tags with resultData jsonObject to create table rows
