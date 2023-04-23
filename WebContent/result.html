@@ -51,7 +51,32 @@
         </div>
     </nav>
 </header>
-    <h1 class="page-headers"><strong>Result</strong></h1>
+    <div style="margin-left: 80px; margin-right: 80px;" id="page-title-area">
+        <h1 class="page-headers"><strong>Result</strong></h1>
+        <form class="movie-settings-form" action="#" method="GET">
+            <label for="per-page">Movies Per Page</label>
+            <select name="per-page" id="per-page">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <label for="sort-by">Movies Per Page</label>
+            <select name="sort-by" id="sort-by">
+                <option value="title ASC|rating ASC">Title &uarr; Rating &darr;</option>
+                <option value="title ASC|rating DESC">Title &uarr; Rating &darr;</option>
+                <option value="title DESC|rating ASC">Title &darr; Rating &darr;</option>
+                <option value="title DESC|rating DESC">Title &darr; Rating &darr;</option>
+
+                <option value="rating ASC|title ASC">Rating &uarr; Title &darr;</option>
+                <option value="rating ASC|title DESC">Rating &uarr; Title &darr;</option>
+                <option value="rating DESC|title ASC">Rating &darr; Title &darr;</option>
+                <option value="rating DESC|title DESC">Rating &darr; Title &darr;</option>
+            </select>
+            <button type="submit"><i>Apply</i></button>
+        </form>
+    </div>
+
     <div style="margin-left: 80px; margin-right: 80px;" class="rounded">
         <table id=movies_table class="table rounded table-striped table-dark table-borderless">
             <!-- Create a table header -->
