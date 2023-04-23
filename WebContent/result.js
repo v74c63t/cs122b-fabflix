@@ -40,6 +40,30 @@ function handleResult(resultData) {
     console.log("handleResult: movie info from resultData");
     console.log(resultData)
 
+    let url = window.location.href;
+    // assuming that firstRecord would always be the last parameter will adjust if not the case later
+    let parsed = url.substring(0,url.indexOf('firstRecord'));
+    let prev = jQuery("#prev");
+    let next = jQuery("#next");
+    let page = jQuery("#page");
+    let numRecords = parseInt(getParameterByName("numRecords"));
+    let firstRecord = parseInt(getParameterByName("firstRecord"));
+    let nextHref = '';
+    let prevHref = '';
+    if(firstRecord-numRecords < 0){
+        if(firstRecord != 0) {
+            prevHref = parsed + 'firstRecord=' + (firstRecord-numRecords).toString();
+            prev.attr("href", prevHref);
+        }
+    }
+    else {
+        prevHref = parsed + 'firstRecord=' + (firstRecord-numRecords).toString();
+        prev.attr("href", prevHref);
+    }
+    if(resultData.length >= numRecords){
+        nextHref = parsed + 'firstRecord=' + (firstRecord+numRecords).toString();
+        next.attr("href", nextHref);
+    }
     let movieTableBodyElement = jQuery("#movies_table_body");
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < Math.min(30, resultData.length); i++) {
