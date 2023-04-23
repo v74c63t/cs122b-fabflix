@@ -145,7 +145,8 @@ public class SearchResultServlet extends HttpServlet {
                         "AND s.id=sim.starId) ",
                         "AND s.id=sim.starId ",
                         "GROUP BY s.id ",
-                        "ORDER BY COUNT(*) DESC, s.name ASC ");
+                        "ORDER BY COUNT(*) DESC, s.name ASC ",
+                        "LIMIT 3; ");
 
                 ResultSet newRS = statement2.executeQuery(query);
 
@@ -164,7 +165,8 @@ public class SearchResultServlet extends HttpServlet {
                         "join genres_in_movies AS gim ",
                         "on  g.id = gim.genreId ",
                         "WHERE gim.movieId='", movie_id, "'",
-                        "ORDER BY name;");
+                        "ORDER BY name ",
+                        "LIMIT 3; ");
 
                 newRS = statement2.executeQuery(query);
 

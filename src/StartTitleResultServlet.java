@@ -112,19 +112,30 @@ public class StartTitleResultServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
 
                 // New Query for getting stars
+//                query = String.join("",
+//                        "select starId, name ",
+//                        "from stars as s ",
+//                        "join stars_in_movies as sim ",
+//                        "on id = starId ",
+//                        "where sim.movieId='", movie_id, "'");
                 query = String.join("",
-                        "select starId, name ",
-                        "from stars as s ",
-                        "join stars_in_movies as sim ",
-                        "on id = starId ",
-                        "where sim.movieId='", movie_id, "'");
+                        "SELECT s.id, s.name ",
+                        "FROM stars AS s, stars_in_movies AS sim ",
+                        "WHERE s.id IN (SELECT s.id ",
+                        "FROM stars AS s, stars_in_movies AS sim ",
+                        "WHERE sim.movieId='", movie_id, "' ",
+                        "AND s.id=sim.starId) ",
+                        "AND s.id=sim.starId ",
+                        "GROUP BY s.id ",
+                        "ORDER BY COUNT(*) DESC, s.name ASC ",
+                        "LIMIT 3; ");
 
                 ResultSet newRS = statement2.executeQuery(query);
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
                 while (newRS.next()) {
-                    starsArray.add(newRS.getString("starId") + "|" + newRS.getString("name"));
+                    starsArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 String stars = String.join(", ", starsArray);
@@ -136,7 +147,8 @@ public class StartTitleResultServlet extends HttpServlet {
                         "join genres_in_movies AS gim ",
                         "on  g.id = gim.genreId ",
                         "WHERE gim.movieId='", movie_id, "'",
-                        "ORDER BY name;");
+                        "ORDER BY name ",
+                        "LIMIT 3; ");
 
                 newRS = statement2.executeQuery(query);
 
