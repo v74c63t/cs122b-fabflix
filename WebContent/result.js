@@ -88,6 +88,8 @@ function handleResult(resultData) {
         $("#star").attr('name', 'star');
         $("#star").attr('value', getParameterByName('star'));
     }
+    document.getElementById("sortBy").value = getParameterByName("sortBy");
+    document.getElementById("numRecords").value = getParameterByName("numRecords");
     let url = window.location.href;
     // assuming that firstRecord would always be the last parameter will adjust if not the case later
     let parsed = url.substring(0,url.indexOf('firstRecord'));
