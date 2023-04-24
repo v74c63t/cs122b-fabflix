@@ -54,6 +54,8 @@ public class StartTitleResultServlet extends HttpServlet {
         String numRecords = request.getParameter("numRecords");
 
         //sortBy
+        String sortBy = request.getParameter("sortBy");
+        String[] sort = sortBy.split(" ");
 
         // The log message can be found in localhost log
         request.getServletContext().log("getting startTitle: " + startTitle);
@@ -73,7 +75,7 @@ public class StartTitleResultServlet extends HttpServlet {
                         "join ratings as r ",
                         "on r.movieId = m.id ",
                         "where title REGEXP '^[^A-Za-z0-9]' ",
-                        "order by title asc ",
+                        "order by ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
                         "limit ", numRecords, " ",
                         "offset ", firstRecord, " ");
 //                        "limit 25 ",
@@ -101,7 +103,7 @@ public class StartTitleResultServlet extends HttpServlet {
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
 //            statement.setString(1, startTitle);
-
+            System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();

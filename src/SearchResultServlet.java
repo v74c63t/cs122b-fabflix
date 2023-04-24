@@ -75,6 +75,7 @@ public class SearchResultServlet extends HttpServlet {
             ArrayList<String> queryParameters = new ArrayList<String>();
             String limit = "";
             String offset = "";
+            String order = "";
             if (!parameterMap.isEmpty()) {
                 query = query.concat("WHERE ");
                 Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
@@ -88,6 +89,12 @@ public class SearchResultServlet extends HttpServlet {
                     }else if (entry.getKey().equals("year")) {
                         query = query.concat(entry.getKey().concat(" = ? "));
                         queryParameters.add(entry.getValue()[0]);
+                    }
+                    else if(entry.getKey().equals("sortBy")) {
+                        query = query.substring(0, query.length()-4);
+                        String[] sort = entry.getValue()[0].split(" ");
+                        order = "ORDER BY " + sort[0] + " " + sort[1] + ", " + sort[2] + " " + sort[3] + " ";
+                        query = query.concat(order);
                     }
                     else if(entry.getKey().equals("numRecords")) {
                         query = query.substring(0, query.length()-4);

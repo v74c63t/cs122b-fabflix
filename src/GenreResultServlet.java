@@ -56,9 +56,6 @@ public class GenreResultServlet extends HttpServlet {
         String numRecords = request.getParameter("numRecords");
         String sortBy = request.getParameter("sortBy");
         String[] sort = sortBy.split(" ");
-        for(int i=0; i < sort.length; i++) {
-            System.out.println(sort[i]);
-        }
 
         System.out.println(request.getParameter("sortBy"));
         // The log message can be found in localhost log
@@ -85,7 +82,6 @@ public class GenreResultServlet extends HttpServlet {
                     // temporary
 //                    "limit 25 ",
 //                    "offset 0 ");
-            System.out.println(query);
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
@@ -94,7 +90,7 @@ public class GenreResultServlet extends HttpServlet {
             // num 1 indicates the first "?" in the query
             statement.setString(1, genreId);
 
-
+            System.out.println(query);
             ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
