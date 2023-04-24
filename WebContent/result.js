@@ -23,7 +23,7 @@ function getURLParams(paramsObj) {
         urlString += (keyVal[0] + '=' + keyVal[1]) + '&';
     }
     urlString = urlString.substring(0,urlString.length-1);
-    urlString += "&numRecords=25&firstRecord=0";
+    // urlString += "&numRecords=25&firstRecord=0";
     return urlString
 }
 
@@ -169,18 +169,21 @@ let urlRequest = '';
 let servletUrl = '';
 if ( getParameterByName('genreId') ) {
     urlRequest = 'genreId=' + getParameterByName('genreId')+ '&sortBy=' + getParameterByName('sortBy') + '&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
-    servletUrl += 'api/by-genre?'
+    servletUrl += 'api/by-genre?';
 }else if ( getParameterByName('startTitle') ) {
-    urlRequest = 'startTitle=' + getParameterByName('startTitle')+'&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
-    servletUrl += 'api/by-start-title?'
+    urlRequest = 'startTitle=' + getParameterByName('startTitle') + '&sortBy=' + getParameterByName('sortBy') + '&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
+    servletUrl += 'api/by-start-title?';
 }else {
     let obj = {}
-    if ( getParameterByName('title') ) { obj['title'] = getParameterByName('title') }
-    if ( getParameterByName('director') ) { obj['director'] = getParameterByName('director') }
-    if ( getParameterByName('year') ) { obj['year'] = getParameterByName('year') }
-    if ( getParameterByName('star') ) { obj['star'] = getParameterByName('star') }
+    if ( getParameterByName('title') ) { obj['title'] = getParameterByName('title'); }
+    if ( getParameterByName('director') ) { obj['director'] = getParameterByName('director'); }
+    if ( getParameterByName('year') ) { obj['year'] = getParameterByName('year'); }
+    if ( getParameterByName('star') ) { obj['star'] = getParameterByName('star'); }
+    obj['sortBy'] = getParameterByName('sortBy');
+    obj['numRecords'] = getParameterByName('numRecords');
+    obj['firstRecord'] = getParameterByName('firstRecord');
     urlRequest = getURLParams(obj);
-    servletUrl += 'api/by-search?'
+    servletUrl += 'api/by-search?';
 }
 
 // Makes the HTTP GET request and registers on success callback function handleResult

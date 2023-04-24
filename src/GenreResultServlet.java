@@ -55,6 +55,7 @@ public class GenreResultServlet extends HttpServlet {
         // used for limit
         String numRecords = request.getParameter("numRecords");
 
+        System.out.println(request.getParameter("sortBy"));
         // The log message can be found in localhost log
         request.getServletContext().log("getting genreId: " + genreId);
 

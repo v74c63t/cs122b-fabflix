@@ -53,6 +53,8 @@ public class StartTitleResultServlet extends HttpServlet {
         // used for limit
         String numRecords = request.getParameter("numRecords");
 
+        //sortBy
+
         // The log message can be found in localhost log
         request.getServletContext().log("getting startTitle: " + startTitle);
 
