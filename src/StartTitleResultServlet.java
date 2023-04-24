@@ -89,7 +89,7 @@ public class StartTitleResultServlet extends HttpServlet {
                         "join ratings as r ",
                         "on r.movieId = m.id ",
                         "where title like '", startTitle, "%' ",
-                        "order by title asc ",
+                        "order by ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
                         "limit ", numRecords, " ",
                         "offset ", firstRecord, " ");
 //                        "limit 25 ",
