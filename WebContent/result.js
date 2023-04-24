@@ -23,7 +23,6 @@ function getURLParams(paramsObj) {
         urlString += (keyVal[0] + '=' + keyVal[1]) + '&';
     }
     urlString = urlString.substring(0,urlString.length-1);
-    // urlString += "&numRecords=25&firstRecord=0";
     return urlString
 }
 
@@ -48,7 +47,7 @@ function handleSearch(searchSubmitEvent) {
     for (let i = 0; i < paramArray.length; i++) {
         if (i == paramArray.length-1) {
             url += paramArray[i][0] + "=" + paramArray[i][1];
-            url += "&numRecords=25&firstRecord=0";
+            url += "&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0";
         } else {
             url += paramArray[i][0] + "=" + paramArray[i][1] + "&";
         }
@@ -179,8 +178,8 @@ if ( getParameterByName('genreId') ) {
     if ( getParameterByName('director') ) { obj['director'] = getParameterByName('director'); }
     if ( getParameterByName('year') ) { obj['year'] = getParameterByName('year'); }
     if ( getParameterByName('star') ) { obj['star'] = getParameterByName('star'); }
-    obj['sortBy'] = getParameterByName('sortBy');
-    // already added in getURLParams
+    // already handled in handleSearch
+    // obj['sortBy'] = getParameterByName('sortBy');
     // obj['numRecords'] = getParameterByName('numRecords');
     // obj['firstRecord'] = getParameterByName('firstRecord');
     urlRequest = getURLParams(obj);
