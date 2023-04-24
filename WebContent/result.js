@@ -102,6 +102,7 @@ function handleResult(resultData) {
     let firstRecord = parseInt(getParameterByName("firstRecord"));
     let nextHref = '';
     let prevHref = '';
+
     if(firstRecord-numRecords < 0){
         if(firstRecord != 0) {
             prevHref = parsed + 'firstRecord=' + (firstRecord-numRecords).toString();

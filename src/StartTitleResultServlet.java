@@ -70,7 +70,7 @@ public class StartTitleResultServlet extends HttpServlet {
             String query = "";
             if(startTitle.equals("*")) {
                 query = String.join("",
-                        "select r.movieId, title, year, director, rating ",
+                        "select count(*) over() as maxRecords, r.movieId, title, year, director, rating ",
                         "from movies as m ",
                         "join ratings as r ",
                         "on r.movieId = m.id ",
@@ -84,7 +84,7 @@ public class StartTitleResultServlet extends HttpServlet {
             }
             else{
                 query = String.join("",
-                        "select r.movieId, title, year, director, rating ",
+                        "select count(*) over() as maxRecords, r.movieId, title, year, director, rating ",
                         "from movies as m ",
                         "join ratings as r ",
                         "on r.movieId = m.id ",
@@ -114,6 +114,7 @@ public class StartTitleResultServlet extends HttpServlet {
                 String movie_title = rs.getString("title");
                 String movie_year = rs.getString("year");
                 String movie_director = rs.getString("director");
+                String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
 //                query = String.join("",
@@ -173,6 +174,7 @@ public class StartTitleResultServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("max_records", max_records);
 
                 jsonArray.add(jsonObject);
             }
