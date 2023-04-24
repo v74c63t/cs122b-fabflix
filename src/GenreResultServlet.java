@@ -54,6 +54,11 @@ public class GenreResultServlet extends HttpServlet {
         // numRecords decide how many to display on each page
         // used for limit
         String numRecords = request.getParameter("numRecords");
+        String sortBy = request.getParameter("sortBy");
+        String[] sort = sortBy.split(" ");
+        for(int i=0; i < sort.length; i++) {
+            System.out.println(sort[i]);
+        }
 
         System.out.println(request.getParameter("sortBy"));
         // The log message can be found in localhost log
@@ -74,13 +79,13 @@ public class GenreResultServlet extends HttpServlet {
                     "on r.movieId = m.id ",
                     "and m.id = gim.movieId ",
                     "where genreId= ? ",
-                    "order by title asc ",
+                    "order by ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
                     "limit ", numRecords, " ",
                     "offset ", firstRecord, " ");
                     // temporary
 //                    "limit 25 ",
 //                    "offset 0 ");
-
+            System.out.println(query);
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
