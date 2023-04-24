@@ -83,6 +83,7 @@ public class SearchResultServlet extends HttpServlet {
                 while(itr.hasNext())
                 {
                     Map.Entry<String, String[]> entry = itr.next();
+                    System.out.println(entry.getKey());
                     if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
                         query = query.concat(entry.getKey().concat(" LIKE ? "));
                         queryParameters.add("%" + entry.getValue()[0] + "%");

@@ -178,10 +178,9 @@ if ( getParameterByName('genreId') ) {
     if ( getParameterByName('director') ) { obj['director'] = getParameterByName('director'); }
     if ( getParameterByName('year') ) { obj['year'] = getParameterByName('year'); }
     if ( getParameterByName('star') ) { obj['star'] = getParameterByName('star'); }
-    // already handled in handleSearch
-    // obj['sortBy'] = getParameterByName('sortBy');
-    // obj['numRecords'] = getParameterByName('numRecords');
-    // obj['firstRecord'] = getParameterByName('firstRecord');
+    obj['sortBy'] = getParameterByName('sortBy');
+    obj['numRecords'] = getParameterByName('numRecords');
+    obj['firstRecord'] = getParameterByName('firstRecord');
     urlRequest = getURLParams(obj);
     servletUrl += 'api/by-search?';
 }
