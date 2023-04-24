@@ -180,8 +180,9 @@ if ( getParameterByName('genreId') ) {
     if ( getParameterByName('year') ) { obj['year'] = getParameterByName('year'); }
     if ( getParameterByName('star') ) { obj['star'] = getParameterByName('star'); }
     obj['sortBy'] = getParameterByName('sortBy');
-    obj['numRecords'] = getParameterByName('numRecords');
-    obj['firstRecord'] = getParameterByName('firstRecord');
+    // already added in getURLParams
+    // obj['numRecords'] = getParameterByName('numRecords');
+    // obj['firstRecord'] = getParameterByName('firstRecord');
     urlRequest = getURLParams(obj);
     servletUrl += 'api/by-search?';
 }
