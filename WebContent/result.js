@@ -103,6 +103,10 @@ function handleResult(resultData) {
     let nextHref = '';
     let prevHref = '';
 
+    let page = jQuery("#page");
+    let pageNum = firstRecord/numRecords + 1;
+    page.text("Page " + pageNum.toString());
+
     if(firstRecord-numRecords < 0){
         if(firstRecord != 0) {
             prevHref = parsed + 'firstRecord=' + (firstRecord-numRecords).toString();
