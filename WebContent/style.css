@@ -105,6 +105,12 @@
     -webkit-text-stroke: 0.75px black;
 }
 
+select {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffc107;
+    background-color: #363636;
+}
+
 thead {
     font-family: Helvetica;
 }
