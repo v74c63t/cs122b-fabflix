@@ -107,11 +107,13 @@ function handleResult(resultData) {
         if(firstRecord != 0) {
             prevHref = parsed + 'firstRecord=' + (firstRecord-numRecords).toString();
             prev.attr("href", prevHref);
+            prev.css({'color': '#ffc107', 'font-family': "'Montserrat', sans-serif"});
         }
     }
     else {
         prevHref = parsed + 'firstRecord=' + (firstRecord-numRecords).toString();
         prev.attr("href", prevHref);
+        prev.css({'color': '#ffc107', 'font-family': "'Montserrat', sans-serif"});
     }
     if(resultData.length >= numRecords){
         console.log(resultData[0]["max_records"]);
