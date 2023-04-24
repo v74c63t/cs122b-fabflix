@@ -68,8 +68,8 @@ public class SearchResultServlet extends HttpServlet {
                     "JOIN ratings AS r " +
                     "ON m.id = sim.movieId " +
                     "AND sim.starId = s.id " +
-                    "AND r.movieId = m.id) " +
-                    "SELECT DISTINCT movieId, title, year, director, rating " +
+                    "AND r.movieId = m.id), " +
+                    "distinctResult AS (SELECT DISTINCT movieId, title, year, director, rating " +
                     "FROM starMovies AS sm ";
 
             ArrayList<String> queryParameters = new ArrayList<String>();
@@ -80,10 +80,10 @@ public class SearchResultServlet extends HttpServlet {
                 query = query.concat("WHERE ");
                 Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
 
-                while(itr.hasNext())
-                {
+                // Get first parameter from url
+                if (itr.hasNext()) {
                     Map.Entry<String, String[]> entry = itr.next();
-                    System.out.println(entry.getKey());
+
                     if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
                         query = query.concat(entry.getKey().concat(" LIKE ? "));
                         queryParameters.add("%" + entry.getValue()[0] + "%");
@@ -91,26 +91,33 @@ public class SearchResultServlet extends HttpServlet {
                         query = query.concat(entry.getKey().concat(" = ? "));
                         queryParameters.add(entry.getValue()[0]);
                     }
-                    else if(entry.getKey().equals("sortBy")) {
-                        query = query.substring(0, query.length()-4);
+                }
+
+                // Get parameters from url starting from 2nd parameter
+                while(itr.hasNext())
+                {
+                    Map.Entry<String, String[]> entry = itr.next();
+
+                    if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
+                        query = query.concat(entry.getKey() + " LIKE ? ");
+                        queryParameters.add("AND %" + entry.getValue()[0] + "%");
+                    }else if (entry.getKey().equals("year")) {
+                        query = query.concat("AND " + entry.getKey() + " = ? ");
+                        queryParameters.add(entry.getValue()[0]);
+                    }else if (entry.getKey().equals("sortBy")) {
+                        query = query.concat(") SELECT COUNT(*) over() AS maxRecords, movieId, title, year, director, rating FROM distinctResult ");
                         String[] sort = entry.getValue()[0].split(" ");
                         order = "ORDER BY " + sort[0] + " " + sort[1] + ", " + sort[2] + " " + sort[3] + " ";
                         query = query.concat(order);
-                    }
-                    else if(entry.getKey().equals("numRecords")) {
-                        query = query.substring(0, query.length()-4);
+
+                    } else if (entry.getKey().equals("numRecords")) {
                         limit = "LIMIT " + entry.getValue()[0] + " ";
                         query = query.concat(limit);
-                    }
-                    else if(entry.getKey().equals("firstRecord")){
-                        query = query.substring(0, query.length()-4);
-                        offset = "OFFSET " + entry.getValue()[0] + "; ";
+                    } else if (entry.getKey().equals("firstRecord")) {
+                        offset = "OFFSET " + entry.getValue()[0];
                         query = query.concat(offset);
                     }
 
-                    if (itr.hasNext()) {
-                        query = query.concat("AND ");
-                    }
                 }
             }
 
@@ -124,7 +131,6 @@ public class SearchResultServlet extends HttpServlet {
             for (int i = 0; i < queryParameters.size(); ++i) {
                 statement.setString(i+1, queryParameters.get(i));
             }
-            System.out.println(query);
 
             ResultSet rs = statement.executeQuery();
 
@@ -136,6 +142,7 @@ public class SearchResultServlet extends HttpServlet {
                 String movie_title = rs.getString("title");
                 String movie_year = rs.getString("year");
                 String movie_director = rs.getString("director");
+                String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
 //                query = String.join("",
@@ -195,6 +202,7 @@ public class SearchResultServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("max_records", max_records);
 
                 jsonArray.add(jsonObject);
             }
