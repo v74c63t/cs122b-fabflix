@@ -99,8 +99,8 @@ public class SearchResultServlet extends HttpServlet {
                     Map.Entry<String, String[]> entry = itr.next();
 
                     if (entry.getKey().equals("title") || entry.getKey().equals("director") || entry.getKey().equals("star")) {
-                        query = query.concat(entry.getKey() + " LIKE ? ");
-                        queryParameters.add("AND %" + entry.getValue()[0] + "%");
+                        query = query.concat("AND " + entry.getKey() + " LIKE ? ");
+                        queryParameters.add("%" + entry.getValue()[0] + "%");
                     }else if (entry.getKey().equals("year")) {
                         query = query.concat("AND " + entry.getKey() + " = ? ");
                         queryParameters.add(entry.getValue()[0]);
