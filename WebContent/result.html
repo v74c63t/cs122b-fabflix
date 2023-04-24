@@ -53,35 +53,37 @@
 </header>
     <div style="margin-left: 80px; margin-right: 80px;" id="page-title-area">
         <h1 class="page-headers"><strong>Result</strong></h1>
-        <form id="movie-settings-form" class="movie-settings-form" action="result.html" method="GET">
-            <input type="hidden" id="genreId" name="" value="" />
-            <input type="hidden" id="startTitle" name="" value="" />
-            <input type="hidden" id="title" name="" value="" />
-            <input type="hidden" id="year" name="" value="" />
-            <input type="hidden" id="director" name="" value="" />
-            <input type="hidden" id="star" name="" value="" />
-            <label for="sortBy">Movies Sorted By</label>
-            <select name="sortBy" id="sortBy">
-                <option value="title ASC rating ASC">Title &uarr; Rating &uarr;</option>
-                <option value="title ASC rating DESC">Title &uarr; Rating &darr;</option>
-                <option value="title DESC rating ASC">Title &darr; Rating &uarr;</option>
-                <option value="title DESC rating DESC">Title &darr; Rating &darr;</option>
+        <div style="padding-bottom: 10px;font-family: 'Montserrat', sans-serif; color: #ffc107; text-align: right">
+            <form id="movie-settings-form" action="result.html" method="GET">
+                <input type="hidden" id="genreId" name="" value="" />
+                <input type="hidden" id="startTitle" name="" value="" />
+                <input type="hidden" id="title" name="" value="" />
+                <input type="hidden" id="year" name="" value="" />
+                <input type="hidden" id="director" name="" value="" />
+                <input type="hidden" id="star" name="" value="" />
+                <label for="sortBy"><strong>Movies Sorted By</strong></label>
+                <select name="sortBy" id="sortBy">
+                    <option value="title ASC rating ASC">Title &uarr; Rating &uarr;</option>
+                    <option value="title ASC rating DESC">Title &uarr; Rating &darr;</option>
+                    <option value="title DESC rating ASC">Title &darr; Rating &uarr;</option>
+                    <option value="title DESC rating DESC">Title &darr; Rating &darr;</option>
 
-                <option value="rating ASC title ASC">Rating &uarr; Title &uarr;</option>
-                <option value="rating ASC title DESC">Rating &uarr; Title &darr;</option>
-                <option value="rating DESC title ASC">Rating &darr; Title &uarr;</option>
-                <option value="rating DESC title DESC">Rating &darr; Title &darr;</option>
-            </select>
-            <label for="numRecords">Movies Per Page</label>
-            <select name="numRecords" id="numRecords">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            <input type="hidden" name="firstRecord" value="0" />
-            <button type="submit"><i>Apply</i></button>
-        </form>
+                    <option value="rating ASC title ASC">Rating &uarr; Title &uarr;</option>
+                    <option value="rating ASC title DESC">Rating &uarr; Title &darr;</option>
+                    <option value="rating DESC title ASC">Rating &darr; Title &uarr;</option>
+                    <option value="rating DESC title DESC">Rating &darr; Title &darr;</option>
+                </select>
+                <label for="numRecords"><strong>Movies Per Page</strong></label>
+                <select name="numRecords" id="numRecords">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <input type="hidden" name="firstRecord" value="0" />
+                <button type="submit">Apply</button>
+            </form>
+        </div>
     </div>
 
     <div style="margin-left: 80px; margin-right: 80px;" class="rounded">
