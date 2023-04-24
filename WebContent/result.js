@@ -56,14 +56,7 @@ function handleSearch(searchSubmitEvent) {
     window.location.replace("result.html?" + url);
 }
 
-/**
- * Handles the data returned by the API, read the jsonObject and populate data into html elements
- * @param resultData jsonObject
- */
-
-function handleResult(resultData) {
-    console.log("handleResult: movie info from resultData");
-    console.log(resultData)
+function movieSettingsSetup(){
     if(getParameterByName('genreId')) {
         $("#genreId").attr('name', 'genreId');
         $("#genreId").attr('value', getParameterByName('genreId'));
@@ -88,8 +81,19 @@ function handleResult(resultData) {
         $("#star").attr('name', 'star');
         $("#star").attr('value', getParameterByName('star'));
     }
-    document.getElementById("sortBy").value = getParameterByName("sortBy");
-    document.getElementById("numRecords").value = getParameterByName("numRecords");
+    document.getElementById("sortBy").value = getParameterByName('sortBy');
+    document.getElementById("numRecords").value = getParameterByName('numRecords');
+}
+
+/**
+ * Handles the data returned by the API, read the jsonObject and populate data into html elements
+ * @param resultData jsonObject
+ */
+
+function handleResult(resultData) {
+    console.log("handleResult: movie info from resultData");
+    console.log(resultData)
+    movieSettingsSetup();
     let url = window.location.href;
     // assuming that firstRecord would always be the last parameter will adjust if not the case later
     let parsed = url.substring(0,url.indexOf('firstRecord'));
