@@ -44,6 +44,8 @@ function handleTitle() {
     alphanumList.append(numHTML);
 }
 function handleInit(resultData) {
+    let resultTab = jQuery("#result");
+    resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
     handleGenreResult(resultData);
     handleTitle();
 }

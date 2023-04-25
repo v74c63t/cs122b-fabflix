@@ -9,6 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,6 +41,12 @@ public class MoviesServlet extends HttpServlet {
      */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Get instance of current session
+        HttpSession session = request.getSession();
+
+        // Get the most recent result page url
+        String resultUrl = (String) session.getAttribute("resultUrl");
 
         response.setContentType("application/json"); // Response mime type
 
@@ -131,6 +139,7 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
             }

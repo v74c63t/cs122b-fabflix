@@ -49,7 +49,7 @@ function handleResult(resultData) {
 
     // Set the result href to the most recent result url requested
     let resultTab = jQuery("#result");
-    resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"])
+    resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
 
     // populate the star info h3
     // find the empty h3 body by id "star_info"

@@ -21,7 +21,12 @@ public class CartServlet extends HttpServlet {
      * handles GET requests to store session information
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Get instance of current session
         HttpSession session = request.getSession();
+
+        // Get the most recent result page url
+        String resultUrl = (String) session.getAttribute("resultUrl");
         String sessionId = session.getId();
         long lastAccessTime = session.getLastAccessedTime();
 
@@ -38,6 +43,7 @@ public class CartServlet extends HttpServlet {
         JsonArray previousItemsJsonArray = new JsonArray();
         previousItems.forEach(previousItemsJsonArray::add);
         responseJsonObject.add("previousItems", previousItemsJsonArray);
+        responseJsonObject.addProperty("resultUrl", resultUrl);
 
         // write all the data into the jsonObject
         response.getWriter().write(responseJsonObject.toString());
