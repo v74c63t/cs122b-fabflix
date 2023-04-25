@@ -23,22 +23,25 @@ function handleGenreResult(resultData) {
 
 function handleTitle() {
     console.log('handling title');
-    let alphaList = jQuery("#alpha-list");
+    let alphanumList = jQuery("#alphanum-list");
     let alpha = 'A';
     for(let i = 0; i < 26; i++){
         let alphaHTML = "<h4><a style='color: #ffc107;' href='result.html?startTitle=" + alpha + '&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' +"'>" + alpha + '</a></h4>';
         alpha = String.fromCharCode(alpha.charCodeAt(0) + 1)
-        alphaList.append(alphaHTML);
+        alphanumList.append(alphaHTML);
     }
-    let numList = jQuery("#num-list");
+    // let numList = jQuery("#num-list");
+    alphanumList.append("<br>")
     let num = '0';
     for(let i = 0; i < 10; i++){
         let numHTML = "<h4><a style='color: #ffc107;' href='result.html?startTitle=" + num + '&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' +"'>" + num + '</a></h4>';
         num = String.fromCharCode(num.charCodeAt(0) + 1)
-        numList.append(numHTML);
+        // numList.append(numHTML);
+        alphanumList.append(numHTML);
     }
     let numHTML = "<h4><a style='color: #ffc107;' href='result.html?startTitle=*&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0'>*</a></h4>";
-    numList.append(numHTML);
+    // numList.append(numHTML);
+    alphanumList.append(numHTML);
 }
 function handleInit(resultData) {
     handleGenreResult(resultData);
