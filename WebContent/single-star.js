@@ -79,6 +79,7 @@ function handleResult(resultData) {
             + "'>" + resultData[i]["movie_title"] + "</a></th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
+        rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary'>Add</button></th>";
         rowHTML += "</tr>";
         // Append the row created to the table body, which will refresh the page
         starMovieTableBodyElement.append(rowHTML);
