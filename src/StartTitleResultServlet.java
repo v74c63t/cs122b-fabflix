@@ -44,15 +44,18 @@ public class StartTitleResultServlet extends HttpServlet {
     // note: have to modify and adjust to use code
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        // Get an instance of the current session
         HttpSession session = request.getSession();
+
+        // Create an attribute "resultUrl" if it doesn't exist
         String resultUrl = (String) session.getAttribute("resultUrl");
-        System.out.println(resultUrl);
 
         if (resultUrl == null) {
             resultUrl = "";
             session.setAttribute("resultUrl", resultUrl);
         }
 
+        // Set the resultUrl to the current url
         resultUrl = request.getQueryString();
         session.setAttribute("resultUrl", resultUrl);
 
