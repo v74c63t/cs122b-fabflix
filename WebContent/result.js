@@ -159,6 +159,8 @@ function handleResult(resultData) {
         rowHTML += "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] +
             " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>"
+
+        rowHTML += "<th><button type='submit' style='font-family: Verdana, serif;color:#ffc107;border-color=#ffc107' class='btn btn-dark'>Add</button></th>"
         rowHTML += "</tr>";
 
         movieTableBodyElement.append(rowHTML);
