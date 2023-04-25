@@ -53,6 +53,25 @@
     </nav>
 </header>
 <h1 class="page-headers"><strong>Shopping Cart</strong></h1>
+<div style="margin-left: 80px; margin-right: 80px;" class="rounded">
+    <table id=cart_table class="table rounded table-striped table-dark table-borderless">
+        <!-- Create a table header -->
+        <thead class="text-warning">
+        <tr>
+            <!-- Titles of each column-->
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Delete</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <!-- Table body is left empty here, will be populated with the data retrieved with index.js -->
+        <tbody id=cart_table_body>
+        </tbody>
+    </table>
+    <button type="submit" style="font-family: Verdana, serif; color:#ffc107" class="btn btn-dark">Proceed to Payment</button>
+</div>
 <p id="sessionID"></p>
 <p id="lastAccessTime"></p>
 <form ACTION="#" id="cart" METHOD="post">
