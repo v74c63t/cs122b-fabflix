@@ -46,6 +46,10 @@ function handleSearch(searchSubmitEvent) {
 function handleResult(resultData) {
     console.log("handleResult: populating movie info from resultData");
 
+    // Set the result href to the most recent result url requested
+    let resultTab = jQuery("#result");
+    resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"])
+
     let movieTitle = jQuery("#movie_title");
     movieTitle.append(resultData[0]["movie_title"]);
     let movieInfoElement = jQuery("#movie_info");

@@ -8,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,6 +43,18 @@ public class GenreResultServlet extends HttpServlet {
      */
     // note: have to modify and adjust to use code
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
+        String resultUrl = (String) session.getAttribute("resultUrl");
+        System.out.println(resultUrl);
+
+        if (resultUrl == null) {
+            resultUrl = "";
+            session.setAttribute("resultUrl", resultUrl);
+        }
+
+        resultUrl = request.getQueryString();
+        session.setAttribute("resultUrl", resultUrl);
 
         response.setContentType("application/json"); // Response mime type
 
@@ -162,6 +176,7 @@ public class GenreResultServlet extends HttpServlet {
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_genres", genres);
                 jsonObject.addProperty("max_records", max_records);
+                jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
             }

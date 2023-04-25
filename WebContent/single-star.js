@@ -47,6 +47,10 @@ function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
 
+    // Set the result href to the most recent result url requested
+    let resultTab = jQuery("#result");
+    resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"])
+
     // populate the star info h3
     // find the empty h3 body by id "star_info"
     let starName = jQuery("#star_name");
