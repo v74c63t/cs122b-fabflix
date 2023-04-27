@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="payment.css">
     <title>Result</title>
 </head>
 
@@ -54,17 +54,17 @@
 <!--    </nav>-->
 <!--</header>-->
 <div id="main-widget">
-    <h1 class="page-headers"><strong>Payment</strong></h1>
+    <h1 style="padding-top:30px; padding-bottom: 20px"><strong>Payment</strong></h1>
     <div style="text-align: center">
         <form id="payment-form" action="#" method="POST">
-            <input  style="margin-bottom: 30px" type="text" name="ccId" size="30" placeholder="Credit Card ID">
+            <input  type="text" name="ccId" size="30" placeholder="Credit Card ID">
             <br>
-            <input  style="margin-bottom: 30px" type="text" name="first" size="30" placeholder="First Name">
+            <input  type="text" name="first" size="30" placeholder="First Name">
             <br>
-            <input  style="margin-bottom: 30px" type="text" name="last" size="30" placeholder="Last Name">
+            <input  type="text" name="last" size="30" placeholder="Last Name">
             <br>
             <label for="expirationDate" style="color:#ffc107"><strong>Expiration Date:</strong></label>
-            <input  style="margin-bottom: 30px; width:142px" type="date" name="expirationDate">
+            <input  style="width:142px" type="date" name="expirationDate">
             <br>
             <div>
                 <button type="button" style="margin-right:30px;" class="btn btn-dark" onclick="window.location.href='cart.html';">Cancel</button>
