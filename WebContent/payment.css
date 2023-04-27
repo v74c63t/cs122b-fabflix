@@ -27,3 +27,13 @@
 #main-widget input {
     margin-bottom:30px;
 }
+
+.btn[name='cancel']:hover {
+    background-color:#DC3545;
+    color: white;
+}
+
+.btn[name='place']:hover {
+    background-color:#5cb85c;
+    color: white;
+}
