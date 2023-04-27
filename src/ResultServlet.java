@@ -9,6 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -168,6 +170,34 @@ public class ResultServlet extends HttpServlet {
 
         // Always remember to close db connection after usage. Here it's done by try-with-resources
 
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String movieItem = request.getParameter("item");
+        System.out.println(movieItem);
+        HttpSession session = request.getSession();
+
+        // get the previous items in a ArrayList
+        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+        if (previousItems == null) {
+            previousItems = new ArrayList<String>();
+            previousItems.add(movieItem);
+            session.setAttribute("previousItems", previousItems);
+        } else {
+            // prevent corrupted states through sharing under multi-threads
+            // will only be executed by one thread at a time
+            synchronized (previousItems) {
+                previousItems.add(movieItem);
+            }
+        }
+
+        JsonObject responseJsonObject = new JsonObject();
+
+        JsonArray previousItemsJsonArray = new JsonArray();
+        previousItems.forEach(previousItemsJsonArray::add);
+        responseJsonObject.add("previousItems", previousItemsJsonArray);
+
+        response.getWriter().write(responseJsonObject.toString());
     }
 
 }
