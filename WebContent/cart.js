@@ -9,9 +9,10 @@ let cart = $("#cart");
 function handleSessionData(resultDataString) {
     let resultDataJson = JSON.parse(resultDataString);
 
-    let resultTab = jQuery("#result");
-    resultTab.attr("href", "result.html?" + resultDataJson["resultUrl"]);
-    console.log(resultTab.attr("href"));
+    if(resultDataJson["resultUrl"] != null) {
+        let resultTab = jQuery("#result");
+        resultTab.attr("href", "result.html?" + resultDataJson["resultUrl"]);
+    }
 
     console.log("handle session response");
     console.log(resultDataJson);

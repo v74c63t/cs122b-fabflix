@@ -32,8 +32,10 @@ function handleSearch(searchSubmitEvent) {
 function handleMovieResult(resultData) {
     console.log("handleResult: populating movies info from resultData");
 
-    let resultTab = jQuery("#result");
-    resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
+    if(resultData[0]["resultUrl"] != null) {
+        let resultTab = jQuery("#result");
+        resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
+    }
 
     let moviesTableBodyElem = jQuery("#movies_table_body");
 
