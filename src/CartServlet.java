@@ -1,12 +1,18 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,6 +23,17 @@ import java.util.Date;
 @WebServlet(name = "CartServlet", urlPatterns = "/api/cart")
 public class CartServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 10L;
+    private DataSource dataSource;
+
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * handles GET requests to store session information
      */
@@ -24,6 +41,11 @@ public class CartServlet extends HttpServlet {
 
         // Get instance of current session
         HttpSession session = request.getSession();
+
+        response.setContentType("application/json"); // Response mime type
+
+        // Output stream to STDOUT
+        PrintWriter out = response.getWriter();
 
         // Get the most recent result page url
         String resultUrl = (String) session.getAttribute("resultUrl");
