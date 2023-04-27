@@ -167,7 +167,7 @@ function handleResult(resultData) {
         let $rowHTML = $(rowHTML);
         let $addButton = $rowHTML.find("button");
 
-        $addButton.on("click", () => { handleCart(resultData[i]["movie_id"]); });
+        $addButton.on("click", () => { handleCart(resultData[i]["movie_id"]); $addButton.prop("disabled", true) });
 
         movieTableBodyElement.append($rowHTML);
     }
@@ -177,6 +177,15 @@ function handleCart(movieId) {
     // addToCartEvent.preventDefault();
     console.log("CLICKED ON THE BUTTON");
     console.log("MOVIE ID -> ", movieId)
+
+    $.ajax("api/cart", {
+        method: "POST",
+        data: {item: movieId},
+        success: resultDataString => {
+            let resultDataJson = JSON.parse(resultDataString);
+            console.log(resultDataJson["previousItems"]);
+        }
+    })
 
 }
 
