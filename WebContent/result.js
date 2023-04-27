@@ -184,6 +184,7 @@ function handleCart(movieId) {
         success: resultDataString => {
             let resultDataJson = JSON.parse(resultDataString);
             console.log(resultDataJson["previousItems"]);
+            alert("Successfully added to cart");
         }
     })
 
