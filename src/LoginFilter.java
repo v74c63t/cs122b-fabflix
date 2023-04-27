@@ -52,10 +52,6 @@ public class LoginFilter implements Filter {
         allowedURIs.add("login.css");
         allowedURIs.add("style.css");
         allowedURIs.add("api/login");
-        allowedURIs.add("main.html");
-        allowedURIs.add("main.js");
-        allowedURIs.add("main.css");
-        allowedURIs.add("api/maininit");
     }
 
     public void destroy() {
