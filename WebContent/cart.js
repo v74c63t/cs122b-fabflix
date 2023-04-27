@@ -10,7 +10,7 @@ function handleSessionData(resultDataString) {
     let resultDataJson = JSON.parse(resultDataString);
 
     let resultTab = jQuery("#result");
-    resultTab.attr("href", "result.html?" + resultDataString["resultUrl"]);
+    resultTab.attr("href", "result.html?" + resultDataJson["resultUrl"]);
     console.log(resultTab.attr("href"));
 
     console.log("handle session response");
