@@ -52,20 +52,28 @@ function handleSearch(searchSubmitEvent) {
  * Handle the items in item list
  * @param resultArray jsonObject, needs to be parsed to html
  */
-function handleCartArray(resultArray) {
-    console.log(resultArray);
-    let item_list = $("#item_list");
-    // change it to html list
-    let res = "<ul>";
-    for (let i = 0; i < resultArray.length; i++) {
-        // each item will be in a bullet point
-        res += "<li>" + resultArray[i] + "</li>";
+function handleCartArray(resultData) {
+
+    if(resultData[0]["resultUrl"] != null) {
+        let resultTab = jQuery("#result");
+        resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
     }
-    res += "</ul>";
+    console.log(resultData);
+    let cartTableBody = $("#cart_table_body");
+    // change it to html list
+    // let rowHTML = "<ul>";
+    for (let i = 0; i < resultData.length; i++) {
+        let rowHTML = "<tr>";
+        // each item will be in a bullet point
+        rowHTML += "<th>" + resultData[i]['movie_title'] + "</th>";
+        rowHTML += '</tr>';
+        cartTableBody.append(rowHTML);
+    }
+    // res += "</ul>";
 
     // clear the old array and show the new array in the frontend
-    item_list.html("");
-    item_list.append(res);
+    // item_list.html("");
+    // item_list.append(res);
 }
 
 /**
@@ -96,7 +104,7 @@ function handleCartInfo(cartEvent) {
 
 $.ajax("api/cart", {
     method: "GET",
-    success: handleSessionData
+    success: handleCartArray
 });
 
 // Bind the submit action of the form to a event handler function

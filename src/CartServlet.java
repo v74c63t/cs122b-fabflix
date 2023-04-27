@@ -13,6 +13,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -53,6 +56,7 @@ public class CartServlet extends HttpServlet {
         long lastAccessTime = session.getLastAccessedTime();
 
         JsonObject responseJsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
         responseJsonObject.addProperty("sessionID", sessionId);
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
@@ -60,15 +64,53 @@ public class CartServlet extends HttpServlet {
         if (previousItems == null) {
             previousItems = new ArrayList<String>();
         }
-        // Log to localhost log
-        request.getServletContext().log("getting " + previousItems.size() + " items");
-        JsonArray previousItemsJsonArray = new JsonArray();
-        previousItems.forEach(previousItemsJsonArray::add);
-        responseJsonObject.add("previousItems", previousItemsJsonArray);
-        responseJsonObject.addProperty("resultUrl", resultUrl);
 
-        // write all the data into the jsonObject
-        response.getWriter().write(responseJsonObject.toString());
+        try (Connection conn = dataSource.getConnection()) {
+
+            // Log to localhost log
+            request.getServletContext().log("getting " + previousItems.size() + " items");
+            JsonArray previousItemsJsonArray = new JsonArray();
+//            previousItems.forEach(previousItemsJsonArray::add);
+            for ( int i = 0; i < previousItems.size(); i++) {
+                String movieId = previousItems.get(i);
+                System.out.println(movieId);
+                Statement statement = conn.createStatement();
+                String query = String.join("",
+                        "SELECT * ",
+                        "FROM movies as m ",
+                        "WHERE m.id = '", movieId, "';");
+                System.out.println(query);
+                ResultSet rs = statement.executeQuery(query);
+                if(rs.next()) {
+                    String movie_title = rs.getString("title");
+                    System.out.println(movie_title);
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("movie_title", movie_title);
+                    //                jsonObject.addProperty("resultUrl", resultUrl);
+                    jsonArray.add(jsonObject);
+                }
+                rs.close();
+                statement.close();
+            }
+            responseJsonObject.add("previousItems", jsonArray);
+            responseJsonObject.addProperty("resultUrl", resultUrl);
+
+            // write all the data into the jsonObject
+//            response.getWriter().write(responseJsonObject.toString());
+            response.getWriter().write(jsonArray.toString());
+
+        }catch (Exception e) {
+
+            // Write error message JSON object to output
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("errorMessage", e.getMessage());
+            out.write(jsonObject.toString());
+
+            // Set response status to 500 (Internal Server Error)
+            response.setStatus(500);
+        } finally {
+            out.close();
+        }
     }
 
     /**
