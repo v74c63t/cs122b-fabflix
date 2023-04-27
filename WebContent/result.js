@@ -1,5 +1,6 @@
 
 let movie_search_form = $("#movie-search-form");
+let movieTableBodyElement = jQuery("#movies_table_body");
 function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
@@ -128,7 +129,7 @@ function handleResult(resultData) {
         }
 
     }
-    let movieTableBodyElement = jQuery("#movies_table_body");
+
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < resultData.length; i++) {
         let starsArray = resultData[i]["movie_stars"].split(", ");
@@ -160,11 +161,23 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_rating"] +
             " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
 
-        rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary'>Add</button></th>";
+        rowHTML += "<th><button type='submit' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary'>Add</button></th>";
         rowHTML += "</tr>";
 
-        movieTableBodyElement.append(rowHTML);
+        let $rowHTML = $(rowHTML);
+        let $addButton = $rowHTML.find("button");
+
+        $addButton.on("click", () => { handleCart(resultData[i]["movie_id"]); });
+
+        movieTableBodyElement.append($rowHTML);
     }
+}
+
+function handleCart(movieId) {
+    // addToCartEvent.preventDefault();
+    console.log("CLICKED ON THE BUTTON");
+    console.log("MOVIE ID -> ", movieId)
+
 }
 
 
