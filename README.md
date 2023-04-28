@@ -5,7 +5,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ### Demo
 **URL:** 
 ### AWS
-**URL:** 
+**URL:**
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
