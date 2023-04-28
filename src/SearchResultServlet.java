@@ -78,14 +78,15 @@ public class SearchResultServlet extends HttpServlet {
 
 //          Construct a query with parameter represented by "?"
             String query = "WITH starMovies AS " +
-                    "(SELECT m.id AS movieId, title, year, director, starId, name AS star, rating " +
+                    "(SELECT m.id AS movieId, title, year, director, starId, name AS star, " +
+                    "CASE WHEN rating IS NOT NULL THEN rating ELSE 0 END AS rating " +
                     "FROM movies AS m " +
                     "JOIN stars_in_movies AS sim " +
                     "JOIN stars AS s " +
-                    "JOIN ratings AS r " +
                     "ON m.id = sim.movieId " +
                     "AND sim.starId = s.id " +
-                    "AND r.movieId = m.id), " +
+                    "LEFT JOIN ratings AS r " +
+                    "ON r.movieId = m.id), " +
                     "distinctResult AS (SELECT DISTINCT movieId, title, year, director, rating " +
                     "FROM starMovies AS sm ";
 
