@@ -63,19 +63,24 @@ public class CartServlet extends HttpServlet {
         responseJsonObject.addProperty("sessionID", sessionId);
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
-        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
-        if (previousItems == null) {
-            previousItems = new ArrayList<String>();
+//        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
+//        if (previousItems == null) {
+//            previousItems = new ArrayList<String>();
+//        }
+        if (itemCart == null) {
+            itemCart = new HashMap<>();
         }
 
-        try (Connection conn = dataSource.getConnection()) {
+            try (Connection conn = dataSource.getConnection()) {
 
             // Log to localhost log
-            request.getServletContext().log("getting " + previousItems.size() + " items");
+            request.getServletContext().log("getting " + itemCart.size() + " items");
             JsonArray previousItemsJsonArray = new JsonArray();
 //            previousItems.forEach(previousItemsJsonArray::add);
-            for ( int i = 0; i < previousItems.size(); i++) {
-                String movieId = previousItems.get(i);
+//            for ( int i = 0; i < previousItems.size(); i++) {
+            for(String movieId: itemCart.keySet()){
+//                String movieId = itemCart.keySet();
                 System.out.println(movieId);
                 Statement statement = conn.createStatement();
                 String query = String.join("",
@@ -86,9 +91,10 @@ public class CartServlet extends HttpServlet {
                 ResultSet rs = statement.executeQuery(query);
                 if(rs.next()) {
                     String movie_title = rs.getString("title");
-                    System.out.println(movie_title);
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("movie_title", movie_title);
+                    jsonObject.addProperty("movie_quantity", itemCart.get(movieId).get("quantity"));
+                    jsonObject.addProperty("movie_price", itemCart.get(movieId).get("price"));
                     jsonObject.addProperty("resultUrl", resultUrl);
                     jsonArray.add(jsonObject);
                 }
