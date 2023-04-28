@@ -133,12 +133,12 @@ public class PaymentServlet extends HttpServlet {
                     HttpSession session = request.getSession();
 
                     // Get or create a final sales cart
-                    ArrayList<Integer> salesCart = (ArrayList<Integer>) session.getAttribute("salesCart");
+                    ArrayList<Integer> salesId = (ArrayList<Integer>) session.getAttribute("salesId");
 
                     // Create a sales cart and add items in if there isn't one
-                    if (salesCart == null) {
-                        salesCart = new ArrayList<Integer>();
-                        session.setAttribute("salesCart", salesCart);
+                    if (salesId == null) {
+                        salesId = new ArrayList<Integer>();
+                        session.setAttribute("salesId", salesId);
                     }
 
                     // Iterate through each item in itemCart
@@ -174,11 +174,10 @@ public class PaymentServlet extends HttpServlet {
 
                         // Get last inserted id to salesCart
                         if (getIdRS.next()) {
-                            salesCart.add(getIdRS.getInt(1));
+                            salesId.add(getIdRS.getInt(1));
                         }
-
                         // Add HashMap to an Array and update "salesCart"
-                        session.setAttribute("salesCart", salesCart);
+                        session.setAttribute("salesId", salesId);
 
                         // Close all statements/executes
                         insertStatement.close();
