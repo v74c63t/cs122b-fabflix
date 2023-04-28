@@ -40,20 +40,23 @@ function handleConfirmationArray(resultData) {
     let totalPrice = 0;
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "<tr>";
-        rowHTML += "<th>" + resultData[i]['saleId'].toString() + "</th>";
+        rowHTML += "<th>" + resultData[i]['sale_id'] + "</th>";
         rowHTML += "<th>" +
             '<a style="color:darkturquoise;" href="single-movie.html?id=' + resultData[i]["movie_id"] + '">' +
             resultData[i]["movie_title"] +
             '</a>'+
             "</th>";
         rowHTML += "<th>" + resultData[i]['movie_quantity'] + "</th>";
-        rowHTML += "<th>$" + resultData[i]['movie_price'] + "</th>";
-        totalPrice += (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price']));
-        rowHTML += "<th>$" + (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price'])).toString() + "</th>";
+        rowHTML += "<th>$" + resultData[i]['movie_price'].toFixed(2) + "</th>";
+        // totalPrice += parseFloat((resultData[i]['movie_quantity'] * (resultData[i]['movie_price'])).toFixed(2));
+        totalPrice += resultData[i]['movie_total'];
+        // rowHTML += "<th>$" + (resultData[i]['movie_quantity'] * resultData[i]['movie_price']).toFixed(2).toString() + "</th>";
+        rowHTML += "<th>$" + (resultData[i]['movie_total']).toFixed(2).toString() + "</th>";
+
         rowHTML += '</tr>';
         confirmationTableBody.append(rowHTML);
     }
-    document.getElementById("total").innerText = "Total Price: $" + totalPrice.toString();
+    document.getElementById("total").innerText = "Total Price: $" + totalPrice.toFixed(2);
 }
 
 $.ajax("api/confirmation", {
