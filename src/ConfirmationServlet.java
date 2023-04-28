@@ -56,6 +56,14 @@ public class ConfirmationServlet extends HttpServlet {
         // Get the most recent result page url
         String resultUrl = (String) session.getAttribute("resultUrl");
         String sessionId = session.getId();
+        ArrayList<HashMap<String,String>> salesCart = (ArrayList<HashMap<String,String>>) session.getAttribute("salesCart");
+
+        for (HashMap<String,String> entryMap: salesCart) {
+            for (Map.Entry<String,String> entry: entryMap.entrySet()) {
+                System.out.println(entry.getKey() + " --> " + entry.getValue());
+            }
+        }
+
         long lastAccessTime = session.getLastAccessedTime();
 
         JsonObject responseJsonObject = new JsonObject();
