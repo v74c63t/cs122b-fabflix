@@ -65,6 +65,9 @@ create table if not exists ratings
     movieId  varchar(10) not null,
     rating   float       not null,
     numVotes integer     not null,
+    quantity INT,
+    price DECIMAL(10,2),
+    total DECIMAL(10,2),
     foreign key (movieId) references movies (id)
 );
 
