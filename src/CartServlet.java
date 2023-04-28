@@ -20,6 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This IndexServlet is declared in the web annotation below,
@@ -160,9 +161,10 @@ public class CartServlet extends HttpServlet {
 //        JsonObject responseJsonObject = Json.createObjectBuilder(itemCart).build();
 
 //        JsonArray previousItemsJsonArray = new JsonArray();
+        ArrayList<Map.Entry<String,HashMap<String,Double>>> itemArray = new ArrayList<>(itemCart.entrySet());
         Gson gson = new Gson();
-        String responseJsonObject = gson.toJson(itemCart);
-        System.out.println(responseJsonObject);
+        String responseJsonObject = gson.toJson(itemArray);
+//        System.out.println(responseJsonObject);
 //        itemCart.forEach(previousItemsJsonArray::add);
 //        responseJsonObject.add("previousItems", previousItemsJsonArray);
 
