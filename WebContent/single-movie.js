@@ -87,8 +87,13 @@ function handleResult(resultData) {
         }
         rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_rating"] +
+        if(resultData[i]["movie_rating"] != null)
+            rowHTML += "<th>" + resultData[i]["movie_rating"] +
+                    " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
+        else {
+            rowHTML += "<th>" + "0.0" +
                 " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
+        }
         rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary' onclick=\"handleCart("+ "'" + resultData[i]["movie_id"] + "'" + ")\">Add</button></th>";
         rowHTML += "</tr>";
 
