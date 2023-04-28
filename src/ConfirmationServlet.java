@@ -58,10 +58,14 @@ public class ConfirmationServlet extends HttpServlet {
         String sessionId = session.getId();
         ArrayList<HashMap<String,String>> salesCart = (ArrayList<HashMap<String,String>>) session.getAttribute("salesCart");
 
+        System.out.println("saleId     | customerId     | movieId     | price     | total     | saleDate");
         for (HashMap<String,String> entryMap: salesCart) {
-            for (Map.Entry<String,String> entry: entryMap.entrySet()) {
-                System.out.println(entry.getKey() + " --> " + entry.getValue());
-            }
+            System.out.print(entryMap.get("saleId") + "     | ");
+            System.out.print(entryMap.get("customerId") + "     | ");
+            System.out.print(entryMap.get("movieId") + "     | ");
+            System.out.print(entryMap.get("price") + "     | ");
+            System.out.print(entryMap.get("total") + "     | ");
+            System.out.println(entryMap.get("saleDate"));
         }
 
         long lastAccessTime = session.getLastAccessedTime();
