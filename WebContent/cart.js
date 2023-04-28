@@ -61,9 +61,6 @@ function handleCart(movieId, quantity) {
         method: "POST",
         data: {item: movieId, quantity: quantity},
         success: resultDataString => {
-            let resultDataJson = JSON.parse(resultDataString);
-            console.log(resultDataJson);
-            console.log(resultDataJson[0]["key"], resultDataJson[0]["value"]["price"],resultDataJson[0]["value"]["quantity"]);
             $.ajax("api/cart", {
                 method: "GET",
                 success: handleCartArray

@@ -89,12 +89,27 @@ function handleResult(resultData) {
         rowHTML += "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] +
                 " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
-        rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary'>Add</button></th>";
+        rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary' onclick=\"handleCart("+ "'" + resultData[i]["movie_id"] + "'" + ")\">Add</button></th>";
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
+}
+
+function handleCart(movieId) {
+
+    $.ajax("api/cart", {
+        method: "POST",
+        data: {item: movieId, quantity: 1.0},
+        success: resultDataString => {
+            let resultDataJson = JSON.parse(resultDataString);
+            console.log(resultDataJson);
+            console.log(resultDataJson[0]["key"], resultDataJson[0]["value"]["price"],resultDataJson[0]["value"]["quantity"])
+            alert("Successfully added to cart");
+        }
+    })
+
 }
 
 /**
