@@ -1,4 +1,4 @@
-#main-widget {
+#payment-main-widget {
     width: 550px;
     height: 450px;
     position: absolute;
@@ -13,7 +13,7 @@
     border-collapse: collapse;
 }
 
-#main-widget  h1 {
+#payment-main-widget  h1 {
     text-align: center;
     /*padding: 10px;*/
     padding-top:30px;
@@ -24,8 +24,8 @@
     -webkit-text-stroke: 1.25px black;
 }
 
-#main-widget input {
-    margin-bottom:30px;
+#payment-main-widget input {
+    margin-bottom:20px;
 }
 
 .btn[name='cancel']:hover {

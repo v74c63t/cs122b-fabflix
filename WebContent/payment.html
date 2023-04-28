@@ -53,26 +53,30 @@
 <!--        </div>-->
 <!--    </nav>-->
 <!--</header>-->
-<div id="main-widget">
+<div id="payment-main-widget">
     <h1 style="padding-top:30px; padding-bottom: 20px"><strong>Payment</strong></h1>
     <div style="text-align: center">
-        <form id="payment-form" action="#" method="POST">
-            <input  type="text" name="ccId" size="30" placeholder="Credit Card ID">
+        <form id="payment_form" action="#" method="POST">
+            <label><input  type="text" name="ccId" size="30" placeholder="Credit Card ID"></label>
             <br>
-            <input  type="text" name="first" size="30" placeholder="First Name">
+            <label><input  type="text" name="first" size="30" placeholder="First Name"></label>
             <br>
-            <input  type="text" name="last" size="30" placeholder="Last Name">
+            <label><input  type="text" name="last" size="30" placeholder="Last Name"></label>
             <br>
             <label for="expirationDate" style="color:#ffc107"><strong>Expiration Date:</strong></label>
-            <input  style="width:142px" type="date" name="expirationDate">
-            <br>
+            <label><input  style="width:142px" type="date" name="expirationDate"></label>
             <div>
-                <button type="button" name="cancel" style="margin-right:30px;" class="btn btn-dark" onclick="window.location.href='cart.html';">Cancel</button>
-                <button type="submit" name="place" style="margin-left:30px;" class="btn btn-dark">Place Order</button>
+                <button type="button" name="cancel" style="margin-right:30px;" class="btn btn-secondary" onclick="window.location.href='cart.html';">Cancel</button>
+                <button type="submit" id="place" name="place" style="margin-left:30px;" class="btn btn-secondary">Place Order</button>
             </div>
-
+            <br>
+            <div style="color:antiquewhite; background-color: darkred; text-align: center;border-radius: 10px;" id="payment_error_message"></div>
         </form>
     </div>
 </div>
+<!-- include jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- include our own JS file -->
+<script src="./payment.js"></script>
 </body>
 </html>
