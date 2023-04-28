@@ -110,6 +110,8 @@ public class PaymentServlet extends HttpServlet {
                 if (rs.next()) {
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
+                    // insert each item into sale table
+                    // add sale id for that item into an arraylist to be set in session attribute
                 } else {
                     responseJsonObject.addProperty("status", "fail");
                     // Log to localhost log
