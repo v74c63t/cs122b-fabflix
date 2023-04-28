@@ -91,8 +91,10 @@ public class CartServlet extends HttpServlet {
                 System.out.println(query);
                 ResultSet rs = statement.executeQuery(query);
                 if(rs.next()) {
+                    String movie_id = rs.getString("id");
                     String movie_title = rs.getString("title");
                     JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("movie_id", movie_id);
                     jsonObject.addProperty("movie_title", movie_title);
                     jsonObject.addProperty("movie_quantity", itemCart.get(movieId).get("quantity"));
                     jsonObject.addProperty("movie_price", itemCart.get(movieId).get("price"));
@@ -148,8 +150,17 @@ public class CartServlet extends HttpServlet {
             synchronized (itemCart) {
                 if ( itemCart.containsKey(item) ) {
                     // increment quantity by 1
-                    itemCart.get(item).put("quantity", itemCart.get(item).get("quantity") + quantity);
-                    itemCart.get(item).put("price", itemCart.get(item).get("price"));
+                    if(quantity == 0) {
+                        itemCart.remove(item);
+                    }
+                    else if(itemCart.get(item).get("quantity") + quantity > 0) {
+                        itemCart.get(item).put("quantity", itemCart.get(item).get("quantity") + quantity);
+                        itemCart.get(item).put("price", itemCart.get(item).get("price"));
+                    }
+                    else if(itemCart.get(item).get("quantity") + quantity <= 0){
+                        System.out.println(item);
+                        itemCart.remove(item);
+                    }
                 }else {
                     HashMap<String, Double> detail = new HashMap<>();
                     detail.put("quantity", quantity);

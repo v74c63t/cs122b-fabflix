@@ -29,29 +29,48 @@ function handleSearch(searchSubmitEvent) {
  * @param resultArray jsonObject, needs to be parsed to html
  */
 function handleCartArray(resultData) {
+    let cartTableBody = $("#cart_table_body");
+    cartTableBody.html("");
+    document.getElementById("total").innerHTML="";
     if(resultData.length!=0) {
         if (resultData[0]["resultUrl"] != null) {
             let resultTab = jQuery("#result");
             resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
         }
         console.log(resultData);
-        let cartTableBody = $("#cart_table_body");
         let totalPrice = 0;
         for (let i = 0; i < resultData.length; i++) {
             let rowHTML = "<tr>";
             rowHTML += "<th>" + resultData[i]['movie_title'] + "</th>";
-            rowHTML += "<th><button type='submit' class='btn btn-secondary' style='margin-right:10px'><i class='fa-solid fa-minus'></i></button>" +
-                resultData[i]['movie_quantity'] + "<button type='submit' class='btn btn-secondary' style='margin-left:10px'><i class='fa-solid fa-plus'></i></button>" +
+            rowHTML += "<th><button type='submit' class='btn btn-secondary' style='margin-right:10px' onclick=\"handleCart("+ "'" + resultData[i]["movie_id"] + "'" + ", -1.0)\"><i class='fa-solid fa-minus'></i></button>" +
+                "<span id='" + resultData[0]["movie_id"] +"-quantity'>" + resultData[i]['movie_quantity'] + "</span>" + "<button type='submit' class='btn btn-secondary' style='margin-left:10px' onclick=\"handleCart("+ "'" + resultData[i]["movie_id"] + "'" + ", 1.0)\"><i class='fa-solid fa-plus'></i></button>" +
                 "</th>";
-            rowHTML += "<th><button type='submit' class='btn btn-outline-danger'>Delete</button></th>";
+            rowHTML += "<th><button type='submit' class='btn btn-outline-danger' onclick=\"handleCart("+ "'" + resultData[i]["movie_id"] + "'" + ", 0.0)\">Delete</button></th>";
             rowHTML += "<th>$" + resultData[i]['movie_price'] + "</th>";
-            totalPrice += (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price']));
-            rowHTML += "<th>$" + (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price'])).toString() + "</th>";
+            totalPrice += parseFloat((parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price'])).toFixed(2));
+            rowHTML += "<th id='" + resultData[0]["movie_id"] +"-movie-total'>$" + (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price'])).toFixed(2).toString() + "</th>";
             rowHTML += '</tr>';
             cartTableBody.append(rowHTML);
         }
-        document.getElementById("total").innerText = "Total Price: $" + totalPrice.toString();
+        document.getElementById("total").innerText = "Total Price: $" + totalPrice.toFixed(2);
     }
+}
+
+function handleCart(movieId, quantity) {
+    $.ajax("api/cart", {
+        method: "POST",
+        data: {item: movieId, quantity: quantity},
+        success: resultDataString => {
+            let resultDataJson = JSON.parse(resultDataString);
+            console.log(resultDataJson);
+            console.log(resultDataJson[0]["key"], resultDataJson[0]["value"]["price"],resultDataJson[0]["value"]["quantity"]);
+            $.ajax("api/cart", {
+                method: "GET",
+                success: handleCartArray
+            });
+        }
+    })
+
 }
 
 /**
