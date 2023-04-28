@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.lang.Math;
 
 /**
  * This IndexServlet is declared in the web annotation below,
@@ -126,9 +127,9 @@ public class CartServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String item = request.getParameter("item");
-        Double price = Double.valueOf(request.getParameter("price"));
+        Double quantity = Double.valueOf(request.getParameter("quantity"));
 
-        System.out.println(item + price);
+        System.out.println(item + quantity);
         HttpSession session = request.getSession();
 
         // get the previous items in a ArrayList
@@ -136,7 +137,8 @@ public class CartServlet extends HttpServlet {
         if (itemCart == null) {
             itemCart = new HashMap<>();
             HashMap<String, Double> detail = new HashMap<>();
-            detail.put("quantity", (double) 1);
+            double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100;
+            detail.put("quantity", quantity);
             detail.put("price", price);
             itemCart.put(item, detail);
             session.setAttribute("itemCart", itemCart);
@@ -146,11 +148,12 @@ public class CartServlet extends HttpServlet {
             synchronized (itemCart) {
                 if ( itemCart.containsKey(item) ) {
                     // increment quantity by 1
-                    itemCart.get(item).put("quantity", itemCart.get(item).get("quantity") + 1);
-                    itemCart.get(item).put("price", price);
+                    itemCart.get(item).put("quantity", itemCart.get(item).get("quantity") + quantity);
+                    itemCart.get(item).put("price", itemCart.get(item).get("price"));
                 }else {
                     HashMap<String, Double> detail = new HashMap<>();
-                    detail.put("quantity", 1.0);
+                    detail.put("quantity", quantity);
+                    double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100;
                     detail.put("price", price);
                     itemCart.put(item, detail);
                 }

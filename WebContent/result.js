@@ -178,7 +178,7 @@ function handleCart(movieId) {
 
     $.ajax("api/cart", {
         method: "POST",
-        data: {item: movieId, price: 9.99},
+        data: {item: movieId, quantity: 1.0},
         success: resultDataString => {
             let resultDataJson = JSON.parse(resultDataString);
             console.log(resultDataJson);
