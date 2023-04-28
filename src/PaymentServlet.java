@@ -133,12 +133,12 @@ public class PaymentServlet extends HttpServlet {
                     HttpSession session = request.getSession();
 
                     // Get or create a final sales cart
-                    ArrayList<HashMap<String, String>> salesCart = (ArrayList<HashMap<String, String>>) session.getAttribute("salesCart");
+                    ArrayList<Integer> salesId = (ArrayList<Integer>) session.getAttribute("salesId");
 
                     // Create a sales cart and add items in if there isn't one
-                    if (salesCart == null) {
-                        salesCart = new ArrayList<HashMap<String, String>>();
-                        session.setAttribute("salesCart", salesCart);
+                    if (salesId == null) {
+                        salesId = new ArrayList<Integer>();
+                        session.setAttribute("salesId", salesId);
                     }
 
                     // Iterate through each item in itemCart
@@ -152,22 +152,13 @@ public class PaymentServlet extends HttpServlet {
                         // Statement for inserting into table
                         PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
 
-                        // HashMap for the salesCart attribute in session
-                        HashMap<String,String> individualSale = new HashMap<String,String>();
-                        individualSale.put("customerId", String.valueOf(customerId));
-                        individualSale.put("movieId", entry.getKey());
-                        individualSale.put("saleDate", LocalDate.now().toString());
-                        individualSale.put("quantity", String.valueOf(entry.getValue().get("quantity")));
-                        individualSale.put("price", String.valueOf(entry.getValue().get("price")));
-                        individualSale.put("total", String.valueOf( new BigDecimal((entry.getValue().get("quantity"))*(entry.getValue().get("price"))).setScale(2, RoundingMode.HALF_UP)));
-
                         // Setting parameters for insert query
-                        insertStatement.setString(1, individualSale.get("customerId"));
-                        insertStatement.setString(2, individualSale.get("movieId"));
-                        insertStatement.setString(3, individualSale.get("saleDate"));
-                        insertStatement.setString(4, individualSale.get("quantity"));
-                        insertStatement.setString(5, individualSale.get("price"));
-                        insertStatement.setString(6, individualSale.get("total"));
+                        insertStatement.setString(1, String.valueOf(customerId));
+                        insertStatement.setString(2, entry.getKey());
+                        insertStatement.setString(3, LocalDate.now().toString());
+                        insertStatement.setString(4, String.valueOf(entry.getValue().get("quantity")));
+                        insertStatement.setString(5, String.valueOf(entry.getValue().get("price")));
+                        insertStatement.setString(6, String.valueOf( new BigDecimal((entry.getValue().get("quantity"))*(entry.getValue().get("price"))).setScale(2, RoundingMode.HALF_UP)));
 
                         // Executes insert statement query
                         int updateRS = insertStatement.executeUpdate();
@@ -181,14 +172,12 @@ public class PaymentServlet extends HttpServlet {
                         // Execute statement for getting last inserted id
                         ResultSet getIdRS = getIdStatement.executeQuery(getIdQuery);
 
-                        // Get last inserted id and add to HashMap
+                        // Get last inserted id to salesCart
                         if (getIdRS.next()) {
-                            individualSale.put("saleId", String.valueOf(getIdRS.getInt(1)));
+                            salesId.add(getIdRS.getInt(1));
                         }
-
                         // Add HashMap to an Array and update "salesCart"
-                        salesCart.add(individualSale);
-                        session.setAttribute("salesCart", salesCart);
+                        session.setAttribute("salesId", salesId);
 
                         // Close all statements/executes
                         insertStatement.close();
