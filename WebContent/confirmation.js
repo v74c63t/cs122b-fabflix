@@ -40,7 +40,11 @@ function handleConfirmationArray(resultData) {
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "<tr>";
         rowHTML += "<th>" + resultData[i]['saleId'].toString() + "</th>";
-        rowHTML += "<th>" + resultData[i]['movie_title'] + "</th>";
+        rowHTML += "<th>" +
+            '<a style="color:darkturquoise;" href="single-movie.html?id=' + resultData[i]["movie_id"] + '">' +
+            resultData[i]["movie_title"] +
+            '</a>'+
+            "</th>";
         rowHTML += "<th>" + resultData[i]['movie_quantity'] + "</th>";
         rowHTML += "<th>$" + resultData[i]['movie_price'] + "</th>";
         totalPrice += (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price']));
