@@ -121,7 +121,7 @@ public class PaymentServlet extends HttpServlet {
                     responseJsonObject.addProperty("message", "success");
 //                    LocalDate currDate = LocalDate.now();
 //                    for(String movieId: itemCart.keySet()) {
-//                        LocalDate currDate = LocalDate.now();
+//                        LocalDate currDate = LocalDate.now();git
 //                        // figure out if we plan on updating the sales table to include more info
 //                        // insert each item into sale table
                                 // INSERT INTO Sales(customerId, movieId, saleDate, quantity, price, (maybe total but it can be calulcated anyways so it doesnt rly matter))
@@ -146,7 +146,8 @@ public class PaymentServlet extends HttpServlet {
                     for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
 
                         String insertQuery = String.join("",
-                                "INSERT INTO test (customerId, movieId, saleDate, quantity, price, total) ",
+//                                "INSERT INTO test (customerId, movieId, saleDate, quantity, price, total) ",
+                                "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
                                 "VALUES (?, ?, ?, ?, ?, ?);");
 
                         // Statement for inserting into table

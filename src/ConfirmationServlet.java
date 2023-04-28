@@ -92,13 +92,12 @@ public class ConfirmationServlet extends HttpServlet {
                 Statement statement = conn.createStatement();
                 String query = String.join("",
                         "SELECT s.id, s.movieId, m.title, s.quantity, s.price, s.total ",
-//                        "FROM sales as s, movies as m ",
-                        "FROM test as s, movies as m ", // temp for testing
+                        "FROM sales as s, movies as m ",
+//                        "FROM test as s, movies as m ", // temp for testing
                         "WHERE s.id = ", String.valueOf(saleId), " AND s.movieId = m.id;");
                 System.out.println(query);
                 ResultSet rs = statement.executeQuery(query);
                 if (rs.next()) {
-                    System.out.println("got results");
                     int sale_id = rs.getInt("id");
                     String movie_id = rs.getString("movieId");
                     String movie_title = rs.getString("title");
