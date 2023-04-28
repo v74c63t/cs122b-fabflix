@@ -141,14 +141,18 @@ public class PaymentServlet extends HttpServlet {
                         session.setAttribute("salesCart", salesCart);
                     }
 
+                    // Iterate through each item in itemCart
+                    //      to get sale info
                     for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
 
                         String insertQuery = String.join("",
                                 "INSERT INTO test (customerId, movieId, saleDate, quantity, price, total) ",
                                 "VALUES (?, ?, ?, ?, ?, ?);");
 
+                        // Statement for inserting into table
                         PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
 
+                        // HashMap for the salesCart attribute in session
                         HashMap<String,String> individualSale = new HashMap<String,String>();
                         individualSale.put("customerId", String.valueOf(customerId));
                         individualSale.put("movieId", entry.getKey());
@@ -157,6 +161,7 @@ public class PaymentServlet extends HttpServlet {
                         individualSale.put("price", String.valueOf(entry.getValue().get("price")));
                         individualSale.put("total", String.valueOf( new BigDecimal((entry.getValue().get("quantity"))*(entry.getValue().get("price"))).setScale(2, RoundingMode.HALF_UP)));
 
+                        // Setting parameters for insert query
                         insertStatement.setString(1, individualSale.get("customerId"));
                         insertStatement.setString(2, individualSale.get("movieId"));
                         insertStatement.setString(3, individualSale.get("saleDate"));
@@ -164,21 +169,28 @@ public class PaymentServlet extends HttpServlet {
                         insertStatement.setString(5, individualSale.get("price"));
                         insertStatement.setString(6, individualSale.get("total"));
 
+                        // Executes insert statement query
                         int updateRS = insertStatement.executeUpdate();
 
+                        // Create statement for getting last inserted id
                         Statement getIdStatement = conn.createStatement();
 
+                        // Query statement for getting last inserted id
                         String getIdQuery = "SELECT last_insert_id()";
 
+                        // Execute statement for getting last inserted id
                         ResultSet getIdRS = getIdStatement.executeQuery(getIdQuery);
 
+                        // Get last inserted id and add to HashMap
                         if (getIdRS.next()) {
                             individualSale.put("saleId", String.valueOf(getIdRS.getInt(1)));
                         }
 
+                        // Add HashMap to an Array and update "salesCart"
                         salesCart.add(individualSale);
                         session.setAttribute("salesCart", salesCart);
 
+                        // Close all statements/executes
                         insertStatement.close();
                         getIdStatement.close();
                         getIdRS.close();
