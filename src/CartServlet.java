@@ -86,14 +86,13 @@ public class CartServlet extends HttpServlet {
                     System.out.println(movie_title);
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("movie_title", movie_title);
-                    //                jsonObject.addProperty("resultUrl", resultUrl);
+                    jsonObject.addProperty("resultUrl", resultUrl);
                     jsonArray.add(jsonObject);
                 }
                 rs.close();
                 statement.close();
             }
             responseJsonObject.add("previousItems", jsonArray);
-            responseJsonObject.addProperty("resultUrl", resultUrl);
 
             // write all the data into the jsonObject
 //            response.getWriter().write(responseJsonObject.toString());

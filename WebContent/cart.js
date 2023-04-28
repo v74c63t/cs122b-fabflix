@@ -1,30 +1,30 @@
 
 let movie_search_form = $("#movie-search-form");
-let cart = $("#cart");
+// let cart = $("#cart");
 
-/**
- * Handle the data returned by IndexServlet
- * @param resultDataString jsonObject, consists of session info
- */
-function handleSessionData(resultDataString) {
-    let resultDataJson = JSON.parse(resultDataString);
-
-    if(resultDataJson["resultUrl"] != null) {
-        let resultTab = jQuery("#result");
-        resultTab.attr("href", "result.html?" + resultDataJson["resultUrl"]);
-    }
-
-    console.log("handle session response");
-    console.log(resultDataJson);
-    console.log(resultDataJson["sessionID"]);
-
-    // show the session information
-    $("#sessionID").text("Session ID: " + resultDataJson["sessionID"]);
-    $("#lastAccessTime").text("Last access time: " + resultDataJson["lastAccessTime"]);
-
-    // show cart information
-    handleCartArray(resultDataJson["previousItems"]);
-}
+// /**
+//  * Handle the data returned by IndexServlet
+//  * @param resultDataString jsonObject, consists of session info
+//  */
+// function handleSessionData(resultDataString) {
+//     let resultDataJson = JSON.parse(resultDataString);
+//
+//     if(resultDataJson["resultUrl"] != null) {
+//         let resultTab = jQuery("#result");
+//         resultTab.attr("href", "result.html?" + resultDataJson["resultUrl"]);
+//     }
+//
+//     console.log("handle session response");
+//     console.log(resultDataJson);
+//     console.log(resultDataJson["sessionID"]);
+//
+//     // show the session information
+//     $("#sessionID").text("Session ID: " + resultDataJson["sessionID"]);
+//     $("#lastAccessTime").text("Last access time: " + resultDataJson["lastAccessTime"]);
+//
+//     // show cart information
+//     handleCartArray(resultDataJson["previousItems"]);
+// }
 
 function handleSearch(searchSubmitEvent) {
     let paramArray = []
@@ -53,7 +53,6 @@ function handleSearch(searchSubmitEvent) {
  * @param resultArray jsonObject, needs to be parsed to html
  */
 function handleCartArray(resultData) {
-
     if(resultData[0]["resultUrl"] != null) {
         let resultTab = jQuery("#result");
         resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
@@ -64,7 +63,6 @@ function handleCartArray(resultData) {
     // let rowHTML = "<ul>";
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "<tr>";
-        // each item will be in a bullet point
         rowHTML += "<th>" + resultData[i]['movie_title'] + "</th>";
         rowHTML += "<th><button type='submit' class='btn btn-secondary'><i class='fa-solid fa-minus'></i></button>" +
             " # " + "<button type='submit' class='btn btn-secondary'><i class='fa-solid fa-plus'></i></button>" +
@@ -86,27 +84,27 @@ function handleCartArray(resultData) {
  * Submit form content with POST method
  * @param cartEvent
  */
-function handleCartInfo(cartEvent) {
-    console.log("submit cart form");
-    /**
-     * When users click the submit button, the browser will not direct
-     * users to the url defined in HTML form. Instead, it will call this
-     * event handler when the event is triggered.
-     */
-    cartEvent.preventDefault();
-
-    $.ajax("api/cart", {
-        method: "POST",
-        data: cart.serialize(),
-        success: resultDataString => {
-            let resultDataJson = JSON.parse(resultDataString);
-            handleCartArray(resultDataJson["previousItems"]);
-        }
-    });
-
-    // clear input form
-    cart[0].reset();
-}
+// function handleCartInfo(cartEvent) {
+//     console.log("submit cart form");
+//     /**
+//      * When users click the submit button, the browser will not direct
+//      * users to the url defined in HTML form. Instead, it will call this
+//      * event handler when the event is triggered.
+//      */
+//     cartEvent.preventDefault();
+//
+//     $.ajax("api/cart", {
+//         method: "POST",
+//         data: cart.serialize(),
+//         success: resultDataString => {
+//             let resultDataJson = JSON.parse(resultDataString);
+//             handleCartArray(resultDataJson["previousItems"]);
+//         }
+//     });
+//
+//     // clear input form
+//     cart[0].reset();
+// }
 
 $.ajax("api/cart", {
     method: "GET",
@@ -114,6 +112,6 @@ $.ajax("api/cart", {
 });
 
 // Bind the submit action of the form to a event handler function
-cart.submit(handleCartInfo);
+// cart.submit(handleCartInfo);
 
 movie_search_form.submit(handleSearch);
