@@ -16,11 +16,25 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Login Filter/Login Servlet
   - Main Page (JS)
   - Main Page Servlet
+  - Confirmation Page (HTML/JS)
+  - Confirmation Servlet
+  - Payment Page (HTML/CSS/JS)
+  - Payment Page Servlet
+  - Cart Page (HTML/JS)
+  - Cart Page Servlet
+  - Pagenation/Sorting
+  - Modifying SQL Queries
   - Making Revisions/Style Changes to Other Pages
   - Debugging
 ### Haver
   - Login Page (HTML/CSS)
   - Main Page (HTML/CSS)
   - Main Page Servlet
+  - Payment Page Servlet
+  - Cart Page Servlet
+  - Genre Results Servlet
+  - Start Title Servlet
+  - Search Result Servlet
+  - Modifying SQL Queries
   - Making Revisions/Style Changes to Other Pages
   - Debugging
