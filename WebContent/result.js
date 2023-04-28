@@ -167,7 +167,8 @@ function handleResult(resultData) {
         let $rowHTML = $(rowHTML);
         let $addButton = $rowHTML.find("button");
 
-        $addButton.on("click", () => { handleCart(resultData[i]["movie_id"]); $addButton.prop("disabled", true) });
+        // $addButton.on("click", () => { handleCart(resultData[i]["movie_id"]); $addButton.prop("disabled", true) });
+        $addButton.on("click", () => { handleCart(resultData[i]["movie_id"])});
 
         movieTableBodyElement.append($rowHTML);
     }
