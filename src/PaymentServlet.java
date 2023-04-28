@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 @WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
 public class PaymentServlet extends HttpServlet {
@@ -48,12 +49,32 @@ public class PaymentServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         JsonObject responseJsonObject = new JsonObject();
         User customer = (User) request.getSession().getAttribute("user");
-
+        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>)request.getSession().getAttribute("itemCart");
         if(customer.getFirstName().equals(firstName) || customer.getLastName().equals(lastName)){
             responseJsonObject.addProperty("status", "fail");
             // Log to localhost log
             request.getServletContext().log("Verifying Failed");
             responseJsonObject.addProperty("message", "Invalid credit card information");
+            // Write JSON string to output
+            response.getWriter().write(responseJsonObject.toString());
+            // Set response status to 200 (OK)
+            response.setStatus(200);
+        }
+        else if(itemCart == null) {
+            responseJsonObject.addProperty("status", "fail");
+            // Log to localhost log
+            request.getServletContext().log("Empty cart");
+            responseJsonObject.addProperty("message", "Cart is empty");
+            // Write JSON string to output
+            response.getWriter().write(responseJsonObject.toString());
+            // Set response status to 200 (OK)
+            response.setStatus(200);
+        }
+        else if (itemCart.isEmpty()) {
+            responseJsonObject.addProperty("status", "fail");
+            // Log to localhost log
+            request.getServletContext().log("Empty cart");
+            responseJsonObject.addProperty("message", "Cart is empty");
             // Write JSON string to output
             response.getWriter().write(responseJsonObject.toString());
             // Set response status to 200 (OK)
