@@ -1,5 +1,6 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * This IndexServlet is declared in the web annotation below,
@@ -118,29 +120,47 @@ public class CartServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String item = request.getParameter("item");
-        System.out.println(item);
+        Double price = Double.valueOf(request.getParameter("price"));
+
+        System.out.println(item + price);
         HttpSession session = request.getSession();
 
         // get the previous items in a ArrayList
-        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
-        if (previousItems == null) {
-            previousItems = new ArrayList<String>();
-            previousItems.add(item);
-            session.setAttribute("previousItems", previousItems);
+        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
+        if (itemCart == null) {
+            itemCart = new HashMap<>();
+            HashMap<String, Double> detail = new HashMap<>();
+            detail.put("quantity", (double) 1);
+            detail.put("price", price);
+            itemCart.put(item, detail);
+            session.setAttribute("itemCart", itemCart);
         } else {
             // prevent corrupted states through sharing under multi-threads
             // will only be executed by one thread at a time
-            synchronized (previousItems) {
-                previousItems.add(item);
+            synchronized (itemCart) {
+                if ( itemCart.containsKey(item) ) {
+                    // increment quantity by 1
+                    itemCart.get(item).put("quantity", itemCart.get(item).get("quantity") + 1);
+                    itemCart.get(item).put("price", price);
+                }else {
+                    HashMap<String, Double> detail = new HashMap<>();
+                    detail.put("quantity", 1.0);
+                    detail.put("price", price);
+                    itemCart.put(item, detail);
+                }
+
             }
         }
 
-        JsonObject responseJsonObject = new JsonObject();
+//        JsonObject responseJsonObject = Json.createObjectBuilder(itemCart).build();
 
-        JsonArray previousItemsJsonArray = new JsonArray();
-        previousItems.forEach(previousItemsJsonArray::add);
-        responseJsonObject.add("previousItems", previousItemsJsonArray);
+//        JsonArray previousItemsJsonArray = new JsonArray();
+        Gson gson = new Gson();
+        String responseJsonObject = gson.toJson(itemCart);
+        System.out.println(responseJsonObject);
+//        itemCart.forEach(previousItemsJsonArray::add);
+//        responseJsonObject.add("previousItems", previousItemsJsonArray);
 
-        response.getWriter().write(responseJsonObject.toString());
+        response.getWriter().write(responseJsonObject);
     }
 }

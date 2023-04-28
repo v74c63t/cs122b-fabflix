@@ -175,16 +175,13 @@ function handleResult(resultData) {
 }
 
 function handleCart(movieId) {
-    // addToCartEvent.preventDefault();
-    console.log("CLICKED ON THE BUTTON");
-    console.log("MOVIE ID -> ", movieId)
 
     $.ajax("api/cart", {
         method: "POST",
-        data: {item: movieId},
+        data: {item: movieId, price: 9.99},
         success: resultDataString => {
             let resultDataJson = JSON.parse(resultDataString);
-            console.log(resultDataJson["previousItems"]);
+            console.log(resultDataJson);
             alert("Successfully added to cart");
         }
     })
