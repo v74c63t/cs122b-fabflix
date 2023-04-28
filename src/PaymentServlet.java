@@ -13,6 +13,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,6 +116,7 @@ public class PaymentServlet extends HttpServlet {
                 ResultSet rs = statement.executeQuery();
 
                 if (rs.next()) {
+                    System.out.println("SUCCESS");
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
 //                    LocalDate currDate = LocalDate.now();
@@ -127,27 +130,59 @@ public class PaymentServlet extends HttpServlet {
                                 // use SELECT LAST_INSERTED_ID()
 //                    }
                     // Get instance of current session
-//                    HttpSession session = request.getSession();
-//                    HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
-//                    ArrayList<HashMap<String, String>> salesCart = (ArrayList<HashMap<String, String>>) session.getAttribute("salesCart");
-//
-//                    if (salesCart == null) {
-//                        salesCart = new ArrayList<HashMap<String, String>>();
-//                        for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
-////                            String query2 = String.join("",
-////                                    "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
-////                                    "VALUES (?, ?, CURRENT_DATE(), ?, ?, ?);");
-////
-////                            PreparedStatement statement2 = conn.createStatement(query2);
-//
-//                            HashMap<String,String> individualSale = new HashMap<String,String>();
-//                            individualSale.put("movieId", entry.getKey());
-//                            individualSale.put("quantity", String.valueOf(entry.getValue().get("quantity")));
-//                            individualSale.put("price", String.valueOf(entry.getValue().get("price")));
-//                            individualSale.put("total", String.valueOf(Math.round((entry.getValue().get("quantity"))*(entry.getValue().get("price")))*100/100);
-//                        }
-//
-//                    }
+                    HttpSession session = request.getSession();
+
+                    // Get or create a final sales cart
+                    ArrayList<HashMap<String, String>> salesCart = (ArrayList<HashMap<String, String>>) session.getAttribute("salesCart");
+
+                    // Create a sales cart and add items in if there isn't one
+                    if (salesCart == null) {
+                        salesCart = new ArrayList<HashMap<String, String>>();
+                        session.setAttribute("salesCart", salesCart);
+                    }
+
+                    for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
+
+                        String insertQuery = String.join("",
+                                "INSERT INTO test (customerId, movieId, saleDate, quantity, price, total) ",
+                                "VALUES (?, ?, ?, ?, ?, ?);");
+
+                        PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
+
+                        HashMap<String,String> individualSale = new HashMap<String,String>();
+                        individualSale.put("customerId", String.valueOf(customerId));
+                        individualSale.put("movieId", entry.getKey());
+                        individualSale.put("saleDate", LocalDate.now().toString());
+                        individualSale.put("quantity", String.valueOf(entry.getValue().get("quantity")));
+                        individualSale.put("price", String.valueOf(entry.getValue().get("price")));
+                        individualSale.put("total", String.valueOf( new BigDecimal((entry.getValue().get("quantity"))*(entry.getValue().get("price"))).setScale(2, RoundingMode.HALF_UP)));
+
+                        insertStatement.setString(1, individualSale.get("customerId"));
+                        insertStatement.setString(2, individualSale.get("movieId"));
+                        insertStatement.setString(3, individualSale.get("saleDate"));
+                        insertStatement.setString(4, individualSale.get("quantity"));
+                        insertStatement.setString(5, individualSale.get("price"));
+                        insertStatement.setString(6, individualSale.get("total"));
+
+                        int updateRS = insertStatement.executeUpdate();
+
+                        Statement getIdStatement = conn.createStatement();
+
+                        String getIdQuery = "SELECT last_insert_id()";
+
+                        ResultSet getIdRS = getIdStatement.executeQuery(getIdQuery);
+
+                        if (getIdRS.next()) {
+                            individualSale.put("saleId", String.valueOf(getIdRS.getInt(1)));
+                        }
+
+                        salesCart.add(individualSale);
+                        session.setAttribute("salesCart", salesCart);
+
+                        insertStatement.close();
+                        getIdStatement.close();
+                        getIdRS.close();
+                    }
 
                 } else {
                     responseJsonObject.addProperty("status", "fail");
@@ -156,6 +191,7 @@ public class PaymentServlet extends HttpServlet {
                     responseJsonObject.addProperty("message", "Invalid credit card information");
 
                 }
+
                 rs.close();
                 statement.close();
 
