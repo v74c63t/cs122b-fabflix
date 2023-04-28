@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+
+
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "ResultServlet", urlPatterns = "/api/result")
 public class ResultServlet extends HttpServlet {
