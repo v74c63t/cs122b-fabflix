@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.time.LocalDate;
 
 @WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
 public class PaymentServlet extends HttpServlet {
@@ -110,8 +111,14 @@ public class PaymentServlet extends HttpServlet {
                 if (rs.next()) {
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
-                    // insert each item into sale table
-                    // add sale id for that item into an arraylist to be set in session attribute
+//                    LocalDate currDate = LocalDate.now();
+//                    for(String movieId: itemCart.keySet()) {
+//                        LocalDate currDate = LocalDate.now();
+//                        // figure out if we plan on updating the sales table to include more info
+//                        // insert each item into sale table
+//                        // add sale id for that item into an arraylist to be set in session attribute
+//                    }
+
                 } else {
                     responseJsonObject.addProperty("status", "fail");
                     // Log to localhost log
