@@ -28,7 +28,7 @@ function handleSearch(searchSubmitEvent) {
  * @param resultArray jsonObject, needs to be parsed to html
  */
 function handleConfirmationArray(resultData) {
-    console.log("HELLO");
+
     if(resultData[0]["resultUrl"] != null) {
         let resultTab = jQuery("#result");
         resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
@@ -40,7 +40,7 @@ function handleConfirmationArray(resultData) {
     let totalPrice = 0;
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "<tr>";
-        rowHTML += "<th>" + resultData[i]['saleId'].toString() + "</th>";
+        rowHTML += "<th>" + resultData[i]['sale_id'].toString() + "</th>";
         rowHTML += "<th>" +
             '<a style="color:darkturquoise;" href="single-movie.html?id=' + resultData[i]["movie_id"] + '">' +
             resultData[i]["movie_title"] +
@@ -48,17 +48,19 @@ function handleConfirmationArray(resultData) {
             "</th>";
         rowHTML += "<th>" + resultData[i]['movie_quantity'] + "</th>";
         rowHTML += "<th>$" + resultData[i]['movie_price'] + "</th>";
-        totalPrice += (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price']));
-        rowHTML += "<th>$" + (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price'])).toString() + "</th>";
+        totalPrice += parseFloat(resultData[i]['movie_total']);
+        rowHTML += "<th>$" + resultData[i]['movie_total'] + "</th>";
         rowHTML += '</tr>';
         confirmationTableBody.append(rowHTML);
     }
-    document.getElementById("total").innerText = "Total Price: $" + totalPrice.toString();
+    document.getElementById("total").innerText = "Total Price: $" + totalPrice.toFixed(2);
 }
 
 $.ajax("api/confirmation", {
     method: "GET",
-    success: handleConfirmationArray
+    success: (resultData) => {
+        handleConfirmationArray(resultData);
+    }
 });
 
 
