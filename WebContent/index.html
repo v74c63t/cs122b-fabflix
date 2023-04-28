@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>Fabflix</title>
+    <title>Top 20</title>
 </head>
 <body class="background">
 <header>
@@ -26,10 +26,28 @@
         <a style="color: white" class="navbar-brand fabflix"><strong><em>Fabflix</em></strong></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" href="main.html">Home</a>
+                </li>
                 <li class="nav-item active">
-                    <a style="color:darkorange" class="nav-link" href="#">Top 20 Rated Movies<span class="sr-only">(current)</span></a>
+                    <a style="color:darkorange" class="nav-link" href="#">Top 20<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" href="cart.html">Checkout</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" id="result">Result</a>
                 </li>
             </ul>
+        </div>
+        <div id="search-component">
+            <form id="movie-search-form" action="#" method="GET">
+                <input  class="search-item" type="text" id="search-title" name="title" placeholder="Title">
+                <input  class="search-item" type="text" id="search-year" name="year" placeholder="Year">
+                <input  class="search-item" type="text" id="search-director" name="director" placeholder="Director">
+                <input  class="search-item" type="text" id="search-star" name="star" placeholder="Star">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
     </nav>
 </header>
@@ -46,6 +64,7 @@
         <th>Genres</th>
         <th>Stars</th>
         <th>Rating</th>
+        <th>Cart</th>
     </tr>
     </thead>
     <!-- Table body is left empty here, will be populated with the data retrieved with index.js -->

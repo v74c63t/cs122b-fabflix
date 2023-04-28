@@ -1,3 +1,61 @@
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+#search-component form {
+    display: flex;
+    align-items: center;
+}
+
+#search-component > label{
+    margin: 0 0.25rem;
+    outline: none;
+}
+
+#search-component input,button{
+    padding: 0 3px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+#search-component input:focus,button:focus{
+    outline: none;
+}
+
+#search-component input[type=text],button[type=submit]{
+    padding: 2px 6px;
+}
+
+#search-title {
+    width: 300px;
+}
+
+#search-year {
+    width: 100px;
+}
+
+#search-director {
+    width: 225px;
+}
+
+#search-star {
+    width: 225px;
+}
+
+#search-component button{
+    width: 35px;
+    margin-left: 6px;
+    color: #ff8c00;
+    background: azure;
+}
+
+#search-component button:hover{
+    cursor: pointer;
+    color: #ffc107!important;
+    background: darkgray;
+}
+
 .page-headers{
     text-align: center;
     padding-top: 10px;
@@ -45,6 +103,12 @@
     color: darkblue;
     font-family: Verdana, serif;
     -webkit-text-stroke: 0.75px black;
+}
+
+select {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffc107;
+    background-color: #363636;
 }
 
 thead {

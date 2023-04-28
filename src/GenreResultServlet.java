@@ -1,4 +1,3 @@
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -15,17 +14,19 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
+// Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
+@WebServlet(name = "GenreResultServlet", urlPatterns = "/api/by-genre")
+public class GenreResultServlet extends HttpServlet {
+    private static final long serialVersionUID = 3L;
 
-// Declaring a WebServlet called StarsServlet, which maps to url "/api/movies"
-@WebServlet(name = "MoviesServlet", urlPatterns = "/api/movies")
-public class MoviesServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    // Create a dataSource which registered in web.
+    // Create a dataSource which registered in web.xml
     private DataSource dataSource;
 
     public void init(ServletConfig config) {
@@ -37,18 +38,45 @@ public class MoviesServlet extends HttpServlet {
     }
 
     /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     * response)
      */
-
+    // note: have to modify and adjust to use code
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        // Get instance of current session
+        // Get an instance of the current session
         HttpSession session = request.getSession();
 
-        // Get the most recent result page url
+        // Create an attribute "resultUrl" if it doesn't exist
         String resultUrl = (String) session.getAttribute("resultUrl");
 
+        if (resultUrl == null) {
+            resultUrl = "";
+            session.setAttribute("resultUrl", resultUrl);
+        }
+
+        // Set the resultUrl to the current url
+        resultUrl = request.getQueryString();
+        session.setAttribute("resultUrl", resultUrl);
+
         response.setContentType("application/json"); // Response mime type
+
+        // Retrieve parameter id from url request.
+        // Testing out Servlet functions
+        String genreId = request.getParameter("genreId");
+
+        //figure out how to add this info into url
+        // firstRecord used for offset
+        String firstRecord = request.getParameter("firstRecord");
+        // numRecords decide how many to display on each page
+        // used for limit
+        String numRecords = request.getParameter("numRecords");
+        String sortBy = request.getParameter("sortBy");
+        String[] sort = sortBy.split(" ");
+
+        System.out.println(request.getParameter("sortBy"));
+        // The log message can be found in localhost log
+        request.getServletContext().log("getting genreId: " + genreId);
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -56,38 +84,49 @@ public class MoviesServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
 
+//          Construct a query with parameter represented by "?"
+            String query = String.join("",
+                    "SELECT COUNT(*) over() AS maxRecords, gim.movieId, title, year, director, rating ",
+                    "FROM genres_in_movies AS gim ",
+                    "JOIN movies AS m ",
+                    "ON m.id = gim.movieId ",
+                    "LEFT JOIN ratings AS r ",
+                    "ON r.movieId = m.id ",
+                    "WHERE genreId= ? ",
+                    "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
+                    "LIMIT ", numRecords, " ",
+                    "OFFSET ", firstRecord, " ");
+                    // temporary
+//                    "limit 25 ",
+//                    "offset 0 ");
             // Declare our statement
-            Statement statement = conn.createStatement();
-            // Declare statement for inner query
+            PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
 
-            String query = String.join("",
-                    "SELECT rating, id, title, year, director ",
-                    "FROM movies AS m, ratings AS r ",
-                    "WHERE m.id=r.movieId ",
-                    "ORDER BY rating DESC ",
-                    "LIMIT 20");
+            // Set the parameter represented by "?" in the query to the id we get from url,
+            // num 1 indicates the first "?" in the query
+            statement.setString(1, genreId);
 
-            // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+            System.out.println(query);
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 
-            // Iterate through each row of rs
             while (rs.next()) {
                 String movie_rating = rs.getString("rating");
-                String movie_id = rs.getString("id");
+                String movie_id = rs.getString("movieId");
                 String movie_title = rs.getString("title");
                 String movie_year = rs.getString("year");
                 String movie_director = rs.getString("director");
+                String max_records = rs.getString("maxRecords");
 
-                // New Query for getting top 3 stars
+                // New Query for getting stars
 //                query = String.join("",
-//                        "SELECT starId, name ",
-//                        "FROM stars AS s, stars_in_movies AS sim ",
-//                        "WHERE sim.movieId='", movie_id, "' ",
-//                        "AND s.id=sim.starId ",
-//                        "LIMIT 3");
+//                        "select starId, name ",
+//                        "from stars as s ",
+//                        "join stars_in_movies as sim ",
+//                        "on id = starId ",
+//                        "where sim.movieId='", movie_id, "'");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
@@ -98,7 +137,7 @@ public class MoviesServlet extends HttpServlet {
                         "AND s.id=sim.starId ",
                         "GROUP BY s.id ",
                         "ORDER BY COUNT(*) DESC, s.name ASC ",
-                        "LIMIT 3");
+                        "LIMIT 3;");
 
                 ResultSet newRS = statement2.executeQuery(query);
 
@@ -110,12 +149,13 @@ public class MoviesServlet extends HttpServlet {
                 newRS.close();
                 String stars = String.join(", ", starsArray);
 
-                // New Query for getting top 3 genres
+                // New Query for getting genres
                 query = String.join("",
-                        "SELECT id, name ",
-                        "FROM genres AS g, genres_in_movies AS gim ",
-                        "WHERE gim.movieId='", movie_id, "' ",
-                        "AND g.id=gim.genreId ",
+                        "select genreId, name ",
+                        "from genres AS g ",
+                        "join genres_in_movies AS gim ",
+                        "on  g.id = gim.genreId ",
+                        "WHERE gim.movieId='", movie_id, "'",
                         "ORDER BY name ",
                         "LIMIT 3;");
 
@@ -124,8 +164,7 @@ public class MoviesServlet extends HttpServlet {
                 ArrayList<String> genresArray = new ArrayList<>();
 
                 while (newRS.next()) {
-//                    genresArray.add(newRS.getString("name"));
-                    genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
+                    genresArray.add(newRS.getString("genreId") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
                 String genres = String.join(", ", genresArray);
@@ -139,16 +178,13 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("max_records", max_records);
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
             }
             rs.close();
             statement.close();
-            statement2.close();
-
-            // Log to localhost log
-            request.getServletContext().log("getting " + jsonArray.size() + " results");
 
             // Write JSON string to output
             out.write(jsonArray.toString());
@@ -156,12 +192,13 @@ public class MoviesServlet extends HttpServlet {
             response.setStatus(200);
 
         } catch (Exception e) {
-
             // Write error message JSON object to output
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());
             out.write(jsonObject.toString());
 
+            // Log error to localhost log
+            request.getServletContext().log("Error:", e);
             // Set response status to 500 (Internal Server Error)
             response.setStatus(500);
         } finally {
@@ -171,4 +208,6 @@ public class MoviesServlet extends HttpServlet {
         // Always remember to close db connection after usage. Here it's done by try-with-resources
 
     }
+
 }
+

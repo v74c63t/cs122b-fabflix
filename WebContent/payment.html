@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!--Font Awesome CSS-->
+    <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment.css">
+    <title>Payment</title>
+</head>
+
+<body class="background">
+<!--<header>-->
+<!--    <nav class="navbar navbar-expand-lg navbar-light bg-dark">-->
+<!--        <div class="logo">F</div>-->
+<!--        <a style="color: white" class="navbar-brand fabflix"><strong><em>Fabflix</em></strong></a>-->
+<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--            <ul class="navbar-nav mr-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a style="color:darksalmon" class="nav-link" href="main.html">Home</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a style="color:darksalmon" class="nav-link" href="index.html">Top 20</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item active">-->
+<!--                    <a style="color:darkorange" class="nav-link" href="checkout.html">Checkout<span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a style="color:darksalmon" class="nav-link" id="result" href="result.html">Result</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div id="search-component">-->
+<!--            <form id="movie-search-form" action="#" method="GET">-->
+<!--                <input  class="search-item" type="text" id="search-title" name="title" placeholder="Title">-->
+<!--                <input  class="search-item" type="text" id="search-year" name="year" placeholder="Year">-->
+<!--                <input  class="search-item" type="text" id="search-director" name="director" placeholder="Director">-->
+<!--                <input  class="search-item" type="text" id="search-star" name="star" placeholder="Star">-->
+<!--                <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </nav>-->
+<!--</header>-->
+<div id="payment-main-widget">
+    <h1 style="padding-top:30px; padding-bottom: 20px"><strong>Payment</strong></h1>
+    <div style="text-align: center">
+        <form id="payment_form" action="#" method="POST">
+            <label><input  type="text" name="ccId" size="30" placeholder="Credit Card ID"></label>
+            <br>
+            <label><input  type="text" name="first" size="30" placeholder="First Name"></label>
+            <br>
+            <label><input  type="text" name="last" size="30" placeholder="Last Name"></label>
+            <br>
+            <label for="expirationDate" style="color:#ffc107"><strong>Expiration Date:</strong></label>
+            <label><input  style="width:142px" type="date" name="expirationDate"></label>
+            <div>
+                <button type="button" name="cancel" style="margin-right:30px;" class="btn btn-secondary" onclick="window.location.href='cart.html';">Cancel</button>
+                <button type="submit" id="place" name="place" style="margin-left:30px;" class="btn btn-secondary">Place Order</button>
+            </div>
+            <br>
+            <div style="color:antiquewhite; background-color: darkred; text-align: center;border-radius: 10px;" id="payment_error_message"></div>
+        </form>
+    </div>
+</div>
+<!-- include jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- include our own JS file -->
+<script src="./payment.js"></script>
+</body>
+</html>
