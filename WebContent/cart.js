@@ -61,18 +61,21 @@ function handleCartArray(resultData) {
     let cartTableBody = $("#cart_table_body");
     // change it to html list
     // let rowHTML = "<ul>";
+    let totalPrice = 0;
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "<tr>";
         rowHTML += "<th>" + resultData[i]['movie_title'] + "</th>";
-        rowHTML += "<th><button type='submit' class='btn btn-secondary'><i class='fa-solid fa-minus'></i></button>" +
-            " # " + "<button type='submit' class='btn btn-secondary'><i class='fa-solid fa-plus'></i></button>" +
+        rowHTML += "<th><button type='submit' class='btn btn-secondary' style='margin-right:10px'><i class='fa-solid fa-minus'></i></button>" +
+            resultData[i]['movie_quantity'] + "<button type='submit' class='btn btn-secondary' style='margin-left:10px'><i class='fa-solid fa-plus'></i></button>" +
             "</th>";
         rowHTML += "<th><button type='submit' class='btn btn-outline-danger'>Delete</button></th>";
-        rowHTML += "<th>$#.##</th>";
-        rowHTML += "<th>$#.## * #</th>";
+        rowHTML += "<th>$" + resultData[i]['movie_price'] + "</th>";
+        totalPrice += (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price']));
+        rowHTML += "<th>$" + (parseInt(resultData[i]['movie_quantity']) * parseFloat(resultData[i]['movie_price'])).toString() + "</th>";
         rowHTML += '</tr>';
         cartTableBody.append(rowHTML);
     }
+    document.getElementById("total").innerText = "Total Price: $" + totalPrice.toString();
     // res += "</ul>";
 
     // clear the old array and show the new array in the frontend
