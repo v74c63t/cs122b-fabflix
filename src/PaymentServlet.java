@@ -54,6 +54,7 @@ public class PaymentServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         JsonObject responseJsonObject = new JsonObject();
         User customer = (User) request.getSession().getAttribute("user");
+        int customerId = customer.getId();
         HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>)request.getSession().getAttribute("itemCart");
         if(customer.getFirstName().equals(firstName) || customer.getLastName().equals(lastName)){
             responseJsonObject.addProperty("status", "fail");
@@ -120,7 +121,10 @@ public class PaymentServlet extends HttpServlet {
 //                        LocalDate currDate = LocalDate.now();
 //                        // figure out if we plan on updating the sales table to include more info
 //                        // insert each item into sale table
+                                // INSERT INTO Sales(customerId, movieId, saleDate, quantity, price, (maybe total but it can be calulcated anyways so it doesnt rly matter))
+                                // VALUES(customerId, movieId, currDate, itemCart.get(movieId).get('quantity'), itemCart.get(movieId).get('price')
 //                        // add sale id for that item into an arraylist to be set in session attribute
+                                // use SELECT LAST_INSERTED_ID()
 //                    }
                     // Get instance of current session
                     HttpSession session = request.getSession();

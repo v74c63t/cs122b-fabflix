@@ -65,7 +65,7 @@ public class ConfirmationServlet extends HttpServlet {
 
         // set a session attribute of the sale ids in payment
         ArrayList<Integer> saleIds = (ArrayList<Integer>) session.getAttribute("saleIds");
-        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
+//        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
 
 
         try (Connection conn = dataSource.getConnection()) {
@@ -79,7 +79,7 @@ public class ConfirmationServlet extends HttpServlet {
                 System.out.println(saleId);
                 Statement statement = conn.createStatement();
                 String query = String.join("",
-                        "SELECT s.id, s.movieId, m.title",
+                        "SELECT s.id, s.movieId, m.title, s.quantity, s.price",
                         "FROM sales as s, movies as m",
                         "WHERE s.id = ", String.valueOf(saleId), " AND s.movieId = m.id;");
                 System.out.println(query);
@@ -88,12 +88,14 @@ public class ConfirmationServlet extends HttpServlet {
                     String sale_id = rs.getString("id");
                     String movie_id = rs.getString("movieId");
                     String movie_title = rs.getString("title");
+                    String quantity = rs.getString("quantity");
+                    String price = rs.getString("price");
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("sale_id", sale_id);
                     jsonObject.addProperty("movie_id", movie_id);
                     jsonObject.addProperty("movie_title", movie_title);
-                    jsonObject.addProperty("movie_quantity", itemCart.get(movie_id).get("quantity"));
-                    jsonObject.addProperty("movie_price", itemCart.get(movie_id).get("price"));
+                    jsonObject.addProperty("movie_quantity", quantity);
+                    jsonObject.addProperty("movie_price", price);
                     jsonObject.addProperty("resultUrl", resultUrl);
                     jsonArray.add(jsonObject);
                 }

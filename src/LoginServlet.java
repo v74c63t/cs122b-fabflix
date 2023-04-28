@@ -69,11 +69,10 @@ public class LoginServlet extends HttpServlet {
             if(rs.next()) {
 //                while(rs.next()) {
                     // not sure whether to keep this information/add to user obj or not
-//                String customerId = rs.getString("id");
+                int customerId = rs.getInt("id");
                 String customerFirstName = rs.getString("firstName");
                 String customerLastName = rs.getString("lastName");
-//                String customerCcId = rs.getString("ccId");
-//                String customerAddress = rs.getString("address");
+
 //
 //                // Create a JsonObject based on the data we retrieve from rs
 //                responseJsonObject.addProperty("customer_id", customerId);
@@ -82,7 +81,7 @@ public class LoginServlet extends HttpServlet {
 //                responseJsonObject.addProperty("customer_cc_id", customerCcId);
 //                responseJsonObject.addProperty("customer_address", customerAddress);
 //                    if(rs.getString("password").equals(password)) {
-                        request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName));
+                        request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
                         responseJsonObject.addProperty("status", "success");
                         responseJsonObject.addProperty("message", "success");
 //                        break;
