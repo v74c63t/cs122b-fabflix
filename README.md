@@ -10,6 +10,9 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
 **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
+## Additional Notes
+### Substring Matching Design
+  - %az%: For a query 'az', it will return all strings the contain the pattern 'az' in the results
 ## Contributions
 ### Vanessa
   - Login Page (JS)
