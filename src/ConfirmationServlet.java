@@ -56,17 +56,6 @@ public class ConfirmationServlet extends HttpServlet {
         // Get the most recent result page url
         String resultUrl = (String) session.getAttribute("resultUrl");
         String sessionId = session.getId();
-        ArrayList<HashMap<String,String>> salesCart = (ArrayList<HashMap<String,String>>) session.getAttribute("salesCart");
-
-        System.out.println("saleId     | customerId     | movieId     | price     | total     | saleDate");
-        for (HashMap<String,String> entryMap: salesCart) {
-            System.out.print(entryMap.get("saleId") + "     | ");
-            System.out.print(entryMap.get("customerId") + "     | ");
-            System.out.print(entryMap.get("movieId") + "     | ");
-            System.out.print(entryMap.get("price") + "     | ");
-            System.out.print(entryMap.get("total") + "     | ");
-            System.out.println(entryMap.get("saleDate"));
-        }
 
         long lastAccessTime = session.getLastAccessedTime();
 
@@ -76,7 +65,7 @@ public class ConfirmationServlet extends HttpServlet {
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
         // set a session attribute of the sale ids in payment
-        ArrayList<Integer> saleIds = (ArrayList<Integer>) session.getAttribute("saleIds");
+        ArrayList<Integer> salesId = (ArrayList<Integer>) session.getAttribute("salesId");
 //        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
 
 
@@ -87,12 +76,12 @@ public class ConfirmationServlet extends HttpServlet {
             JsonArray previousItemsJsonArray = new JsonArray();
 //            previousItems.forEach(previousItemsJsonArray::add);
 //            for ( int i = 0; i < previousItems.size(); i++) {
-            for (int saleId : saleIds) {
+            for (int saleId : salesId) {
                 System.out.println(saleId);
                 Statement statement = conn.createStatement();
                 String query = String.join("",
-                        "SELECT s.id, s.movieId, m.title, s.quantity, s.price",
-                        "FROM sales as s, movies as m",
+                        "SELECT s.id, s.movieId, m.title, s.quantity, s.price, s.total ",
+                        "FROM test as s, movies as m ",
                         "WHERE s.id = ", String.valueOf(saleId), " AND s.movieId = m.id;");
                 System.out.println(query);
                 ResultSet rs = statement.executeQuery(query);
@@ -102,12 +91,14 @@ public class ConfirmationServlet extends HttpServlet {
                     String movie_title = rs.getString("title");
                     String quantity = rs.getString("quantity");
                     String price = rs.getString("price");
+                    String total = rs.getString("total");
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("sale_id", sale_id);
                     jsonObject.addProperty("movie_id", movie_id);
                     jsonObject.addProperty("movie_title", movie_title);
                     jsonObject.addProperty("movie_quantity", quantity);
                     jsonObject.addProperty("movie_price", price);
+                    jsonObject.addProperty("movie_total", total);
                     jsonObject.addProperty("resultUrl", resultUrl);
                     jsonArray.add(jsonObject);
                 }
