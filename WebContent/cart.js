@@ -66,6 +66,12 @@ function handleCartArray(resultData) {
         let rowHTML = "<tr>";
         // each item will be in a bullet point
         rowHTML += "<th>" + resultData[i]['movie_title'] + "</th>";
+        rowHTML += "<th><button type='submit' class='btn btn-secondary'><i class='fa-solid fa-minus'></i></button>" +
+            " # " + "<button type='submit' class='btn btn-secondary'><i class='fa-solid fa-plus'></i></button>" +
+            "</th>";
+        rowHTML += "<th><button type='submit' class='btn btn-outline-danger'>Delete</button></th>";
+        rowHTML += "<th>$#.##</th>";
+        rowHTML += "<th>$#.## * #</th>";
         rowHTML += '</tr>';
         cartTableBody.append(rowHTML);
     }
