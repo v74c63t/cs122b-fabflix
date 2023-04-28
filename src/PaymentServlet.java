@@ -127,27 +127,27 @@ public class PaymentServlet extends HttpServlet {
                                 // use SELECT LAST_INSERTED_ID()
 //                    }
                     // Get instance of current session
-                    HttpSession session = request.getSession();
-                    HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
-                    ArrayList<HashMap<String, String>> salesCart = (ArrayList<HashMap<String, String>>) session.getAttribute("salesCart");
-
-                    if (salesCart == null) {
-                        salesCart = new ArrayList<HashMap<String, String>>();
-                        for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
-//                            String query2 = String.join("",
-//                                    "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
-//                                    "VALUES (?, ?, CURRENT_DATE(), ?, ?, ?);");
+//                    HttpSession session = request.getSession();
+//                    HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
+//                    ArrayList<HashMap<String, String>> salesCart = (ArrayList<HashMap<String, String>>) session.getAttribute("salesCart");
 //
-//                            PreparedStatement statement2 = conn.createStatement(query2);
-
-                            HashMap<String,String> individualSale = new HashMap<String,String>();
-                            individualSale.put("movieId", entry.getKey());
-                            individualSale.put("quantity", String.valueOf(entry.getValue().get("quantity")));
-                            individualSale.put("price", String.valueOf(entry.getValue().get("price")));
-                            individualSale.put("total", String.valueOf(Math.round((entry.getValue().get("quantity"))*(entry.getValue().get("price")))*100/100);
-                        }
-
-                    }
+//                    if (salesCart == null) {
+//                        salesCart = new ArrayList<HashMap<String, String>>();
+//                        for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
+////                            String query2 = String.join("",
+////                                    "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
+////                                    "VALUES (?, ?, CURRENT_DATE(), ?, ?, ?);");
+////
+////                            PreparedStatement statement2 = conn.createStatement(query2);
+//
+//                            HashMap<String,String> individualSale = new HashMap<String,String>();
+//                            individualSale.put("movieId", entry.getKey());
+//                            individualSale.put("quantity", String.valueOf(entry.getValue().get("quantity")));
+//                            individualSale.put("price", String.valueOf(entry.getValue().get("price")));
+//                            individualSale.put("total", String.valueOf(Math.round((entry.getValue().get("quantity"))*(entry.getValue().get("price")))*100/100);
+//                        }
+//
+//                    }
 
                 } else {
                     responseJsonObject.addProperty("status", "fail");
