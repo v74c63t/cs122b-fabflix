@@ -94,6 +94,7 @@ public class SearchResultServlet extends HttpServlet {
             String limit = "";
             String offset = "";
             String order = "";
+
             if (!parameterMap.isEmpty()) {
                 query = query.concat("WHERE ");
                 Iterator<Map.Entry<String, String[]>> itr = parameterMap.entrySet().iterator();
