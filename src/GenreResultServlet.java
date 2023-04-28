@@ -86,16 +86,16 @@ public class GenreResultServlet extends HttpServlet {
 
 //          Construct a query with parameter represented by "?"
             String query = String.join("",
-                    "select count(*) over() as maxRecords, gim.movieId, title, year, director, rating ",
-                    "from genres_in_movies as gim ",
-                    "join movies as m ",
-                    "join ratings as r ",
-                    "on r.movieId = m.id ",
-                    "and m.id = gim.movieId ",
-                    "where genreId= ? ",
-                    "order by ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
-                    "limit ", numRecords, " ",
-                    "offset ", firstRecord, " ");
+                    "SELECT COUNT(*) over() AS maxRecords, gim.movieId, title, year, director, rating ",
+                    "FROM genres_in_movies AS gim ",
+                    "JOIN movies AS m ",
+                    "ON m.id = gim.movieId ",
+                    "LEFT JOIN ratings AS r ",
+                    "ON r.movieId = m.id ",
+                    "WHERE genreId= ? ",
+                    "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
+                    "LIMIT ", numRecords, " ",
+                    "OFFSET ", firstRecord, " ");
                     // temporary
 //                    "limit 25 ",
 //                    "offset 0 ");

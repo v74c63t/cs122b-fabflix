@@ -87,30 +87,26 @@ public class StartTitleResultServlet extends HttpServlet {
             String query = "";
             if(startTitle.equals("*")) {
                 query = String.join("",
-                        "select count(*) over() as maxRecords, r.movieId, title, year, director, rating ",
-                        "from movies as m ",
-                        "join ratings as r ",
-                        "on r.movieId = m.id ",
-                        "where title REGEXP '^[^A-Za-z0-9]' ",
-                        "order by ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
-                        "limit ", numRecords, " ",
-                        "offset ", firstRecord, " ");
-//                        "limit 25 ",
-//                        "offset 0 ");
+                        "SELECT COUNT(*) OVER() AS maxRecords, r.movieId, title, year, director, rating ",
+                        "FROM movies AS m ",
+                        "LEFT join ratings AS r ",
+                        "ON r.movieId = m.id ",
+                        "WHERE title REGEXP '^[^A-Za-z0-9]' ",
+                        "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
+                        "LIMIT ", numRecords, " ",
+                        "OFFSET ", firstRecord, " ");
 
             }
             else{
                 query = String.join("",
-                        "select count(*) over() as maxRecords, r.movieId, title, year, director, rating ",
-                        "from movies as m ",
-                        "join ratings as r ",
-                        "on r.movieId = m.id ",
-                        "where title like '", startTitle, "%' ",
-                        "order by ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
-                        "limit ", numRecords, " ",
-                        "offset ", firstRecord, " ");
-//                        "limit 25 ",
-//                        "offset 0 ");
+                        "SELECT COUNT(*) OVER() AS maxRecords, r.movieId, title, year, director, rating ",
+                        "FROM movies AS m ",
+                        "LEFT JOIN ratings AS r ",
+                        "ON r.movieId = m.id ",
+                        "WHERE title LIKE '", startTitle, "%' ",
+                        "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
+                        "LIMIT ", numRecords, " ",
+                        "OFFSET ", firstRecord, " ");
             }
             // Declare our statement
 //            PreparedStatement statement = conn.prepareStatement(query);
