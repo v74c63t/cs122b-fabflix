@@ -76,7 +76,7 @@ public class ConfirmationServlet extends HttpServlet {
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
         // set a session attribute of the sale ids in payment
-        ArrayList<Integer> saleIds = (ArrayList<Integer>) session.getAttribute("salesCart");
+        ArrayList<Integer> saleIds = (ArrayList<Integer>) session.getAttribute("salesId");
 //        HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
 
 
@@ -119,7 +119,7 @@ public class ConfirmationServlet extends HttpServlet {
                 statement.close();
             }
             session.removeAttribute("itemCart");
-            session.removeAttribute("salesCart");
+            session.removeAttribute("salesId");
 //            responseJsonObject.add("previousItems", jsonArray);
 
             // write all the data into the jsonObject
