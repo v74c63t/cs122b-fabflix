@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,8 +16,11 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
+import java.util.Map;
 
 @WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
 public class PaymentServlet extends HttpServlet {
@@ -118,6 +122,28 @@ public class PaymentServlet extends HttpServlet {
 //                        // insert each item into sale table
 //                        // add sale id for that item into an arraylist to be set in session attribute
 //                    }
+                    // Get instance of current session
+                    HttpSession session = request.getSession();
+                    HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
+                    ArrayList<HashMap<String, String>> salesCart = (ArrayList<HashMap<String, String>>) session.getAttribute("salesCart");
+
+                    if (salesCart == null) {
+                        salesCart = new ArrayList<HashMap<String, String>>();
+                        for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
+//                            String query2 = String.join("",
+//                                    "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
+//                                    "VALUES (?, ?, CURRENT_DATE(), ?, ?, ?);");
+//
+//                            PreparedStatement statement2 = conn.createStatement(query2);
+
+                            HashMap<String,String> individualSale = new HashMap<String,String>();
+                            individualSale.put("movieId", entry.getKey());
+                            individualSale.put("quantity", String.valueOf(entry.getValue().get("quantity")));
+                            individualSale.put("price", String.valueOf(entry.getValue().get("price")));
+                            individualSale.put("total", String.valueOf(Math.round((entry.getValue().get("quantity"))*(entry.getValue().get("price")))*100/100);
+                        }
+
+                    }
 
                 } else {
                     responseJsonObject.addProperty("status", "fail");

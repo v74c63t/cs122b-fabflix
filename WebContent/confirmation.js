@@ -28,6 +28,7 @@ function handleSearch(searchSubmitEvent) {
  * @param resultArray jsonObject, needs to be parsed to html
  */
 function handleConfirmationArray(resultData) {
+    console.log("HELLO");
     if(resultData[0]["resultUrl"] != null) {
         let resultTab = jQuery("#result");
         resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
