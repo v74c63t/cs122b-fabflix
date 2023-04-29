@@ -29,7 +29,7 @@ import java.util.Map;
 @WebServlet(name = "ConfirmationServlet", urlPatterns = "/api/confirmation")
 public class ConfirmationServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 10L;
+    private static final long serialVersionUID = 13L;
     private DataSource dataSource;
 
     public void init(ServletConfig config) {
@@ -67,23 +67,19 @@ public class ConfirmationServlet extends HttpServlet {
         // set a session attribute of the sale ids in payment
         ArrayList<Integer> saleIds = (ArrayList<Integer>) session.getAttribute("salesId");
 
+
         try (Connection conn = dataSource.getConnection()) {
 
-            // Loop through saleId array
+            // Log to localhost log
             for (int saleId : saleIds) {
-
-                // Declare our statement
+                System.out.println(saleId);
                 Statement statement = conn.createStatement();
-
-                // Query to get all info
                 String query = String.join("",
                         "SELECT s.id, s.movieId, m.title, s.quantity, s.price, s.total ",
                         "FROM sales as s, movies as m ",
                         "WHERE s.id = ", String.valueOf(saleId), " AND s.movieId = m.id;");
-
+                System.out.println(query);
                 ResultSet rs = statement.executeQuery(query);
-
-                // Add info int JsonObject
                 if (rs.next()) {
                     int sale_id = rs.getInt("id");
                     String movie_id = rs.getString("movieId");
@@ -91,7 +87,6 @@ public class ConfirmationServlet extends HttpServlet {
                     int quantity = rs.getInt("quantity");
                     float price = rs.getFloat("price");
                     float movie_total = rs.getFloat("total");
-
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("sale_id", String.valueOf(sale_id));
                     jsonObject.addProperty("movie_id", movie_id);
@@ -107,8 +102,6 @@ public class ConfirmationServlet extends HttpServlet {
             }
             session.removeAttribute("itemCart");
             session.removeAttribute("salesId");
-
-            // write all the data into the jsonObject
             response.getWriter().write(jsonArray.toString());
 
         } catch (Exception e) {

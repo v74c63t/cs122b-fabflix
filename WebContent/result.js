@@ -57,6 +57,7 @@ function handleSearch(searchSubmitEvent) {
 }
 
 function movieSettingsSetup(){
+    // set as hidden inputs so they show up in url if it exists
     if(getParameterByName('genreId')) {
         $("#genreId").attr('name', 'genreId');
         $("#genreId").attr('value', getParameterByName('genreId'));

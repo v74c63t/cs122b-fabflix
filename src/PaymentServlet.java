@@ -119,7 +119,6 @@ public class PaymentServlet extends HttpServlet {
                     System.out.println("SUCCESS");
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
-
                     // Get instance of current session
                     HttpSession session = request.getSession();
 
@@ -137,7 +136,6 @@ public class PaymentServlet extends HttpServlet {
                     for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
 
                         String insertQuery = String.join("",
-//                                "INSERT INTO test (customerId, movieId, saleDate, quantity, price, total) ",
                                 "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
                                 "VALUES (?, ?, ?, ?, ?, ?);");
 

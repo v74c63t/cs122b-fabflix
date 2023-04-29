@@ -60,6 +60,7 @@ public class SingleMovieServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
+            // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
             String query = String.join("",
@@ -88,7 +89,8 @@ public class SingleMovieServlet extends HttpServlet {
                 String movieDirector = rs.getString("director");
                 String movieRating = rs.getString("rating");
 
-                // New query for getting all stars
+                // Construct query for getting all stars
+                // with parameter represented as "?"
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
@@ -102,10 +104,8 @@ public class SingleMovieServlet extends HttpServlet {
 
                 // Declare statement for inner queries
                 PreparedStatement statement2 = conn.prepareStatement(query);
-
                 // Putting id value as parameter in query
                 statement2.setString(1, id);
-
                 // Execute inner query
                 ResultSet newRS = statement2.executeQuery();
 
@@ -126,6 +126,8 @@ public class SingleMovieServlet extends HttpServlet {
                         "AND g.id=gim.genreId ",
                         "ORDER BY name ");
 
+
+
                 statement2 = conn.prepareStatement(query);
                 statement2.setString(1, id);
                 newRS = statement2.executeQuery();
@@ -135,7 +137,6 @@ public class SingleMovieServlet extends HttpServlet {
                 while (newRS.next()) {
                     genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
-
                 newRS.close();
                 statement2.close();
                 String genres = String.join(", ", genresArray);

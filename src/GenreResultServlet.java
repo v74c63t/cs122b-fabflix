@@ -62,7 +62,6 @@ public class GenreResultServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        // Testing out Servlet functions
         String genreId = request.getParameter("genreId");
 
         //figure out how to add this info into url
@@ -84,7 +83,7 @@ public class GenreResultServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
 
-            // Construct a query with parameter represented by "?"
+//          Construct a query with parameter represented by "?"
             String query = String.join("",
                     "SELECT COUNT(*) over() AS maxRecords, gim.movieId, title, year, director, rating ",
                     "FROM genres_in_movies AS gim ",
@@ -118,7 +117,7 @@ public class GenreResultServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
                 String max_records = rs.getString("maxRecords");
 
-                // New Query for getting genres
+                // New Query for getting stars
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",

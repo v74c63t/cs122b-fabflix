@@ -62,7 +62,6 @@ public class SearchResultServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        // Testing out Servlet functions
         Map<String, String[]> parameterMap = request.getParameterMap();
 
         // The log message can be found in localhost log

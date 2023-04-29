@@ -62,17 +62,14 @@ public class StartTitleResultServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        // Testing out Servlet functions
         String startTitle = request.getParameter("startTitle");
-
         // firstRecord used for offset
         String firstRecord = request.getParameter("firstRecord");
-
         // numRecords decide how many to display on each page
         // used for limit
         String numRecords = request.getParameter("numRecords");
 
-        // sortBy
+        //sortBy
         String sortBy = request.getParameter("sortBy");
         String[] sort = sortBy.split(" ");
 
@@ -85,7 +82,7 @@ public class StartTitleResultServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
 
-            //Construct a query with parameter represented by "?"
+//          Construct a query with parameter represented by "?"
             String query = "";
             if(startTitle.equals("*")) {
                 query = String.join("",
@@ -111,12 +108,10 @@ public class StartTitleResultServlet extends HttpServlet {
                         "OFFSET ", firstRecord, " ");
             }
 
-            // Declare our statement
             Statement statement = conn.createStatement();
             Statement statement2 = conn.createStatement();
 
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
+            System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();
@@ -129,7 +124,7 @@ public class StartTitleResultServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
                 String max_records = rs.getString("maxRecords");
 
-                // New Query for getting stars
+                // New Query for getting stars sorted by the amount of movies they appear in
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
@@ -152,7 +147,7 @@ public class StartTitleResultServlet extends HttpServlet {
                 newRS.close();
                 String stars = String.join(", ", starsArray);
 
-                // New Query for getting genres
+                // New Query for getting genres sorted by name
                 query = String.join("",
                         "select genreId, name ",
                         "from genres AS g ",

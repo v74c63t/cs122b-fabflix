@@ -1,11 +1,5 @@
 let movie_search_form = $("#movie-search-form");
 
-function htmlHREF(html_page, id, name) {
-    return '<a style="color:darkturquoise;" href="' + html_page + '.html?id=' + id + '">' +
-        name +     // display star_name for the link text
-        '</a>';
-}
-
 function handleGenreResult(resultData) {
     console.log("handleResult: populating movies info from resultData");
     console.log(resultData);
@@ -16,7 +10,6 @@ function handleGenreResult(resultData) {
         let genre = resultData[i]["genre_name"];
         let genreId = resultData[i]['genre_id'];
         let listHTML = "<h4><a style='color: #ffc107;' href='result.html?genreId=" + genreId +'&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' +  "'>" + genre + "</a></h4>";
-        // add in the href later
         genreList.append(listHTML);
     }
 }
@@ -30,7 +23,6 @@ function handleTitle() {
         alpha = String.fromCharCode(alpha.charCodeAt(0) + 1);
         alphanumList.append(alphaHTML);
     }
-    // let numList = jQuery("#num-list");
     alphanumList.append("<br>")
     let num = '0';
     for(let i = 0; i < 10; i++){
@@ -75,8 +67,8 @@ function handleSearch(searchSubmitEvent) {
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/maininit", // Setting request url, which is mapped by MoviesServlet
-    success: (resultData) => handleInit(resultData) // Setting callback function to handle data returned successfully by the MoviesServlet
+    url: "api/maininit", // Setting request url, which is mapped by MainInitServlet
+    success: (resultData) => handleInit(resultData) // Setting callback function to handle data returned successfully by the MainInitServlet
 });
 
 // Binds submit action to handleSearch handler function

@@ -19,7 +19,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-// Declaring a WebServlet called StarsServlet, which maps to url "/api/movies"
+// Declaring a WebServlet called MainInitServlet, which maps to url "/api/maininit"
+// This is used to get all the genres in the database for the browsing by genre list
 @WebServlet(name = "MainInitServlet", urlPatterns = "/api/maininit")
 public class MainInitServlet extends HttpServlet {
     private static final long serialVersionUID = 5L;

@@ -102,7 +102,6 @@ public class CartServlet extends HttpServlet {
             responseJsonObject.add("previousItems", jsonArray);
 
             // write all the data into the jsonObject
-//            response.getWriter().write(responseJsonObject.toString());
             response.getWriter().write(jsonArray.toString());
 
         }catch (Exception e) {
@@ -134,7 +133,7 @@ public class CartServlet extends HttpServlet {
         if (itemCart == null) {
             itemCart = new HashMap<>();
             HashMap<String, Double> detail = new HashMap<>();
-            double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100;
+            double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100; // randomized price
             detail.put("quantity", quantity);
             detail.put("price", price);
             itemCart.put(item, detail);
@@ -144,7 +143,9 @@ public class CartServlet extends HttpServlet {
             // will only be executed by one thread at a time
             synchronized (itemCart) {
                 if ( itemCart.containsKey(item) ) {
-                    // increment quantity by 1
+                    // if quantity == 1 increment
+                    // if quantity == -1 decrement
+                    // if quantity == 0 remove
                     if(quantity == 0) {
                         itemCart.remove(item);
                     }
@@ -153,10 +154,10 @@ public class CartServlet extends HttpServlet {
                         itemCart.get(item).put("price", itemCart.get(item).get("price"));
                     }
                     else if(itemCart.get(item).get("quantity") + quantity <= 0){
+                        System.out.println(item);
                         itemCart.remove(item);
                     }
                 }else {
-                    // Create new map for items not in cart
                     HashMap<String, Double> detail = new HashMap<>();
                     detail.put("quantity", quantity);
                     double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100;
@@ -167,7 +168,6 @@ public class CartServlet extends HttpServlet {
             }
         }
 
-        // Convert itemCart to JsonArray of JsonObjects for output
         ArrayList<Map.Entry<String,HashMap<String,Double>>> itemArray = new ArrayList<>(itemCart.entrySet());
         Gson gson = new Gson();
         String responseJsonObject = gson.toJson(itemArray);

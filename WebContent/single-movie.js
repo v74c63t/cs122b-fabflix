@@ -70,7 +70,6 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        // rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
         let genresArray = resultData[i]["movie_genres"].split(", ");
         rowHTML += "<th>";
         for(let genres in genresArray) {
@@ -90,7 +89,7 @@ function handleResult(resultData) {
         if(resultData[i]["movie_rating"] != null)
             rowHTML += "<th>" + resultData[i]["movie_rating"] +
                     " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
-        else {
+        else { // replace null ratings with 0.0
             rowHTML += "<th>" + "0.0" +
                 " <i class='fa-sharp fa-solid fa-star' style='color: #ffd747;'></i></th>";
         }
