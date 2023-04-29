@@ -33,7 +33,7 @@ function handleConfirmationArray(resultData) {
         let resultTab = jQuery("#result");
         resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
     }
-    console.log(resultData);
+    // console.log(resultData);
     let confirmationTableBody = $("#confirmation_table_body");
     let totalPrice = 0;
     for (let i = 0; i < resultData.length; i++) {

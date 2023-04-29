@@ -93,7 +93,7 @@ function movieSettingsSetup(){
 
 function handleResult(resultData) {
     console.log("handleResult: movie info from resultData");
-    console.log(resultData)
+    // console.log(resultData)
     movieSettingsSetup();
     let url = window.location.href;
     // assuming that firstRecord would always be the last parameter will adjust if not the case later

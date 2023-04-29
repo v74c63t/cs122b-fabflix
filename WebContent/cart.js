@@ -37,7 +37,7 @@ function handleCartArray(resultData) {
             let resultTab = jQuery("#result");
             resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
         }
-        console.log(resultData);
+        // console.log(resultData);
         let totalPrice = 0;
         for (let i = 0; i < resultData.length; i++) {
             let rowHTML = "<tr>";

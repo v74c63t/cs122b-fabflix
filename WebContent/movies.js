@@ -81,9 +81,9 @@ function handleCart(movieId) {
         method: "POST",
         data: {item: movieId, quantity: 1.0},
         success: resultDataString => {
-            let resultDataJson = JSON.parse(resultDataString);
-            console.log(resultDataJson);
-            console.log(resultDataJson[0]["key"], resultDataJson[0]["value"]["price"],resultDataJson[0]["value"]["quantity"])
+            // let resultDataJson = JSON.parse(resultDataString);
+            // console.log(resultDataJson);
+            // console.log(resultDataJson[0]["key"], resultDataJson[0]["value"]["price"],resultDataJson[0]["value"]["quantity"])
             alert("Successfully added to cart");
         }
     })
