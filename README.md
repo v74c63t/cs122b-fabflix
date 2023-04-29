@@ -12,7 +12,8 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
 ## Additional Notes
 ### Substring Matching Design
-  - %az%: For a query 'az', it will return all strings the contain the pattern 'az' in the results
+  - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
+  - LIKE '%AB%'
 ## Contributions
 ### Vanessa
   - Login Page (JS)
@@ -20,7 +21,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Main Page (JS)
   - Main Page Servlet
   - Confirmation Page (HTML/JS)
-  - Confirmation Servlet
+  - Confirmation Page Servlet
   - Payment Page (HTML/CSS/JS)
   - Payment Page Servlet
   - Cart Page (HTML/JS)
@@ -33,6 +34,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Login Page (HTML/CSS)
   - Main Page (HTML/CSS)
   - Main Page Servlet
+  - Confirmation Page Servlet
   - Payment Page Servlet
   - Cart Page Servlet
   - Genre Results Servlet
