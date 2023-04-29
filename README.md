@@ -3,9 +3,9 @@
 ### Deployment
 Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
 ### Demo
-**URL:** 
+**URL:** `https://youtu.be/tFqOc9hKA5c`
 ### AWS
-**URL:**
+**URL:** `http://54.215.234.136:8080/cs122b-project2/`
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
