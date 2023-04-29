@@ -62,7 +62,6 @@ public class GenreResultServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        // Testing out Servlet functions
         String genreId = request.getParameter("genreId");
 
         //figure out how to add this info into url
@@ -96,9 +95,7 @@ public class GenreResultServlet extends HttpServlet {
                     "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
                     "LIMIT ", numRecords, " ",
                     "OFFSET ", firstRecord, " ");
-                    // temporary
-//                    "limit 25 ",
-//                    "offset 0 ");
+
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
@@ -121,12 +118,6 @@ public class GenreResultServlet extends HttpServlet {
                 String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
-//                query = String.join("",
-//                        "select starId, name ",
-//                        "from stars as s ",
-//                        "join stars_in_movies as sim ",
-//                        "on id = starId ",
-//                        "where sim.movieId='", movie_id, "'");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",

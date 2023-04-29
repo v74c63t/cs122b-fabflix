@@ -63,7 +63,6 @@ public class SearchResultServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        // Testing out Servlet functions
         Map<String, String[]> parameterMap = request.getParameterMap();
 
 
@@ -164,12 +163,6 @@ public class SearchResultServlet extends HttpServlet {
                 String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
-//                query = String.join("",
-//                        "select starId, name ",
-//                        "from stars as s ",
-//                        "join stars_in_movies as sim ",
-//                        "on id = starId ",
-//                        "where sim.movieId='", movie_id, "'");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",

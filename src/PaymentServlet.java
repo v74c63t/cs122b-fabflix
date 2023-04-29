@@ -119,16 +119,6 @@ public class PaymentServlet extends HttpServlet {
                     System.out.println("SUCCESS");
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
-//                    LocalDate currDate = LocalDate.now();
-//                    for(String movieId: itemCart.keySet()) {
-//                        LocalDate currDate = LocalDate.now();git
-//                        // figure out if we plan on updating the sales table to include more info
-//                        // insert each item into sale table
-                                // INSERT INTO Sales(customerId, movieId, saleDate, quantity, price, (maybe total but it can be calulcated anyways so it doesnt rly matter))
-                                // VALUES(customerId, movieId, currDate, itemCart.get(movieId).get('quantity'), itemCart.get(movieId).get('price')
-//                        // add sale id for that item into an arraylist to be set in session attribute
-                                // use SELECT LAST_INSERTED_ID()
-//                    }
                     // Get instance of current session
                     HttpSession session = request.getSession();
 
@@ -146,7 +136,6 @@ public class PaymentServlet extends HttpServlet {
                     for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
 
                         String insertQuery = String.join("",
-//                                "INSERT INTO test (customerId, movieId, saleDate, quantity, price, total) ",
                                 "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
                                 "VALUES (?, ?, ?, ?, ?, ?);");
 

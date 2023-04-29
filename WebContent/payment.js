@@ -15,11 +15,10 @@ function handlePaymentResult(resultDataString) {
 
     // If login succeeds, it will redirect the user to index.html
     if (resultDataJson["status"] === "success") {
-        alert(resultDataJson["message"])
         window.location.replace("confirmation.html");
     } else {
         // If login fails, the web page will display
-        // error messages on <div> with id "login_error_message"
+        // error messages on <div> with id "payment_error_message"
         console.log("show error message");
         console.log(resultDataJson["message"]);
         $("#payment_error_message").text(resultDataJson["message"]);
