@@ -1,7 +1,7 @@
 
 /**
- * This User class only has the username field in this example.
- * You can add more attributes such as the user's shopping cart items.
+ * firstName and lastName is used later for credit card validation
+ * id is used to insert a value into the sales table once a payment goes through
  */
 public class User {
 
