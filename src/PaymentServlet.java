@@ -115,7 +115,6 @@ public class PaymentServlet extends HttpServlet {
                 ResultSet rs = statement.executeQuery();
 
                 if (rs.next()) {
-                    System.out.println("SUCCESS");
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                     // Get instance of current session
