@@ -76,7 +76,8 @@ public class CartServlet extends HttpServlet {
             request.getServletContext().log("getting " + itemCart.size() + " items");
             JsonArray previousItemsJsonArray = new JsonArray();
 
-            for(String movieId: itemCart.keySet()){
+            for(Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet()){
+                String movieId = entry.getKey();
                 System.out.println(movieId);
                 Statement statement = conn.createStatement();
                 String query = String.join("",
