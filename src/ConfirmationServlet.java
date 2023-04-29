@@ -72,14 +72,17 @@ public class ConfirmationServlet extends HttpServlet {
 
             // Log to localhost log
             for (int saleId : saleIds) {
-                System.out.println(saleId);
+
+                // Declare our statement
                 Statement statement = conn.createStatement();
+
                 String query = String.join("",
                         "SELECT s.id, s.movieId, m.title, s.quantity, s.price, s.total ",
                         "FROM sales as s, movies as m ",
                         "WHERE s.id = ", String.valueOf(saleId), " AND s.movieId = m.id;");
-                System.out.println(query);
+
                 ResultSet rs = statement.executeQuery(query);
+
                 if (rs.next()) {
                     int sale_id = rs.getInt("id");
                     String movie_id = rs.getString("movieId");
@@ -87,6 +90,7 @@ public class ConfirmationServlet extends HttpServlet {
                     int quantity = rs.getInt("quantity");
                     float price = rs.getFloat("price");
                     float movie_total = rs.getFloat("total");
+
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("sale_id", String.valueOf(sale_id));
                     jsonObject.addProperty("movie_id", movie_id);

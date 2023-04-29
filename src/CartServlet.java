@@ -78,17 +78,21 @@ public class CartServlet extends HttpServlet {
 
             for(Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet()){
                 String movieId = entry.getKey();
-                System.out.println(movieId);
+//                System.out.println(movieId);
+                // Declare our statement
                 Statement statement = conn.createStatement();
+
                 String query = String.join("",
                         "SELECT * ",
                         "FROM movies as m ",
                         "WHERE m.id = '", movieId, "';");
-                System.out.println(query);
+
                 ResultSet rs = statement.executeQuery(query);
-                if(rs.next()) {
+
+                if (rs.next()) {
                     String movie_id = rs.getString("id");
                     String movie_title = rs.getString("title");
+
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("movie_id", movie_id);
                     jsonObject.addProperty("movie_title", movie_title);
@@ -131,13 +135,17 @@ public class CartServlet extends HttpServlet {
 
         // get the previous items in a ArrayList
         HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
+
+        // Create new item and add to itemCart if its empty
         if (itemCart == null) {
             itemCart = new HashMap<>();
             HashMap<String, Double> detail = new HashMap<>();
             double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100; // randomized price
+
             detail.put("quantity", quantity);
             detail.put("price", price);
             itemCart.put(item, detail);
+
             session.setAttribute("itemCart", itemCart);
         } else {
             // prevent corrupted states through sharing under multi-threads
@@ -169,6 +177,7 @@ public class CartServlet extends HttpServlet {
             }
         }
 
+        // Convert to JsonArray of JsonObjects
         ArrayList<Map.Entry<String,HashMap<String,Double>>> itemArray = new ArrayList<>(itemCart.entrySet());
         Gson gson = new Gson();
         String responseJsonObject = gson.toJson(itemArray);

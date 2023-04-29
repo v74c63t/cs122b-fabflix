@@ -60,7 +60,6 @@ public class SingleMovieServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
             String query = String.join("",
@@ -104,8 +103,10 @@ public class SingleMovieServlet extends HttpServlet {
 
                 // Declare statement for inner queries
                 PreparedStatement statement2 = conn.prepareStatement(query);
+
                 // Putting id value as parameter in query
                 statement2.setString(1, id);
+
                 // Execute inner query
                 ResultSet newRS = statement2.executeQuery();
 
@@ -125,8 +126,6 @@ public class SingleMovieServlet extends HttpServlet {
                         "WHERE gim.movieId=? ",
                         "AND g.id=gim.genreId ",
                         "ORDER BY name ");
-
-
 
                 statement2 = conn.prepareStatement(query);
                 statement2.setString(1, id);
