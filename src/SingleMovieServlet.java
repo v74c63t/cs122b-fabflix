@@ -60,7 +60,6 @@ public class SingleMovieServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
             String query = String.join("",
@@ -89,13 +88,7 @@ public class SingleMovieServlet extends HttpServlet {
                 String movieDirector = rs.getString("director");
                 String movieRating = rs.getString("rating");
 
-                // Construct query for getting all stars
-                // with parameter represented as "?"
-//                query = String.join("",
-//                        "SELECT starId, name as stars ",
-//                        "FROM stars AS s, stars_in_movies AS sim ",
-//                        "WHERE sim.movieId=? ",
-//                        "AND sim.starId=s.id");
+                // New query for getting all stars
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
@@ -109,8 +102,10 @@ public class SingleMovieServlet extends HttpServlet {
 
                 // Declare statement for inner queries
                 PreparedStatement statement2 = conn.prepareStatement(query);
+
                 // Putting id value as parameter in query
                 statement2.setString(1, id);
+
                 // Execute inner query
                 ResultSet newRS = statement2.executeQuery();
 
@@ -131,26 +126,16 @@ public class SingleMovieServlet extends HttpServlet {
                         "AND g.id=gim.genreId ",
                         "ORDER BY name ");
 
-
-//                query = String.join("",
-//                        "SELECT name as genres ",
-//                        "FROM genres AS g, genres_in_movies AS gim ",
-//                        "WHERE gim.movieId=? ",
-//                        "AND gim.genreId=g.id");
-
                 statement2 = conn.prepareStatement(query);
                 statement2.setString(1, id);
                 newRS = statement2.executeQuery();
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
-//                while (newRS.next()) {
-//                    genresArray.add(newRS.getString("genres"));
-//                }
                 while (newRS.next()) {
-//                    genresArray.add(newRS.getString("name"));
                     genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
+
                 newRS.close();
                 statement2.close();
                 String genres = String.join(", ", genresArray);

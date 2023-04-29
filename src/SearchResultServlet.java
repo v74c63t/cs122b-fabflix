@@ -42,7 +42,6 @@ public class SearchResultServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    // note: have to modify and adjust to use code
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Get an instance of the current session
@@ -65,7 +64,6 @@ public class SearchResultServlet extends HttpServlet {
         // Retrieve parameter id from url request.
         // Testing out Servlet functions
         Map<String, String[]> parameterMap = request.getParameterMap();
-
 
         // The log message can be found in localhost log
         request.getServletContext().log("getting parameters: " + parameterMap.toString());
@@ -144,7 +142,6 @@ public class SearchResultServlet extends HttpServlet {
             PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
 
-
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
             for (int i = 0; i < queryParameters.size(); ++i) {
@@ -164,12 +161,6 @@ public class SearchResultServlet extends HttpServlet {
                 String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
-//                query = String.join("",
-//                        "select starId, name ",
-//                        "from stars as s ",
-//                        "join stars_in_movies as sim ",
-//                        "on id = starId ",
-//                        "where sim.movieId='", movie_id, "'");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",

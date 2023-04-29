@@ -64,13 +64,15 @@ public class StartTitleResultServlet extends HttpServlet {
         // Retrieve parameter id from url request.
         // Testing out Servlet functions
         String startTitle = request.getParameter("startTitle");
+
         // firstRecord used for offset
         String firstRecord = request.getParameter("firstRecord");
+
         // numRecords decide how many to display on each page
         // used for limit
         String numRecords = request.getParameter("numRecords");
 
-        //sortBy
+        // sortBy
         String sortBy = request.getParameter("sortBy");
         String[] sort = sortBy.split(" ");
 
@@ -83,7 +85,7 @@ public class StartTitleResultServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
 
-//          Construct a query with parameter represented by "?"
+            //Construct a query with parameter represented by "?"
             String query = "";
             if(startTitle.equals("*")) {
                 query = String.join("",
@@ -108,15 +110,13 @@ public class StartTitleResultServlet extends HttpServlet {
                         "LIMIT ", numRecords, " ",
                         "OFFSET ", firstRecord, " ");
             }
+
             // Declare our statement
-//            PreparedStatement statement = conn.prepareStatement(query);
             Statement statement = conn.createStatement();
             Statement statement2 = conn.createStatement();
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
-//            statement.setString(1, startTitle);
-            System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();
@@ -130,12 +130,6 @@ public class StartTitleResultServlet extends HttpServlet {
                 String max_records = rs.getString("maxRecords");
 
                 // New Query for getting stars
-//                query = String.join("",
-//                        "select starId, name ",
-//                        "from stars as s ",
-//                        "join stars_in_movies as sim ",
-//                        "on id = starId ",
-//                        "where sim.movieId='", movie_id, "'");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",

@@ -61,6 +61,7 @@ public class MoviesServlet extends HttpServlet {
             // Declare statement for inner query
             Statement statement2 = conn.createStatement();
 
+            // Query to get top 20 movies
             String query = String.join("",
                     "SELECT rating, id, title, year, director ",
                     "FROM movies AS m, ratings AS r ",
@@ -82,12 +83,6 @@ public class MoviesServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
 
                 // New Query for getting top 3 stars
-//                query = String.join("",
-//                        "SELECT starId, name ",
-//                        "FROM stars AS s, stars_in_movies AS sim ",
-//                        "WHERE sim.movieId='", movie_id, "' ",
-//                        "AND s.id=sim.starId ",
-//                        "LIMIT 3");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
@@ -124,7 +119,6 @@ public class MoviesServlet extends HttpServlet {
                 ArrayList<String> genresArray = new ArrayList<>();
 
                 while (newRS.next()) {
-//                    genresArray.add(newRS.getString("name"));
                     genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();

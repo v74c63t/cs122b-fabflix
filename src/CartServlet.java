@@ -64,11 +64,8 @@ public class CartServlet extends HttpServlet {
         responseJsonObject.addProperty("sessionID", sessionId);
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
-//        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
         HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
-//        if (previousItems == null) {
-//            previousItems = new ArrayList<String>();
-//        }
+
         if (itemCart == null) {
             itemCart = new HashMap<>();
         }
@@ -78,10 +75,8 @@ public class CartServlet extends HttpServlet {
             // Log to localhost log
             request.getServletContext().log("getting " + itemCart.size() + " items");
             JsonArray previousItemsJsonArray = new JsonArray();
-//            previousItems.forEach(previousItemsJsonArray::add);
-//            for ( int i = 0; i < previousItems.size(); i++) {
+
             for(String movieId: itemCart.keySet()){
-//                String movieId = itemCart.keySet();
                 System.out.println(movieId);
                 Statement statement = conn.createStatement();
                 String query = String.join("",
@@ -158,10 +153,10 @@ public class CartServlet extends HttpServlet {
                         itemCart.get(item).put("price", itemCart.get(item).get("price"));
                     }
                     else if(itemCart.get(item).get("quantity") + quantity <= 0){
-                        System.out.println(item);
                         itemCart.remove(item);
                     }
                 }else {
+                    // Create new map for items not in cart
                     HashMap<String, Double> detail = new HashMap<>();
                     detail.put("quantity", quantity);
                     double price = Math.floor(Math.random() * (10000 - 100) + 100) / 100;
@@ -172,15 +167,10 @@ public class CartServlet extends HttpServlet {
             }
         }
 
-//        JsonObject responseJsonObject = Json.createObjectBuilder(itemCart).build();
-
-//        JsonArray previousItemsJsonArray = new JsonArray();
+        // Convert itemCart to JsonArray of JsonObjects for output
         ArrayList<Map.Entry<String,HashMap<String,Double>>> itemArray = new ArrayList<>(itemCart.entrySet());
         Gson gson = new Gson();
         String responseJsonObject = gson.toJson(itemArray);
-//        System.out.println(responseJsonObject);
-//        itemCart.forEach(previousItemsJsonArray::add);
-//        responseJsonObject.add("previousItems", previousItemsJsonArray);
 
         response.getWriter().write(responseJsonObject);
     }
