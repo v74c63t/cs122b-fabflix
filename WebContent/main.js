@@ -36,11 +36,9 @@ function handleTitle() {
     for(let i = 0; i < 10; i++){
         let numHTML = "<h4><a style='color: #ffc107;' href='result.html?startTitle=" + num + '&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' +"'>" + num + '</a></h4>';
         num = String.fromCharCode(num.charCodeAt(0) + 1);
-        // numList.append(numHTML);
         alphanumList.append(numHTML);
     }
     let numHTML = "<h4><a style='color: #ffc107;' href='result.html?startTitle=*&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0'>*</a></h4>";
-    // numList.append(numHTML);
     alphanumList.append(numHTML);
 }
 function handleInit(resultData) {
