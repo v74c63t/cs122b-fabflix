@@ -86,7 +86,7 @@ public class StartTitleResultServlet extends HttpServlet {
             String query = "";
             if(startTitle.equals("*")) {
                 query = String.join("",
-                        "SELECT COUNT(*) OVER() AS maxRecords, r.movieId, title, year, director, rating ",
+                        "SELECT COUNT(*) OVER() AS maxRecords, m.id as movieId, title, year, director, rating ",
                         "FROM movies AS m ",
                         "LEFT join ratings AS r ",
                         "ON r.movieId = m.id ",
@@ -98,7 +98,7 @@ public class StartTitleResultServlet extends HttpServlet {
             }
             else{
                 query = String.join("",
-                        "SELECT COUNT(*) OVER() AS maxRecords, r.movieId, title, year, director, rating ",
+                        "SELECT COUNT(*) OVER() AS maxRecords, m.id as movieId, title, year, director, rating ",
                         "FROM movies AS m ",
                         "LEFT JOIN ratings AS r ",
                         "ON r.movieId = m.id ",

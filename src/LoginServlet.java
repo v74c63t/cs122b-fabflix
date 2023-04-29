@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             String query = String.join("",
                     "SELECT *",
                     "FROM customers ",
-                    "WHERE email=? AND password=?");
+                    "WHERE email=? ");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
@@ -61,37 +61,19 @@ public class LoginServlet extends HttpServlet {
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
             statement.setString(1, email);
-            statement.setString(2, password);
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-                int customerId = rs.getInt("id");
-                String customerFirstName = rs.getString("firstName");
-                String customerLastName = rs.getString("lastName");
-                // additional information is stored so it can be used for payment confirmation later
-                request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
-                responseJsonObject.addProperty("status", "success");
-                responseJsonObject.addProperty("message", "success");
-
-            }
-            else {
-                // check what type of error is occuring
-                String query2 = String.join("",
-                        "SELECT *",
-                        "FROM customers ",
-                        "WHERE email=? ");
-                PreparedStatement statement2 = conn.prepareStatement(query2);
-                statement2.setString(1, email);
-                ResultSet rs2 = statement2.executeQuery();
-                if(rs2.next()) {
-                    // Login fail
-                    responseJsonObject.addProperty("status", "fail");
-                    // Log to localhost log
-                    request.getServletContext().log("Login failed");
-
-                    responseJsonObject.addProperty("message", "Incorrect password");
+                if (rs.getString("password").equals(password)) {
+                    int customerId = rs.getInt("id");
+                    String customerFirstName = rs.getString("firstName");
+                    String customerLastName = rs.getString("lastName");
+                    // additional information is stored so it can be used for payment confirmation later
+                    request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
+                    responseJsonObject.addProperty("status", "success");
+                    responseJsonObject.addProperty("message", "success");
                 }
                 else {
                     // Login fail
@@ -99,10 +81,18 @@ public class LoginServlet extends HttpServlet {
                     // Log to localhost log
                     request.getServletContext().log("Login failed");
 
-                    responseJsonObject.addProperty("message", "User with that email doesn't exist");
+                    responseJsonObject.addProperty("message", "Incorrect password");
                 }
-                rs2.close();
-                statement2.close();
+
+            }
+            else {
+                // Login fail
+                responseJsonObject.addProperty("status", "fail");
+                // Log to localhost log
+                request.getServletContext().log("Login failed");
+
+                responseJsonObject.addProperty("message", "User with that email doesn't exist");
+
             }
         rs.close();
         statement.close();

@@ -7,9 +7,9 @@ let login_form = $("#login_form");
 function handleLoginResult(resultDataString) {
     let resultDataJson = JSON.parse(JSON.stringify(resultDataString));
 
-    console.log("handle login response");
-    console.log(resultDataJson);
-    console.log(resultDataJson["status"]);
+    // console.log("handle login response");
+    // console.log(resultDataJson);
+    // console.log(resultDataJson["status"]);
 
     // If login succeeds, it will redirect the user to index.html
     if (resultDataJson["status"] === "success") {
