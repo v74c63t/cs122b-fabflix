@@ -42,7 +42,6 @@ public class SearchResultServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    // note: have to modify and adjust to use code
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Get an instance of the current session
@@ -64,7 +63,6 @@ public class SearchResultServlet extends HttpServlet {
 
         // Retrieve parameter id from url request.
         Map<String, String[]> parameterMap = request.getParameterMap();
-
 
         // The log message can be found in localhost log
         request.getServletContext().log("getting parameters: " + parameterMap.toString());
@@ -142,7 +140,6 @@ public class SearchResultServlet extends HttpServlet {
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
             Statement statement2 = conn.createStatement();
-
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query

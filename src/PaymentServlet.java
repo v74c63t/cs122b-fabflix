@@ -48,16 +48,15 @@ public class PaymentServlet extends HttpServlet {
         String lastName = request.getParameter("last");
 
         String expirationDate = request.getParameter("expirationDate");
-        System.out.println(request.getParameter("expirationDate"));
-        System.out.println(request.getParameter("ccId"));
-        System.out.println(request.getParameter("first"));
-        System.out.println(request.getParameter("last"));
+
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
         JsonObject responseJsonObject = new JsonObject();
         User customer = (User) request.getSession().getAttribute("user");
         int customerId = customer.getId();
+
         HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>)request.getSession().getAttribute("itemCart");
+
         if(customer.getFirstName().equals(firstName) || customer.getLastName().equals(lastName)){
             responseJsonObject.addProperty("status", "fail");
             // Log to localhost log
@@ -180,7 +179,6 @@ public class PaymentServlet extends HttpServlet {
                     // Log to localhost log
                     request.getServletContext().log("Verifying Failed");
                     responseJsonObject.addProperty("message", "Invalid credit card information");
-
                 }
 
                 rs.close();

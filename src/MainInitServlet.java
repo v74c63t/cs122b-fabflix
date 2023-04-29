@@ -91,6 +91,7 @@ public class MainInitServlet extends HttpServlet {
 
             // Write JSON string to output
             out.write(jsonArray.toString());
+
             // Set response status to 200 (OK)
             response.setStatus(200);
 
