@@ -15,7 +15,6 @@ function handlePaymentResult(resultDataString) {
 
     // If login succeeds, it will redirect the user to index.html
     if (resultDataJson["status"] === "success") {
-        alert(resultDataJson["message"])
         window.location.replace("confirmation.html");
     } else {
         // If login fails, the web page will display
