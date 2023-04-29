@@ -73,7 +73,7 @@ public class GenreResultServlet extends HttpServlet {
         String sortBy = request.getParameter("sortBy");
         String[] sort = sortBy.split(" ");
 
-        System.out.println(request.getParameter("sortBy"));
+//        System.out.println(request.getParameter("sortBy"));
         // The log message can be found in localhost log
         request.getServletContext().log("getting genreId: " + genreId);
 
@@ -104,7 +104,7 @@ public class GenreResultServlet extends HttpServlet {
             // num 1 indicates the first "?" in the query
             statement.setString(1, genreId);
 
-            System.out.println(query);
+//            System.out.println(query);
             ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();

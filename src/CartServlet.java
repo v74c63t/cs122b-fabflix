@@ -169,7 +169,6 @@ public class CartServlet extends HttpServlet {
                         itemCart.get(item).put("price", itemCart.get(item).get("price"));
                     }
                     else if(itemCart.get(item).get("quantity") + quantity <= 0){
-                        System.out.println(item);
                         itemCart.remove(item);
                     }
                 }else {

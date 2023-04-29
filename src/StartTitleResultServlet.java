@@ -111,7 +111,7 @@ public class StartTitleResultServlet extends HttpServlet {
             Statement statement = conn.createStatement();
             Statement statement2 = conn.createStatement();
 
-            System.out.println(query);
+//            System.out.println(query);
             ResultSet rs = statement.executeQuery(query);
 
             JsonArray jsonArray = new JsonArray();
