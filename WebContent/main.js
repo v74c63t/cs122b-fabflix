@@ -2,7 +2,7 @@ let movie_search_form = $("#movie-search-form");
 
 function handleGenreResult(resultData) {
     console.log("handleResult: populating movies info from resultData");
-    console.log(resultData);
+    // console.log(resultData);
 
     let genreList = jQuery("#genre-list");
 
