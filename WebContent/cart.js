@@ -33,9 +33,15 @@ function handleCartArray(resultData) {
     cartTableBody.html("");
     document.getElementById("total").innerHTML="";
     if(resultData.length!=0) {
-        if (resultData[0]["resultUrl"] != null) {
+        if (resultData.hasOwnProperty("resultUrl")){
             let resultTab = jQuery("#result");
-            resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
+            resultTab.attr("href", "result.html?" + resultData["resultUrl"]);
+        }
+        else {
+            if (resultData[0]["resultUrl"] != null) {
+                let resultTab = jQuery("#result");
+                resultTab.attr("href", "result.html?" + resultData[0]["resultUrl"]);
+            }
         }
         // console.log(resultData);
         let totalPrice = 0;

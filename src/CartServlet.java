@@ -61,8 +61,8 @@ public class CartServlet extends HttpServlet {
 
         JsonObject responseJsonObject = new JsonObject();
         JsonArray jsonArray = new JsonArray();
-        responseJsonObject.addProperty("sessionID", sessionId);
-        responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
+//        responseJsonObject.addProperty("sessionID", sessionId);
+//        responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
         HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>) session.getAttribute("itemCart");
 
@@ -104,10 +104,16 @@ public class CartServlet extends HttpServlet {
                 rs.close();
                 statement.close();
             }
-            responseJsonObject.add("previousItems", jsonArray);
+            responseJsonObject.addProperty("resultUrl", resultUrl);
 
             // write all the data into the jsonObject
-            response.getWriter().write(jsonArray.toString());
+            if(jsonArray.isEmpty() && resultUrl != null) {
+                response.getWriter().write(responseJsonObject.toString());
+
+            }
+            else{
+                response.getWriter().write(jsonArray.toString());
+            }
 
         }catch (Exception e) {
 
@@ -130,7 +136,7 @@ public class CartServlet extends HttpServlet {
         String item = request.getParameter("item");
         Double quantity = Double.valueOf(request.getParameter("quantity"));
 
-        System.out.println(item + quantity);
+//        System.out.println(item + quantity);
         HttpSession session = request.getSession();
 
         // get the previous items in a ArrayList
