@@ -91,11 +91,6 @@ public class SingleMovieServlet extends HttpServlet {
 
                 // Construct query for getting all stars
                 // with parameter represented as "?"
-//                query = String.join("",
-//                        "SELECT starId, name as stars ",
-//                        "FROM stars AS s, stars_in_movies AS sim ",
-//                        "WHERE sim.movieId=? ",
-//                        "AND sim.starId=s.id");
                 query = String.join("",
                         "SELECT s.id, s.name ",
                         "FROM stars AS s, stars_in_movies AS sim ",
@@ -132,11 +127,6 @@ public class SingleMovieServlet extends HttpServlet {
                         "ORDER BY name ");
 
 
-//                query = String.join("",
-//                        "SELECT name as genres ",
-//                        "FROM genres AS g, genres_in_movies AS gim ",
-//                        "WHERE gim.movieId=? ",
-//                        "AND gim.genreId=g.id");
 
                 statement2 = conn.prepareStatement(query);
                 statement2.setString(1, id);
@@ -144,11 +134,7 @@ public class SingleMovieServlet extends HttpServlet {
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
-//                while (newRS.next()) {
-//                    genresArray.add(newRS.getString("genres"));
-//                }
                 while (newRS.next()) {
-//                    genresArray.add(newRS.getString("name"));
                     genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();

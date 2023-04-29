@@ -35,8 +35,6 @@ function handleConfirmationArray(resultData) {
     }
     console.log(resultData);
     let confirmationTableBody = $("#confirmation_table_body");
-    // change it to html list
-    // let rowHTML = "<ul>";
     let totalPrice = 0;
     for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "<tr>";
@@ -48,9 +46,7 @@ function handleConfirmationArray(resultData) {
             "</th>";
         rowHTML += "<th>" + resultData[i]['movie_quantity'] + "</th>";
         rowHTML += "<th>$" + resultData[i]['movie_price'].toFixed(2) + "</th>";
-        // totalPrice += parseFloat((resultData[i]['movie_quantity'] * (resultData[i]['movie_price'])).toFixed(2));
         totalPrice += resultData[i]['movie_total'];
-        // rowHTML += "<th>$" + (resultData[i]['movie_quantity'] * resultData[i]['movie_price']).toFixed(2).toString() + "</th>";
         rowHTML += "<th>$" + (resultData[i]['movie_total']).toFixed(2).toString() + "</th>";
 
         rowHTML += '</tr>';

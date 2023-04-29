@@ -65,6 +65,7 @@ function handleCart(movieId, quantity) {
         method: "POST",
         data: {item: movieId, quantity: quantity},
         success: resultDataString => {
+            // dynamically update the page to reflect changes
             $.ajax("api/cart", {
                 method: "GET",
                 success: handleCartArray

@@ -67,36 +67,17 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-//                while(rs.next()) {
-                    // not sure whether to keep this information/add to user obj or not
                 int customerId = rs.getInt("id");
                 String customerFirstName = rs.getString("firstName");
                 String customerLastName = rs.getString("lastName");
+                // additional information is stored so it can be used for payment confirmation later
+                request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
+                responseJsonObject.addProperty("status", "success");
+                responseJsonObject.addProperty("message", "success");
 
-//
-//                // Create a JsonObject based on the data we retrieve from rs
-//                responseJsonObject.addProperty("customer_id", customerId);
-//                responseJsonObject.addProperty("customer_first_name", customerFirstName);
-//                responseJsonObject.addProperty("customer_last_name", customerLastName);
-//                responseJsonObject.addProperty("customer_cc_id", customerCcId);
-//                responseJsonObject.addProperty("customer_address", customerAddress);
-//                    if(rs.getString("password").equals(password)) {
-                        request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
-                        responseJsonObject.addProperty("status", "success");
-                        responseJsonObject.addProperty("message", "success");
-//                        break;
-//                    }
-//                }
-//                if (request.getSession().getAttribute("user") == null) {
-//                    // Login fail
-//                    responseJsonObject.addProperty("status", "fail");
-//                    // Log to localhost log
-//                    request.getServletContext().log("Login failed");
-//
-//                    responseJsonObject.addProperty("message", "Incorrect password");
-//                }
             }
             else {
+                // check what type of error is occuring
                 String query2 = String.join("",
                         "SELECT *",
                         "FROM customers ",
