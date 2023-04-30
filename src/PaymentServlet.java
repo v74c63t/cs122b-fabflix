@@ -57,17 +57,7 @@ public class PaymentServlet extends HttpServlet {
 
         HashMap<String, HashMap<String,Double>> itemCart = (HashMap<String, HashMap<String,Double>>)request.getSession().getAttribute("itemCart");
 
-        if(customer.getFirstName().equals(firstName) || customer.getLastName().equals(lastName)){
-            responseJsonObject.addProperty("status", "fail");
-            // Log to localhost log
-            request.getServletContext().log("Verifying Failed");
-            responseJsonObject.addProperty("message", "Invalid credit card information");
-            // Write JSON string to output
-            response.getWriter().write(responseJsonObject.toString());
-            // Set response status to 200 (OK)
-            response.setStatus(200);
-        }
-        else if(itemCart == null) {
+        if(itemCart == null) {
             responseJsonObject.addProperty("status", "fail");
             // Log to localhost log
             request.getServletContext().log("Empty cart");
