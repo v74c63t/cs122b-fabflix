@@ -30,28 +30,40 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        PrintWriter out = response.getWriter();
-
-        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
-
-        // Verify reCAPTCHA
-        try {
-            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-        } catch (Exception e) {
-            out.println("<html>");
-            out.println("<head><title>Error</title></head>");
-            out.println("<body>");
-            out.println("<p>recaptcha verification error</p>");
-            out.println("<p>" + e.getMessage() + "</p>");
-            out.println("</body>");
-            out.println("</html>");
-
-            out.close();
-            return;
-        }
-    }
+//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        PrintWriter out = response.getWriter();
+//
+//        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+//        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+//
+//        // Verify reCAPTCHA
+//        try {
+//            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+//        } catch (Exception e) {
+////            out.println("<html>");
+////            out.println("<head><title>Error</title></head>");
+////            out.println("<body>");
+////            out.println("<p>recaptcha verification error</p>");
+////            out.println("<p>" + e.getMessage() + "</p>");
+////            out.println("</body>");
+////            out.println("</html>");
+//            JsonObject responseJsonObject = new JsonObject();
+//            // Login fail
+//            responseJsonObject.addProperty("status", "fail");
+//            // Log to localhost log
+//            request.getServletContext().log("Login failed");
+//
+//            responseJsonObject.addProperty("message", "ReCaptcha");
+//
+//            // Write JSON string to output
+//            response.getWriter().write(responseJsonObject.toString());
+//            // Set response status to 200 (OK)
+//            response.setStatus(200);
+//
+//            out.close();
+//            return;
+//        }
+//    }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -59,6 +71,38 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+
+        // Verify reCAPTCHA
+        try {
+            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+        }  catch (Exception e) {
+//            out.println("<html>");
+//            out.println("<head><title>Error</title></head>");
+//            out.println("<body>");
+//            out.println("<p>recaptcha verification error</p>");
+//            out.println("<p>" + e.getMessage() + "</p>");
+//            out.println("</body>");
+//            out.println("</html>");
+            JsonObject responseJsonObject = new JsonObject();
+            // Login fail
+            responseJsonObject.addProperty("status", "fail");
+            // Log to localhost log
+            request.getServletContext().log("Login failed");
+
+            responseJsonObject.addProperty("message", "reCaptcha Verification Error");
+//            System.out.println(e.getMessage());
+//            System.out.println(responseJsonObject.toString());
+
+            // Write JSON string to output
+            response.getWriter().write(responseJsonObject.toString());
+            // Set response status to 200 (OK)
+            response.setStatus(200);
+
+            out.close();
+            return;
+        }
 
         String email= request.getParameter("email");
         String password = request.getParameter("password");
@@ -70,6 +114,7 @@ public class LoginServlet extends HttpServlet {
         JsonObject responseJsonObject = new JsonObject();
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
+            System.out.println("in second try");
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
@@ -89,6 +134,7 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
+                System.out.println("checking password");
                 if (rs.getString("password").equals(password)) {
                     int customerId = rs.getInt("id");
                     String customerFirstName = rs.getString("firstName");
