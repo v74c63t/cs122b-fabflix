@@ -18,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./login.css"/>
     <link rel="stylesheet" href="./style.css"/>
+    <!-- reCaptcha -->
+    <script src='https://www.google.com/recaptcha/api.js' type="text/javascript"></script>
     <title>Login</title>
 </head>
 <body class="background">
@@ -45,8 +47,10 @@
             <div class="submit-form">
                 <input class="submit-btn" type="submit" value="Login">
             </div>
-            <div style="color:antiquewhite; background-color: darkred; text-align: center;border-radius: 10px;" id="login_error_message"></div>
+            <!-- Replace to whichever we decide to use -->
+            <div class="g-recaptcha" data-sitekey="6LeyEtclAAAAAGsYKnxArjIVwT6JfGJf4qR6fZJx"></div>
 
+            <div style="color:antiquewhite; background-color: darkred; text-align: center;border-radius: 10px;" id="login_error_message"></div>
         </form>
     </div>
 </div>

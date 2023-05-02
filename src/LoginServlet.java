@@ -34,15 +34,33 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Output stream to STDOUT
+        PrintWriter out = response.getWriter();
+
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+
+        // Verify reCAPTCHA
+        try {
+            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+        } catch (Exception e) {
+            out.println("<html>");
+            out.println("<head><title>Error</title></head>");
+            out.println("<body>");
+            out.println("<p>recaptcha verification error</p>");
+            out.println("<p>" + e.getMessage() + "</p>");
+            out.println("</body>");
+            out.println("</html>");
+
+            out.close();
+            return;
+        }
+
         String email= request.getParameter("email");
         String password = request.getParameter("password");
         response.setContentType("application/json"); // Response mime type
         // The log message can be found in localhost log
         request.getServletContext().log("getting email: " + email);
         request.getServletContext().log("getting password: " + password);
-
-        // Output stream to STDOUT
-        PrintWriter out = response.getWriter();
 
         JsonObject responseJsonObject = new JsonObject();
         // Get a connection from dataSource and let resource manager close the connection after usage.
