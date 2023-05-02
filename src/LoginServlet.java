@@ -71,38 +71,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
-        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
-
-        // Verify reCAPTCHA
-        try {
-            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-        }  catch (Exception e) {
-//            out.println("<html>");
-//            out.println("<head><title>Error</title></head>");
-//            out.println("<body>");
-//            out.println("<p>recaptcha verification error</p>");
-//            out.println("<p>" + e.getMessage() + "</p>");
-//            out.println("</body>");
-//            out.println("</html>");
-            JsonObject responseJsonObject = new JsonObject();
-            // Login fail
-            responseJsonObject.addProperty("status", "fail");
-            // Log to localhost log
-            request.getServletContext().log("Login failed");
-
-            responseJsonObject.addProperty("message", "reCaptcha Verification Error");
-//            System.out.println(e.getMessage());
-//            System.out.println(responseJsonObject.toString());
-
-            // Write JSON string to output
-            response.getWriter().write(responseJsonObject.toString());
-            // Set response status to 200 (OK)
-            response.setStatus(200);
-
-            out.close();
-            return;
-        }
 
         String email= request.getParameter("email");
         String password = request.getParameter("password");
@@ -143,6 +111,38 @@ public class LoginServlet extends HttpServlet {
                     request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
+                    String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+                    System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+
+                    // Verify reCAPTCHA
+                    try {
+                        RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+                    }  catch (Exception e) {
+//            out.println("<html>");
+//            out.println("<head><title>Error</title></head>");
+//            out.println("<body>");
+//            out.println("<p>recaptcha verification error</p>");
+//            out.println("<p>" + e.getMessage() + "</p>");
+//            out.println("</body>");
+////            out.println("</html>");
+//                        JsonObject responseJsonObject = new JsonObject();
+                        // Login fail
+                        responseJsonObject.addProperty("status", "fail");
+                        // Log to localhost log
+                        request.getServletContext().log("Login failed");
+
+                        responseJsonObject.addProperty("message", "reCaptcha Verification Error");
+//            System.out.println(e.getMessage());
+//            System.out.println(responseJsonObject.toString());
+
+                        // Write JSON string to output
+                        response.getWriter().write(responseJsonObject.toString());
+                        // Set response status to 200 (OK)
+                        response.setStatus(200);
+
+                        out.close();
+                        return;
+                    }
                 }
                 else {
                     // Login fail
