@@ -104,3 +104,8 @@
 .signup-href:hover {
     cursor: pointer;
 }
+
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
+}
