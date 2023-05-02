@@ -30,14 +30,11 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Output stream to STDOUT
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
 
         // Verify reCAPTCHA
         try {
@@ -54,6 +51,14 @@ public class LoginServlet extends HttpServlet {
             out.close();
             return;
         }
+    }
+
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Output stream to STDOUT
+        PrintWriter out = response.getWriter();
 
         String email= request.getParameter("email");
         String password = request.getParameter("password");
