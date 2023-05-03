@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 4L;
@@ -102,8 +104,9 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-                if (rs.getString("password").equals(password)) {
-//                if(new StrongPasswordEncryptor().checkPassword(password, encryptedPassword)){
+                String encryptedPassword = rs.getString("password");
+                if(new StrongPasswordEncryptor().checkPassword(password, encryptedPassword)){
+
                     int customerId = rs.getInt("id");
                     String customerFirstName = rs.getString("firstName");
                     String customerLastName = rs.getString("lastName");
