@@ -82,6 +82,14 @@ public class GenreResultServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
+            if(sort[0].equals("title")) {
+                if(!sort[2].equals("rating")) {
+                    throw new Exception("Invalid sorting criteria");
+                }
+            }
+            if(!(sort[1].equals("ASC") || sort[1].equals("DESC")) && !(sort[3].equals("ASC") || sort[3].equals("DESC"))){
+                throw new Exception("Invalid sorting criteria");
+            }
 
 //          Construct a query with parameter represented by "?"
             String query = String.join("",
@@ -93,16 +101,17 @@ public class GenreResultServlet extends HttpServlet {
                     "ON r.movieId = m.id ",
                     "WHERE genreId= ? ",
                     "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
-                    "LIMIT ", numRecords, " ",
-                    "OFFSET ", firstRecord, " ");
+                    "LIMIT ? ",
+                    "OFFSET ? ");
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
-            Statement statement2 = conn.createStatement();
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
             statement.setString(1, genreId);
+            statement.setInt(2, Integer.parseInt(numRecords));
+            statement.setInt(3, Integer.parseInt(firstRecord));
 
 //            System.out.println(query);
             ResultSet rs = statement.executeQuery();
@@ -123,14 +132,15 @@ public class GenreResultServlet extends HttpServlet {
                         "FROM stars AS s, stars_in_movies AS sim ",
                         "WHERE s.id IN (SELECT s.id ",
                         "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE sim.movieId='", movie_id, "' ",
+                        "WHERE sim.movieId=? ",
                         "AND s.id=sim.starId) ",
                         "AND s.id=sim.starId ",
                         "GROUP BY s.id ",
                         "ORDER BY COUNT(*) DESC, s.name ASC ",
                         "LIMIT 3;");
-
-                ResultSet newRS = statement2.executeQuery(query);
+                PreparedStatement statement2 = conn.prepareStatement(query);
+                statement2.setString(1,movie_id);
+                ResultSet newRS = statement2.executeQuery();
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
@@ -146,11 +156,14 @@ public class GenreResultServlet extends HttpServlet {
                         "from genres AS g ",
                         "join genres_in_movies AS gim ",
                         "on  g.id = gim.genreId ",
-                        "WHERE gim.movieId='", movie_id, "'",
+                        "WHERE gim.movieId=? ",
                         "ORDER BY name ",
                         "LIMIT 3;");
 
-                newRS = statement2.executeQuery(query);
+                statement2 = conn.prepareStatement(query);
+                statement2.setString(1,movie_id);
+
+                newRS = statement2.executeQuery();
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
