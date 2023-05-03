@@ -102,8 +102,8 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-                System.out.println("checking password");
                 if (rs.getString("password").equals(password)) {
+//                if(new StrongPasswordEncryptor().checkPassword(password, encryptedPassword)){
                     int customerId = rs.getInt("id");
                     String customerFirstName = rs.getString("firstName");
                     String customerLastName = rs.getString("lastName");
@@ -118,13 +118,6 @@ public class LoginServlet extends HttpServlet {
                     try {
                         RecaptchaVerifyUtils.verify(gRecaptchaResponse);
                     }  catch (Exception e) {
-//            out.println("<html>");
-//            out.println("<head><title>Error</title></head>");
-//            out.println("<body>");
-//            out.println("<p>recaptcha verification error</p>");
-//            out.println("<p>" + e.getMessage() + "</p>");
-//            out.println("</body>");
-////            out.println("</html>");
 //                        JsonObject responseJsonObject = new JsonObject();
                         // Login fail
                         responseJsonObject.addProperty("status", "fail");
@@ -132,8 +125,6 @@ public class LoginServlet extends HttpServlet {
                         request.getServletContext().log("Login failed");
 
                         responseJsonObject.addProperty("message", "reCaptcha Verification Error");
-//            System.out.println(e.getMessage());
-//            System.out.println(responseJsonObject.toString());
 
                         // Write JSON string to output
                         response.getWriter().write(responseJsonObject.toString());
