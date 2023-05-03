@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class MoviesServlet extends HttpServlet {
             // Declare our statement
             Statement statement = conn.createStatement();
             // Declare statement for inner query
-            Statement statement2 = conn.createStatement();
+//            Statement statement2 = conn.createStatement();
 
             // Query to get top 20 movies
             String query = String.join("",
@@ -88,14 +89,16 @@ public class MoviesServlet extends HttpServlet {
                         "FROM stars AS s, stars_in_movies AS sim ",
                         "WHERE s.id IN (SELECT s.id ",
                         "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE sim.movieId='", movie_id, "' ",
+                        "WHERE sim.movieId=? ",
                         "AND s.id=sim.starId) ",
                         "AND s.id=sim.starId ",
                         "GROUP BY s.id ",
                         "ORDER BY COUNT(*) DESC, s.name ASC ",
                         "LIMIT 3");
+                PreparedStatement statement2 = conn.prepareStatement(query);
+                statement2.setString(1,movie_id);
 
-                ResultSet newRS = statement2.executeQuery(query);
+                ResultSet newRS = statement2.executeQuery();
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
@@ -136,10 +139,11 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
+                statement2.close();
             }
             rs.close();
             statement.close();
-            statement2.close();
+
 
             // Log to localhost log
             request.getServletContext().log("getting " + jsonArray.size() + " results");

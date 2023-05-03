@@ -186,6 +186,7 @@ public class GenreResultServlet extends HttpServlet {
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
+                statement2.close();
             }
             rs.close();
             statement.close();

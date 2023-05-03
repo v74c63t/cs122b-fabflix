@@ -127,11 +127,13 @@ public class SearchResultServlet extends HttpServlet {
                         query = query.concat(order);
 
                     } else if (entry.getKey().equals("numRecords")) {
-                        limit = "LIMIT " + entry.getValue()[0] + " ";
+                        limit = "LIMIT ? ";
                         query = query.concat(limit);
+                        queryParameters.add(entry.getValue()[0]);
                     } else if (entry.getKey().equals("firstRecord")) {
-                        offset = "OFFSET " + entry.getValue()[0];
+                        offset = "OFFSET ? ";
                         query = query.concat(offset);
+                        queryParameters.add(entry.getValue()[0]);
                     }
 
                 }
@@ -139,12 +141,15 @@ public class SearchResultServlet extends HttpServlet {
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
-            Statement statement2 = conn.createStatement();
+//            Statement statement2 = conn.createStatement();
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
-            for (int i = 0; i < queryParameters.size(); ++i) {
+            for (int i = 0; i < queryParameters.size()-2; ++i) {
                 statement.setString(i+1, queryParameters.get(i));
+            }
+            for (int i = queryParameters.size()-2; i < queryParameters.size(); ++i) {
+                statement.setInt(i+1, Integer.parseInt(queryParameters.get(i)));
             }
 
             ResultSet rs = statement.executeQuery();
@@ -165,14 +170,17 @@ public class SearchResultServlet extends HttpServlet {
                         "FROM stars AS s, stars_in_movies AS sim ",
                         "WHERE s.id IN (SELECT s.id ",
                         "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE sim.movieId='", movie_id, "' ",
+                        "WHERE sim.movieId=? ",
                         "AND s.id=sim.starId) ",
                         "AND s.id=sim.starId ",
                         "GROUP BY s.id ",
                         "ORDER BY COUNT(*) DESC, s.name ASC ",
                         "LIMIT 3; ");
 
-                ResultSet newRS = statement2.executeQuery(query);
+                PreparedStatement statement2 = conn.prepareStatement(query);
+                statement2.setString(1,movie_id);
+
+                ResultSet newRS = statement2.executeQuery();
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
@@ -188,11 +196,14 @@ public class SearchResultServlet extends HttpServlet {
                         "from genres AS g ",
                         "join genres_in_movies AS gim ",
                         "on  g.id = gim.genreId ",
-                        "WHERE gim.movieId='", movie_id, "'",
+                        "WHERE gim.movieId=? ",
                         "ORDER BY name ",
                         "LIMIT 3; ");
 
-                newRS = statement2.executeQuery(query);
+                statement2 = conn.prepareStatement(query);
+                statement2.setString(1,movie_id);
+
+                newRS = statement2.executeQuery();
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
@@ -215,6 +226,7 @@ public class SearchResultServlet extends HttpServlet {
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
+                statement2.close();
             }
             rs.close();
             statement.close();
