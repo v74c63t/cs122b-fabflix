@@ -14,8 +14,12 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ### Substring Matching Design
   - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
   - LIKE '%AB%'
-### Prepared Statements Files
-  -
+### Files with Prepared Statements
+  - GenreResultServlet.java
+  - StartTitleResultServlet.java
+  - SearchResultServlet.java
+  - SingleMovieServlet.java
+  - SingleStarServlet.java
 ### Parsing Time Optimization Strategies
   1. 
   2. 
