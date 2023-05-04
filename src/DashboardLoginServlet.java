@@ -54,7 +54,7 @@ public class DashboardLoginServlet extends HttpServlet {
             // Construct a query with parameter represented by "?"
             String query = String.join("",
                     "SELECT *",
-                    "FROM customers ",
+                    "FROM employees ",
                     "WHERE email=? ");
 
             // Declare our statement
@@ -72,11 +72,11 @@ public class DashboardLoginServlet extends HttpServlet {
                 String encryptedPassword = rs.getString("password");
                 if(new StrongPasswordEncryptor().checkPassword(password, encryptedPassword)){
 
-                    int customerId = rs.getInt("id");
-                    String customerFirstName = rs.getString("firstName");
-                    String customerLastName = rs.getString("lastName");
+//                    int customerId = rs.getInt("id");
+//                    String customerFirstName = rs.getString("firstName");
+//                    String customerLastName = rs.getString("lastName");
                     // additional information is stored so it can be used for payment confirmation later
-                    request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
+                    request.getSession().setAttribute("user", new User(email, "", "", -1));
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                     String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
