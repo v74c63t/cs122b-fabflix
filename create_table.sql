@@ -71,3 +71,10 @@ create table if not exists ratings
     foreign key (movieId) references movies (id)
 );
 
+create table if not exists employees
+(
+    email varchar(50) primary key,
+    password varchar(20) not null,
+    fullname varchar(100)
+)
+
