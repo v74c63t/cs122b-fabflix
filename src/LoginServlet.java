@@ -84,7 +84,6 @@ public class LoginServlet extends HttpServlet {
         JsonObject responseJsonObject = new JsonObject();
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            System.out.println("in second try");
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
