@@ -104,6 +104,7 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
+//                if (rs.getString("password").equals(password)) {
                 String encryptedPassword = rs.getString("password");
                 if(new StrongPasswordEncryptor().checkPassword(password, encryptedPassword)){
 
