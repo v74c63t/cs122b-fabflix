@@ -26,12 +26,15 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ## Contributions
 ### Vanessa
   - reCaptcha Error Message
+  - HTTPS
+  - Encrypted Password Changes
   - Prepared Statements
   - Dashboard Home
   - Debugging
   - 
 ### Haver
-  - reCaptcha
+  - reCaptcha Setup
+  - Encrypted Password Changes
   - Employees Login
   - Dashboard Home
   - Metadata Servlet
