@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 
 // Declaring a WebServlet called MainInitServlet, which maps to url "/api/metadata"
@@ -76,6 +73,10 @@ public class MetadataServlet extends HttpServlet {
                 jsonObject.addProperty("table_name", table);
 
                 Statement statement2 = conn.createStatement();
+                String query2 = "select * from " + table;
+                ResultSet rs2 = statement2.executeQuery(query2);
+                ResultSetMetaData resultSetMetaData = rs2.getMetaData();
+                // use getTableName, getColumnName, getColumnType to get all the info
 
 //                NEED TO IMPLEMENT THIS
 //                      GETTING ERRORS DOING
@@ -106,6 +107,8 @@ public class MetadataServlet extends HttpServlet {
 //                jsonObject.add("types", fieldsArray);
 
                 jsonArray.add(jsonObject);
+                rs2.close();
+                statement2.close();
             }
             rs.close();
             statement.close();
