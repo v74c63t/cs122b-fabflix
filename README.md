@@ -25,6 +25,15 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   2. 
 ## Contributions
 ### Vanessa
+  - reCaptcha Error Message
+  - Prepared Statements
+  - Dashboard Home
+  - Debugging
   - 
 ### Haver
+  - reCaptcha
+  - Employees Login
+  - Dashboard Home
+  - Metadata Servlet
+  - Debugging
   - 
