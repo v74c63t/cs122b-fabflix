@@ -53,8 +53,8 @@ public class EmployeeFilter implements Filter {
         allowedURIs.add("style.css");
         allowedURIs.add("api/login");
 
-        allowedURIs.add("employees-login.html");
-        allowedURIs.add("employees-login.js");
+        allowedURIs.add("/_dashboard/login.html");
+        allowedURIs.add("/_dashboard/login.js");
         allowedURIs.add("api/employee-login");
     }
 
