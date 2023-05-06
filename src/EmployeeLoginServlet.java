@@ -1,4 +1,3 @@
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,8 +16,8 @@ import java.sql.ResultSet;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
-@WebServlet(name = "DashboardLoginServlet", urlPatterns = "/api/_dashboard")
-public class DashboardLoginServlet extends HttpServlet {
+@WebServlet(name = "EmployeeLoginServlet", urlPatterns = "/api/employee-login")
+public class EmployeeLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 4L;
 
     // Create a dataSource which registered in web.xml
