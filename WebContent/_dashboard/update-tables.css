@@ -1,0 +1,37 @@
+#details-component {
+    display: flex;
+    justify-content: center;
+}
+#new-movie-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+#new-movie-form input{
+    margin: 5px 0;
+    width: 70%;
+    height: 40px;
+    border-radius: 5px;
+    border-width: 0;
+    padding: 2px 6px;
+}
+
+#new-movie-form input:focus, button:focus{
+    outline: none;
+}
+
+#new-movie-form button{
+    width: 70%;
+    height: 40px;
+    color: white;
+    background: rgba(74,74,74,0.4);
+    border-width: 0;
+}
+
+#new-movie-form button:hover {
+    cursor: pointer;
+    color: black;
+    background-color: #ffc107;
+}
