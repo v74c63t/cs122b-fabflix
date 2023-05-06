@@ -9,7 +9,7 @@ function handleMetadata(resultData) {
 
         let table_html = "";
 
-        table_html += "<h1 class='page-headers'><strong> " + table_name + "</strong></h1>";
+        table_html += "<h2 class='page-headers'><strong> " + table_name + "</strong></h2>";
         table_html += "<div style='margin-left: 20%; margin-right: 20%;' class='rounded'>";
         table_html += "<div style='padding-left: 80px; padding-right: 80px;'>";
         table_html += "<table id='dashboard-table' class='table table-striped table-dark table-borderless rounded'>";
