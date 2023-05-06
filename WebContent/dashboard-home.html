@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+
+    <!-- Other -->
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="main.css"/>
+    <title>Dashboard</title>
+</head>
+
+<body class="background">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="logo">F</div>
+        <a style="color: white" class="navbar-brand fabflix"><strong><em>Dashboard</em></strong></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a style="color:darkorange" class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" href="#">Add Movie</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" href="#">Add Star</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" href="#">Add Genre</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color:darksalmon" class="nav-link" href="main.html">Browse Movies</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div style="padding-left: 80px; padding-right: 80px;">
+    <table id=single_movie_table class="table table-striped table-dark table-borderless rounded">
+        <thead class="text-warning">
+        <tr>
+            <th>Attribute</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+
+        <!-- Table body is left empty here, will be populated with the data retrieved with single-movie.js -->
+        <tbody id=single_ movie_table_body></tbody>
+    </table>
+</div>
+
+<!-- Load jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Load our own JS file -->
+<!-- The path is relative to main.html, since these two files are in the same directory -->
+<!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
+     otherwise the url is relative to the root path-->
+<script src="main.js"></script>
+</body>
+</html>
