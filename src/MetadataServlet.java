@@ -70,41 +70,27 @@ public class MetadataServlet extends HttpServlet {
 
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("table_name", table);
 
+                // Get Query Result for Metadata for each table
                 Statement statement2 = conn.createStatement();
-                String query2 = "select * from " + table;
+                String query2 = "DESCRIBE " + table;
                 ResultSet rs2 = statement2.executeQuery(query2);
                 ResultSetMetaData resultSetMetaData = rs2.getMetaData();
-                // use getTableName, getColumnName, getColumnType to get all the info
 
-//                NEED TO IMPLEMENT THIS
-//                      GETTING ERRORS DOING
-//                          String field = rs.getString(1);
-//                          String field = rs.getString("Field");
+                // JsonArray for each field/type
+                JsonArray fieldsArray = new JsonArray();
+                JsonArray typesArray = new JsonArray();
 
+                // Iterate through each table metadata and add to JsonArray
+                while ( rs2.next() ) {
+                    fieldsArray.add(rs2.getString(1));
+                    typesArray.add(rs2.getString(2));
+                }
 
-//                // Query to get metadata of each table
-//                query = "DESCRIBE " + table;
-//
-//                ResultSet newRS = statement2.executeQuery(query);
-//
-//                JsonArray fieldsArray = new JsonArray();
-//                JsonArray typesArray = new JsonArray();
-//
-//                while (newRS.next()) {
-//
-//                    String field = rs.getString(1);
-//                    System.out.println(field);
-//                    String type = rs.getString(2);
-//                    System.out.println(type);
-//
-//                    fieldsArray.add(field);
-//                    typesArray.add(type);
-//                }
-//
-//                jsonObject.add("fields", fieldsArray);
-//                jsonObject.add("types", fieldsArray);
+                // Creates that holds table_name, array of fields/types
+                jsonObject.addProperty("table_name", table);
+                jsonObject.add("fields", fieldsArray);
+                jsonObject.add("types", typesArray);
 
                 jsonArray.add(jsonObject);
                 rs2.close();
