@@ -75,7 +75,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 //                    String customerFirstName = rs.getString("firstName");
 //                    String customerLastName = rs.getString("lastName");
                     // additional information is stored so it can be used for payment confirmation later
-                    request.getSession().setAttribute("user", new User(email, "", "", -1));
+                    request.getSession().setAttribute("employee", new User(email, "", "", -1));
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                     String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
