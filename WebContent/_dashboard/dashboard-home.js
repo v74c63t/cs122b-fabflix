@@ -14,7 +14,7 @@ function handleMetadata(resultData) {
         table_html += "<div style='padding-left: 80px; padding-right: 80px;'>";
         table_html += "<table id='dashboard-table' class='table table-striped table-dark table-borderless rounded'>";
         table_html += "<thead class='text-warning'>";
-        table_html += "<tr> <th>Attribute</th> <th>Type</th> </tr>";
+        table_html += "<tr> <th style='width: 50%;'>Attribute</th> <th style='width: 50%;'>Type</th> </tr>";
         table_html += "</thead>";
         table_html += "<tbody id='" + table_name + "-table-body'></tbody>";
         table_html += "</table></div></div>";
@@ -27,8 +27,8 @@ function handleMetadata(resultData) {
         for (let i = 0; i < fieldsArray.length; i++) {
             let rowHTML = "";
             rowHTML += "<tr>"
-            rowHTML += "<th>" + fieldsArray[i] + "</th>";
-            rowHTML += "<th>" + typesArray[i] + "</th>";
+            rowHTML += "<th style='width: 50%;'>" + fieldsArray[i] + "</th>";
+            rowHTML += "<th style='width: 50%;'>" + typesArray[i] + "</th>";
             rowHTML += "</tr>";
 
             dashboard_table.append(rowHTML);
