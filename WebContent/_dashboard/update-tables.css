@@ -1,6 +1,12 @@
 #details-component {
     display: flex;
     justify-content: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.70);
+    /*background-color: black;*/
+    padding: 10px;
+    border: 3px solid darkgray;
+    border-collapse: collapse;
 }
 
 #new-details-form {
@@ -12,7 +18,7 @@
 
 #new-details-form input{
     margin: 5px 0;
-    width: 70%;
+    width: 90%;
     height: 40px;
     border-radius: 5px;
     border-width: 0;
@@ -24,15 +30,18 @@
 }
 
 #new-details-form button{
-    width: 70%;
+    width: 90%;
     height: 40px;
     color: white;
-    background: rgba(74,74,74,0.4);
+    /*background: rgba(74,74,74,0.4);*/
+    background: #9FA6B2;
     border-width: 0;
 }
 
 #new-details-form button:hover {
     cursor: pointer;
-    color: black;
-    background-color: #ffc107;
+    /*color: black;*/
+    color:white;
+    /*background-color: #ffc107;*/
+    background-color:#5cb85c;
 }
