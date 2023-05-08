@@ -30,6 +30,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Encrypted Password Changes
   - Prepared Statements
   - Dashboard Home
+  - Making Revisions/Style Changes to Other Pages
   - Debugging
   - 
 ### Haver
@@ -38,5 +39,6 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Employees Login
   - Dashboard Home
   - Metadata Servlet
+  - Making Revisions/Style Changes to Other Pages
   - Debugging
   - 
