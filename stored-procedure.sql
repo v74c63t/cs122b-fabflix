@@ -1,5 +1,6 @@
+USE moviedb; -- not sure if this is needed
 DELIMITER $$
-CREATE PROCEDURE add_movie (IN in_title VARCHAR(100), in_year INT, in_director VARCHAR(100), in_star VARCHAR(100), in_birth INT, in_genre VARCHAR(32) ) -- add in genre and star info too
+CREATE PROCEDURE add_movie (IN movie_title VARCHAR(100), movie_year INT, movie_director VARCHAR(100), star_name VARCHAR(100), star_birth_year INT, genre_name VARCHAR(32) ) -- add in genre and star info too
 BEGIN
     DECLARE movieId VARCHAR(10);
     DECLARE starId VARCHAR(10);
@@ -10,21 +11,33 @@ BEGIN
     -- check if genre already exists
     -- if not insert them
 
+    IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year  AND director = movie_director) THEN
+        -- send a message saying the movie already exists and end the procedure
+    END IF;
+
+    SET movieId = (select concat(substring(max(id), 1,2), (CAST(substring(max(id), 3) AS UNSIGNED) + 1)) from movies);
+
     -- CHECK STAR
-    IF EXISTS(SELECT * FROM stars WHERE name = in_star AND birthYear = in_birth) THEN
-		SET starId = (SELECT id FROM stars WHERE name = in_star AND birthYear = in_birth);
+    IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
+		SET starId = (SELECT id FROM stars WHERE name = star_name AND birthYear = star_birth_year);
     ELSE
         -- parse and increment id
 		SET starId = (select concat(substring(max(id), 1,2), (CAST(substring(max(id), 3) AS UNSIGNED) + 1)) from stars);
+		INSERT INTO stars (id, name, birthYear) VALUES (starId, star_name, star_birth_year);
     END IF;
 
     -- CHECK GENRE
-    IF EXISTS(SELECT * FROM genres WHERE name = in_genre) THEN
-		SET genreId = (SELECT id FROM genres WHERE name = in_genre);
+    IF EXISTS(SELECT * FROM genres WHERE name = genre_name) THEN
+		SET genreId = (SELECT id FROM genres WHERE name = genre_name);
     ELSE
         -- parse and increment id
 		SET genreId = (select max(id) + 1 from genres);
+		-- but its autoincrement so i dont think we need to set genreId?
+		INSERT INTO genres (id, name) VALUES (genreId, genre_name);
     END IF;
+
+    INSERT INTO movies (id, title, year, director) VALUES(movieId, movie_title, movie_year, movie_director);
+
 
 
 #     IF (x > 5) THEN
