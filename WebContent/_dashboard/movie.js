@@ -1,8 +1,10 @@
 let details_form = $("#new-details-form");
 
 
-function handleAdd(resulData) {
+function handleAdd(resultData) {
     console.log("TEMP");
+    let add_message = $("#add-message");
+    add_message.text(resultData["message"]);
 }
 function handleDetails(submitEvent) {
     let details = {};
