@@ -1,3 +1,21 @@
+-- HELPER FOR NEXT AVAILABLE INT
+--      MOVIE - CONCAT('tt', CAST(movie AS UNSIGNED))
+--      STAR - CONCAT('nm', CAST(star AS UNSIGNED))
+-- TO BE MOVED TO CREATE_TABLE???
+CREATE TABLE availableInt (
+    movie INT,
+    star INT,
+    genre INT
+);
+
+INSERT INTO availableInt VALUES(
+    (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM movies),
+    (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM stars),
+    (SELECT MAX(id) + 1 FROM genres)
+);
+
+
+
 DELIMITER $$
 CREATE PROCEDURE add_movie (IN in_title VARCHAR(100), in_year INT, in_director VARCHAR(100), in_star VARCHAR(100), in_birth INT, in_genre VARCHAR(32) ) -- add in genre and star info too
 BEGIN
@@ -26,12 +44,6 @@ BEGIN
 		SET genreId = (select max(id) + 1 from genres);
     END IF;
 
-
-#     IF (x > 5) THEN
-#         SELECT CONCAT(x, " is higher") as answer;
-#     ELSE
-#         SELECT CONCAT(x, " is lower") as answer;
-#     END IF;
 END
 $$
 -- Change back DELIMITER to ;
