@@ -21,5 +21,84 @@ import java.util.ArrayList;
 
 @WebServlet(name = "AddStarServlet", urlPatterns = "/api/add-star")
 public class AddStarServlet extends HttpServlet{
+    private static final long serialVersionUID = 3L;
 
+    // Create a dataSource which registered in web.xml
+    private DataSource dataSource;
+
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     * response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/json"); // Response mime type
+
+        // Retrieve parameter id from url request.
+        String star = request.getParameter("star");
+        String birth = request.getParameter("birth");
+
+        // The log message can be found in localhost log
+        request.getServletContext().log("getting star: " + star);
+        request.getServletContext().log("getting birth: " + birth);
+
+        // Output stream to STDOUT
+        PrintWriter out = response.getWriter();
+
+        // Get a connection from dataSource and let resource manager close the connection after usage.
+        try (Connection conn = dataSource.getConnection()) {
+
+            // Construct a query with parameter represented by "?"
+            String query = "CALL add_star(?, ?);";
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            statement.setString(1, star);
+            if(birth == "") {
+                statement.setInt(2, -1);
+            }
+            else {
+                statement.setInt(2, Integer.parseInt(birth));
+            }
+
+            ResultSet rs = statement.executeQuery();
+
+            JsonObject jsonObject = new JsonObject();
+
+            while(rs.next()) {
+                jsonObject.addProperty("message", rs.getString("message"));
+            }
+            rs.close();
+            statement.close();
+
+            // Write JSON string to output
+            out.write(jsonObject.toString());
+            // Set response status to 200 (OK)
+            response.setStatus(200);
+
+        } catch (Exception e) {
+            // Write error message JSON object to output
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("errorMessage", e.getMessage());
+            out.write(jsonObject.toString());
+
+            // Log error to localhost log
+            request.getServletContext().log("Error:", e);
+            // Set response status to 500 (Internal Server Error)
+            response.setStatus(500);
+        } finally {
+            out.close();
+        }
+
+        // Always remember to close db connection after usage. Here it's done by try-with-resources
+
+    }
 }
