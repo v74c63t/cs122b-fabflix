@@ -32,7 +32,9 @@ BEGIN
         SELECT 0 AS existence, CONCAT('Error! Movie(', movie_title, ') already exists') as message;
     ELSE
         SET movie_id = (SELECT CONCAT('tt', LPAD(movie, 7, 0)) FROM availableInt);
+        SET SQL_SAFE_UPDATES = 0;
         UPDATE availableInt SET movie = movie + 1;
+        SET SQL_SAFE_UPDATES = 1;
 
         -- CHECK STAR
         IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
@@ -40,7 +42,9 @@ BEGIN
         ELSE
             -- parse and increment id
             SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
+            SET SQL_SAFE_UPDATES = 0;
             UPDATE availableInt SET star = star + 1;
+            SET SQL_SAFE_UPDATES = 1;
             IF star_birth_year = -1 THEN
                 INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
             ELSE
@@ -57,7 +61,9 @@ BEGIN
             -- but its autoincrement so i dont think we need to set genreId?
             --      its autoincrement but we only set once in the helper and calling max() is inefficient
             SET genre_id = (SELECT genre FROM availableInt);
+            SET SQL_SAFE_UPDATES = 0;
             UPDATE availableInt SET genre = genre + 1;
+            SET SQL_SAFE_UPDATES = 1;
             INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
         END IF;
 
@@ -75,7 +81,9 @@ CREATE PROCEDURE add_star (IN star_name VARCHAR(100), star_birth_year INT )
 BEGIN
     DECLARE star_id VARCHAR(10);
     SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
+    SET SQL_SAFE_UPDATES = 0;
     UPDATE availableInt SET star = star + 1;
+    SET SQL_SAFE_UPDATES = 1;
     IF star_birth_year = -1 THEN
         INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
     ELSE
@@ -89,7 +97,9 @@ CREATE PROCEDURE add_genre (IN genre_name VARCHAR(100))
 BEGIN
     DECLARE genre_id INT;
     SET genre_id = (SELECT genre FROM availableInt);
+    SET SQL_SAFE_UPDATES = 0;
     UPDATE availableInt SET genre = genre + 1;
+    SET SQL_SAFE_UPDATES = 1;
     INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
     SELECT CONCAT('Success! Genre(', genre_name, ') was successfully added | genreID: ', genre_id) as message;
 END
