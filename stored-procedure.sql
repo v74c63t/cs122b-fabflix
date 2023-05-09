@@ -27,9 +27,9 @@ BEGIN
     -- check if genre already exists
     -- if not insert them
 
-    IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year  AND director = movie_director) THEN
+    IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year AND director = movie_director) THEN
         -- send a message saying the movie already exists and end the procedure
-        SELECT CONCAT(movie_title, " already exists") as message;
+        SELECT CONCAT("Movie(", movie_title, ") already exists") as message;
     ELSE
         SET movie_id = (select concat(substring(max(id), 1,2), (CAST(substring(max(id), 3) AS UNSIGNED) + 1)) from movies);
 
@@ -59,7 +59,7 @@ BEGIN
         INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         -- send a message saying movie was successfully added
-        SELECT CONCAT(movie_title, " was succesfully added") as message;
+        SELECT CONCAT("Movie(", movie_title, ") was successfully added") as message;
     END IF;
 END
 $$
