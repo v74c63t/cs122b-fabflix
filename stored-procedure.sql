@@ -41,7 +41,11 @@ BEGIN
             -- parse and increment id
             SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
             UPDATE availableInt SET star = star + 1;
-            INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
+            IF star_birth_year = -1 THEN
+                INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
+            ELSE
+                INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
+            END IF;
         END IF;
 
         -- CHECK GENRE
