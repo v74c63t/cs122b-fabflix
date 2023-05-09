@@ -30,6 +30,12 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Encrypted Password Changes
   - Prepared Statements
   - Dashboard Home
+  - Stored Procedures
+  - Add Star Servlet
+  - Add Genre Servlet
+  - Movie Page
+  - Star Page
+  - Genre Page
   - Making Revisions/Style Changes to Other Pages
   - Debugging
   - 
@@ -39,6 +45,11 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Employees Login
   - Dashboard Home
   - Metadata Servlet
+  - Stored Procedures
+  - Add Movie Servlet
+  - Movie Page
+  - Star Page
+  - Genre Page
   - Making Revisions/Style Changes to Other Pages
   - Debugging
   - 
