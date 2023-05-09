@@ -11,6 +11,8 @@ function handleDetails(submitEvent) {
         details[$(this)[0].name] = $(this)[0].value;
     })
 
+    submitEvent.preventDefault();
+
     console.log(details);
 
     jQuery.ajax({
