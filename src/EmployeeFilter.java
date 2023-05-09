@@ -43,6 +43,7 @@ public class EmployeeFilter implements Filter {
          Always allow your own login related requests(html, js, servlet, etc..)
          You might also want to allow some CSS files, etc..
          */
+        System.out.println(requestURI);
         return allowedURIs.stream().anyMatch(requestURI.toLowerCase()::endsWith);
     }
 
@@ -52,7 +53,7 @@ public class EmployeeFilter implements Filter {
         allowedURIs.add("login.css");
         allowedURIs.add("style.css");
         allowedURIs.add("api/login");
-
+        allowedURIs.add("/_dashboard");
         allowedURIs.add("/_dashboard/login.html");
         allowedURIs.add("/_dashboard/login.js");
         allowedURIs.add("api/employee-login");
