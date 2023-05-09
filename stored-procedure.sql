@@ -7,10 +7,26 @@ BEGIN
     -- check if movie already exists
         -- IF EXISTS(SELECT * FROM movies WHERE title = in_title AND year = in_year) THEN
     -- check if star already exists
-        -- IF EXISTS(SELECT * FROM stars WHERE name = in_star) THEN
     -- check if genre already exists
-        -- IF EXISTS(SELECT * FROM genre WHERE name = in_genre) THEN
     -- if not insert them
+
+    -- CHECK STAR
+    IF EXISTS(SELECT * FROM stars WHERE name = in_star AND birthYear = in_birth) THEN
+		SET starId = (SELECT id FROM stars WHERE name = in_star AND birthYear = in_birth);
+    ELSE
+        -- parse and increment id
+		SET starId = 0;
+    END IF;
+
+    -- CHECK GENRE
+    IF EXISTS(SELECT * FROM genres WHERE name = in_genre) THEN
+		SET genreId = (SELECT id FROM genres WHERE name = in_genre);
+    ELSE
+        -- parse and increment id
+		SET genreId = 0;
+    END IF;
+
+
 #     IF (x > 5) THEN
 #         SELECT CONCAT(x, " is higher") as answer;
 #     ELSE
