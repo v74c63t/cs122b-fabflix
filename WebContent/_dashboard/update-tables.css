@@ -45,3 +45,13 @@
     /*background-color: #ffc107;*/
     background-color:#5cb85c;
 }
+
+#add-message {
+    text-align: center;
+    color: #ffc107;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: Georgia;
+    padding-bottom: 10px;
+    -webkit-text-stroke: 0.75px black;
+}
