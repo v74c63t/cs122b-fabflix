@@ -29,7 +29,7 @@ BEGIN
 
     IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year AND director = movie_director) THEN
         -- send a message saying the movie already exists and end the procedure
-        SELECT 0 AS existence, CONCAT('Movie(', movie_title, ') already exists') as message;
+        SELECT CONCAT('Error Movie(', movie_title, ') already exists') as message;
     ELSE
         SET movie_id = (SELECT CONCAT('tt', LPAD(movie, 7, 0)) FROM availableInt);
         UPDATE availableInt SET movie = movie + 1;
@@ -60,7 +60,7 @@ BEGIN
         INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         -- send a message saying movie was successfully added
-        SELECT 1 AS existence, CONCAT('Movie(', movie_title, ') was successfully added') AS message, movie_id, star_id, genre_id;
+        SELECT CONCAT('Success Movie(', movie_title, ') was successfully added'), movie_id, star_id, genre_id as message, movie_id, star_id, genre_id;
     END IF;
 END
 $$
