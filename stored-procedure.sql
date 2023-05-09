@@ -29,9 +29,10 @@ BEGIN
 
     IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year  AND director = movie_director) THEN
         -- send a message saying the movie already exists and end the procedure
-        SELECT CONCAT(movie_title, " already exists") as message;
+        SELECT CONCAT(movie_title, ' already exists') as message;
     ELSE
-        SET movie_id = (select concat(substring(max(id), 1,2), (CAST(substring(max(id), 3) AS UNSIGNED) + 1)) from movies);
+        SET movie_id = SET star_id = (SELECT movie FROM availableInt);
+        UPDATE availableInt SET movie = movie + 1;
 
         -- CHECK STAR
         IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
