@@ -31,7 +31,7 @@ BEGIN
         -- send a message saying the movie already exists and end the procedure
         SELECT CONCAT('Movie(', movie_title, ') already exists') as message;
     ELSE
-        SET movie_id = (SELECT CONCAT('tt', movie) FROM availableInt);
+        SET movie_id = (SELECT CONCAT('tt', LPAD(movie, 7, 0)) FROM availableInt);
         UPDATE availableInt SET movie = movie + 1;
 
         -- CHECK STAR
@@ -39,7 +39,7 @@ BEGIN
             SET star_id = (SELECT id FROM stars WHERE name = star_name AND birthYear = star_birth_year);
         ELSE
             -- parse and increment id
-            SET star_id = (SELECT CONCAT('nm', star) FROM availableInt);
+            SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
             UPDATE availableInt SET star = star + 1;
             INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
         END IF;
