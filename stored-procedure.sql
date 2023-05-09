@@ -60,7 +60,7 @@ BEGIN
         INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         -- send a message saying movie was successfully added
-        SELECT CONCAT('Movie(', movie_title, ') was successfully added') as message;
+        SELECT CONCAT('Movie(', movie_title, ') was successfully added') as message, movie_id, star_id, genre_id;
     END IF;
 END
 $$
