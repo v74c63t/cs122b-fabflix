@@ -52,7 +52,7 @@ BEGIN
 		-- but its autoincrement so i dont think we need to set genreId?
         SET genre_id = (SELECT genre FROM availableInt);
         UPDATE availableInt SET genre = genre + 1;
-		INSERT INTO genres (id, name) VALUES (genreId, genre_name);
+		INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
     END IF;
 
     INSERT INTO movies (id, title, year, director) VALUES(movie_id, movie_title, movie_year, movie_director);
