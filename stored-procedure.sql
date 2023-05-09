@@ -3,17 +3,15 @@ USE moviedb; -- not sure if this is needed
 --      MOVIE - CONCAT('tt', CAST(movie AS UNSIGNED))
 --      STAR - CONCAT('nm', CAST(star AS UNSIGNED))
 -- TO BE MOVED TO CREATE_TABLE???
+
 CREATE TABLE availableInt (
-    movie INT,
-    star INT,
-    genre INT
+    idType VARCHAR(10),
+    idVal INT
 );
 
-INSERT INTO availableInt VALUES(
-    (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM movies),
-    (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM stars),
-    (SELECT MAX(id) + 1 FROM genres)
-);
+INSERT INTO availableInt VALUES('movie', (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM movies));
+INSERT INTO availableInt VALUES('star', (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM stars));
+INSERT INTO availableInt VALUES('genre', (SELECT MAX(id) + 1 FROM genres));
 
 DELIMITER $$
 CREATE PROCEDURE add_movie (IN movie_title VARCHAR(100), movie_year INT, movie_director VARCHAR(100), star_name VARCHAR(100), star_birth_year INT, genre_name VARCHAR(32) ) -- add in genre and star info too
@@ -31,16 +29,21 @@ BEGIN
         -- send a message saying the movie already exists and end the procedure
         SELECT 0 AS existence, CONCAT('Error! Movie(', movie_title, ') already exists') as message;
     ELSE
-        SET movie_id = (SELECT CONCAT('tt', LPAD(movie, 7, 0)) FROM availableInt);
-        UPDATE availableInt SET movie = movie + 1;
+        SET movie_id = (SELECT CONCAT('tt', LPAD(idVal, 7, 0)) FROM availableInt WHERE idType='movie');
+        -- Setting this for each UPDATE to ensure its only open for updates
+        SET SQL_SAFE_UPDATES = 0;
+        UPDATE availableInt SET idVal = idVal + 1 WHERE idType='movie';
+        SET SQL_SAFE_UPDATES = 1;
 
         -- CHECK STAR
         IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
             SET star_id = (SELECT id FROM stars WHERE name = star_name AND birthYear = star_birth_year);
         ELSE
             -- parse and increment id
-            SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
-            UPDATE availableInt SET star = star + 1;
+            SET star_id = (SELECT CONCAT('nm', LPAD(idVal, 7, 0)) FROM availableInt WHERE idType = 'star');
+            SET SQL_SAFE_UPDATES = 0;
+            UPDATE availableInt SET idVal = idVal + 1 WHERE idType='star';
+            SET SQL_SAFE_UPDATES = 1;
             INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
         END IF;
 
@@ -52,8 +55,10 @@ BEGIN
             # 		SET genreId = (select max(id) + 1 from genres);
             -- but its autoincrement so i dont think we need to set genreId?
             --      its autoincrement but we only set once in the helper and calling max() is inefficient
-            SET genre_id = (SELECT genre FROM availableInt);
-            UPDATE availableInt SET genre = genre + 1;
+            SET genre_id = (SELECT idVal FROM availableInt WHERE idType='genre');
+            SET SQL_SAFE_UPDATES = 0;
+            UPDATE availableInt SET idVal = idVal + 1 WHERE idType = 'genre';
+            SET SQL_SAFE_UPDATES = 1;
             INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
         END IF;
 
