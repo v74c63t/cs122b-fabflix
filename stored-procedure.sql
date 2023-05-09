@@ -29,7 +29,7 @@ BEGIN
 
     IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year AND director = movie_director) THEN
         -- send a message saying the movie already exists and end the procedure
-        SELECT CONCAT('Error Movie(', movie_title, ') already exists') as message;
+        SELECT 0 AS existence, CONCAT('Error! Movie(', movie_title, ') already exists') as message;
     ELSE
         SET movie_id = (SELECT CONCAT('tt', LPAD(movie, 7, 0)) FROM availableInt);
         UPDATE availableInt SET movie = movie + 1;
@@ -51,6 +51,7 @@ BEGIN
             -- parse and increment id
             # 		SET genreId = (select max(id) + 1 from genres);
             -- but its autoincrement so i dont think we need to set genreId?
+            --      its autoincrement but we only set once in the helper and calling max() is inefficient
             SET genre_id = (SELECT genre FROM availableInt);
             UPDATE availableInt SET genre = genre + 1;
             INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
@@ -60,7 +61,7 @@ BEGIN
         INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         -- send a message saying movie was successfully added
-        SELECT CONCAT('Success Movie(', movie_title, ') was successfully added movieID: ', movie_id,
+        SELECT CONCAT('Success! Movie(', movie_title, ') was successfully added  |  movieID: ', movie_id,
             'starID: ', star_id, 'genreID: ', genre_id) as message;
     END IF;
 END
