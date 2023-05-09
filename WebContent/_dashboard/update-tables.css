@@ -34,16 +34,17 @@
     height: 40px;
     color: white;
     /*background: rgba(74,74,74,0.4);*/
-    background: #9FA6B2;
+    background-color:#5cb85c;
     border-width: 0;
 }
 
 #new-details-form button:hover {
     cursor: pointer;
     /*color: black;*/
-    color:white;
+    color:black;
     /*background-color: #ffc107;*/
-    background-color:#5cb85c;
+    /*background-color:#5cb85c;*/
+    background: #9FA6B2;
 }
 
 #add-message {
