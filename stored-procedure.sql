@@ -33,7 +33,8 @@ BEGIN
 		SET starId = (SELECT id FROM stars WHERE name = in_star AND birthYear = in_birth);
     ELSE
         -- parse and increment id
-		SET starId = (select concat(substring(max(id), 1,2), (CAST(substring(max(id), 3) AS UNSIGNED) + 1)) from stars);
+		SET starId = (SELECT star FROM availableInt);
+        UPDATE availableInt SET star = star + 1;
     END IF;
 
     -- CHECK GENRE
@@ -41,7 +42,8 @@ BEGIN
 		SET genreId = (SELECT id FROM genres WHERE name = in_genre);
     ELSE
         -- parse and increment id
-		SET genreId = (select max(id) + 1 from genres);
+		SET starId = (SELECT genre FROM availableInt);
+        UPDATE availableInt SET genre = genre + 1;
     END IF;
 
 END
