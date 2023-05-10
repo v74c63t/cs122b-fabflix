@@ -29,7 +29,7 @@ BEGIN
 
     IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year AND director = movie_director) THEN
         -- send a message saying the movie already exists and end the procedure
-        SELECT 0 AS existence, CONCAT('Error! Movie(', movie_title, ') already exists') as message;
+        SELECT CONCAT('Error! Movie ("', movie_title, '") already exists.') as message;
     ELSE
         SET movie_id = (SELECT CONCAT('tt', LPAD(movie, 7, 0)) FROM availableInt);
         SET SQL_SAFE_UPDATES = 0;
@@ -71,7 +71,7 @@ BEGIN
         INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         -- send a message saying movie was successfully added
-        SELECT CONCAT('Success! Movie(', movie_title, ') was successfully added | movieID: ', movie_id,
+        SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ', movie_id,
             'starID: ', star_id, 'genreID: ', genre_id) as message;
     END IF;
 END
@@ -80,28 +80,36 @@ $$
 CREATE PROCEDURE add_star (IN star_name VARCHAR(100), star_birth_year INT )
 BEGIN
     DECLARE star_id VARCHAR(10);
-    SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
-    SET SQL_SAFE_UPDATES = 0;
-    UPDATE availableInt SET star = star + 1;
-    SET SQL_SAFE_UPDATES = 1;
-    IF star_birth_year = -1 THEN
-        INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
+    IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
+        SELECT CONCAT('Error! Star ("', star_name, '") already exists.') as message;
     ELSE
-        INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
+        SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
+        SET SQL_SAFE_UPDATES = 0;
+        UPDATE availableInt SET star = star + 1;
+        SET SQL_SAFE_UPDATES = 1;
+        IF star_birth_year = -1 THEN
+            INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
+        ELSE
+            INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
+        END IF;
     END IF;
-    SELECT CONCAT('Success! Star(', star_name, ') was successfully added | starID: ', star_id) as message;
+    SELECT CONCAT('Success! Star ("', star_name, '") was successfully added. | starID: ', star_id) as message;
 END
 $$
 
 CREATE PROCEDURE add_genre (IN genre_name VARCHAR(100))
 BEGIN
     DECLARE genre_id INT;
-    SET genre_id = (SELECT genre FROM availableInt);
-    SET SQL_SAFE_UPDATES = 0;
-    UPDATE availableInt SET genre = genre + 1;
-    SET SQL_SAFE_UPDATES = 1;
-    INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
-    SELECT CONCAT('Success! Genre(', genre_name, ') was successfully added | genreID: ', genre_id) as message;
+    IF EXISTS(SELECT * FROM genres WHERE name = genre_name) THEN
+        SELECT CONCAT('Error! Genre ("', genre_name, '") already exists.') as message;
+    ELSE
+        SET genre_id = (SELECT genre FROM availableInt);
+        SET SQL_SAFE_UPDATES = 0;
+        UPDATE availableInt SET genre = genre + 1;
+        SET SQL_SAFE_UPDATES = 1;
+        INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
+    END IF;
+    SELECT CONCAT('Success! Genre ("', genre_name, '") was successfully added. | genreID: ', genre_id) as message;
 END
 $$
 
