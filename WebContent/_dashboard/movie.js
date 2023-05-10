@@ -21,7 +21,7 @@ function handleDetails(submitEvent) {
         dataType: "json", // Setting return data type
         method: "GET", // Setting request method
         data: details,
-        url: "api/add-movie", // Setting request url, which is mapped by MainInitServlet
+        url: "../api/add-movie", // Setting request url, which is mapped by MainInitServlet
         success: (resultData) => handleAdd(resultData) // Setting callback function to handle data returned successfully by the MainInitServlet
     });
 
