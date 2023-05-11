@@ -21,11 +21,33 @@ BEGIN
     DECLARE movie_id VARCHAR(10);
     DECLARE star_id VARCHAR(10);
     DECLARE genre_id INT;
+    DECLARE check_star BOOL;
+    DECLARE check_genre BOOL;
     -- check if movie already exists
     -- IF EXISTS(SELECT * FROM movies WHERE title = in_title AND year = in_year) THEN
     -- check if star already exists
     -- check if genre already exists
     -- if not insert them
+    IF movie_year = -1 THEN
+        SET movie_year = null;
+    END IF;
+    IF star_birth_year = -1 THEN
+        SET star_birth_year = null;
+    END IF;
+    IF movie_director = '' THEN
+        SET movie_director = null;
+    END IF;
+    IF star_name = '' THEN
+        SET check_star = FALSE;
+    ELSE
+        SET check_star = TRUE;
+    END IF;
+
+    IF genre_name = '' THEN
+        SET check_genre = FALSE;
+    ELSE
+        SET check_genre = TRUE;
+    END IF;
 
     IF EXISTS(SELECT * FROM movies WHERE title = movie_title AND year = movie_year AND director = movie_director) THEN
         -- send a message saying the movie already exists and end the procedure
@@ -35,44 +57,56 @@ BEGIN
         SET SQL_SAFE_UPDATES = 0;
         UPDATE availableInt SET movie = movie + 1;
         SET SQL_SAFE_UPDATES = 1;
-
+        INSERT INTO movies (id, title, year, director) VALUES(movie_id, movie_title, movie_year, movie_director);
         -- CHECK STAR
-        IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
-            SET star_id = (SELECT id FROM stars WHERE name = star_name AND birthYear = star_birth_year);
-        ELSE
-            -- parse and increment id
-            SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
-            SET SQL_SAFE_UPDATES = 0;
-            UPDATE availableInt SET star = star + 1;
-            SET SQL_SAFE_UPDATES = 1;
-            IF star_birth_year = -1 THEN
-                INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
+        IF check_star = TRUE THEN
+            IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
+                SET star_id = (SELECT id FROM stars WHERE name = star_name AND birthYear = star_birth_year);
             ELSE
+                -- parse and increment id
+                SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
+                SET SQL_SAFE_UPDATES = 0;
+                UPDATE availableInt SET star = star + 1;
+                SET SQL_SAFE_UPDATES = 1;
                 INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
             END IF;
+            INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         END IF;
-
         -- CHECK GENRE
-        IF EXISTS(SELECT * FROM genres WHERE name = genre_name) THEN
-            SET genre_id = (SELECT id FROM genres WHERE name = genre_name);
-        ELSE
-            -- parse and increment id
-            # 		SET genreId = (select max(id) + 1 from genres);
-            -- but its autoincrement so i dont think we need to set genreId?
-            --      its autoincrement but we only set once in the helper and calling max() is inefficient
-            SET genre_id = (SELECT genre FROM availableInt);
-            SET SQL_SAFE_UPDATES = 0;
-            UPDATE availableInt SET genre = genre + 1;
-            SET SQL_SAFE_UPDATES = 1;
-            INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
+        IF check_genre = TRUE THEN
+            IF EXISTS(SELECT * FROM genres WHERE name = genre_name) THEN
+                SET genre_id = (SELECT id FROM genres WHERE name = genre_name);
+            ELSE
+                -- parse and increment id
+                # 		SET genreId = (select max(id) + 1 from genres);
+                -- but its autoincrement so i dont think we need to set genreId?
+                --      its autoincrement but we only set once in the helper and calling max() is inefficient
+                SET genre_id = (SELECT genre FROM availableInt);
+                SET SQL_SAFE_UPDATES = 0;
+                UPDATE availableInt SET genre = genre + 1;
+                SET SQL_SAFE_UPDATES = 1;
+                INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
+            END IF;
+            INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         END IF;
-
-        INSERT INTO movies (id, title, year, director) VALUES(movie_id, movie_title, movie_year, movie_director);
-        INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
-        INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         -- send a message saying movie was successfully added
-        SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ', movie_id,
-            'starID: ', star_id, 'genreID: ', genre_id) as message;
+        IF check_star = TRUE AND check_genre = TRUE THEN
+            SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ', movie_id,
+                'starID: ', star_id, 'genreID: ', genre_id) as message;
+        ELSE
+            IF check_star = TRUE THEN
+                SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ',
+                    movie_id, 'starID: ', star_id) as message;
+            ELSE
+                IF check_genre = TRUE THEN
+                    SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ',
+                        movie_id, 'genreID: ', genre_id) as message;
+                ELSE
+                    SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ',
+                        movie_id) as message;
+                END IF;
+            END IF;
+        END IF;
     END IF;
 END
 $$
