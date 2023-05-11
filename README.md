@@ -9,7 +9,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
-**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
+**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`
 ## Additional Notes
 ### Substring Matching Design
   - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
@@ -29,27 +29,29 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - HTTPS
   - Encrypted Password Changes
   - Prepared Statements
-  - Dashboard Home
+  - Employees Login Filter
+  - Dashboard Home (HTML/CSS)
   - Stored Procedures
   - Add Star Servlet
   - Add Genre Servlet
-  - Movie Page
-  - Star Page
-  - Genre Page
+  - Add Movie Page (HTML/CSS)
+  - Add Star Page (HTML/CSS/JS)
+  - Add Genre Page (HTML/CSS/JS)
   - Making Revisions/Style Changes to Other Pages
   - Debugging
   - 
 ### Haver
   - reCaptcha Setup
   - Encrypted Password Changes
-  - Employees Login
-  - Dashboard Home
+  - Employees Login (HTML/CSS/JS)
+  - Employees Login Servlet/Filter
+  - Dashboard Home (HTML/CSS/JS)
   - Metadata Servlet
   - Stored Procedures
   - Add Movie Servlet
-  - Movie Page
-  - Star Page
-  - Genre Page
+  - Add Movie Page (HTML/CSS/JS)
+  - Add Star Page (HTML/CSS)
+  - Add Genre Page (HTML/CSS)
   - Making Revisions/Style Changes to Other Pages
   - Debugging
   - 
