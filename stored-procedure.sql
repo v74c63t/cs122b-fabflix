@@ -64,7 +64,6 @@ BEGIN
                 SET SQL_SAFE_UPDATES = 1;
                 INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
             END IF;
-            INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
         END IF;
         -- CHECK GENRE
         IF check_genre = TRUE THEN
@@ -81,20 +80,23 @@ BEGIN
                 SET SQL_SAFE_UPDATES = 1;
                 INSERT INTO genres (id, name) VALUES (genre_id, genre_name);
             END IF;
-            INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
         END IF;
         -- send a message saying movie was successfully added
         IF check_star = TRUE AND check_genre = TRUE THEN
+            INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
+            INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
             SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ', movie_id,
-                'starID: ', star_id, 'genreID: ', genre_id) as message;
+                ' starID: ', star_id, ' genreID: ', genre_id) as message;
         ELSE
             IF check_star = TRUE THEN
+                INSERT INTO stars_in_movies(starId, movieId) VALUES (star_id, movie_id);
                 SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ',
-                    movie_id, 'starID: ', star_id) as message;
+                    movie_id, ' starID: ', star_id) as message;
             ELSE
                 IF check_genre = TRUE THEN
+                    INSERT INTO genres_in_movies(genreId, movieId) VALUES (genre_id, movie_id);
                     SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ',
-                        movie_id, 'genreID: ', genre_id) as message;
+                        movie_id, ' genreID: ', genre_id) as message;
                 ELSE
                     SELECT CONCAT('Success! Movie ("', movie_title, '") was successfully added. | movieID: ',
                         movie_id) as message;
