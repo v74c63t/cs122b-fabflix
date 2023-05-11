@@ -71,12 +71,7 @@ public class AddMovieServlet extends HttpServlet{
             PreparedStatement statement = conn.prepareStatement(query);
 
             statement.setString(1, title);
-            if(year == ""){
-                statement.setInt(2, -1);
-            }
-            else {
-                statement.setInt(2, Integer.parseInt(year));
-            }
+            statement.setInt(2, Integer.parseInt(year));
             statement.setString(3, director);
             statement.setString(4, star);
             if(birth == "") {

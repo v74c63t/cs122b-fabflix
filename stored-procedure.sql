@@ -27,15 +27,9 @@ BEGIN
     -- IF EXISTS(SELECT * FROM movies WHERE title = in_title AND year = in_year) THEN
     -- check if star already exists
     -- check if genre already exists
-    -- if not insert them
-    IF movie_year = -1 THEN
-        SET movie_year = null;
-    END IF;
+    -- if not insert them;
     IF star_birth_year = -1 THEN
         SET star_birth_year = null;
-    END IF;
-    IF movie_director = '' THEN
-        SET movie_director = null;
     END IF;
     IF star_name = '' THEN
         SET check_star = FALSE;
