@@ -80,18 +80,14 @@ $$
 CREATE PROCEDURE add_star (IN star_name VARCHAR(100), star_birth_year INT )
 BEGIN
     DECLARE star_id VARCHAR(10);
-    IF EXISTS(SELECT * FROM stars WHERE name = star_name AND birthYear = star_birth_year) THEN
-        SELECT CONCAT('Error! Star ("', star_name, '") already exists.') as message;
+    SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
+    SET SQL_SAFE_UPDATES = 0;
+    UPDATE availableInt SET star = star + 1;
+    SET SQL_SAFE_UPDATES = 1;
+    IF star_birth_year = -1 THEN
+        INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
     ELSE
-        SET star_id = (SELECT CONCAT('nm', LPAD(star, 7, 0)) FROM availableInt);
-        SET SQL_SAFE_UPDATES = 0;
-        UPDATE availableInt SET star = star + 1;
-        SET SQL_SAFE_UPDATES = 1;
-        IF star_birth_year = -1 THEN
-            INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, null);
-        ELSE
-            INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
-        END IF;
+        INSERT INTO stars (id, name, birthYear) VALUES (star_id, star_name, star_birth_year);
     END IF;
     SELECT CONCAT('Success! Star ("', star_name, '") was successfully added. | starID: ', star_id) as message;
 END
