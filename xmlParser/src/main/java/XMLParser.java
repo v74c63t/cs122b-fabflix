@@ -52,12 +52,14 @@ Elements Needed
     Cast
     -----------------
         <dirfilms>
-	        <is>?
+	        <is>? // shouldnt be needed imo
 	        <filmmc>
 		        <m>
                     <f>
                     <t>
                     <a>
+                    // should only need f and a
+                    // if f is used as id can simply get the id of a and then insert f and a_id
 
     Actor
     -----------------
