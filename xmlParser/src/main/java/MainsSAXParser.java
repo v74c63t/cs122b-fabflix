@@ -24,6 +24,12 @@ public class MainsSAXParser extends DefaultHandler {
     // so im not sure why they would do that in this case maybe use title as key i guess
     // need a better idea of what would be considered inconsistent
 
+    // after looking at the demo
+        // duplicates -- same multiple fid
+        // movieempty -- not sure whats in this ( looked at the fid and cross reference and the fields exists ( movieid, title, year, director, genre, actors )
+        // inconsist -- have no director/genres
+        // movienotfound -- not sure whats in it either
+
     private String tempVal;
 
     //to maintain context
