@@ -30,6 +30,22 @@ maybe different parser files for each file? (one for mains, one for casts, one f
     - with how each xml is structured, this will be a better option
 there are directors that have a dirn of "Unknown0"
     - maybe we exclude and skip over them since director in schema is required
+there are also those with multiple directors
+    - <directorfilms>
+        <director>
+            <dirname>NAME</dirname>
+        </director>
+        <films>
+            <film>
+                <dirs>
+                    <dir>DIR1</dir>
+                    <dir>DIR2</dir>
+                </dirs>
+            </film>
+        </films>
+      </directorfilms>
+    - we can probably ignore the <dirs> field ( dont put in starElement event ) from <films>
+        - use just from <director>
  */
 
 
