@@ -12,30 +12,18 @@ import org.xml.sax.SAXException;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-public class MainsSAXParser extends DefaultHandler {
+public class CastsSAXParser extends DefaultHandler {
 
     List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
-
-    //If we are mainly storing films in this we can maybe make a hashmap of "fid" since they are unqiuqe for each film
-
-    // the thing is in the demo they had movies that had the same name but diff everything else listed as inconsistent
-    // so im not sure why they would do that in this case maybe use title as key i guess
-    // need a better idea of what would be considered inconsistent
-
-    // after looking at the demo
-        // duplicates -- same multiple fid
-        // movieempty -- not sure whats in this ( looked at the fid and cross reference and the fields exists ( movieid, title, year, director, genre, actors )
-        // inconsist -- have no director/genres
-        // movienotfound -- not sure whats in it either
 
     private String tempVal;
 
     //to maintain context
     private Employee tempEmp;
 
-    public MainsSAXParser() {
+    public CastsSAXParser() {
         myEmpls = new ArrayList<Employee>();
     }
 
@@ -54,7 +42,7 @@ public class MainsSAXParser extends DefaultHandler {
             SAXParser sp = spf.newSAXParser();
 
             //parse the file and also register this class for call backs
-            sp.parse("stanford-movies/mains243.xml", this);
+            sp.parse("stanford-movies/casts243.xml", this);
 
         } catch (SAXException se) {
             se.printStackTrace();
@@ -71,8 +59,7 @@ public class MainsSAXParser extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Movies '" + myEmpls.size());
-        System.out.println("No of Genres_in_Movies '" + myEmpls.size());
+        System.out.println("No of Stars_in_Movies '" + myEmpls.size());
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
@@ -85,9 +72,8 @@ public class MainsSAXParser extends DefaultHandler {
     //Event Handlers
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         //reset
-        // not sure what to put here for mains
         tempVal = "";
-        if (qName.equalsIgnoreCase("actor")) {
+        if (qName.equalsIgnoreCase("dirfilms")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
             tempEmp = new Employee();
@@ -104,7 +90,7 @@ public class MainsSAXParser extends DefaultHandler {
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equalsIgnoreCase("film")) {
+        if (qName.equalsIgnoreCase("filmc")) {
             //add it to the list
             // check if dupe
             // if dupe write to movies dupe file id title director year
@@ -113,26 +99,26 @@ public class MainsSAXParser extends DefaultHandler {
             // else diff (id, director name, year)? not sure abt this
             myEmpls.add(tempEmp);
 
-        } else if (qName.equalsIgnoreCase("fid")) {
-            // check if dupe
-            // there are dupes fids in the file
-        }else if (qName.equalsIgnoreCase("t")) {
-            // some movies has same title (but that seems normal to me imo but demo had them in inconsistent so idk)
-            // but the dtd said titles are not supposed to be unique i dont get the inconsistency reports
-            // just ignore what demo had i guess
-
-        }else if (qName.equalsIgnoreCase("year")) {
-            // there are some with invalid ints ex: 199x, 19yy, etc
-            // dk how to deal with these b/c we cant set as null since tables require them to be not null
-            // maybe report as inconsistent????
-            tempEmp.setName(tempVal);
-        } else if(qName.equalsIgnoreCase("cat")) {
-            // need to do substring matching to check for if exists in db
-            // need to use .lower() b/c 'dram', 'DRam', etc
-            // also may need to combine similar genres together ex: adult
-            // store in list?
+        } else if (qName.equalsIgnoreCase("f")) {
+            // check if exists
+            // if not report as missing
+        }else if (qName.equalsIgnoreCase("m")) {
+            // check if exists
+                // if not report as missing
+                // if exists find id
 
         }
+        // not sure if we will need title/director to check if movie info consistent
+
+//        else if (qName.equalsIgnoreCase("year")) {
+//            // there are some with invalid ints ex: 199x, 19yy, etc
+//            // dk how to deal with these b/c we cant set as null since tables require them to be not null
+//            // maybe report as inconsistent????
+//            tempEmp.setName(tempVal);
+//        } else if(qName.equalsIgnoreCase("cat")) {
+//            // need to do substring matching
+//            // also may need to combine similar genres together ex: adult
+//        }
 //        else if (qName.equalsIgnoreCase("Age")) {
 //            tempEmp.setAge(Integer.parseInt(tempVal));
 //        }
@@ -140,8 +126,8 @@ public class MainsSAXParser extends DefaultHandler {
     }
 
     public static void main(String[] args) {
-        MainsSAXParser msp = new MainsSAXParser();
-        msp.runExample();
+        CastsSAXParser csp = new CastsSAXParser();
+        csp.runExample();
     }
 
 }
