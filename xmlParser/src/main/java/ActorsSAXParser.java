@@ -28,6 +28,8 @@ DOM may cause problems with AWS because of memory?
     - if too long optimize or switch to SAX
 maybe different parser files for each file? (one for mains, one for casts, one for actors)
     - with how each xml is structured, this will be a better option
+there are directors that have a dirn of "Unknown0"
+    - maybe we exclude and skip over them since director in schema is required
  */
 
 
