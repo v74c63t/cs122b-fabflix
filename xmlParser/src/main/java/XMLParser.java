@@ -21,6 +21,8 @@ Some notes abt the XML files:
 /*
 There are dupes within the xml files
     - have to keep track of stuff to be inserted to check these
+    - for movies use fid as movie id
+    - for stars, genres use available int to generate an id i guess?
 DOM may cause problems with AWS because of memory?
     - try on AWS to see how long it takes
         - tbh, SAX might be the best option because of the memory usage of DOM
@@ -28,4 +30,6 @@ DOM may cause problems with AWS because of memory?
     - if too long optimize or switch to SAX
 maybe different parser files for each file? (one for mains, one for casts, one for actors)
     - with how each xml is structured, this will be a better option
+with how casts is structured, we need to know the what movie is associated with what fid to be able to insert correctly into stars_in_movies
+    - most likely need to keep smth in memory for that instead of querying db
  */
