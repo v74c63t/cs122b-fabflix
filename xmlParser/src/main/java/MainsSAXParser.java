@@ -66,6 +66,7 @@ public class MainsSAXParser extends DefaultHandler {
     private void printData() {
 
         System.out.println("No of Movies '" + myEmpls.size());
+        System.out.println("No of Genres_in_Movies '" + myEmpls.size());
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
@@ -111,6 +112,8 @@ public class MainsSAXParser extends DefaultHandler {
             // there are dupes fids in the file
         }else if (qName.equalsIgnoreCase("t")) {
             // some movies has same title (but that seems normal to me imo but demo had them in inconsistent so idk)
+            // but the dtd said titles are not supposed to be unique i dont get the inconsistency reports
+            // just ignore what demo had i guess
 
         }else if (qName.equalsIgnoreCase("year")) {
             // there are some with invalid ints ex: 199x, 19yy, etc
@@ -118,8 +121,11 @@ public class MainsSAXParser extends DefaultHandler {
             // maybe report as inconsistent????
             tempEmp.setName(tempVal);
         } else if(qName.equalsIgnoreCase("cat")) {
-            // need to do substring matching
+            // need to do substring matching to check for if exists in db
+            // need to use .lower() b/c 'dram', 'DRam', etc
             // also may need to combine similar genres together ex: adult
+            // store in list?
+
         }
 //        else if (qName.equalsIgnoreCase("Age")) {
 //            tempEmp.setAge(Integer.parseInt(tempVal));
