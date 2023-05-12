@@ -18,6 +18,8 @@ public class MainsSAXParser extends DefaultHandler {
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
 
+    //If we are mainly storing films in this we can maybe make a hashmap of "fid" since they are unqiuqe for each film
+
     private String tempVal;
 
     //to maintain context
@@ -80,6 +82,9 @@ public class MainsSAXParser extends DefaultHandler {
             tempEmp = new Employee();
 //            tempEmp.setType(attributes.getValue("type"));
         }
+
+        // Think
+
     }
 
     public void characters(char[] ch, int start, int length) throws SAXException {
