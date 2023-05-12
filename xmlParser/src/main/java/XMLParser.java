@@ -23,7 +23,9 @@ There are dupes within the xml files
     - have to keep track of stuff to be inserted to check these
 DOM may cause problems with AWS because of memory?
     - try on AWS to see how long it takes
+        - tbh, SAX might be the best option because of the memory usage of DOM
+            - also because the website isn't done ( still more projects left )
     - if too long optimize or switch to SAX
-fid can be used as movieId and possibly a key to a hashmap to check for dupes
-some year tags dont have valid ints ex: 199x, 19yy prob report as inconsistent and reject these?
+maybe different parser files for each file? (one for mains, one for casts, one for actors)
+    - with how each xml is structured, this will be a better option
  */
