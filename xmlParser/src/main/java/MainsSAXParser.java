@@ -20,6 +20,10 @@ public class MainsSAXParser extends DefaultHandler {
 
     //If we are mainly storing films in this we can maybe make a hashmap of "fid" since they are unqiuqe for each film
 
+    // the thing is in the demo they had movies that had the same name but diff everything else listed as inconsistent
+    // so im not sure why they would do that in this case maybe use title as key i guess
+    // need a better idea of what would be considered inconsistent
+
     private String tempVal;
 
     //to maintain context
@@ -111,11 +115,8 @@ public class MainsSAXParser extends DefaultHandler {
         }else if (qName.equalsIgnoreCase("year")) {
             // there are some with invalid ints ex: 199x, 19yy, etc
             // dk how to deal with these b/c we cant set as null since tables require them to be not null
+            // maybe report as inconsistent????
             tempEmp.setName(tempVal);
-        } else if (qName.equalsIgnoreCase("dob")) {
-            // if empty set null
-            // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
-            tempEmp.setId(Integer.parseInt(tempVal));
         } else if(qName.equalsIgnoreCase("cat")) {
             // need to do substring matching
             // also may need to combine similar genres together ex: adult
