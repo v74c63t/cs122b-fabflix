@@ -129,7 +129,7 @@ public class ActorsSAXParser extends DefaultHandler {
     private void printData() {
 
         System.out.println("No of Stars '" + myEmpls.size());
-
+        // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
         while (it.hasNext()) {
