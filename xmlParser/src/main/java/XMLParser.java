@@ -36,30 +36,32 @@ Elements Needed
 -----------------
     Main
     -----------------
-        directorfilms
-	        - director
-		        - dirname
-	        - films
-		        - film
-			        - fid
-			        - t
-			        - year
-				        - released
-			        - cats
-				        - cat?
-				        - cattext?
+        <directorfilms>
+	        <director>
+		        <dirname>
+	        <films>
+		        <film>
+			        <fid>
+			        <t>
+			        <year>
+				        <released>
+			        <cats>
+				        <cat>?
+				        <cattext>?
+
     Cast
     -----------------
-        dirfilms
-	        - is?
-	        - filmmc
-		        - m
-                    - f
-                    - t
-                    - a
+        <dirfilms>
+	        <is>?
+	        <filmmc>
+		        <m>
+                    <f>
+                    <t>
+                    <a>
+
     Actor
     -----------------
-    actor
-	    - stagename
-	    - dob
+    <actor>
+	    <stagename>
+	    <dob>
  */
