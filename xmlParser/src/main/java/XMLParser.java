@@ -24,5 +24,6 @@ There are dupes within the xml files
 DOM may cause problems with AWS because of memory?
     - try on AWS to see how long it takes
     - if too long optimize or switch to SAX
-maybe different parser files for each file? (one for mains, one for casts, one for actors)
+fid can be used as movieId and possibly a key to a hashmap to check for dupes
+some year tags dont have valid ints ex: 199x, 19yy prob report as inconsistent and reject these?
  */
