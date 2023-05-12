@@ -81,22 +81,24 @@ import org.xml.sax.SAXException;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-public class SAXParserExample extends DefaultHandler {
+public class ActorsSAXParser extends DefaultHandler {
 
-    List<Employee> myEmpls;
+    List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
+    // get data from db and store in in memory hashmap for fast lookup?
+    // maybe key: name, value: birthYear?
 
     private String tempVal;
 
     //to maintain context
     private Employee tempEmp;
 
-    public SAXParserExample() {
+    public ActorsSAXParser() {
         myEmpls = new ArrayList<Employee>();
     }
 
     public void runExample() {
         parseDocument();
-        printData();
+        printData(); // write to csv file
     }
 
     private void parseDocument() {
@@ -109,7 +111,7 @@ public class SAXParserExample extends DefaultHandler {
             SAXParser sp = spf.newSAXParser();
 
             //parse the file and also register this class for call backs
-            sp.parse("employees.xml", this);
+            sp.parse("stanford-movies/actors63.xml", this);
 
         } catch (SAXException se) {
             se.printStackTrace();
@@ -126,22 +128,25 @@ public class SAXParserExample extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Employees '" + myEmpls.size() + "'.");
+        System.out.println("No of Stars '" + myEmpls.size());
 
+        // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
         while (it.hasNext()) {
             System.out.println(it.next().toString());
         }
+        // then load data
     }
 
     //Event Handlers
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         //reset
         tempVal = "";
-        if (qName.equalsIgnoreCase("Employee")) {
+        if (qName.equalsIgnoreCase("actor")) {
             //create a new instance of employee
+            // figure out how to store everything in hashmap i guess
             tempEmp = new Employee();
-            tempEmp.setType(attributes.getValue("type"));
+//            tempEmp.setType(attributes.getValue("type"));
         }
     }
 
@@ -151,23 +156,31 @@ public class SAXParserExample extends DefaultHandler {
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equalsIgnoreCase("Employee")) {
+        if (qName.equalsIgnoreCase("actor")) {
             //add it to the list
+            // check if dupe
+                // if dupe write to stars dupe file the name and birthyear of star
+                // if not add to hashmap
             myEmpls.add(tempEmp);
 
-        } else if (qName.equalsIgnoreCase("Name")) {
+        } else if (qName.equalsIgnoreCase("stagename")) {
+            // might have to .lower() and .strip() to check if dupe? not sure if
+            // everythign is capitalized properly
             tempEmp.setName(tempVal);
-        } else if (qName.equalsIgnoreCase("Id")) {
+        } else if (qName.equalsIgnoreCase("dob")) {
+            // if empty set null
+            // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
             tempEmp.setId(Integer.parseInt(tempVal));
-        } else if (qName.equalsIgnoreCase("Age")) {
-            tempEmp.setAge(Integer.parseInt(tempVal));
         }
+//        else if (qName.equalsIgnoreCase("Age")) {
+//            tempEmp.setAge(Integer.parseInt(tempVal));
+//        }
 
     }
 
     public static void main(String[] args) {
-        SAXParserExample spe = new SAXParserExample();
-        spe.runExample();
+        ActorsSAXParser asp = new ActorsSAXParser();
+        asp.runExample();
     }
 
 }
