@@ -41,11 +41,11 @@ Elements Needed
 		        <dirname>
 	        <films>
 		        <film>
-			        <fid>
-			        <t>
+			        <fid> // film_id
+			        <t> //title
 			        <year>
 				        <released>
-			        <cats>
+			        <cats>  // categories
 				        <cat>?
 				        <cattext>?
 
@@ -55,9 +55,8 @@ Elements Needed
 	        <is>? // shouldnt be needed imo
 	        <filmmc>
 		        <m>
-                    <f>
-                    <t>
-                    <a>
+                    <f> // film_id
+                    <a> // actor_name
                     // should only need f and a
                     // if f is used as id can simply get the id of a and then insert f and a_id
 
