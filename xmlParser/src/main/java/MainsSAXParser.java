@@ -26,6 +26,12 @@ public class MainsSAXParser extends DefaultHandler {
     // nvm it was reported as inconsistent because no genres so fid can be key just need to store director, title, year as value
     // to check for dupes so we can skip and report them
 
+    // after looking at the demo
+        // duplicates -- same multiple fid
+        // movieempty -- not sure whats in this ( looked at the fid and cross reference and the fields exists ( movieid, title, year, director, genre, actors )
+        // inconsist -- have no director/genres
+        // movienotfound -- not sure whats in it either
+
     private String tempVal;
 
     //to maintain context
