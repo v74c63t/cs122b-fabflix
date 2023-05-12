@@ -17,12 +17,14 @@ public class MainsSAXParser extends DefaultHandler {
     List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
+    // dont think there are dupes between db and xml for movies
+    // so we only need to get genres from db i think
+    // movies without genres are considered inconsistent so report that in file
 
     //If we are mainly storing films in this we can maybe make a hashmap of "fid" since they are unqiuqe for each film
 
-    // the thing is in the demo they had movies that had the same name but diff everything else listed as inconsistent
-    // so im not sure why they would do that in this case maybe use title as key i guess
-    // need a better idea of what would be considered inconsistent
+    // nvm it was reported as inconsistent because no genres so fid can be key just need to store director, title, year as value
+    // to check for dupes so we can skip and report them
 
     private String tempVal;
 
@@ -111,20 +113,20 @@ public class MainsSAXParser extends DefaultHandler {
             // check if dupe
             // there are dupes fids in the file
         }else if (qName.equalsIgnoreCase("t")) {
-            // some movies has same title (but that seems normal to me imo but demo had them in inconsistent so idk)
-            // but the dtd said titles are not supposed to be unique i dont get the inconsistency reports
-            // just ignore what demo had i guess
+            // store for dupe checking
 
         }else if (qName.equalsIgnoreCase("year")) {
             // there are some with invalid ints ex: 199x, 19yy, etc
             // dk how to deal with these b/c we cant set as null since tables require them to be not null
             // maybe report as inconsistent????
+            // store for dupe checking
             tempEmp.setName(tempVal);
         } else if(qName.equalsIgnoreCase("cat")) {
             // need to do substring matching to check for if exists in db
             // need to use .lower() b/c 'dram', 'DRam', etc
             // also may need to combine similar genres together ex: adult
             // store in list?
+            // if empty report inconsistent
 
         }
 //        else if (qName.equalsIgnoreCase("Age")) {
