@@ -73,7 +73,7 @@ public class CastsSAXParser extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         //reset
         tempVal = "";
-        if (qName.equalsIgnoreCase("filmmc")) { // not too sure
+        if (qName.equalsIgnoreCase("dirfilms")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
             tempEmp = new Employee();
@@ -90,7 +90,7 @@ public class CastsSAXParser extends DefaultHandler {
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equalsIgnoreCase("m")) {
+        if (qName.equalsIgnoreCase("filmc")) {
             //add it to the list
             // check if dupe
             // if dupe write to movies dupe file id title director year
@@ -99,10 +99,10 @@ public class CastsSAXParser extends DefaultHandler {
             // else diff (id, director name, year)? not sure abt this
             myEmpls.add(tempEmp);
 
-        } else if (qName.equalsIgnoreCase("fid")) {
+        } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
             // if not report as missing
-        }else if (qName.equalsIgnoreCase("a")) {
+        }else if (qName.equalsIgnoreCase("m")) {
             // check if exists
                 // if not report as missing
                 // if exists find id
