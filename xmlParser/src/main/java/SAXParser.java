@@ -179,7 +179,6 @@ public class SAXParser extends DefaultHandler {
             writer.newLine();
             for (Map.entry<String, int> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
                 writer.write(Integer.toString(entry.getValue()));
-                writer.write(entry.getKey());
                 writer.write(",");
                 writer.write(entry.getKey());
                 writer.newLine();
