@@ -164,6 +164,9 @@ public class SAXParser extends DefaultHandler {
             }
             // keep name as a variable somewhere so can set for all movies directed
 
+        } else if (qName.equalsIgnoreCase("dirfilms")) { // check if correct
+            director = null; //reset director name
+
         } else if (qName.equalsIgnoreCase("film")) {
 
             // If data is inconsistent
@@ -190,7 +193,7 @@ public class SAXParser extends DefaultHandler {
                     // write to file
                 }
                 else { // Add to myMovies HashMap
-                    tempMovie.setDirector(director); // need to reset director somewhere either <films> or <dirfilms> i guess
+                    tempMovie.setDirector(director);
                     myMovies.put(tempMovie.getId(), tempMovie);
                 }
             }
