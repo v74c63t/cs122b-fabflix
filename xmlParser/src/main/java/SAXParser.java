@@ -18,6 +18,8 @@ public class SAXParser extends DefaultHandler {
 
     private String tempVal;
 
+    private String director;
+
     private Movie tempMovie;
     private Star tempStar;
     // private Stars_in_Movies tempSIM;
@@ -137,6 +139,9 @@ public class SAXParser extends DefaultHandler {
                 //write to movie inconsistent file
             }
             // keep name as a variable somewhere so can set for all movies directed
+            else {
+                director = tempVal.strip();
+            }
 
         } else if( qName.equalsIgnoreCase("dirn")) { // some use <dirn> tag instead of <dirname>
             // Check if its starsWith "Unknown"
@@ -153,6 +158,9 @@ public class SAXParser extends DefaultHandler {
             else if (tempVal.strip() == "") {
                 isConsistent = false;
                 //write to movie inconsistent file
+            }
+            else {
+                director = tempVal.strip();
             }
             // keep name as a variable somewhere so can set for all movies directed
 
@@ -177,11 +185,12 @@ public class SAXParser extends DefaultHandler {
                     movieInconsistent++;
                     // write to file
                 }
-                else if (director not found) {
+                else if (director == null) {
                     movieInconsistent++;
                     // write to file
                 }
                 else { // Add to myMovies HashMap
+                    tempMovie.setDirector(director); // need to reset director somewhere either <films> or <dirfilms> i guess
                     myMovies.put(tempMovie.getId(), tempMovie);
                 }
             }
