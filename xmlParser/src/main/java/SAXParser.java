@@ -19,8 +19,10 @@ public class SAXParser extends DefaultHandler {
     private String tempVal;
 
     private Movie tempMovie;
+    private Star tempStar;
 
     private int movieDupe = 0;
+    private int starDupe = 0;
 
     private int movieInconsistent = 0;
 
@@ -44,6 +46,8 @@ public class SAXParser extends DefaultHandler {
 
             //parse the file and also register this class for call backs
             sp.parse("stanford-movies/mains243.xml", this);
+            sp.parse("stanford-movies/actors63.xml", this);
+            sp.parse("stanford-movies/casts243.xml", this);
 
         } catch (SAXException se) {
             se.printStackTrace();
@@ -134,6 +138,14 @@ public class SAXParser extends DefaultHandler {
 //                // increment dup count
 //                movieDupe++;
             if( not rejected b/c dupe or inconsistent) { // how will we check this tho
+                // we probably dont need to check for dup
+                // for inconsistent, just check for inconsistency at the end
+                    // use getters from Movies() to check date/genre/director
+                // OR we can create a boolean varaible "consistent"
+                    // init to "true"
+                    // set to "false" when check elsewhere
+                    // reset to true after each movie
+
                 // if not add to hashmap
                 // key should be fid
                 myMovies.put(tempMovie.getId(), tempMovie);
