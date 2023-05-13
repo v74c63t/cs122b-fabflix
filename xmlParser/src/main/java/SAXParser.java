@@ -120,6 +120,7 @@ public class SAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
             // check if dupe
+
             if ( myMovies.containsKey(tempVal.strip()) ) {
                 // if dupe write to movies dupe file id title director year
                 // increment dup count
@@ -142,7 +143,7 @@ public class SAXParser extends DefaultHandler {
                 // add to tempMovie
                 // tempMovie.setId(tempVal.strip());
             }
-        }else if (qName.equalsIgnoreCase("t")) {
+        } else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
                 movieInconsistent++;
@@ -246,6 +247,63 @@ public class SAXParser extends DefaultHandler {
                 // if new genre add to another hashmap? for genre table key: name, val: id
                 // and tehn keep id
                 // tempMovie.addGenre(tempVal.strip());
+            }
+
+        } else if (qName.equalsIgnoreCase("actor")) {
+            //add it to the list
+            // check if dupe
+            // if dupe write to stars dupe file the name and birthyear of star (make sure to check with db info too)
+            // if not add to hashmap
+            myStars.add(tempStar);
+
+        } else if (qName.equalsIgnoreCase("stagename")) {
+            // might have to .lower() and .strip() to check if dupe? not sure if
+            // everythign is capitalized properly
+            if( already exists previous in file or exists in db ) {
+                starDupe++;
+                //write to star dupe file
+            }
+            else {
+                // generate an id for star using available int remember to update the id afterwards
+                // store somewhere for dupe checking
+                // tempStar.setName(tempVal.strip());
+            }
+//            tempEmp.setName(tempVal);
+        } else if (qName.equalsIgnoreCase("dob")) {
+            // if empty set null
+            // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
+            try (Integer.parseInt(tempVal.strip())) {
+                // tempStar.setBirthYear(tempVal.strip());
+            }
+            catch(Exception e) {
+                // set null
+                // tempStar.setBirthYear(null);
+            }
+//            tempEmp.setId(Integer.parseInt(tempVal));
+        } else if (qName.equalsIgnoreCase("filmc")) {
+            //add it to the list
+            // check if dupe
+            // if dupe write to movies dupe file id title director year
+            // if not add to hashmap
+            // according to the demo vid its added to inconsistent file if there are movies with the same name but everything
+            // else diff (id, director name, year)? not sure abt this
+            myEmpls.add(tempEmp);
+
+        } else if (qName.equalsIgnoreCase("f")) {
+            // check if exists
+            // if not report as missing
+            if ( f not found ) {
+                moviesNotFound++;
+                // write to movie missing file
+            }
+        }else if (qName.equalsIgnoreCase("a")) {
+            // check if exists
+            // if not report as missing
+            // if exists find id
+            // ignore if 's a'
+            if ( a not found ) {
+                starsNotFound++;
+                // write to star missing file
             }
 
         }
