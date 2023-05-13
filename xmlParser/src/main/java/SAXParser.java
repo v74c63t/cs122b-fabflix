@@ -88,7 +88,17 @@ public class SAXParser extends DefaultHandler {
      * the contents
      */
     private void printData() {
+        // depending on when we load csv we may want diff print functions for each file
+        // if we load after we finish each file might need diff functions
+        // if we load after all files are done parsing can just keep one
 
+        // also need ot print dupes/inconsistencies
+        // in this set write to csv file i guess
+        Iterator<Employee> it = myMovies.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next().toString());
+        }
+        // then load data
         System.out.println("No of Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: ");
         System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
@@ -99,13 +109,6 @@ public class SAXParser extends DefaultHandler {
         System.out.println("No of Records Inserted into Stars_in_Movies: " + myEmpls.size());
         System.out.println("No of Missing Movies: " + moviesNotFound);
         System.out.println("No of Missing Stars: " + starsNotFound);
-        // also need ot print dupes/inconsistencies
-        // in this set write to csv file i guess
-        Iterator<Employee> it = myMovies.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next().toString());
-        }
-        // then load data
     }
 
     public void writeToTextFile( String fileName, String content ) {
@@ -131,6 +134,12 @@ public class SAXParser extends DefaultHandler {
                 // for each Movie,
                     // genreId lookup via name
                     // add Movie.getId(), genreId
+            // Genre Hashmaps
+                // for existing genres in db -> genre name: genre id
+                // for new genres found while parsing -> genre name: genre id
+                // for genres in cat -> genre abbr: actual genre defined by cats def page or corresponding equivalent in db
+                    // first get actual genre here then check against existing and new genres
+                    // if no equivalent found here and fails above check just add as is to new genres
     public void writeToCSVFile( String fileName, ArrayList<Object> objArray ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
