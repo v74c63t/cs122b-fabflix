@@ -17,6 +17,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class SAXParser extends DefaultHandler {
     HashMap<String, Movies> myMovies;
 
@@ -39,6 +46,19 @@ public class SAXParser extends DefaultHandler {
     private boolean isConsistent = true;
 
     private boolean isDuplicate = false;
+
+    private HashMap<String, int> genreToIdMap = new HashMap<String, int>();
+
+    /*
+    // Create a dataSource which registered in web.xml
+    private DataSource dataSource;
+
+    try {
+        dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+    } catch (NamingException e) {
+        e.printStackTrace();
+    }
+    */
 
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
@@ -137,6 +157,30 @@ public class SAXParser extends DefaultHandler {
                     writer.write(obj.getDirector());
 
                     // Do something with genres
+                    /*
+                    // Get a connection from dataSource and let resource manager close the connection after usage.
+                    try (Connection conn = dataSource.getConnection()) {
+
+                        // Construct a query with parameter represented by g"?"
+                        String query = "CALL add_genre(?);";
+
+                        PreparedStatement statement = conn.prepareStatement(query);
+
+                        statement.setString(1, genre);
+
+                        ResultSet rs = statement.executeQuery();
+
+                        while(rs.next()) {
+                            // add_genre  procedure only returns message
+                            // maybe modify to have (message, genreId) as returned fields
+                            genreToIdMap.put(genre, rs.getString("genreId"));
+                        }
+                        rs.close();
+                        statement.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    */
                 }
                 // Add more instanceof checking
             }
