@@ -143,7 +143,16 @@ public class SAXParser extends DefaultHandler {
     public void movieToCSV( String fileName, ArrayList<Movie> movieArray ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            for (Movie movie : movieArray) { // will prob have to change so it writes properly to csv file currently doesnt
+            // should write a header
+            writer.write("id");
+            writer.write(",");
+            writer.write("title");
+            writer.write(",");
+            writer.write("year");
+            writer.write(",");
+            writer.write("director");
+            writer.newLine();
+            for (Movie movie : movieArray) { // will prob have to change so it writes properly to csv file currently doesn't
                 writer.write(movie.getId());
                 writer.write(",");
                 writer.write(movie.getTitle());
