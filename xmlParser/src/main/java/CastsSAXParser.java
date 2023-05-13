@@ -107,10 +107,11 @@ public class CastsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
             // if not report as missing
-        }else if (qName.equalsIgnoreCase("m")) {
+        }else if (qName.equalsIgnoreCase("a")) {
             // check if exists
                 // if not report as missing
                 // if exists find id
+                // ignore if 's a'
 
         }
         // not sure if we will need title/director to check if movie info consistent
