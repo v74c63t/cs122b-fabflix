@@ -152,10 +152,24 @@ public class SAXParser extends DefaultHandler {
                 writer.write(",");
                 writer.write(movie.getDirector());
                 writer.newLine();
-
-                // Do something with genres
             }
-            // Add more instanceof checking
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 
+    public void genreToCSV( String fileName, HashMap<String, int> genreMap ) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            for (Map.entry<String, int> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
+                writer.write(entry.getKey());
+                writer.write(",");
+                writer.write(Integer.toString(entry.getValue()));
+                writer.newLine();
+            }
             writer.flush();
             writer.close();
         } catch (IOException e) {
