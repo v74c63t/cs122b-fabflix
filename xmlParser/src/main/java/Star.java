@@ -2,13 +2,15 @@ import java.sql.Date;
 
 public class Star {
     private String name;
-    private int birthYear; // maybe consider using string for this to deal with nulls
+//    private int birthYear; // maybe consider using string for this to deal with nulls
                             // can do checking that it is an int before it is set so it wont be a problem
+    private String birthYear;
 
     public Star() {
     }
 
-    public Star ( String name, int birthYear ) {
+//    public Star ( String name, int birthYear ) {
+    public Star ( String name, String birthYear ) {
         this.name = name;
         this.birthYear = birthYear;
     }
@@ -27,7 +29,7 @@ public class Star {
         this.name = name;
     }
 
-    public setBirthYear( int birthYear ) {
+    public setBirthYear( String birthYear ) {
         this.birthYear = birthYear;
     }
 
