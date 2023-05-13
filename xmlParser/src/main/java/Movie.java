@@ -41,29 +41,29 @@ public class Movie {
     }
 
     // Setters
-    public String setId( String id ) {
-        return this.id = id;
+    public void setId( String id ) {
+        this.id = id;
     }
 
-    public String setTitle( String title ) {
-        return this.title = title;
+    public void setTitle( String title ) {
+        this.title = title;
     }
 
-    public int setYear( int year ) {
-        return this.year = year;
+    public void setYear( int year ) {
+        this.year = year;
     }
 
-    public String setDirector( String director ) {
-        return this.director = director;
+    public void setDirector( String director ) {
+        this.director = director;
     }
 
-    public ArrayList<String> setGenres(ArrayList<String> genres) {
+    public void setGenres(ArrayList<String> genres) {
         // Might need to deep copy this
-        return this.genres = genres;
+        this.genres = genres;
     }
 
     public String addGenre( String genre ) {
-        genres.add(genre)
+        this.genres.add(genre)
     }
 
     public String toString() {

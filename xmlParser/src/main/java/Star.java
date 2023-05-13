@@ -16,20 +16,20 @@ public class Star {
     }
 
     // Getters
-    public getName() {
+    public String getName() {
         return name;
     }
 
-    public getBirthYear() {
+    public String getBirthYear() {
         return birthYear;
     }
 
     // Setters
-    public setName( String name ) {
+    public void setName( String name ) {
         this.name = name;
     }
 
-    public setBirthYear( String birthYear ) {
+    public void setBirthYear( String birthYear ) {
         this.birthYear = birthYear;
     }
 
