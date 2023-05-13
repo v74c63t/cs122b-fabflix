@@ -243,6 +243,16 @@ public class SAXParser extends DefaultHandler {
             }
 
         } else if( qName.equalsIgnoreCase("dirn")) { // some use <dirn> tag instead of <dirname>
+                // I've only seen 1 that used <dirn> instead of <dirname> under
+                    // we can probably remove this or it would take the
+                    // the last <dirn> listed for that film
+                // and it looks like it was mistake/misplaced because
+                    // <directorfilms><director><dirname>Morneau<dirn>...
+                    // <film> for director Morneau
+                    // <directorfilms><director><dir>Moodysson<dirn>...
+                    // no <film> for this director "Moodysson"
+                    // <film> for director "Morneau"
+
             // Check if its starsWith "Unknown"
             //  if so, add to inconsistent
             if ( tempVal.lower().strip().startsWith("unknown") ) {
