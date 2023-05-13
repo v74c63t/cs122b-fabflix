@@ -153,6 +153,9 @@ public class MainsSAXParser extends DefaultHandler {
             // also may need to combine similar genres together ex: adult
             // store in list?
             // if empty report inconsistent
+            // refer to http://infolab.stanford.edu/pub/movies/doc.html#CATS
+            // to figure out what each cat stands for
+            // maybe create a map for this as well?
 //            if( cat tag doesnt exist ) {
             if(tempVal == "") { // check if this is correct
                 movieInconsistent++;
