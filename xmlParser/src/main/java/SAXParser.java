@@ -51,7 +51,6 @@ public class SAXParser extends DefaultHandler {
     private HashMap<String, int> existingGenres = new HashMap<String, int>();
     private HashMap<String, int> newGenres = new HashMap<String, int>();
 
-
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
     }
@@ -141,30 +140,30 @@ public class SAXParser extends DefaultHandler {
                 // for genres in cat -> genre abbr: actual genre defined by cats def page or corresponding equivalent in db
                     // first get actual genre here then check against existing and new genres
                     // if no equivalent found here and fails above check just add as is to new genres
-    public void writeToCSVFile( String fileName, ArrayList<Object> objArray ) {
+    public void movieToCSV( String fileName, ArrayList<Movie> movieArray ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            for (Object obj : objArray) { // will prob have to change so it writes properly to csv file currently doesnt
-                if ( obj instanceof Movie ) {
-                    writer.write(obj.getId());
-                    writer.write(",");
-                    writer.write(obj.getTitle());
-                    writer.write(",");
-                    writer.write(obj.getYear());
-                    writer.write(",");
-                    writer.write(obj.getDirector());
+            for (Movie movie : movieArray) { // will prob have to change so it writes properly to csv file currently doesnt
+                writer.write(movie.getId());
+                writer.write(",");
+                writer.write(movie.getTitle());
+                writer.write(",");
+                writer.write(Integer.toString(movie.getYear()));
+                writer.write(",");
+                writer.write(movie.getDirector());
+                writer.newLine();
 
-                    // Do something with genres
-                }
-                // Add more instanceof checking
+                // Do something with genres
             }
-            writer.write(content);
-            writer.newLine();
+            // Add more instanceof checking
+            writer.flush();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     //Event Handlers
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
