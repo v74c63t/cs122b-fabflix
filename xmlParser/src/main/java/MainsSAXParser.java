@@ -80,6 +80,7 @@ public class MainsSAXParser extends DefaultHandler {
     private void printData() {
 
         System.out.println("No of Movies: " + myMovies.size());
+        System.out.println("No of Inserted Genres: ");
         System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
@@ -117,7 +118,8 @@ public class MainsSAXParser extends DefaultHandler {
         if ( qName.equalsIgnoreCase("dirname")) {
             // Check if its starsWith "Unknown"
             //  if so, add to inconsistent
-            if ( unknown ) {
+            if ( tempVal.lower().strip().startsWith("unknown") ) {
+                // in case trailing spaces
                 movieInconsistent++;
                 //write to movie inconsistent file
             }
@@ -128,8 +130,6 @@ public class MainsSAXParser extends DefaultHandler {
             // check if dupe
             // if dupe write to movies dupe file id title director year
             // if not add to hashmap
-            // according to the demo vid its added to inconsistent file if there are movies with the same name but everything
-            // else diff (id, director name, year)? not sure abt this
             myMovies.add(tempMovie);
 
         } else if (qName.equalsIgnoreCase("fid")) {
@@ -143,11 +143,15 @@ public class MainsSAXParser extends DefaultHandler {
                 // keep in hashmap as key? for dupe checking later
 
                 // add to tempMovie
-                    // tempMovie.setId(tempVal);
+                    // tempMovie.setId(tempVal.strip());
             }
         }else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
-            if(tempVal == "") { // i mean title is required not to be null so this should be a fair assumption?
+            if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
+                movieInconsistent++;
+                // write to movie inconsistent file
+            }
+            else if(tempVal == null) {
                 movieInconsistent++;
                 // write to movie inconsistent file
             }
@@ -155,7 +159,7 @@ public class MainsSAXParser extends DefaultHandler {
                 //set
 
                 // add to tempMovie
-                    // tempMovie.setTitle(tempVal);
+                    // tempMovie.setTitle(tempVal.strip());
             }
 
         }else if (qName.equalsIgnoreCase("year")) {
@@ -163,15 +167,18 @@ public class MainsSAXParser extends DefaultHandler {
             // dk how to deal with these b/c we cant set as null since tables require them to be not null
             // maybe report as inconsistent????
             // store for dupe checking
-            if(tempVal == "") { // i mean year is required not to be null so this should be a fair assumption?
+            if(tempVal.strip() == "") { // i mean year is required not to be null so this should be a fair assumption?
+                movieInconsistent++;
+                // write to movie inconsistent file
+            }
+            else if(tempVal == null) {
                 movieInconsistent++;
                 // write to movie inconsistent file
             }
             else {
                 try () {
-                    tempEmp.setYear(Integer.parseInt(tempVal))
                     // add to tempMovie
-                        // tempMovie.setYear(Integer.parseInt(tempVal));
+                        // tempMovie.setYear(Integer.parseInt(tempVal.strip()));
                 } catch (Exception e) {
                     // report inconsistent i guess
                     movieInconsistent++;
@@ -225,12 +232,23 @@ public class MainsSAXParser extends DefaultHandler {
             // for rest just add as new
 
 //            if( cat tag doesnt exist ) {
-            if(tempVal == "") { // check if this is correct
+            if(tempVal.strip() == "") { // check if this is correct // in case trailing spaces
+                movieInconsistent++;
+                // write to movie inconsistent file
+            } else if(tempVal == null) {
                 movieInconsistent++;
                 // write to movie inconsistent file
             } else {
                 // add to tempMovie
-                    // tempMovie.addGenre(tempVal);
+                // have to check genre before adding
+                // have to .strip() b/c trailing spaces and .lower()
+                // have to .split() in case combined genres
+                // refer to comments above to get correct genre
+                // have to add to somewhere so can insert into genres in movie
+                // maybe a hashmap with movie id as key and list of genre ids as values
+                // if new genre add to another hashmap? for genre table key: name, val: id
+                // and tehn keep id
+                    // tempMovie.addGenre(tempVal.strip());
             }
 
         }
