@@ -106,12 +106,12 @@ public class SAXParser extends DefaultHandler {
         }
         rs.close();
 
-        query = "SELECT MAX(id) FROM genres;";
+        query = "SELECT * FROM availableint;";
 
         ResultSet rs2 = statement.executeQuery(query);
 
         if (rs.next()) {
-            availableGenreId = rs.getInt("max(id)") + 1;
+            availableGenreId = rs.getInt("genre");
         }
         rs2.close
 
