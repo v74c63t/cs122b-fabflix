@@ -85,6 +85,10 @@ Elements Needed
 	    <dob>
  */
 
+/*
+    Star Duplicates: already exists in db/already appeared in xml file before
+ */
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -104,6 +108,7 @@ public class ActorsSAXParser extends DefaultHandler {
     List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // maybe key: name, value: birthYear?
+    // tehre are dupes within xml file and db
 
     private String tempVal;
 
@@ -177,7 +182,7 @@ public class ActorsSAXParser extends DefaultHandler {
         if (qName.equalsIgnoreCase("actor")) {
             //add it to the list
             // check if dupe
-                // if dupe write to stars dupe file the name and birthyear of star
+                // if dupe write to stars dupe file the name and birthyear of star (make sure to check with db info too)
                 // if not add to hashmap
             myEmpls.add(tempEmp);
 

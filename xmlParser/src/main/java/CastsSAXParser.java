@@ -12,11 +12,16 @@ import org.xml.sax.SAXException;
 
 import org.xml.sax.helpers.DefaultHandler;
 
+/*
+    Star Not Found: not found in db or actors xml file
+ */
+
 public class CastsSAXParser extends DefaultHandler {
 
     List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
+    // will need to get stars table to check if star actually exists
 
     private String tempVal;
 
