@@ -49,6 +49,8 @@ public class SAXParser extends DefaultHandler {
 
     private int availableGenreId;
 
+    private int availableStarId
+
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
         put("susp", "Thriller");
         put("cnr", "Crime");
@@ -112,8 +114,10 @@ public class SAXParser extends DefaultHandler {
 
         if (rs2.next()) {
             availableGenreId = rs2.getInt("genre");
+            availableStarId = rs2.getInt("star");
         }
-        rs2.close
+        rs2.close();
+
 
         statement.close();
     } catch (Exception e) {
