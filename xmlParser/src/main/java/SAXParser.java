@@ -504,9 +504,11 @@ public class SAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
             // if not report as missing
-            if ( f not found ) {
+            if ( !myMovies.containsKey(tempVal.strip()) ) {
                 moviesNotFound++;
                 // write to movie missing file
+                // should we continue checking in this case?
+                // get something to tell it not to add this entry
             }
         }else if (qName.equalsIgnoreCase("a")) {
             // check if exists
@@ -516,6 +518,10 @@ public class SAXParser extends DefaultHandler {
             if ( a not found ) {
                 starsNotFound++;
                 // write to star missing file
+            }
+            else {
+                String starId = //get star id
+                // add to list
             }
 
         }
