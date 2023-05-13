@@ -444,8 +444,8 @@ public class SAXParser extends DefaultHandler {
                     }
                     else {
                         // get available int and assign to new genre
-                        int genreId = ?;
-                        newGenres.put(genre.toLowerCase(), genreId);
+                        newGenres.put(genre.toLowerCase(), availableGenreId);
+                        availableGenreId++;
                         tempMovie.addGenre(genre);
                     }
                 }
@@ -459,8 +459,8 @@ public class SAXParser extends DefaultHandler {
                                 tempMovie.addGenre(genre);
                             } else {
                                 // get available int and assign to new genre
-                                int genreId = ?;
-                                newGenres.put(genre.toLowerCase(), genreId);
+                                newGenres.put(genre.toLowerCase(), availableGenreId);
+                                availableGenreId++;
                                 tempMovie.addGenre(genre);
                             }
                         } else {
@@ -470,8 +470,8 @@ public class SAXParser extends DefaultHandler {
                                 tempMovie.addGenre(g);
                             } else {
                                 // get available int and assign to new genre
-                                int genreId = ?;
-                                newGenres.put(g.toLowerCase(), genreId);
+                                newGenres.put(g.toLowerCase(), availableGenreId);
+                                availableGenreId++;
                                 tempMovie.addGenre(g);
                             }
                         }
