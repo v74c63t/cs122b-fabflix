@@ -141,7 +141,7 @@ public class MainsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
             // check if dupe
-            if ( myMovies.containsKey(tempVal) ) {
+            if ( myMovies.containsKey(tempVal.strip()) ) {
                 // if dupe write to movies dupe file id title director year
                 // increment dup count
                 movieDupe++;
@@ -153,7 +153,7 @@ public class MainsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("fid")) {
             // check if dupe
             // there are dupes fids in the file
-            if( myMovies.containsKey(tempVal) ){
+            if( myMovies.containsKey(tempVal.strip()) ){
                 movieDupe++;
                 //write to movie dupe file
             }
