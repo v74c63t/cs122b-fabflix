@@ -29,8 +29,10 @@ public class MainsSAXParser extends DefaultHandler {
     // after looking at the demo
         // duplicates -- same multiple fid
         // movieempty -- not sure whats in this ( looked at the fid and cross reference and the fields exists ( movieid, title, year, director, genre, actors )
-        // inconsist -- have no director/genres
+        // inconsistent -- have no director/genres
         // movienotfound -- not sure whats in it either
+            // i thikn they dont add movies with no genres? which is why when trying to find them for casts
+            // they are reported as missing???
 
     private String tempVal;
 
