@@ -120,14 +120,15 @@ public class SAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
             // check if dupe
-
-            if ( myMovies.containsKey(tempVal.strip()) ) {
-                // if dupe write to movies dupe file id title director year
-                // increment dup count
-                movieDupe++;
-            } else {
+            // not sure what tempVal would be here
+//            if ( myMovies.containsKey(tempVal.strip()) ) {
+//                // if dupe write to movies dupe file id title director year
+//                // increment dup count
+//                movieDupe++;
+            if( not rejected b/c dupe or inconsistent) { // how will we check this tho
                 // if not add to hashmap
-                myMovies.put(tempVal, tempMovie);
+                // key should be fid
+                myMovies.put(tempMovie.getId(), tempMovie);
             }
 
         } else if (qName.equalsIgnoreCase("fid")) {
