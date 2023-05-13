@@ -13,6 +13,10 @@ import org.xml.sax.SAXException;
 
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class SAXParser extends DefaultHandler {
     HashMap<String, Movies> myMovies;
 
@@ -91,6 +95,17 @@ public class SAXParser extends DefaultHandler {
             System.out.println(it.next().toString());
         }
         // then load data
+    }
+
+    public void writeToFile( String fileName, String content ) {
+        try () {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            writer.write(content);
+            writer.newLine();
+            writer.close()
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //Event Handlers
