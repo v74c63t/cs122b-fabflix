@@ -84,6 +84,17 @@ public class SAXParser extends DefaultHandler {
             // figure out how to store everything in hashmap i guess
             tempMovie = new Movie();
 //            tempEmp.setType(attributes.getValue("type"));
+        } else if (qName.equalsIgnoreCase("actor")) {
+            //create a new instance of employee
+            // figure out how to store everything in hashmap i guess
+//            tempEmp = new Employee();
+            tempStar = new Star();
+//            tempEmp.setType(attributes.getValue("type"));
+        } else if (qName.equalsIgnoreCase("m")) { // not too sure
+            //create a new instance of employee
+            // figure out how to store everything in hashmap i guess
+            tempSIM = new Stars_In_Movies();
+//            tempEmp.setType(attributes.getValue("type"));
         }
 
         // Think
