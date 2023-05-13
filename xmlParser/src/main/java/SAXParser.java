@@ -20,6 +20,7 @@ public class SAXParser extends DefaultHandler {
 
     private Movie tempMovie;
     private Star tempStar;
+    // private Stars_in_Movies tempSIM;
 
     private int movieDupe = 0;
     private int starDupe = 0;
@@ -99,18 +100,14 @@ public class SAXParser extends DefaultHandler {
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
             tempMovie = new Movie();
-//            tempEmp.setType(attributes.getValue("type"));
         } else if (qName.equalsIgnoreCase("actor")) {
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
-//            tempEmp = new Employee();
             tempStar = new Star();
-//            tempEmp.setType(attributes.getValue("type"));
         } else if (qName.equalsIgnoreCase("m")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
             tempSIM = new Stars_In_Movies();
-//            tempEmp.setType(attributes.getValue("type"));
         }
 
         // Think
@@ -142,51 +139,37 @@ public class SAXParser extends DefaultHandler {
             // keep name as a variable somewhere so can set for all movies directed
 
         } else if (qName.equalsIgnoreCase("film")) {
-            //add it to the list
-            // check if dupe
-            // not sure what tempVal would be here
-//            if ( myMovies.containsKey(tempVal.strip()) ) {
-//                // if dupe write to movies dupe file id title director year
-//                // increment dup count
-//                movieDupe++;
-            if( !isConsistent ) { // how will we check this tho
-                // we probably dont need to check for dup
-                // for inconsistent, just check for inconsistency at the end
-                // use getters from Movies() to check date/genre/director
-                // OR we can create a boolean varaible "consistent"
-                // init to "true"
-                // set to "false" when check elsewhere
-                // reset to true after each movie
+
+            // If data is inconsistent
+            if( !isConsistent ) {
                 movieInconsistent++;
                 // write to file
+                    // all info stored in tempMovie
                 isConsistent = true;
             } else if(isDuplicate) {
                 movieDupe++;
                 //write to file
+                    // all info stored in tempMovie
                 isDuplicate = false;
             }else {
-                // we need ot check for fid dupes within file
-                // i guess we can create a bool var for this too
-                // and then check here and write to dupe file
-                // b/c vid still had all the info (year, dir, title, genres) in the movie dupe file
-
-                // if not add to hashmap
-                // key should be fid
+                // Add to myMovies HashMap
                 myMovies.put(tempMovie.getId(), tempMovie);
             }
 
         } else if (qName.equalsIgnoreCase("fid")) {
             // check if dupe
-            // there are dupes fids in the file
             if( myMovies.containsKey(tempVal.strip()) ){
                 isDuplicate = true;
                 //write to movie dupe file
             }
             else {
                 // keep in hashmap as key? for dupe checking later
+                    // probably not needed if its added at endElement("film")
+                    // we can probably remove the else and just keep
+                    // "tempMovie.setId(tempVal.strip());"
 
                 // add to tempMovie
-                // tempMovie.setId(tempVal.strip());
+                tempMovie.setId(tempVal.strip());
             }
         } else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
@@ -199,10 +182,10 @@ public class SAXParser extends DefaultHandler {
                 // write to movie inconsistent file
             }
             else {
-                //set
+                // same as above, probably not needed since we need the title (<t>) to add to dup file
 
                 // add to tempMovie
-                // tempMovie.setTitle(tempVal.strip());
+                 tempMovie.setTitle(tempVal.strip());
             }
 
         }else if (qName.equalsIgnoreCase("year")) {
