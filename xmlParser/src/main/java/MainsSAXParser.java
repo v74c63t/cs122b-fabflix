@@ -153,9 +153,45 @@ public class MainsSAXParser extends DefaultHandler {
             // also may need to combine similar genres together ex: adult
             // store in list?
             // if empty report inconsistent
+            // some have trailing spaces so use .strip()
+            // some are combined into one tag ex: 'Romt Comd', 'Dram Docu'
+                // use .strip() then .split()
             // refer to http://infolab.stanford.edu/pub/movies/doc.html#CATS
             // to figure out what each cat stands for
             // maybe create a map for this as well?
+            // Susp -> Thriller
+            // CnR -> Cops and Robbers -> Crime??? or new cat
+                // some of them are added as CnRb
+            // Dram -> Drama
+            // West -> Western
+            // Myst -> Mystery
+            // S.F. -> Sci-Fi
+                // but some of them are written as ScFi so idk
+            // Advt -> Adventure
+            // Horr -> Horror
+            // Romt -> Romantic -> Romance
+            // Comd -> Comedy
+                // some are combined for some reason ex: Romt Comd
+            // Musc -> Musical
+            // Docu -> Documentary
+            // Porn -> Adult
+            // Noir -> black (just store as noir i guess)
+            // BioP -> biographical Picture -> Biography? idrk what to consider this as
+            // TV -> TV show
+            // TVs -> TV series
+            // TVm -> TV miniseries
+
+            // some that are not listed on that page
+            // Actn -> Action
+            // Cart -> Cartoon
+            // Bio -> Biography
+            // Crim -> Crime
+            // Faml -> Family
+            // Fant -> Fantasy
+            // Hist -> History
+
+            // for rest just add as new
+
 //            if( cat tag doesnt exist ) {
             if(tempVal == "") { // check if this is correct
                 movieInconsistent++;
