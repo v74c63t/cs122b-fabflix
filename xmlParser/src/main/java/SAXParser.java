@@ -267,7 +267,7 @@ public class SAXParser extends DefaultHandler {
             director = null; //reset director name
 
         } else if (qName.equalsIgnoreCase("film")) {
-
+            tempMovie.setDirector(director);
             // If data is inconsistent
             if( !isConsistent ) {
                 movieInconsistent++;
@@ -296,7 +296,6 @@ public class SAXParser extends DefaultHandler {
                     writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
-                    tempMovie.setDirector(director);
                     myMovies.put(tempMovie.getId(), tempMovie);
                 }
             }
