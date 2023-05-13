@@ -110,8 +110,8 @@ public class SAXParser extends DefaultHandler {
 
         ResultSet rs2 = statement.executeQuery(query);
 
-        if (rs.next()) {
-            availableGenreId = rs.getInt("genre");
+        if (rs2.next()) {
+            availableGenreId = rs2.getInt("genre");
         }
         rs2.close
 
