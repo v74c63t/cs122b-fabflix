@@ -115,6 +115,14 @@ public class SAXParser extends DefaultHandler {
                 movieInconsistent++;
                 //write to movie inconsistent file
             }
+            else if (tempVal == null) {
+                movieInconsistent++;
+                //write to movie inconsistent file
+            }
+            else if (tempVal.strip() == "") {
+                movieInconsistent++;
+                //write to movie inconsistent file
+            }
             // keep name as a variable somewhere so can set for all movies directed
 
         } else if (qName.equalsIgnoreCase("film")) {
