@@ -105,7 +105,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ActorsSAXParser extends DefaultHandler {
 
-    List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
+    List<Star> myStars; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // maybe key: name, value: birthYear?
     // tehre are dupes within xml file and db
@@ -113,12 +113,12 @@ public class ActorsSAXParser extends DefaultHandler {
     private String tempVal;
 
     //to maintain context
-    private Employee tempEmp;
+    private Star tempStar;
 
     private int starDupe = 0;
 
     public ActorsSAXParser() {
-        myEmpls = new ArrayList<Employee>();
+        myEmpls = new ArrayList<Star>();
     }
 
     public void runExample() {
@@ -153,11 +153,11 @@ public class ActorsSAXParser extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Stars: " + myEmpls.size());
+        System.out.println("No of Stars: " + myStars.size());
         System.out.println("No of Duplicated Stars: " + starDupe);
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
-        Iterator<Employee> it = myEmpls.iterator();
+        Iterator<Star> it = myStars.iterator();
         while (it.hasNext()) {
             System.out.println(it.next().toString());
         }
@@ -171,7 +171,8 @@ public class ActorsSAXParser extends DefaultHandler {
         if (qName.equalsIgnoreCase("actor")) {
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
-            tempEmp = new Employee();
+//            tempEmp = new Employee();
+            tempStar = new Star();
 //            tempEmp.setType(attributes.getValue("type"));
         }
     }
@@ -187,7 +188,7 @@ public class ActorsSAXParser extends DefaultHandler {
             // check if dupe
                 // if dupe write to stars dupe file the name and birthyear of star (make sure to check with db info too)
                 // if not add to hashmap
-            myEmpls.add(tempEmp);
+            myStars.add(tempStar);
 
         } else if (qName.equalsIgnoreCase("stagename")) {
             // might have to .lower() and .strip() to check if dupe? not sure if
@@ -196,11 +197,23 @@ public class ActorsSAXParser extends DefaultHandler {
                 starDupe++;
                 //write to star dupe file
             }
-            tempEmp.setName(tempVal);
+            else {
+                // generate an id for star using available int remember to update the id afterwards
+                // store somewhere for dupe checking
+                // tempStar.setName(tempVal.strip());
+            }
+//            tempEmp.setName(tempVal);
         } else if (qName.equalsIgnoreCase("dob")) {
             // if empty set null
             // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
-            tempEmp.setId(Integer.parseInt(tempVal));
+            try (Integer.parseInt(tempVal.strip())) {
+                // tempStar.setBirthYear(tempVal.strip());
+            }
+            catch(Exception e) {
+                // set null
+                // tempStar.setBirthYear(null);
+            }
+//            tempEmp.setId(Integer.parseInt(tempVal));
         }
 //        else if (qName.equalsIgnoreCase("Age")) {
 //            tempEmp.setAge(Integer.parseInt(tempVal));
