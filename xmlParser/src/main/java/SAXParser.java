@@ -48,7 +48,8 @@ public class SAXParser extends DefaultHandler {
     private boolean isDuplicate = false;
 
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>(); // dont know about this
-    private HashMap<String, int> genreToIdMap = new HashMap<String, int>();
+    private HashMap<String, int> existingGenres = new HashMap<String, int>();
+    private HashMap<String, int> newGenres = new HashMap<String, int>();
 
 
     public SAXParser() {
@@ -197,7 +198,7 @@ public class SAXParser extends DefaultHandler {
         if ( qName.equalsIgnoreCase("dirname")) {
             // Check if its starsWith "Unknown"
             //  if so, add to inconsistent
-            if ( tempVal.lower().strip().startsWith("unknown") ) {
+            if ( tempVal.toLowerCase().strip().startsWith("unknown") ) {
                 // in case trailing spaces
                 isConsistent = false;
                 //write to movie inconsistent file
@@ -362,6 +363,36 @@ public class SAXParser extends DefaultHandler {
                 // add to tempMovie
                 // have to check genre before adding
                 // have to .strip() b/c trailing spaces and .lower()
+                for(String g: tempVal.strip().toLowerCase().split("\\s+")) {
+                    if(catToGenreMap.contains(g)) {
+                        String genre = catToGenreMap.get(g);
+                        if(existingGenres.contains(genre)) {
+                            tempMovie.addGenre(genre);
+                        }
+                        else if(newGenres.contains(genre)) {
+                            tempMovie.addGenre(genre);
+                        }
+                        else {
+                            // get available int and assign to new genre
+                            int genreId = ?;
+                            newGenres.put(genre.toLowerCase(), genreId);
+                            tempMovie.addGenre(genre);
+                        }
+                    }
+                    else {
+                        if(existingGenres.contains(g)) {
+                            tempMovie.addGenre(g);
+                        }
+                        else if(newGenres.contains(g)) {
+                            tempMovie.addGenre(g);
+                        }
+                        else {
+                            // get available int and assign to new genre
+                            int genreId = ?;
+                            newGenres.put(g.toLowerCase(), genreId);
+                            tempMovie.addGenre(g);
+                        }
+                    }
                 // have to .split() in case combined genres
                 // refer to comments above to get correct genre
                 // have to add to somewhere so can insert into genres in movie
