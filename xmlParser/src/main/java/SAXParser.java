@@ -398,12 +398,12 @@ public class SAXParser extends DefaultHandler {
                 // add to tempMovie
                 // have to check genre before adding
                 // have to .strip() b/c trailing spaces and .lower()
-                if(catToGenreMap.contains(tempVal.strip().toLowerCase())){
+                if(catToGenreMap.containsKey(tempVal.strip().toLowerCase())){
                     String genre = catToGenreMap.get(tempVal.strip().toLowerCase()));
-                    if(existingGenres.contains(genre)) {
+                    if(existingGenres.containsKey(genre)) {
                         tempMovie.addGenre(genre);
                     }
-                    else if(newGenres.contains(genre)) {
+                    else if(newGenres.containsKey(genre)) {
                         tempMovie.addGenre(genre);
                     }
                     else {
@@ -415,11 +415,11 @@ public class SAXParser extends DefaultHandler {
                 }
                 else {
                     for(String g: tempVal.strip().toLowerCase().split("\\s+")) {
-                        if (catToGenreMap.contains(g)) {
+                        if (catToGenreMap.containsKey(g)) {
                             String genre = catToGenreMap.get(g);
-                            if (existingGenres.contains(genre)) {
+                            if (existingGenres.containsKey(genre)) {
                                 tempMovie.addGenre(genre);
-                            } else if (newGenres.contains(genre)) {
+                            } else if (newGenres.containsKey(genre)) {
                                 tempMovie.addGenre(genre);
                             } else {
                                 // get available int and assign to new genre
@@ -428,9 +428,9 @@ public class SAXParser extends DefaultHandler {
                                 tempMovie.addGenre(genre);
                             }
                         } else {
-                            if (existingGenres.contains(g)) {
+                            if (existingGenres.containsKey(g)) {
                                 tempMovie.addGenre(g);
-                            } else if (newGenres.contains(g)) {
+                            } else if (newGenres.containsKey(g)) {
                                 tempMovie.addGenre(g);
                             } else {
                                 // get available int and assign to new genre
