@@ -12,3 +12,7 @@
 - Star has name/birth year that was previously found in the xml file or already in the movie db
 #### StarNotFound.txt
 - When parsing casts, the name of the star is not found in the db or the actors xml file
+
+
+### Assumptions
+- assume Director/Movie is correctly associated in "casts" xml file
