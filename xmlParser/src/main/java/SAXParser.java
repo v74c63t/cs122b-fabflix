@@ -172,12 +172,12 @@ public class SAXParser extends DefaultHandler {
             System.out.println(it.next().toString());
         }
         // then load data
-        System.out.println("No of Movies: " + myMovies.size());
-        System.out.println("No of Inserted Genres: ");
+        System.out.println("No of Inserted Movies: " + myMovies.size());
+        System.out.println("No of Inserted Genres: " + newGenres.size());
         System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
-        System.out.println("No of Stars: " + myStars.size());
+        System.out.println("No of Inserted Stars: " + myStars.size());
         System.out.println("No of Duplicated Stars: " + starDupe);
         System.out.println("No of Records Inserted into Stars_in_Movies: " + myEmpls.size());
         System.out.println("No of Missing Movies: " + moviesNotFound);
