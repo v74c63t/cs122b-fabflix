@@ -14,7 +14,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class MainsSAXParser extends DefaultHandler {
 
-    List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
+    List<Movie> myMovies; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
     // dont think there are dupes between db and xml for movies
@@ -37,14 +37,14 @@ public class MainsSAXParser extends DefaultHandler {
     private String tempVal;
 
     //to maintain context
-    private Employee tempEmp;
+    private Movie tempMovie;
 
     private int movieDupe = 0;
 
     private int movieInconsistent = 0;
 
     public MainsSAXParser() {
-        myEmpls = new ArrayList<Employee>();
+        myMovies = new ArrayList<Movie>();
     }
 
     public void runExample() {
@@ -79,13 +79,13 @@ public class MainsSAXParser extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Movies: " + myEmpls.size());
-        System.out.println("No of Records Inserted into Genres_in_Movies: " + myEmpls.size());
+        System.out.println("No of Movies: " + myMovies.size());
+        System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
-        Iterator<Employee> it = myEmpls.iterator();
+        Iterator<Employee> it = myMovies.iterator();
         while (it.hasNext()) {
             System.out.println(it.next().toString());
         }
@@ -97,10 +97,10 @@ public class MainsSAXParser extends DefaultHandler {
         //reset
         // not sure what to put here for mains
         tempVal = "";
-        if (qName.equalsIgnoreCase("actor")) {
+        if (qName.equalsIgnoreCase("film")) {
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
-            tempEmp = new Employee();
+            tempMovie = new Movie();
 //            tempEmp.setType(attributes.getValue("type"));
         }
 
@@ -130,7 +130,7 @@ public class MainsSAXParser extends DefaultHandler {
             // if not add to hashmap
             // according to the demo vid its added to inconsistent file if there are movies with the same name but everything
             // else diff (id, director name, year)? not sure abt this
-            myEmpls.add(tempEmp);
+            myMovies.add(tempMovie);
 
         } else if (qName.equalsIgnoreCase("fid")) {
             // check if dupe
@@ -141,6 +141,9 @@ public class MainsSAXParser extends DefaultHandler {
             }
             else {
                 // keep in hashmap as key? for dupe checking later
+
+                // add to tempMovie
+                    // tempMovie.setId(tempVal);
             }
         }else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
@@ -150,6 +153,9 @@ public class MainsSAXParser extends DefaultHandler {
             }
             else {
                 //set
+
+                // add to tempMovie
+                    // tempMovie.setTitle(tempVal);
             }
 
         }else if (qName.equalsIgnoreCase("year")) {
@@ -164,6 +170,8 @@ public class MainsSAXParser extends DefaultHandler {
             else {
                 try () {
                     tempEmp.setYear(Integer.parseInt(tempVal))
+                    // add to tempMovie
+                        // tempMovie.setYear(Integer.parseInt(tempVal));
                 } catch (Exception e) {
                     // report inconsistent i guess
                     movieInconsistent++;
@@ -220,6 +228,9 @@ public class MainsSAXParser extends DefaultHandler {
             if(tempVal == "") { // check if this is correct
                 movieInconsistent++;
                 // write to movie inconsistent file
+            } else {
+                // add to tempMovie
+                    // tempMovie.addGenre(tempVal);
             }
 
         }
