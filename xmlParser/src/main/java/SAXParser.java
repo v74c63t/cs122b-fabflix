@@ -189,11 +189,13 @@ public class SAXParser extends DefaultHandler {
                 movieInconsistent++;
                 // write to file
                     // all info stored in tempMovie
+                writeToFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
             } else if(isDuplicate) {
                 movieDupe++;
                 //write to file
                     // all info stored in tempMovie
+                writeToFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
                 if(myMovies.getGenres.size() == 0) {
@@ -202,10 +204,12 @@ public class SAXParser extends DefaultHandler {
                     // so check here to be safe
                     movieInconsistent++;
                     // write to file
+                    writeToFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else if (director == null) {
                     movieInconsistent++;
                     // write to file
+                    writeToFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
                     tempMovie.setDirector(director);
@@ -340,6 +344,7 @@ public class SAXParser extends DefaultHandler {
             if(isDuplicate) {
                 starDupe++;
                 //write to file
+                writeToFile("/xmlParser/StarDuplicate.txt", tempStar.toString());
                 isDuplicate = false;
             }
             else {
