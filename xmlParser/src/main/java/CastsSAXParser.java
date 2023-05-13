@@ -21,6 +21,7 @@ public class CastsSAXParser extends DefaultHandler {
     List<Employee> myEmpls; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
+    // maybe key: movie id value: list of star ids (get star id from other hashmap with key: starname val: star id)
     // will need to get stars table to check if star actually exists
 
     private String tempVal;
