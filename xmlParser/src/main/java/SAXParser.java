@@ -25,6 +25,13 @@ public class SAXParser extends DefaultHandler {
     private int starDupe = 0;
 
     private int movieInconsistent = 0;
+    private int moviesNotFound = 0;
+
+    private int starsNotFound = 0;
+
+    private boolean consistent = true;
+
+    private boolean duplicate = false;
 
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
@@ -45,9 +52,9 @@ public class SAXParser extends DefaultHandler {
             SAXParser sp = spf.newSAXParser();
 
             //parse the file and also register this class for call backs
-            sp.parse("stanford-movies/mains243.xml", this);
-            sp.parse("stanford-movies/actors63.xml", this);
-            sp.parse("stanford-movies/casts243.xml", this);
+            sp.parse("/xmlParser/stanford-movies/mains243.xml", this);
+            sp.parse("/xmlParser/stanford-movies/actors63.xml", this);
+            sp.parse("/xmlParser/stanford-movies/casts243.xml", this);
 
         } catch (SAXException se) {
             se.printStackTrace();
@@ -69,6 +76,11 @@ public class SAXParser extends DefaultHandler {
         System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
+        System.out.println("No of Stars: " + myStars.size());
+        System.out.println("No of Duplicated Stars: " + starDupe);
+        System.out.println("No of Records Inserted into Stars_in_Movies: " + myEmpls.size());
+        System.out.println("No of Missing Movies: " + moviesNotFound);
+        System.out.println("No of Missing Stars: " + starsNotFound);
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myMovies.iterator();
