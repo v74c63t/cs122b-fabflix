@@ -146,6 +146,11 @@ public class SAXParser extends DefaultHandler {
                     // set to "false" when check elsewhere
                     // reset to true after each movie
 
+                // we need ot check for fid dupes within file
+                // i guess we can create a bool var for this too
+                // and then check here and write to dupe file
+                // b/c vid still had all the info (year, dir, title, genres) in the movie dupe file
+
                 // if not add to hashmap
                 // key should be fid
                 myMovies.put(tempMovie.getId(), tempMovie);
