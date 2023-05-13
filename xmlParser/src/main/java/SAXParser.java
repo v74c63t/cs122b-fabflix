@@ -29,9 +29,9 @@ public class SAXParser extends DefaultHandler {
 
     private int starsNotFound = 0;
 
-    private boolean consistent = true;
+    private boolean isConsistent = true;
 
-    private boolean duplicate = false;
+    private boolean isDuplicate = false;
 
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
@@ -129,14 +129,17 @@ public class SAXParser extends DefaultHandler {
             if ( tempVal.lower().strip().startsWith("unknown") ) {
                 // in case trailing spaces
                 movieInconsistent++;
+                isConsistent = false;
                 //write to movie inconsistent file
             }
             else if (tempVal == null) {
                 movieInconsistent++;
+                isConsistent = false;
                 //write to movie inconsistent file
             }
             else if (tempVal.strip() == "") {
                 movieInconsistent++;
+                isConsistent = false;
                 //write to movie inconsistent file
             }
             // keep name as a variable somewhere so can set for all movies directed
@@ -149,15 +152,16 @@ public class SAXParser extends DefaultHandler {
 //                // if dupe write to movies dupe file id title director year
 //                // increment dup count
 //                movieDupe++;
-            if( not rejected b/c dupe or inconsistent) { // how will we check this tho
+            if( !isConsistent ) { // how will we check this tho
                 // we probably dont need to check for dup
                 // for inconsistent, just check for inconsistency at the end
-                    // use getters from Movies() to check date/genre/director
+                // use getters from Movies() to check date/genre/director
                 // OR we can create a boolean varaible "consistent"
-                    // init to "true"
-                    // set to "false" when check elsewhere
-                    // reset to true after each movie
-
+                // init to "true"
+                // set to "false" when check elsewhere
+                // reset to true after each movie
+                isConsistent = true;
+            } else {
                 // we need ot check for fid dupes within file
                 // i guess we can create a bool var for this too
                 // and then check here and write to dupe file
@@ -173,6 +177,7 @@ public class SAXParser extends DefaultHandler {
             // there are dupes fids in the file
             if( myMovies.containsKey(tempVal.strip()) ){
                 movieDupe++;
+                isDuplicate = true;
                 //write to movie dupe file
             }
             else {
@@ -185,10 +190,12 @@ public class SAXParser extends DefaultHandler {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
                 movieInconsistent++;
+                isConsistent = false;
                 // write to movie inconsistent file
             }
             else if(tempVal == null) {
                 movieInconsistent++;
+                isConsistent = false;
                 // write to movie inconsistent file
             }
             else {
@@ -205,10 +212,12 @@ public class SAXParser extends DefaultHandler {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean year is required not to be null so this should be a fair assumption?
                 movieInconsistent++;
+                isConsistent = false;
                 // write to movie inconsistent file
             }
             else if(tempVal == null) {
                 movieInconsistent++;
+                isConsistent = false;
                 // write to movie inconsistent file
             }
             else {
@@ -218,6 +227,7 @@ public class SAXParser extends DefaultHandler {
                 } catch (Exception e) {
                     // report inconsistent i guess
                     movieInconsistent++;
+                    isConsistent = false;
                     // write to movie inconsistent file
                 }
             }
@@ -270,9 +280,11 @@ public class SAXParser extends DefaultHandler {
 //            if( cat tag doesnt exist ) {
             if(tempVal.strip() == "") { // check if this is correct // in case trailing spaces
                 movieInconsistent++;
+                isConsistent = false;
                 // write to movie inconsistent file
             } else if(tempVal == null) {
                 movieInconsistent++;
+                isConsistent = false;
                 // write to movie inconsistent file
             } else {
                 // add to tempMovie
@@ -299,6 +311,7 @@ public class SAXParser extends DefaultHandler {
             // everythign is capitalized properly
             if( already exists previous in file or exists in db ) {
                 starDupe++;
+                isDuplicate = true;
                 //write to star dupe file
             }
             else {
