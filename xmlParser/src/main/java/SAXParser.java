@@ -169,7 +169,7 @@ public class SAXParser extends DefaultHandler {
         }
     }
 
-    // 
+    //
     public void genreToCSV( String fileName, HashMap<String, int> genreMap ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
@@ -222,42 +222,26 @@ public class SAXParser extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
         if ( qName.equalsIgnoreCase("dirname")) {
-            // Check if its starsWith "Unknown"
-            //  if so, add to inconsistent
+            // Check for inconsistency ( "Unknown" / "" )
             if ( tempVal.toLowerCase().strip().startsWith("unknown") ) {
-                // in case trailing spaces
                 isConsistent = false;
-                //write to movie inconsistent file
-            }
-//            else if (tempVal == null) {
-//                isConsistent = false;
-//                //write to movie inconsistent file
-//            }
-            else if (tempVal.strip() == "") {
+            } else if (tempVal.strip() == "") {
                 isConsistent = false;
-                //write to movie inconsistent file
-            }
-            // keep name as a variable somewhere so can set for all movies directed
-            else {
+            } else { // Set director variable
                 director = tempVal.strip();
             }
 
-        } else if (qName.equalsIgnoreCase("dirfilms")) { // check if correct
+        } else if (qName.equalsIgnoreCase("directorfilms")) { // checks for closing element for <directorfilms>
             director = null; //reset director name
 
         } else if (qName.equalsIgnoreCase("film")) {
             tempMovie.setDirector(director);
-            // If data is inconsistent
-            if( !isConsistent ) {
+            if( !isConsistent ) { // If data is inconsistent
                 movieInconsistent++;
-                // write to file
-                    // all info stored in tempMovie
                 writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
             } else if(isDuplicate) {
                 movieDupe++;
-                //write to file
-                    // all info stored in tempMovie
                 writeToTextFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
@@ -266,12 +250,10 @@ public class SAXParser extends DefaultHandler {
                     // not sure if it will actually hit the null check if the tag doesnt exist
                     // so check here to be safe
                     movieInconsistent++;
-                    // write to file
                     writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else if (director == null) {
                     movieInconsistent++;
-                    // write to file
                     writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
@@ -280,10 +262,9 @@ public class SAXParser extends DefaultHandler {
             }
 
         } else if (qName.equalsIgnoreCase("fid")) {
-            // check if dupe
-            if( myMovies.containsKey(tempVal.strip()) ){
+
+            if( myMovies.containsKey(tempVal.strip()) ){ // check if dupe
                 isDuplicate = true;
-                //write to movie dupe file
             }
             else {
                 // keep in hashmap as key? for dupe checking later
@@ -298,11 +279,9 @@ public class SAXParser extends DefaultHandler {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
                 isConsistent = false;
-                // write to movie inconsistent file
             }
             else if(tempVal == null) {
                 isConsistent = false;
-                // write to movie inconsistent file
             }
             else {
                 // same as above, probably not needed since we need the title (<t>) to add to dup file
@@ -318,11 +297,9 @@ public class SAXParser extends DefaultHandler {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean year is required not to be null so this should be a fair assumption?
                 isConsistent = false;
-                // write to movie inconsistent file
             }
             else if(tempVal == null) {
                 isConsistent = false;
-                // write to movie inconsistent file
             }
             else {
                 try () {
@@ -331,7 +308,6 @@ public class SAXParser extends DefaultHandler {
                 } catch (Exception e) {
                     // report inconsistent i guess
                     isConsistent = false;
-                    // write to movie inconsistent file
                 }
             }
 //            tempEmp.setName(tempVal);
