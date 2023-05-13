@@ -146,7 +146,7 @@ public class SAXParser extends DefaultHandler {
     public void writeToCSVFile( String fileName, ArrayList<Object> objArray ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            for (Object obj : objArray) {
+            for (Object obj : objArray) { // will prob have to change so it writes properly to csv file currently doesnt
                 if ( obj instanceof Movie ) {
                     writer.write(obj.getId());
                     writer.write(",");
