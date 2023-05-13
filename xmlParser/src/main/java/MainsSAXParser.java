@@ -106,7 +106,11 @@ public class MainsSAXParser extends DefaultHandler {
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (qName.equalsIgnoreCase("film")) {
+        if ( qName.equalsIgnoreCase("dirname")) {
+            // Check if its starsWith "Unknown"
+            //  if so, add to inconsistent
+
+        } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
             // check if dupe
             // if dupe write to movies dupe file id title director year
