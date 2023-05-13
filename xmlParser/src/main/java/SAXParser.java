@@ -47,18 +47,9 @@ public class SAXParser extends DefaultHandler {
 
     private boolean isDuplicate = false;
 
+    private HashMap<String, String> catToGenreMap = new HashMap<String, String>(); // dont know about this
     private HashMap<String, int> genreToIdMap = new HashMap<String, int>();
 
-    /*
-    // Create a dataSource which registered in web.xml
-    private DataSource dataSource;
-
-    try {
-        dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
-    } catch (NamingException e) {
-        e.printStackTrace();
-    }
-    */
 
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
@@ -133,16 +124,13 @@ public class SAXParser extends DefaultHandler {
         // and write to a preset file after check the object type
             // Movie -
                 // movies.csv
-                // genres ( not sure how we put id / check for existence )
-                    // ig we can just but genre_name in csv and load it
-                    // since id is autoincrement, but would need to update the
-                    // availableInt table from stored-procedures.sql since it doesnt increment
-                // genres_in_movies
-                    // not sure how we get id here
-
-                // to get its id for genre_in_movies
-                    // maybe just connect to db and call our add_genre stored procedure
-                    // make hashmap from genre_name --> id
+            // genres
+                // genres.csv --> update availableInt procedure
+                // ? get availableint and make hashmap from genreName -> id ?
+            // genres_in_movies
+                // for each Movie,
+                    // genreId lookup via name
+                    // add Movie.getId(), genreId
     public void writeToCSVFile( String fileName, ArrayList<Object> objArray ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
@@ -157,30 +145,6 @@ public class SAXParser extends DefaultHandler {
                     writer.write(obj.getDirector());
 
                     // Do something with genres
-                    /*
-                    // Get a connection from dataSource and let resource manager close the connection after usage.
-                    try (Connection conn = dataSource.getConnection()) {
-
-                        // Construct a query with parameter represented by g"?"
-                        String query = "CALL add_genre(?);";
-
-                        PreparedStatement statement = conn.prepareStatement(query);
-
-                        statement.setString(1, genre);
-
-                        ResultSet rs = statement.executeQuery();
-
-                        while(rs.next()) {
-                            // add_genre  procedure only returns message
-                            // maybe modify to have (message, genreId) as returned fields
-                            genreToIdMap.put(genre, rs.getString("genreId"));
-                        }
-                        rs.close();
-                        statement.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    */
                 }
                 // Add more instanceof checking
             }
@@ -241,37 +205,6 @@ public class SAXParser extends DefaultHandler {
             else {
                 director = tempVal.strip();
             }
-
-        } else if( qName.equalsIgnoreCase("dirn")) { // some use <dirn> tag instead of <dirname>
-                // I've only seen 1 that used <dirn> instead of <dirname> under
-                    // we can probably remove this or it would take the
-                    // the last <dirn> listed for that film
-                // and it looks like it was mistake/misplaced because
-                    // <directorfilms><director><dirname>Morneau<dirn>...
-                    // <film> for director Morneau
-                    // <directorfilms><director><dir>Moodysson<dirn>...
-                    // no <film> for this director "Moodysson"
-                    // <film> for director "Morneau"
-
-            // Check if its starsWith "Unknown"
-            //  if so, add to inconsistent
-            if ( tempVal.lower().strip().startsWith("unknown") ) {
-                // in case trailing spaces
-                isConsistent = false;
-                //write to movie inconsistent file
-            }
-//            else if (tempVal == null) { // not sure if null check will happen if tag not found so remove for now
-//                isConsistent = false;
-//                //write to movie inconsistent file
-//            }
-            else if (tempVal.strip() == "") {
-                isConsistent = false;
-                //write to movie inconsistent file
-            }
-            else {
-                director = tempVal.strip();
-            }
-            // keep name as a variable somewhere so can set for all movies directed
 
         } else if (qName.equalsIgnoreCase("dirfilms")) { // check if correct
             director = null; //reset director name
