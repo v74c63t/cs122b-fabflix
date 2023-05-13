@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -24,7 +25,9 @@ public class MainsSAXParser extends DefaultHandler {
         // need to parse mains AND actors before casts and then pass the fids and actor names with their associated ids
         // (this includes the stars already in the db as well) so casts can use to make sure movies/actors exist
 
-    List<Movie> myMovies; // replace with hashmap? so can check if dupes within xml file quickly
+    // replace with hashmap? so can check if dupes within xml file quickly
+//    List<Movie> myMovies;
+    HashMap<String, Movies> myMovies;
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
     // dont think there are dupes between db and xml for movies
@@ -138,14 +141,19 @@ public class MainsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
             // check if dupe
-            // if dupe write to movies dupe file id title director year
-            // if not add to hashmap
-            myMovies.add(tempMovie);
+            if ( myMovies.containsKey(tempVal) ) {
+                // if dupe write to movies dupe file id title director year
+                // increment dup count
+                movieDupe++;
+            } else {
+                // if not add to hashmap
+                myMovies.put(tempVal, tempMovie);
+            }
 
         } else if (qName.equalsIgnoreCase("fid")) {
             // check if dupe
             // there are dupes fids in the file
-            if( fid already found ){
+            if( myMovies.containsKey(tempVal) ){
                 movieDupe++;
                 //write to movie dupe file
             }
