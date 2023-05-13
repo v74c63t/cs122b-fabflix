@@ -152,8 +152,16 @@ public class SAXParser extends DefaultHandler {
                     // all info stored in tempMovie
                 isDuplicate = false;
             }else {
-                // Add to myMovies HashMap
-                myMovies.put(tempMovie.getId(), tempMovie);
+                if(myMovies.getGenres.size() == 0) {
+                    // since some dont have <cat> tag only have empty <cats>
+                    // not sure if it will actually hit the null check if the tag doesnt exist
+                    // so check here to be safe
+                    movieInconsistent++;
+                    // write to file
+                }
+                else { // Add to myMovies HashMap
+                    myMovies.put(tempMovie.getId(), tempMovie);
+                }
             }
 
         } else if (qName.equalsIgnoreCase("fid")) {
@@ -260,10 +268,8 @@ public class SAXParser extends DefaultHandler {
 //            if( cat tag doesnt exist ) {
             if(tempVal.strip() == "") { // check if this is correct // in case trailing spaces
                 isConsistent = false;
-                // write to movie inconsistent file
             } else if(tempVal == null) {
                 isConsistent = false;
-                // write to movie inconsistent file
             } else {
                 // add to tempMovie
                 // have to check genre before adding
