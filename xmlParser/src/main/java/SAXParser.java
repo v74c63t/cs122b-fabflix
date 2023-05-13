@@ -98,11 +98,11 @@ public class SAXParser extends DefaultHandler {
     }
 
     public void writeToFile( String fileName, String content ) {
-        try () {
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
             writer.write(content);
             writer.newLine();
-            writer.close()
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
