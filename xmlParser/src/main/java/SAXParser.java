@@ -47,6 +47,8 @@ public class SAXParser extends DefaultHandler {
 
     private boolean isDuplicate = false;
 
+    private int availableGenreId;
+
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
         put("susp", "Thriller");
         put("cnr", "Crime");
@@ -82,7 +84,41 @@ public class SAXParser extends DefaultHandler {
     private HashMap<String, int> existingGenres = new HashMap<String, int>();
     private HashMap<String, int> newGenres = new HashMap<String, int>();
 
+    private DataSource dataSource;
 
+    try {
+        dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+    } catch (NamingException e) {
+        e.printStackTrace();
+    }
+
+    try (Connection conn = dataSource.getConnection()) {
+
+        // Construct a query with parameter represented by g"?"
+        String query = "SELECT * FROM genres;";
+
+        Statement statement = conn.createStatement();
+
+        ResultSet rs = statement.executeQuery(query);
+
+        while(rs.next()) {
+            existingGenres.put(rs.getString("name"), rs.getInt("id"));
+        }
+        rs.close();
+
+        query = "SELECT MAX(id) FROM genres;";
+
+        ResultSet rs2 = statement.executeQuery(query);
+
+        if (rs.next()) {
+            availableGenreId = rs.getInt("max(id)") + 1;
+        }
+        rs2.close
+
+        statement.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
