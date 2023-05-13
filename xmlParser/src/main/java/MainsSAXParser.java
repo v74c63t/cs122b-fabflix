@@ -121,6 +121,7 @@ public class MainsSAXParser extends DefaultHandler {
                 movieInconsistent++;
                 //write to movie inconsistent file
             }
+            // keep name as a variable somewhere so can set for all movies directed
 
         } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
@@ -138,15 +139,38 @@ public class MainsSAXParser extends DefaultHandler {
                 movieDupe++;
                 //write to movie dupe file
             }
+            else {
+                // keep in hashmap as key? for dupe checking later
+            }
         }else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
+            if(tempVal == "") { // i mean title is required not to be null so this should be a fair assumption?
+                movieInconsistent++;
+                // write to movie inconsistent file
+            }
+            else {
+                //set
+            }
 
         }else if (qName.equalsIgnoreCase("year")) {
             // there are some with invalid ints ex: 199x, 19yy, etc
             // dk how to deal with these b/c we cant set as null since tables require them to be not null
             // maybe report as inconsistent????
             // store for dupe checking
-            tempEmp.setName(tempVal);
+            if(tempVal == "") { // i mean year is required not to be null so this should be a fair assumption?
+                movieInconsistent++;
+                // write to movie inconsistent file
+            }
+            else {
+                try () {
+                    tempEmp.setYear(Integer.parseInt(tempVal))
+                } catch (Exception e) {
+                    // report inconsistent i guess
+                    movieInconsistent++;
+                    // write to movie inconsistent file
+                }
+            }
+//            tempEmp.setName(tempVal);
         } else if(qName.equalsIgnoreCase("cat")) {
             // need to do substring matching to check for if exists in db
             // need to use .lower() b/c 'dram', 'DRam', etc
