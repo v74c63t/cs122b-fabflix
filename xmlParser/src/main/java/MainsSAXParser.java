@@ -14,6 +14,14 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class MainsSAXParser extends DefaultHandler {
 
+    // since we are deciding to implement a in-memory hashmap
+    // wouldn't the other SAXParsers need access to it too
+        // like Casts to for (stars_in_movies)
+    // im thinking we can create a another file that holds the hashmap
+        // parse mains first to figure out (dups/inconsistencies/genres)
+        // parse casts that opreates on filtered out movies (hashmap) from last parse
+
+
     List<Movie> myMovies; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
     // key: ?? val: ??
