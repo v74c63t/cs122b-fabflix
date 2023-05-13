@@ -20,7 +20,9 @@ public class MainsSAXParser extends DefaultHandler {
     // im thinking we can create a another file that holds the hashmap
         // parse mains first to figure out (dups/inconsistencies/genres)
         // parse casts that opreates on filtered out movies (hashmap) from last parse
-
+        // casts should be parsed last
+        // need to parse mains AND actors before casts and then pass the fids and actor names with their associated ids
+        // (this includes the stars already in the db as well) so casts can use to make sure movies/actors exist
 
     List<Movie> myMovies; // replace with hashmap? so can check if dupes within xml file quickly
     // get data from db and store in in memory hashmap for fast lookup?
