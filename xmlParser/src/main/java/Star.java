@@ -2,7 +2,8 @@ import java.sql.Date;
 
 public class Star {
     private String name;
-    private int birthYear;
+    private int birthYear; // maybe consider using string for this to deal with nulls
+                            // can do checking that it is an int before it is set so it wont be a problem
 
     public Star() {
     }
