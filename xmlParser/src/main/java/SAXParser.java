@@ -128,17 +128,14 @@ public class SAXParser extends DefaultHandler {
             //  if so, add to inconsistent
             if ( tempVal.lower().strip().startsWith("unknown") ) {
                 // in case trailing spaces
-                movieInconsistent++;
                 isConsistent = false;
                 //write to movie inconsistent file
             }
             else if (tempVal == null) {
-                movieInconsistent++;
                 isConsistent = false;
                 //write to movie inconsistent file
             }
             else if (tempVal.strip() == "") {
-                movieInconsistent++;
                 isConsistent = false;
                 //write to movie inconsistent file
             }
@@ -302,13 +299,19 @@ public class SAXParser extends DefaultHandler {
             // check if dupe
             // if dupe write to stars dupe file the name and birthyear of star (make sure to check with db info too)
             // if not add to hashmap
-            myStars.add(tempStar);
+            if(isDuplicate) {
+                starDupe++;
+                //write to file
+                isDuplicate = false;
+            }
+            else {
+                myStars.add(tempStar);
+            }
 
         } else if (qName.equalsIgnoreCase("stagename")) {
             // might have to .lower() and .strip() to check if dupe? not sure if
             // everythign is capitalized properly
             if( already exists previous in file or exists in db ) {
-                starDupe++;
                 isDuplicate = true;
                 //write to star dupe file
             }
@@ -336,6 +339,9 @@ public class SAXParser extends DefaultHandler {
             // if not add to hashmap
             // according to the demo vid its added to inconsistent file if there are movies with the same name but everything
             // else diff (id, director name, year)? not sure abt this
+
+            // get smth to tell this to skip record if movie or star not found
+            // maybe another boolean var
             myEmpls.add(tempEmp);
 
         } else if (qName.equalsIgnoreCase("f")) {
