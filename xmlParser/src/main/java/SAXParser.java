@@ -339,29 +339,18 @@ public class SAXParser extends DefaultHandler {
             if( myMovies.containsKey(tempVal.strip()) ){ // check if dupe
                 isDuplicate = true;
             }
-            else {
-                // keep in hashmap as key? for dupe checking later
-                    // probably not needed if its added at endElement("film")
-                    // we can probably remove the else and just keep
-                    // "tempMovie.setId(tempVal.strip());"
+            // set id of tempMovie
+            tempMovie.setId(tempVal.strip());
 
-                // add to tempMovie
-                tempMovie.setId(tempVal.strip());
-            }
         } else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
                 isConsistent = false;
-            }
-            else if(tempVal == null) {
+            } else if(tempVal == null) {
                 isConsistent = false;
             }
-            else {
-                // same as above, probably not needed since we need the title (<t>) to add to dup file
 
-                // add to tempMovie
-                 tempMovie.setTitle(tempVal.strip());
-            }
+            tempMovie.setTitle(tempVal.strip());
 
         }else if (qName.equalsIgnoreCase("year")) {
             // there are some with invalid ints ex: 199x, 19yy, etc
@@ -374,16 +363,14 @@ public class SAXParser extends DefaultHandler {
             else if(tempVal == null) {
                 isConsistent = false;
             }
-            else {
-                try () {
-                    // add to tempMovie
-                    // tempMovie.setYear(Integer.parseInt(tempVal.strip()));
-                } catch (Exception e) {
-                    // report inconsistent i guess
-                    isConsistent = false;
-                }
+
+            try {
+                Integer.parseInt(tempVal.strip());
+            } catch (Exception e) {
+                isConsistent = false;
             }
-//            tempEmp.setName(tempVal);
+            tempMovie.setYear(tempVal.strip());
+
         } else if(qName.equalsIgnoreCase("cat")) {
             // need to do substring matching to check for if exists in db
             // need to use .lower() b/c 'dram', 'DRam', etc
