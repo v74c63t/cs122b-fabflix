@@ -375,13 +375,13 @@ public class SAXParser extends DefaultHandler {
                 isConsistent = false;
             }
             else {
-                try () {
+                try (Integer.parseInt(tempVal.strip())) {
                     // add to tempMovie
-                    // tempMovie.setYear(Integer.parseInt(tempVal.strip()));
                 } catch (Exception e) {
                     // report inconsistent i guess
                     isConsistent = false;
                 }
+                tempMovie.setYear(tempVal.strip())
             }
 //            tempEmp.setName(tempVal);
         } else if(qName.equalsIgnoreCase("cat")) {
