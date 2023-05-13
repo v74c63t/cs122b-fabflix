@@ -2,7 +2,7 @@ import java.util.ArrayList;
 public class Movie {
     private String id;
     private String title;
-    private int year;
+    private String year;
     private String director;
     private ArrayList<String> genres;
 
@@ -10,7 +10,7 @@ public class Movie {
 
     }
 
-    public Movie (String id, String title, int year, String director, String genre) {
+    public Movie (String id, String title, String year, String director, String genre) {
         this.id = id;
         this.title = title;
         this.year = year;
@@ -28,7 +28,7 @@ public class Movie {
         return title;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -49,7 +49,7 @@ public class Movie {
         this.title = title;
     }
 
-    public void setYear( int year ) {
+    public void setYear( String year ) {
         this.year = year;
     }
 
