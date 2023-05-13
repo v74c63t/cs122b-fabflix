@@ -47,9 +47,42 @@ public class SAXParser extends DefaultHandler {
 
     private boolean isDuplicate = false;
 
-    private HashMap<String, String> catToGenreMap = new HashMap<String, String>(); // dont know about this
+    private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
+        put("susp", "Thriller");
+        put("cnr", "Crime");
+        put("cnrb", "Crime");
+        put("dram", "Drama");
+        put("west", "Western");
+        put("myst", "Mystery");
+        put("s.f.", "Sci-Fi");
+        put("scfi", "Sci-Fi");
+        put("advt", "Adventure");
+        put("horr", "Horror");
+        put("romt", "Romance");
+        put("comd", "Comedy");
+        put("romt comd", "Romantic Comedy");
+        put("musc", "Musical");
+        put("stage musical", "Musical");
+        put("docu", "Documentary");
+        put("porn", "Adult");
+        put("noir", "Noir");
+        put("biop", "Biography");
+        put("bio", "Biography");
+        put("tv", "TV Show");
+        put("tvs", "TV Series");
+        put("tvm", "TV Miniseries");
+        put("actn", "Action");
+        put("cart", "Cartoon");
+        put("crim", "Crime");
+        put("faml", "Family");
+        put("fant", "Fantasy");
+        put("hist", "History");
+    }};
+
     private HashMap<String, int> existingGenres = new HashMap<String, int>();
     private HashMap<String, int> newGenres = new HashMap<String, int>();
+
+
 
     public SAXParser() {
         myMovies = new ArrayList<Movie>();
