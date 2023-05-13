@@ -128,10 +128,28 @@ public class SAXParser extends DefaultHandler {
                 isConsistent = false;
                 //write to movie inconsistent file
             }
-            else if (tempVal == null) {
+//            else if (tempVal == null) {
+//                isConsistent = false;
+//                //write to movie inconsistent file
+//            }
+            else if (tempVal.strip() == "") {
                 isConsistent = false;
                 //write to movie inconsistent file
             }
+            // keep name as a variable somewhere so can set for all movies directed
+
+        } else if( qName.equalsIgnoreCase("dirn")) { // some use <dirn> tag instead of <dirname>
+            // Check if its starsWith "Unknown"
+            //  if so, add to inconsistent
+            if ( tempVal.lower().strip().startsWith("unknown") ) {
+                // in case trailing spaces
+                isConsistent = false;
+                //write to movie inconsistent file
+            }
+//            else if (tempVal == null) { // not sure if null check will happen if tag not found so remove for now
+//                isConsistent = false;
+//                //write to movie inconsistent file
+//            }
             else if (tempVal.strip() == "") {
                 isConsistent = false;
                 //write to movie inconsistent file
@@ -156,6 +174,10 @@ public class SAXParser extends DefaultHandler {
                     // since some dont have <cat> tag only have empty <cats>
                     // not sure if it will actually hit the null check if the tag doesnt exist
                     // so check here to be safe
+                    movieInconsistent++;
+                    // write to file
+                }
+                else if (director not found) {
                     movieInconsistent++;
                     // write to file
                 }
