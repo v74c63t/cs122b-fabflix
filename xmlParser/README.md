@@ -15,6 +15,8 @@
 
 
 ### Assumptions
+#### Mains
+- Assume all movies are not already in our database
 #### Casts
 - Assume Director/Movie is correctly associated in "casts" xml file
 #### Actors
