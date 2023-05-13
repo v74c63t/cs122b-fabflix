@@ -119,6 +119,10 @@ public class SAXParser extends DefaultHandler {
                     // availableInt table from stored-procedures.sql since it doesnt increment
                 // genres_in_movies
                     // not sure how we get id here
+
+                // to get its id for genre_in_movies
+                    // maybe just connect to db and call our add_genre stored procedure
+                    // make hashmap from genre_name --> id
     public void writeToCSVFile( String fileName, ArrayList<Object> objArray ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
