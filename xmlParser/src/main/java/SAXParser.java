@@ -97,9 +97,45 @@ public class SAXParser extends DefaultHandler {
         // then load data
     }
 
-    public void writeToFile( String fileName, String content ) {
+    public void writeToTextFile( String fileName, String content ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            writer.write(content);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Since the Mains/Movie object holds an array of genres
+        // we can probably remove "fileName" from paramter
+        // and write to a preset file after check the object type
+            // Movie -
+                // movies.csv
+                // genres ( not sure how we put id / check for existence )
+                    // ig we can just but genre_name in csv and load it
+                    // since id is autoincrement, but would need to update the
+                    // availableInt table from stored-procedures.sql since it doesnt increment
+                // genres_in_movies
+                    // not sure how we get id here
+    public void writeToCSVFile( String fileName, ArrayList<Object> objArray ) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            for (Object obj : objArray) {
+                if ( obj instanceof Movie ) {
+                    writer.write(obj.getId());
+                    writer.write(",");
+                    writer.write(obj.getTitle());
+                    writer.write(",");
+                    writer.write(obj.getYear());
+                    writer.write(",");
+                    writer.write(obj.getDirector());
+
+                    // Do something with genres
+                }
+                // Add more instanceof checking
+            }
             writer.write(content);
             writer.newLine();
             writer.close();
@@ -189,13 +225,13 @@ public class SAXParser extends DefaultHandler {
                 movieInconsistent++;
                 // write to file
                     // all info stored in tempMovie
-                writeToFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
             } else if(isDuplicate) {
                 movieDupe++;
                 //write to file
                     // all info stored in tempMovie
-                writeToFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
+                writeToTextFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
                 if(myMovies.getGenres.size() == 0) {
@@ -204,12 +240,12 @@ public class SAXParser extends DefaultHandler {
                     // so check here to be safe
                     movieInconsistent++;
                     // write to file
-                    writeToFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else if (director == null) {
                     movieInconsistent++;
                     // write to file
-                    writeToFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
                     tempMovie.setDirector(director);
@@ -344,7 +380,7 @@ public class SAXParser extends DefaultHandler {
             if(isDuplicate) {
                 starDupe++;
                 //write to file
-                writeToFile("/xmlParser/StarDuplicate.txt", tempStar.toString());
+                writeToTextFile("/xmlParser/StarDuplicate.txt", tempStar.toString());
                 isDuplicate = false;
             }
             else {
