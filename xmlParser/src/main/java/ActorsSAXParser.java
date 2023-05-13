@@ -115,6 +115,8 @@ public class ActorsSAXParser extends DefaultHandler {
     //to maintain context
     private Employee tempEmp;
 
+    private int starDupe = 0;
+
     public ActorsSAXParser() {
         myEmpls = new ArrayList<Employee>();
     }
@@ -151,7 +153,8 @@ public class ActorsSAXParser extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Stars '" + myEmpls.size());
+        System.out.println("No of Stars: " + myEmpls.size());
+        System.out.println("No of Duplicated Stars: " + starDupe);
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
@@ -189,6 +192,10 @@ public class ActorsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("stagename")) {
             // might have to .lower() and .strip() to check if dupe? not sure if
             // everythign is capitalized properly
+            if( already exists previous in file or exists in db ) {
+                starDupe++;
+                //write to star dupe file
+            }
             tempEmp.setName(tempVal);
         } else if (qName.equalsIgnoreCase("dob")) {
             // if empty set null

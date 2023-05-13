@@ -39,6 +39,10 @@ public class MainsSAXParser extends DefaultHandler {
     //to maintain context
     private Employee tempEmp;
 
+    private int movieDupe = 0;
+
+    private int movieInconsistent = 0;
+
     public MainsSAXParser() {
         myEmpls = new ArrayList<Employee>();
     }
@@ -75,8 +79,10 @@ public class MainsSAXParser extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Movies '" + myEmpls.size());
-        System.out.println("No of Genres_in_Movies '" + myEmpls.size());
+        System.out.println("No of Movies: " + myEmpls.size());
+        System.out.println("No of Records Inserted into Genres_in_Movies: " + myEmpls.size());
+        System.out.println("No of Duplicated Movies: " + movieDupe);
+        System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
@@ -111,6 +117,10 @@ public class MainsSAXParser extends DefaultHandler {
         if ( qName.equalsIgnoreCase("dirname")) {
             // Check if its starsWith "Unknown"
             //  if so, add to inconsistent
+            if ( unknown ) {
+                movieInconsistent++;
+                //write to movie inconsistent file
+            }
 
         } else if (qName.equalsIgnoreCase("film")) {
             //add it to the list
@@ -124,6 +134,10 @@ public class MainsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("fid")) {
             // check if dupe
             // there are dupes fids in the file
+            if( fid already found ){
+                movieDupe++;
+                //write to movie dupe file
+            }
         }else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
 
@@ -139,6 +153,11 @@ public class MainsSAXParser extends DefaultHandler {
             // also may need to combine similar genres together ex: adult
             // store in list?
             // if empty report inconsistent
+//            if( cat tag doesnt exist ) {
+            if(tempVal == "") { // check if this is correct
+                movieInconsistent++;
+                // write to movie inconsistent file
+            }
 
         }
 //        else if (qName.equalsIgnoreCase("Age")) {

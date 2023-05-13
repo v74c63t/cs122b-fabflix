@@ -28,6 +28,10 @@ public class CastsSAXParser extends DefaultHandler {
     //to maintain context
     private Employee tempEmp;
 
+    private int moviesNotFound = 0;
+
+    private int starsNotFound = 0;
+
     public CastsSAXParser() {
         myEmpls = new ArrayList<Employee>();
     }
@@ -64,7 +68,10 @@ public class CastsSAXParser extends DefaultHandler {
      */
     private void printData() {
 
-        System.out.println("No of Stars_in_Movies '" + myEmpls.size());
+        System.out.println("No of Records Inserted into Stars_in_Movies: " + myEmpls.size());
+        System.out.println("No of Missing Movies: " + moviesNotFound);
+        System.out.println("No of Missing Stars: " + starsNotFound);
+
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         Iterator<Employee> it = myEmpls.iterator();
@@ -107,11 +114,19 @@ public class CastsSAXParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
             // if not report as missing
+            if ( f not found ) {
+                moviesNotFound++;
+                // write to movie missing file
+            }
         }else if (qName.equalsIgnoreCase("a")) {
             // check if exists
                 // if not report as missing
                 // if exists find id
                 // ignore if 's a'
+            if ( a not found ) {
+                starsNotFound++;
+                // write to star missing file
+            }
 
         }
         // not sure if we will need title/director to check if movie info consistent
