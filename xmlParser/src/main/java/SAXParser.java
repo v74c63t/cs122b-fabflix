@@ -173,10 +173,15 @@ public class SAXParser extends DefaultHandler {
     public void genreToCSV( String fileName, HashMap<String, int> genreMap ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            writer.write("id");
+            writer.write(",");
+            writer.write("name");
+            writer.newLine();
             for (Map.entry<String, int> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
+                writer.write(Integer.toString(entry.getValue()));
                 writer.write(entry.getKey());
                 writer.write(",");
-                writer.write(Integer.toString(entry.getValue()));
+                writer.write(entry.getKey());
                 writer.newLine();
             }
             writer.flush();
