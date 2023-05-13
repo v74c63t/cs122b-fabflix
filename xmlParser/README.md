@@ -15,4 +15,7 @@
 
 
 ### Assumptions
-- assume Director/Movie is correctly associated in "casts" xml file
+#### Casts
+- Assume Director/Movie is correctly associated in "casts" xml file
+#### Actors
+- An actor is still considered valid even if dob is in an incorrect format, it will simply be set as null
