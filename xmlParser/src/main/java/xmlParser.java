@@ -150,6 +150,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
         put("h0", "Uncategorized");
         put("h*", "Uncategorized");
         put("h**", "Uncategorized");
+        put("dram.actn", "Drama");
     }};
 
     HashMap<String, Integer> existingGenres;
@@ -267,13 +268,13 @@ public class xmlParser extends DefaultHandler implements Parameters {
      */
     private void printData() {
         // Load all data into database
-        loadData("xmlParser/genres.csv", "genres");
-        loadData("xmlParser/movies.csv", "movies");
-        loadData("xmlParser/genres_in_movies.csv", "genres_in_movies");
-        loadData("xmlParser/stars.csv", "stars");
-        loadData("xmlParser/stars_in_movies.csv", "stars_in_movies");
-
-        updateAvailableInt();
+//        loadData("xmlParser/genres.csv", "genres");
+//        loadData("xmlParser/movies.csv", "movies");
+//        loadData("xmlParser/genres_in_movies.csv", "genres_in_movies");
+//        loadData("xmlParser/stars.csv", "stars");
+//        loadData("xmlParser/stars_in_movies.csv", "stars_in_movies");
+//
+//        updateAvailableInt();
 
         System.out.println("No of Inserted Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: " + newGenres.size());
