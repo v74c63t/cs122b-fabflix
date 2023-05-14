@@ -1,4 +1,4 @@
-USE moviedb; -- not sure if this is needed
+USE moviedb;
 -- HELPER FOR NEXT AVAILABLE INT
 --      MOVIE - CONCAT('tt', CAST(movie AS UNSIGNED))
 --      STAR - CONCAT('nm', CAST(star AS UNSIGNED))
@@ -24,7 +24,6 @@ BEGIN
     DECLARE check_star BOOL;
     DECLARE check_genre BOOL;
     -- check if movie already exists
-    -- IF EXISTS(SELECT * FROM movies WHERE title = in_title AND year = in_year) THEN
     -- check if star already exists
     -- check if genre already exists
     -- if not insert them;
@@ -71,9 +70,6 @@ BEGIN
                 SET genre_id = (SELECT id FROM genres WHERE name = genre_name);
             ELSE
                 -- parse and increment id
-                # 		SET genreId = (select max(id) + 1 from genres);
-                -- but its autoincrement so i dont think we need to set genreId?
-                --      its autoincrement but we only set once in the helper and calling max() is inefficient
                 SET genre_id = (SELECT genre FROM availableInt);
                 SET SQL_SAFE_UPDATES = 0;
                 UPDATE availableInt SET genre = genre + 1;
