@@ -161,7 +161,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
             ResultSet rs3 = statement.executeQuery(query);
 
-            if (rs3.next()) {
+            while (rs3.next()) {
                 Star star = new Star();
                 star.setId(rs3.getString("id"));
                 star.setName(rs3.getString("name"));
