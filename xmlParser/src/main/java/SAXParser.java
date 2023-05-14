@@ -339,15 +339,8 @@ public class SAXParser extends DefaultHandler {
             if( myMovies.containsKey(tempVal.strip()) ){ // check if dupe
                 isDuplicate = true;
             }
-            else {
-                // keep in hashmap as key? for dupe checking later
-                    // probably not needed if its added at endElement("film")
-                    // we can probably remove the else and just keep
-                    // "tempMovie.setId(tempVal.strip());"
+            tempMovie.setId(tempVal.strip()); // add id to current tempMovie
 
-                // add to tempMovie
-                tempMovie.setId(tempVal.strip());
-            }
         } else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
             if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
