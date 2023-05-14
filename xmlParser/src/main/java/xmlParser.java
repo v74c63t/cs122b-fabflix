@@ -46,6 +46,8 @@ public class xmlParser extends DefaultHandler {
 
     private boolean isDuplicate = false;
 
+    private boolean isFound = true;
+
     private int availableGenreId;
 
     private int availableStarId;
@@ -622,13 +624,16 @@ public class xmlParser extends DefaultHandler {
 
             // get smth to tell this to skip record if movie or star not found
             // maybe another boolean var
-            mySIMs.put(castMovieId,tempSIMStars);
+            if ( isFound ) {
+                mySIMs.put(castMovieId,tempSIMStars);
+            }
 
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
             // if not report as missing
             if ( !myMovies.containsKey(tempVal.strip()) ) {
                 moviesNotFound++;
+                isFound = false;
                 // write to movie missing file
                 // should we continue checking in this case?
                 // get something to tell it not to add this entry
