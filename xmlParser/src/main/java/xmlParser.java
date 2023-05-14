@@ -23,8 +23,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class xmlParser extends DefaultHandler {
-    HashMap<String, Movie> myMovies;
-    HashMap<String, ArrayList<String>> mySIMs;
+    private HashMap<String, Movie> myMovies;
+    private HashMap<String, ArrayList<String>> mySIMs;
 
     private String tempVal;
 
@@ -171,6 +171,13 @@ public class xmlParser extends DefaultHandler {
 
     public void runExample() {
         parseDocument();
+
+        // Check if right data is passed
+        genreToCSV(newGenres);
+        movieToCSV(myMovies);
+        starToCSV(newStars);
+        simToCSV(mySIMs);
+
         printData(); // write to csv file
     }
 
@@ -232,7 +239,7 @@ public class xmlParser extends DefaultHandler {
         }
     }
 
-    public void movieToCSV( ArrayList<Movie> movieArray ) {
+    public void movieToCSV( HashMap<String, Movie> movieMap ) {
         try {
             BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("movies.csv", true));
             BufferedWriter gimWriter = new BufferedWriter(new FileWriter("genres_in_movies.csv", true));
@@ -251,17 +258,18 @@ public class xmlParser extends DefaultHandler {
             gimWriter.write("movieId");
             gimWriter.newLine();
 
-            for (Movie movie : movieArray) { // for writing into movies
-                moviesWriter.write(movie.getId());
+            for (Map.Entry<String, Movie> entry : movieMap.entrySet()) { // for writing into movies
+
+                moviesWriter.write(entry.getValue().getId());
                 moviesWriter.write(",");
-                moviesWriter.write(movie.getTitle());
+                moviesWriter.write(entry.getValue().getTitle());
                 moviesWriter.write(",");
-                moviesWriter.write(movie.getYear());
+                moviesWriter.write(entry.getValue().getYear());
                 moviesWriter.write(",");
-                moviesWriter.write(movie.getDirector());
+                moviesWriter.write(entry.getValue().getDirector());
                 moviesWriter.newLine();
 
-                for (String genre: movie.getGenres()) { // for writing into genres_in_movies
+                for (String genre: entry.getValue().getGenres()) { // for writing into genres_in_movies
                     String genreId;
                     if ( existingGenres.containsKey(genre) ) {
                         genreId = Integer.toString(existingGenres.get(genre));
@@ -270,7 +278,7 @@ public class xmlParser extends DefaultHandler {
                     }
                     gimWriter.write(genreId);
                     gimWriter.write(",");
-                    gimWriter.write(movie.getId());
+                    gimWriter.write(entry.getValue().getId());
                     moviesWriter.newLine();
                     gimInserts++;
                 }
