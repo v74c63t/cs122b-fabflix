@@ -54,6 +54,8 @@ public class xmlParser extends DefaultHandler {
 
     private int gimInserts = 0;
 
+    private int starInserts = 0;
+
     private String castMovieId;
 
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
@@ -211,7 +213,7 @@ public class xmlParser extends DefaultHandler {
         System.out.println("No of Records Inserted into Genres_in_Movies: " + gimInserts);
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
-        System.out.println("No of Inserted Stars: " + newStars.size()); // new stars size wont be accurate have to count whne writing to csv
+        System.out.println("No of Inserted Stars: " + starInserts); // new stars size wont be accurate have to count whne writing to csv
         System.out.println("No of Duplicated Stars: " + starDupe);
         System.out.println("No of Records Inserted into Stars_in_Movies: " + myMovies.size()); // have to count when writing to csv
         System.out.println("No of Missing Movies: " + moviesNotFound);
@@ -294,6 +296,7 @@ public class xmlParser extends DefaultHandler {
                 gWriter.write(",");
                 gWriter.write(entry.getKey());
                 gWriter.newLine();
+                starInserts++;
             }
             gWriter.flush();
             gWriter.close();
@@ -650,6 +653,9 @@ public class xmlParser extends DefaultHandler {
             // maybe another boolean var
             if ( isFound ) {
                 mySIMs.put(castMovieId,tempSIMStars);
+            }
+            else {
+                writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
             }
 
         } else if (qName.equalsIgnoreCase("f")) {
