@@ -24,6 +24,7 @@ import java.sql.Statement;
 
 public class xmlParser extends DefaultHandler {
     HashMap<String, Movie> myMovies;
+    HashMap<String, ArrayList<String>> mySIMs;
 
     private String tempVal;
 
@@ -31,7 +32,7 @@ public class xmlParser extends DefaultHandler {
 
     private Movie tempMovie;
     private Star tempStar;
-    // private Stars_in_Movies tempSIM;
+    private ArrayList<String> tempSIMStars;
 
     private int movieDupe = 0;
     private int starDupe = 0;
@@ -317,8 +318,8 @@ public class xmlParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("m")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
-//            tempSIM = new Stars_In_Movies();
             System.out.println("PLACEHOLDER");
+            tempSIMStars = new ArrayList<String>();
         }
 
         // Think
@@ -595,7 +596,7 @@ public class xmlParser extends DefaultHandler {
 
             // get smth to tell this to skip record if movie or star not found
             // maybe another boolean var
-            myEmpls.add(tempEmp);
+            mySIMs.put(castMovieId,tempSIMStars);
 
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
@@ -615,10 +616,12 @@ public class xmlParser extends DefaultHandler {
             if (newStars.containsKey(tempVal.strip()) ) {
                 String starId = newStars.get(tempVal.strip()).get(0).getId();//get star id
                 // add to list
+                tempSIMStars.add(starId);
             }
             else if(existingStars.containsKey(tempVal.strip())) {
                 String starId = existingStars.get(tempVal.strip()).get(0).getId();//get star id
                 // add to list
+                tempSIMStars.add(starId);
             }
             else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
