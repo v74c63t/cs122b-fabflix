@@ -33,7 +33,7 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
 #### Parsing Time Optimization Strategies
   1. We used in memory hash maps to store information from the database and information we plan to insert into the database so we did not have to query against the database constantly in order to find duplicates or to find whether a movie/star/genre already exists. 
-  2. Wrote parsed data to csv files so can use LOAD DATA from SQL to load the information into the tables all at once instead of sending multiple insert queries
+  2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
 ## Contributions
 ### Vanessa
   - reCaptcha Error Message
