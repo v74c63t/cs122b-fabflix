@@ -284,7 +284,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
     }
 
     public void updateAvailableInt () {
-        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
+        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false?allowLoadLocalInfile=true",
                 Parameters.username, Parameters.password);) {
 
             // Construct a query with parameter represented by g"?"
