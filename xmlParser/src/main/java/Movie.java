@@ -62,7 +62,7 @@ public class Movie {
         this.genres = genres;
     }
 
-    public String addGenre( String genre ) {
+    public void addGenre( String genre ) {
         this.genres.add(genre);
     }
 

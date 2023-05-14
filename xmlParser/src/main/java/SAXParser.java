@@ -1,9 +1,7 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.HashMap;
+import java.util.*;
 
+import javax.naming.NamingException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -23,9 +21,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 
-public class SAXParser extends DefaultHandler {
-    HashMap<String, Movies> myMovies;
+public class xmlParser extends DefaultHandler {
+    HashMap<String, Movie> myMovies;
 
     private String tempVal;
 
@@ -83,49 +82,47 @@ public class SAXParser extends DefaultHandler {
         put("hist", "History");
     }};
 
-    private HashMap<String, int> existingGenres = new HashMap<String, int>();
-    private HashMap<String, int> newGenres = new HashMap<String, int>();
+    private HashMap<String, Integer> existingGenres = new HashMap<String, Integer>();
+    private HashMap<String, Integer> newGenres = new HashMap<String, Integer>();
 
     private DataSource dataSource;
 
-    try {
-        dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
-    } catch (NamingException e) {
-        e.printStackTrace();
-    }
-
-    try (Connection conn = dataSource.getConnection()) {
-
-        // Construct a query with parameter represented by g"?"
-        String query = "SELECT * FROM genres;";
-
-        Statement statement = conn.createStatement();
-
-        ResultSet rs = statement.executeQuery(query);
-
-        while(rs.next()) {
-            existingGenres.put(rs.getString("name"), rs.getInt("id"));
+    public xmlParser() {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+        } catch (NamingException e) {
+            e.printStackTrace();
         }
-        rs.close();
 
-        query = "SELECT * FROM availableint;";
+        try (Connection conn = dataSource.getConnection()) {
 
-        ResultSet rs2 = statement.executeQuery(query);
+            // Construct a query with parameter represented by g"?"
+            String query = "SELECT * FROM genres;";
 
-        if (rs2.next()) {
-            availableGenreId = rs2.getInt("genre");
-            availableStarId = rs2.getInt("star");
+            Statement statement = conn.createStatement();
+
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next()) {
+                existingGenres.put(rs.getString("name"), rs.getInt("id"));
+            }
+            rs.close();
+
+            query = "SELECT * FROM availableInt;";
+
+            ResultSet rs2 = statement.executeQuery(query);
+
+            if (rs2.next()) {
+                availableGenreId = rs2.getInt("genre");
+                availableStarId = rs2.getInt("star");
+            }
+            rs2.close();
+
+
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        rs2.close();
-
-
-        statement.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-    public SAXParser() {
-        myMovies = new ArrayList<Movie>();
     }
 
     public void runExample() {
@@ -167,10 +164,10 @@ public class SAXParser extends DefaultHandler {
 
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
-        Iterator<Employee> it = myMovies.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next().toString());
-        }
+//        Iterator<Employee> it = myMovies.iterator();
+//        while (it.hasNext()) {
+//            System.out.println(it.next().toString());
+//        }
         // then load data
         System.out.println("No of Inserted Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: " + newGenres.size());
@@ -265,14 +262,14 @@ public class SAXParser extends DefaultHandler {
     }
 
     //
-    public void genreToCSV( HashMap<String, int> genreMap ) {
+    public void genreToCSV( HashMap<String, Integer> genreMap ) {
         try {
             BufferedWriter gWriter = new BufferedWriter(new FileWriter("genres.csv", true));
             gWriter.write("id");
             gWriter.write(",");
             gWriter.write("name");
             gWriter.newLine();
-            for (Map.entry<String, int> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
+            for (Map.Entry<String, Integer> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
                 gWriter.write(Integer.toString(entry.getValue()));
                 gWriter.write(",");
                 gWriter.write(entry.getKey());
@@ -340,7 +337,7 @@ public class SAXParser extends DefaultHandler {
                 writeToTextFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
-                if(myMovies.getGenres.size() == 0) {
+                if(tempMovie.getGenres().size() == 0) {
                     // since some dont have <cat> tag only have empty <cats>
                     // not sure if it will actually hit the null check if the tag doesnt exist
                     // so check here to be safe
@@ -396,7 +393,7 @@ public class SAXParser extends DefaultHandler {
                     // report inconsistent i guess
                     isConsistent = false;
                 }
-                tempMovie.setYear(tempVal.strip())
+                tempMovie.setYear(tempVal.strip());
             }
 //            tempEmp.setName(tempVal);
         } else if(qName.equalsIgnoreCase("cat")) {
@@ -454,7 +451,7 @@ public class SAXParser extends DefaultHandler {
                 // have to check genre before adding
                 // have to .strip() b/c trailing spaces and .lower()
                 if(catToGenreMap.containsKey(tempVal.strip().toLowerCase())){
-                    String genre = catToGenreMap.get(tempVal.strip().toLowerCase()));
+                    String genre = catToGenreMap.get(tempVal.strip().toLowerCase());
                     if(existingGenres.containsKey(genre)) {
                         tempMovie.addGenre(genre);
                     }
@@ -589,7 +586,7 @@ public class SAXParser extends DefaultHandler {
     }
 
     public static void main(String[] args) {
-        SAXParser sp = new SAXParser();
+        xmlParser sp = new xmlParser();
         sp.runExample();
     }
 
