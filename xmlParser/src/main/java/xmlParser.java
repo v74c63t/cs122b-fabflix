@@ -1,6 +1,8 @@
-import java.io.IOException;
+import java.io.*;
+import java.sql.*;
 import java.util.*;
 
+import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -11,20 +13,14 @@ import org.xml.sax.SAXException;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
-public class xmlParser extends DefaultHandler {
-    private HashMap<String, Movie> myMovies;
-    private HashMap<String, ArrayList<String>> mySIMs;
+public class xmlParser extends DefaultHandler implements Parameters {
+    HashMap<String, Movie> myMovies;
+    HashMap<String, ArrayList<String>> mySIMs;
 
     private String tempVal;
 
@@ -32,7 +28,7 @@ public class xmlParser extends DefaultHandler {
 
     private Movie tempMovie;
     private Star tempStar;
-    private ArrayList<String> tempSIMStars;
+    ArrayList<String> tempSIMStars;
 
     private int movieDupe = 0;
     private int starDupe = 0;
@@ -62,7 +58,7 @@ public class xmlParser extends DefaultHandler {
 
     private String castMovieId;
 
-    private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
+    HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
         put("susp", "Thriller");
         put("cnr", "Crime");
         put("cnrb", "Crime");
@@ -101,23 +97,39 @@ public class xmlParser extends DefaultHandler {
         put("ctxx", "Uncategorized");
     }};
 
-    private HashMap<String, Integer> existingGenres = new HashMap<String, Integer>();
-    private HashMap<String, Integer> newGenres = new HashMap<String, Integer>();
+    HashMap<String, Integer> existingGenres;
+    HashMap<String, Integer> newGenres;
 
-    private HashMap<String, ArrayList<Star>> existingStars = new HashMap<String, ArrayList<Star>>();
-    private HashMap<String, ArrayList<Star>> newStars = new HashMap<String, ArrayList<Star>>();
+    HashMap<String, ArrayList<Star>> existingStars;
+    HashMap<String, ArrayList<Star>> newStars;
 
-    private DataSource dataSource;
+//    private DataSource dataSource;
 
-    public xmlParser() {
+    public xmlParser() throws ClassNotFoundException, SQLException {
         myMovies = new HashMap<String, Movie>();
-        try {
-            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
+        mySIMs = new HashMap<String, ArrayList<String>>();
+        tempSIMStars = new ArrayList<String>();
+        existingGenres = new HashMap<String, Integer>();
+        newGenres = new HashMap<String, Integer>();
+        existingStars = new HashMap<String, ArrayList<Star>>();
+        newStars = new HashMap<String, ArrayList<Star>>();
 
-        try (Connection conn = dataSource.getConnection()) {
+//        try {
+//
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Properties props = new Properties();
+//            props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
+//            Context initContext = new InitialContext(props);
+//
+//            dataSource = (DataSource) initContext.lookup("java:comp/env/jdbc/moviedb");
+//        } catch (NamingException e) {
+//            e.printStackTrace();
+//        }
+
+        // Incorporate mySQL driver
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
+                Parameters.username, Parameters.password);) {
 
             // Construct a query with parameter represented by g"?"
             String query = "SELECT * FROM genres;";
@@ -127,7 +139,7 @@ public class xmlParser extends DefaultHandler {
             ResultSet rs = statement.executeQuery(query);
 
             while(rs.next()) {
-                existingGenres.put(rs.getString("name"), rs.getInt("id"));
+                existingGenres.put(rs.getString("name").toLowerCase(), rs.getInt("id"));
             }
             rs.close();
 
@@ -139,6 +151,9 @@ public class xmlParser extends DefaultHandler {
                 availableGenreId = rs2.getInt("genre");
                 availableStarId = rs2.getInt("star");
                 availableMovieId = rs2.getInt("movie");
+                System.out.println("AVAILABLE GENREID: " + availableGenreId);
+                System.out.println("AVAILABLE STARID: " + availableStarId);
+                System.out.println("AVAILABLE MOVIEID: " + availableMovieId);
             }
             rs2.close();
 
@@ -173,6 +188,15 @@ public class xmlParser extends DefaultHandler {
         parseDocument();
 
         // Check if right data is passed
+        System.out.println(newGenres.size());
+        System.out.println(myMovies.size());
+        System.out.println(newStars.size());
+        System.out.println(mySIMs.size());
+
+        for (Map.Entry<String,Integer> entry: newGenres.entrySet()){
+            System.out.println(entry.getKey() + " --> " + entry.getValue());
+        }
+
         genreToCSV(newGenres);
         movieToCSV(myMovies);
         starToCSV(newStars);
@@ -191,9 +215,9 @@ public class xmlParser extends DefaultHandler {
             SAXParser sp = spf.newSAXParser();
 
             //parse the file and also register this class for call backs
-            sp.parse("/xmlParser/stanford-movies/mains243.xml", this);
-            sp.parse("/xmlParser/stanford-movies/actors63.xml", this);
-            sp.parse("/xmlParser/stanford-movies/casts243.xml", this);
+            sp.parse("xmlParser/stanford-movies/mains243.xml", this);
+            sp.parse("xmlParser/stanford-movies/actors63.xml", this);
+            sp.parse("xmlParser/stanford-movies/casts124.xml", this);
 
         } catch (SAXException se) {
             se.printStackTrace();
@@ -238,7 +262,8 @@ public class xmlParser extends DefaultHandler {
     }
 
     public void loadData ( String csvPath, String tableName ) {
-        try (Connection conn = dataSource.getConnection()) {
+        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
+                Parameters.username, Parameters.password);) {
 
             // Construct a query with parameter represented by g"?"
             String query = "LOAD DATA INFILE ? " +
@@ -259,7 +284,8 @@ public class xmlParser extends DefaultHandler {
     }
 
     public void updateAvailableInt () {
-        try (Connection conn = dataSource.getConnection()) {
+        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
+                Parameters.username, Parameters.password);) {
 
             // Construct a query with parameter represented by g"?"
             String query = "SET SQL_SAFE_UPDATES = 0; " +
@@ -278,9 +304,12 @@ public class xmlParser extends DefaultHandler {
         }
     }
 
-    public void writeToTextFile( String fileName, String content ) {
+    public void writeToTextFile(String fileName, String content) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            File txtFile = new File(fileName);
+            txtFile.getParentFile().mkdirs();
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(txtFile, true));
             writer.write(content);
             writer.newLine();
             writer.close();
@@ -320,11 +349,11 @@ public class xmlParser extends DefaultHandler {
                 moviesWriter.newLine();
 
                 for (String genre: entry.getValue().getGenres()) { // for writing into genres_in_movies
-                    String genreId;
+                    String genreId = "";
                     if ( existingGenres.containsKey(genre) ) {
-                        genreId = Integer.toString(existingGenres.get(genre));
+                        genreId = Integer.toString(existingGenres.get(genre.toLowerCase()));
                     } else {
-                        genreId = Integer.toString(newGenres.get(genre));
+                        genreId = Integer.toString(newGenres.get(genre.toLowerCase()));
                     }
                     gimWriter.write(genreId);
                     gimWriter.write(",");
@@ -433,7 +462,6 @@ public class xmlParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("m")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
-            System.out.println("PLACEHOLDER");
             tempSIMStars = new ArrayList<String>();
         }
 
@@ -652,7 +680,7 @@ public class xmlParser extends DefaultHandler {
                 mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
             }
             else {
-                writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
+                writeToTextFile("/xmlParser/MovieNotFound.txt", castMovieId + tempSIMStars.toString());
             }
 
         } else if (qName.equalsIgnoreCase("f")) {
@@ -681,14 +709,14 @@ public class xmlParser extends DefaultHandler {
             else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
                 // write to star missing file
-                writeToTextFile("StarNotFound.txt", castMovieId + " " + tempVal.strip());
+                writeToTextFile("/xmlParser/StarNotFound.txt", castMovieId + " " + tempVal.strip());
             }
 
         }
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         xmlParser sp = new xmlParser();
         sp.runExample();
     }
