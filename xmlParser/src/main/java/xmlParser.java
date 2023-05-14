@@ -81,6 +81,13 @@ public class xmlParser extends DefaultHandler {
         put("faml", "Family");
         put("fant", "Fantasy");
         put("hist", "History");
+        put("camp now", "Camp");
+        put("disa", "Disaster");
+        put("epic", "Epic");
+        put("surl", "Sureal");
+        put("avga", "Avant Garde");
+        put("avant garde", "Avant Garde");
+        put("ctxx", "Uncategorized");
     }};
 
     private HashMap<String, Integer> existingGenres = new HashMap<String, Integer>();
@@ -421,6 +428,13 @@ public class xmlParser extends DefaultHandler {
             // Faml -> Family
             // Fant -> Fantasy
             // Hist -> History
+
+            // ctxx -> Uncategorized
+            // camp now -> Camp
+            // disa -> Disaster
+            // epic -> Epic
+            // surl -> Sureal
+            // AvGa -> Avant Garde
 
             // for rest just add as new
 
