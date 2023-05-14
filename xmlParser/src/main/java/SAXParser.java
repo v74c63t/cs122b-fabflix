@@ -230,7 +230,7 @@ public class SAXParser extends DefaultHandler {
                 writer.write(",");
                 writer.write(movie.getTitle());
                 writer.write(",");
-                writer.write(Integer.toString(movie.getYear()));
+                writer.write(movie.getYear());
                 writer.write(",");
                 writer.write(movie.getDirector());
                 writer.newLine();
