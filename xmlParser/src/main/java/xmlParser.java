@@ -567,12 +567,12 @@ public class xmlParser extends DefaultHandler {
             // if not report as missing
             // if exists find id
             // ignore if 's a'
-            if ( a not found ) {
+            if ( myStars.containsKey(tempVal.strip()) ) {
                 starsNotFound++;
                 // write to star missing file
             }
             else {
-                String starId = //get star id
+                String starId = myStars.get(tempVal.strip()).get(0).getId();//get star id
                 // add to list
             }
 
