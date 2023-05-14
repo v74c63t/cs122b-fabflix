@@ -67,6 +67,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
         put("myst", "Mystery");
         put("s.f.", "Sci-Fi");
         put("scfi", "Sci-Fi");
+        put("scif", "Sci-Fi");
         put("advt", "Adventure");
         put("horr", "Horror");
         put("romt", "Romance");
@@ -78,6 +79,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
         put("porn", "Adult");
         put("noir", "Noir");
         put("biop", "Biography");
+        put("biog", "Biography");
         put("bio", "Biography");
         put("tv", "TV Show");
         put("tvs", "TV Series");
@@ -92,9 +94,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
         put("disa", "Disaster");
         put("epic", "Epic");
         put("surl", "Surreal");
+        put("surr", "Surreal");
         put("avga", "Avant Garde");
         put("avant garde", "Avant Garde");
         put("ctxx", "Uncategorized");
+        put("ctcxx", "Uncategorized");
     }};
 
     HashMap<String, Integer> existingGenres;
