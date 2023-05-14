@@ -25,6 +25,7 @@ import java.util.Map;
 
 public class xmlParser extends DefaultHandler {
     HashMap<String, Movie> myMovies;
+    HashMap<String, Star> myStars;
 
     private String tempVal;
 
@@ -48,7 +49,7 @@ public class xmlParser extends DefaultHandler {
 
     private int availableGenreId;
 
-    private int availableStarId
+    private int availableStarId;
 
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
         put("susp", "Thriller");
@@ -177,7 +178,7 @@ public class xmlParser extends DefaultHandler {
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
         System.out.println("No of Inserted Stars: " + myStars.size());
         System.out.println("No of Duplicated Stars: " + starDupe);
-        System.out.println("No of Records Inserted into Stars_in_Movies: " + myEmpls.size());
+        System.out.println("No of Records Inserted into Stars_in_Movies: " + myMovies.size());
         System.out.println("No of Missing Movies: " + moviesNotFound);
         System.out.println("No of Missing Stars: " + starsNotFound);
     }
@@ -283,7 +284,8 @@ public class xmlParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("m")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
-            tempSIM = new Stars_In_Movies();
+//            tempSIM = new Stars_In_Movies();
+            System.out.println("PLACEHOLDER");
         }
 
         // Think
@@ -300,7 +302,7 @@ public class xmlParser extends DefaultHandler {
             // Check for inconsistency ( "Unknown" / "" )
             if ( tempVal.toLowerCase().strip().startsWith("unknown") ) {
                 isConsistent = false;
-            } else if (tempVal.strip() == "") {
+            } else if (tempVal.strip().equals("")) {
                 isConsistent = false;
             } else { // Set director variable
                 director = tempVal.strip();
@@ -345,7 +347,7 @@ public class xmlParser extends DefaultHandler {
 
         } else if (qName.equalsIgnoreCase("t")) {
             // store for dupe checking
-            if(tempVal.strip() == "") { // No title associated with movie
+            if(tempVal.strip().equals("")) { // No title associated with movie
                 isConsistent = false;
             }
             else if(tempVal == null) { // No title associated with movie
@@ -363,7 +365,7 @@ public class xmlParser extends DefaultHandler {
             // dk how to deal with these b/c we cant set as null since tables require them to be not null
             // maybe report as inconsistent????
             // store for dupe checking
-            if(tempVal.strip() == "") { // No year associated with movie
+            if(tempVal.strip().equals("")) { // No year associated with movie
                 isConsistent = false;
             }
             else if(tempVal == null) {
@@ -423,7 +425,7 @@ public class xmlParser extends DefaultHandler {
             // for rest just add as new
 
 //            if( cat tag doesnt exist ) {
-            if(tempVal.strip() == "") { // check if this is correct // in case trailing spaces
+            if(tempVal.strip().equals("")) { // check if this is correct // in case trailing spaces
                 isConsistent = false;
             } else if(tempVal == null) {
                 isConsistent = false;
