@@ -627,6 +627,9 @@ public class xmlParser extends DefaultHandler {
             if ( isFound ) {
                 mySIMs.put(castMovieId,tempSIMStars);
             }
+            else {
+                writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
+            }
 
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
