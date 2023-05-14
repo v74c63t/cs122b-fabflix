@@ -328,6 +328,30 @@ public class xmlParser extends DefaultHandler {
         }
     }
 
+    public void simToCSV( HashMap<String, ArrayList<String>> simMap ) { // check if correct
+        try {
+            BufferedWriter simWriter = new BufferedWriter(new FileWriter("stars_in_movies.csv", true));
+            simWriter.write("starId");
+            simWriter.write(",");
+            simWriter.write("movieId");
+            simWriter.newLine();
+            for (Map.Entry<String, ArrayList<String>> entry : simMap.entrySet()) {
+                for(String starId : entry.getValue()) {
+                    simWriter.write(entry.getKey());
+                    simWriter.write(",");
+                    simWriter.write(starId);
+                    simWriter.newLine();
+                }
+            }
+            simWriter.flush();
+            simWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
     //Event Handlers
