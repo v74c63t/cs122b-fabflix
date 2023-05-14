@@ -75,16 +75,18 @@ function handleResult(resultData) {
 
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < resultData.length; i++) {
-        let rowHTML = "";
-        rowHTML += "<tr>";
-        rowHTML += "<th>" + "<a style='color:darkturquoise;' href='single-movie.html?id=" + resultData[i]["movie_id"]
-            + "'>" + resultData[i]["movie_title"] + "</a></th>";
-        rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary' onclick=\"handleCart("+ "'" + resultData[i]["movie_id"] + "'" + ")\">Add</button></th>";
-        rowHTML += "</tr>";
-        // Append the row created to the table body, which will refresh the page
-        starMovieTableBodyElement.append(rowHTML);
+        if(resultData[i]["movie_id"] != null) {
+            let rowHTML = "";
+            rowHTML += "<tr>";
+            rowHTML += "<th>" + "<a style='color:darkturquoise;' href='single-movie.html?id=" + resultData[i]["movie_id"]
+                + "'>" + resultData[i]["movie_title"] + "</a></th>";
+            rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
+            rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
+            rowHTML += "<th><button type='submit' id='add_to_cart' style='font-family: Verdana, serif;color:darkturquoise;border-color:darkturquoise;' class='btn btn-secondary' onclick=\"handleCart(" + "'" + resultData[i]["movie_id"] + "'" + ")\">Add</button></th>";
+            rowHTML += "</tr>";
+            // Append the row created to the table body, which will refresh the page
+            starMovieTableBodyElement.append(rowHTML);
+        }
     }
 }
 

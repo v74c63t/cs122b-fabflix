@@ -63,7 +63,20 @@ public class SingleStarServlet extends HttpServlet {
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
-            String query = "SELECT * from stars as s, stars_in_movies as sim, movies as m " +
+            String query = "SELECT * from stars s WHERE s.id = ?;";
+            PreparedStatement basicInfo = conn.prepareStatement(query);
+            basicInfo.setString(1, id);
+            ResultSet rs = basicInfo.executeQuery();
+            String starName = "";
+            String starDob = "";
+            if(rs.next()) {
+                starName = rs.getString("name");
+                starDob = rs.getString("birthYear");
+            }
+            basicInfo.close();
+
+
+            query = "SELECT * from stars as s, stars_in_movies as sim, movies as m " +
                     "where m.id = sim.movieId and sim.starId = s.id and s.id = ? order by m.year desc, m.title asc;";
 
             // Declare our statement
@@ -74,16 +87,17 @@ public class SingleStarServlet extends HttpServlet {
             statement.setString(1, id);
 
             // Perform the query
-            ResultSet rs = statement.executeQuery();
+            rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
+
 
             // Iterate through each row of rs
             while (rs.next()) {
 
-                String starId = rs.getString("starId");
-                String starName = rs.getString("name");
-                String starDob = rs.getString("birthYear");
+//                String starId = rs.getString("starId");
+//                String starName = rs.getString("name");
+//                String starDob = rs.getString("birthYear");
 
                 String movieId = rs.getString("movieId");
                 String movieTitle = rs.getString("title");
@@ -93,7 +107,7 @@ public class SingleStarServlet extends HttpServlet {
                 // Create a JsonObject based on the data we retrieve from rs
 
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("star_id", starId);
+                jsonObject.addProperty("star_id", id);
                 jsonObject.addProperty("star_name", starName);
                 jsonObject.addProperty("star_dob", starDob);
                 jsonObject.addProperty("movie_id", movieId);
@@ -103,6 +117,16 @@ public class SingleStarServlet extends HttpServlet {
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
+            }
+            if(jsonArray.isEmpty()) {
+                if(starName != "") {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("star_id", id);
+                    jsonObject.addProperty("star_name", starName);
+                    jsonObject.addProperty("star_dob", starDob);
+                    jsonObject.addProperty("resultUrl", resultUrl);
+                    jsonArray.add(jsonObject);
+                }
             }
             rs.close();
             statement.close();
