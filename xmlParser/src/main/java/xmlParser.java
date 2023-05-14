@@ -404,6 +404,10 @@ public class xmlParser extends DefaultHandler implements Parameters {
                         sWriter.write(",");
                         sWriter.write(s.getBirthYear());
                     }
+                    else{
+                        sWriter.write(",");
+                        sWriter.write("");
+                    }
                     sWriter.newLine();
                     starInserts++;
                 }
