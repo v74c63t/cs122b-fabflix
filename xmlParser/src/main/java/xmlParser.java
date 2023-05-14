@@ -118,18 +118,6 @@ public class xmlParser extends DefaultHandler implements Parameters {
         existingStars = new HashMap<String, ArrayList<Star>>();
         newStars = new HashMap<String, ArrayList<Star>>();
 
-//        try {
-//
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            Properties props = new Properties();
-//            props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
-//            Context initContext = new InitialContext(props);
-//
-//            dataSource = (DataSource) initContext.lookup("java:comp/env/jdbc/moviedb");
-//        } catch (NamingException e) {
-//            e.printStackTrace();
-//        }
-
         // Incorporate mySQL driver
         Class.forName("com.mysql.cj.jdbc.Driver");
         try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
@@ -155,9 +143,6 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 availableGenreId = rs2.getInt("genre");
                 availableStarId = rs2.getInt("star");
                 availableMovieId = rs2.getInt("movie");
-                System.out.println("AVAILABLE GENREID: " + availableGenreId);
-                System.out.println("AVAILABLE STARID: " + availableStarId);
-                System.out.println("AVAILABLE MOVIEID: " + availableMovieId);
             }
             rs2.close();
 
@@ -191,16 +176,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
     public void runExample() {
         parseDocument();
 
-        // Check if right data is passed
-        System.out.println(newGenres.size());
-        System.out.println(myMovies.size());
-        System.out.println(newStars.size());
-        System.out.println(mySIMs.size());
-
-        for (Map.Entry<String,Integer> entry: newGenres.entrySet()){
-            System.out.println(entry.getKey() + " --> " + entry.getValue());
-        }
-
+        // Create CSV files
         genreToCSV(newGenres);
         movieToCSV(myMovies);
         starToCSV(newStars);
@@ -239,9 +215,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
      * the contents
      */
     private void printData() {
-        // depending on when we load csv we may want diff print functions for each file
-        // if we load after we finish each file might need diff functions
-        // if we load after all files are done parsing can just keep one
+        // Load all data into database
         loadData("genres.csv", "genres");
         loadData("movies.csv", "movies");
         loadData("genres_in_movies.csv", "genres_in_movies");
@@ -250,17 +224,14 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
         updateAvailableInt();
 
-        // also need ot print dupes/inconsistencies
-        // in this set write to csv file i guess
-        // then load data
         System.out.println("No of Inserted Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: " + newGenres.size());
+        System.out.println("No of Inserted Stars: " + starInserts);
         System.out.println("No of Records Inserted into Genres_in_Movies: " + gimInserts);
-        System.out.println("No of Duplicated Movies: " + movieDupe);
+        System.out.println("No of Records Inserted into Stars_in_Movies: " + simInserts);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
-        System.out.println("No of Inserted Stars: " + starInserts); // new stars size wont be accurate have to count whne writing to csv
+        System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Duplicated Stars: " + starDupe);
-        System.out.println("No of Records Inserted into Stars_in_Movies: " + simInserts); // have to count when writing to csv
         System.out.println("No of Missing Movies: " + moviesNotFound);
         System.out.println("No of Missing Stars: " + starsNotFound);
     }
@@ -452,24 +423,18 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     //Event Handlers
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        //reset
-        // not sure what to put here for mains
+
         tempVal = "";
         if (qName.equalsIgnoreCase("film")) {
-            //create a new instance of employee
-            // figure out how to store everything in hashmap i guess
+            // Create new instance of Movie
             tempMovie = new Movie();
         } else if (qName.equalsIgnoreCase("actor")) {
-            //create a new instance of employee
-            // figure out how to store everything in hashmap i guess
+            // Create new instance of Star
             tempStar = new Star();
         } else if (qName.equalsIgnoreCase("filmc")) { // not too sure
-            //create a new instance of employee
-            // figure out how to store everything in hashmap i guess
+            // Create new array for holding starIds
             tempSIMStars = new ArrayList<String>();
         }
-
-        // Think
 
     }
 
@@ -504,9 +469,6 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 isDuplicate = false;
             }else {
                 if(tempMovie.getGenres().size() == 0) { // No genres associated with movie
-                    // since some dont have <cat> tag only have empty <cats>
-                    // not sure if it will actually hit the null check if the tag doesnt exist
-                    // so check here to be safe
                     movieInconsistent++;
                     writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 }
@@ -539,9 +501,6 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 isConsistent = false;
             }
             else {
-                // same as above, probably not needed since we need the title (<t>) to add to dup file
-
-                // add to tempMovie
                  tempMovie.setTitle(tempVal.strip());
             }
 
@@ -671,18 +630,9 @@ public class xmlParser extends DefaultHandler implements Parameters {
             }
 //            tempEmp.setId(Integer.parseInt(tempVal));
         } else if (qName.equalsIgnoreCase("filmc")) {
-            //add it to the list
-            // check if dupe
-            // if dupe write to movies dupe file id title director year
-            // if not add to hashmap
-            // according to the demo vid its added to inconsistent file if there are movies with the same name but everything
-            // else diff (id, director name, year)? not sure abt this
-
-            // get smth to tell this to skip record if movie or star not found
-            // maybe another boolean var
+            //
             if ( isFound ) {
                 mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
-
             }
             else {
                 writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
