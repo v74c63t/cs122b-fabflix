@@ -21,8 +21,10 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - SingleMovieServlet.java
   - SingleStarServlet.java
 ### Parsing Time Optimization Strategies
-  1. 
-  2. 
+  1. Used in memory hash maps to store database information so did not have to query the database each time to figure out if there were duplicates or if a certain movie/star/genre exists.
+  2. Wrote parsed data to csv files so can use LOAD DATA from SQL to load the information into the tables all at once instead of sending multiple insert queries
+### XMLParser
+There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files
 ## Contributions
 ### Vanessa
   - reCaptcha Error Message
@@ -37,9 +39,9 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Add Movie Page (HTML/CSS)
   - Add Star Page (HTML/CSS/JS)
   - Add Genre Page (HTML/CSS/JS)
+  - xmlParser
   - Making Revisions/Style Changes to Other Pages
   - Debugging
-  - 
 ### Haver
   - reCaptcha Setup
   - Encrypted Password Changes
@@ -52,6 +54,6 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - Add Movie Page (HTML/CSS/JS)
   - Add Star Page (HTML/CSS)
   - Add Genre Page (HTML/CSS)
+  - xmlParser
   - Making Revisions/Style Changes to Other Pages
   - Debugging
-  - 
