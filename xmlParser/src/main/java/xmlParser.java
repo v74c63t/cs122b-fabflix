@@ -208,10 +208,6 @@ public class xmlParser extends DefaultHandler {
 
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
-//        Iterator<Employee> it = myMovies.iterator();
-//        while (it.hasNext()) {
-//            System.out.println(it.next().toString());
-//        }
         // then load data
         System.out.println("No of Inserted Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: " + newGenres.size());
@@ -479,58 +475,6 @@ public class xmlParser extends DefaultHandler {
                 tempMovie.setYear(tempVal.strip());
             }
         } else if(qName.equalsIgnoreCase("cat")) {
-            // need to do substring matching to check for if exists in db
-            // need to use .lower() b/c 'dram', 'DRam', etc
-            // also may need to combine similar genres together ex: adult
-            // store in list?
-            // if empty report inconsistent
-            // some have trailing spaces so use .strip()
-            // some are combined into one tag ex: 'Romt Comd', 'Dram Docu'
-            // use .strip() then .split()
-            // refer to http://infolab.stanford.edu/pub/movies/doc.html#CATS
-            // to figure out what each cat stands for
-            // maybe create a map for this as well?
-            // Susp -> Thriller
-            // CnR -> Cops and Robbers -> Crime??? or new cat
-            // some of them are added as CnRb
-            // Dram -> Drama
-            // West -> Western
-            // Myst -> Mystery
-            // S.F. -> Sci-Fi
-            // but some of them are written as ScFi so idk
-            // Advt -> Adventure
-            // Horr -> Horror
-            // Romt -> Romantic -> Romance
-            // Comd -> Comedy
-            // some are combined for some reason ex: Romt Comd
-            // Musc -> Musical
-            // Docu -> Documentary
-            // Porn -> Adult
-            // Noir -> black (just store as noir i guess)
-            // BioP -> biographical Picture -> Biography? idrk what to consider this as
-            // TV -> TV show
-            // TVs -> TV series
-            // TVm -> TV miniseries
-
-            // some that are not listed on that page
-            // Actn -> Action
-            // Cart -> Cartoon
-            // Bio -> Biography
-            // Crim -> Crime
-            // Faml -> Family
-            // Fant -> Fantasy
-            // Hist -> History
-
-            // ctxx -> Uncategorized
-            // camp now -> Camp
-            // disa -> Disaster
-            // epic -> Epic
-            // surl -> Sureal
-            // AvGa -> Avant Garde
-
-            // for rest just add as new
-
-//            if( cat tag doesnt exist ) {
             if(tempVal.strip().equals("")) { // check if this is correct // in case trailing spaces
                 isConsistent = false;
             } else if(tempVal == null) {
@@ -582,13 +526,6 @@ public class xmlParser extends DefaultHandler {
                         }
                     }
                 }
-                // have to .split() in case combined genres
-                // refer to comments above to get correct genre
-                // have to add to somewhere so can insert into genres in movie
-                // maybe a hashmap with movie id as key and list of genre ids as values
-                // if new genre add to another hashmap? for genre table key: name, val: id
-                // and tehn keep id
-                // tempMovie.addGenre(tempVal.strip());
             }
 
         } else if (qName.equalsIgnoreCase("actor")) {
@@ -619,18 +556,10 @@ public class xmlParser extends DefaultHandler {
             }
 
         } else if (qName.equalsIgnoreCase("stagename")) {
-            // might have to .lower() and .strip() to check if dupe? not sure if
-            // everythign is capitalized properly
-//            if( already exists previous in file or exists in db ) {
-//                isDuplicate = true;
-//                //write to star dupe file
-//            }
             //duplicate check moved to when dob is obtained
             tempStar.setName(tempVal.strip());
-//            tempEmp.setName(tempVal);
         } else if (qName.equalsIgnoreCase("dob")) {
             // if empty set null
-            // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
             try {
                 Integer.parseInt(tempVal.strip());
                 tempStar.setBirthYear(tempVal.strip());
@@ -674,9 +603,6 @@ public class xmlParser extends DefaultHandler {
             if ( !myMovies.containsKey(tempVal.strip()) ) {
                 moviesNotFound++;
                 isFound = false;
-                // write to movie missing file
-                // should we continue checking in this case?
-                // get something to tell it not to add this entry
             }
             castMovieId = tempVal.strip();
         }else if (qName.equalsIgnoreCase("a")) {
@@ -701,9 +627,6 @@ public class xmlParser extends DefaultHandler {
             }
 
         }
-//        else if (qName.equalsIgnoreCase("Age")) {
-//            tempEmp.setAge(Integer.parseInt(tempVal));
-//        }
 
     }
 
