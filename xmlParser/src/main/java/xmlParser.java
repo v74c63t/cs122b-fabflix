@@ -140,11 +140,11 @@ public class xmlParser extends DefaultHandler {
                 star.setBirthYear(Integer.toString(rs3.getInt("birthYear")));
 
                 // Check if name exists
-                if (existingStars.containsKey(rs3.getString("name").toLowerCase())) {
-                    existingStars.get(rs3.getString("name").toLowerCase()).add(star);
+                if (existingStars.containsKey(rs3.getString("name"))) {
+                    existingStars.get(rs3.getString("name")).add(star);
                 } else {
                     ArrayList<Star> starsArray = new ArrayList<Star>(){{add(star);}};
-                    existingStars.put(rs3.getString("name").toLowerCase(), starsArray);
+                    existingStars.put(rs3.getString("name"), starsArray);
                 }
             }
             rs3.close();
