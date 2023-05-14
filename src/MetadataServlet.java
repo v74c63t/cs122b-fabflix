@@ -13,17 +13,13 @@ import jakarta.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.sql.*;
 
 
-// Declaring a WebServlet called MainInitServlet, which maps to url "/api/maininit"
-// This is used to get all the genres in the database for the browsing by genre list
-@WebServlet(name = "MainInitServlet", urlPatterns = "/api/maininit")
-public class MainInitServlet extends HttpServlet {
+// Declaring a WebServlet called MainInitServlet, which maps to url "/api/metadata"
+// This is used to get all metadata of our database
+@WebServlet(name = "MetadataServlet", urlPatterns = "/api/metadata")
+public class MetadataServlet extends HttpServlet {
     private static final long serialVersionUID = 5L;
 
     // Create a dataSource which registered in web.
@@ -56,13 +52,10 @@ public class MainInitServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
+            // Query to get a list of tables in the database
+            String query = "SHOW tables;";
 
             // Declare our statement
-
-            String query = String.join("",
-                    "SELECT * ",
-                    "FROM genres;");
-
             PreparedStatement statement = conn.prepareStatement(query);
 
             // Perform the query
@@ -70,19 +63,37 @@ public class MainInitServlet extends HttpServlet {
 
             JsonArray jsonArray = new JsonArray();
 
-
             // Iterate through each row of rs
             while (rs.next()) {
-                String name = rs.getString("name");
-                String id = rs.getString("id");
+                String table = rs.getString(1);
 
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("genre_name", name);
-                jsonObject.addProperty("genre_id", id);
-                jsonObject.addProperty("resultUrl", resultUrl);
+
+                // Get Query Result for Metadata for each table
+                Statement statement2 = conn.createStatement();
+                String query2 = "DESCRIBE " + table;
+                ResultSet rs2 = statement2.executeQuery(query2);
+                ResultSetMetaData resultSetMetaData = rs2.getMetaData();
+
+                // JsonArray for each field/type
+                JsonArray fieldsArray = new JsonArray();
+                JsonArray typesArray = new JsonArray();
+
+                // Iterate through each table metadata and add to JsonArray
+                while ( rs2.next() ) {
+                    fieldsArray.add(rs2.getString(1));
+                    typesArray.add(rs2.getString(2));
+                }
+
+                // Creates that holds table_name, array of fields/types
+                jsonObject.addProperty("table_name", table);
+                jsonObject.add("fields", fieldsArray);
+                jsonObject.add("types", typesArray);
 
                 jsonArray.add(jsonObject);
+                rs2.close();
+                statement2.close();
             }
             rs.close();
             statement.close();

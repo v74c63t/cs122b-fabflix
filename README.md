@@ -1,45 +1,68 @@
-# CS122B Project 2
+# CS122B Project 3
 ## Instructions
 ### Deployment
 Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
 ### Demo
-**URL:** `https://youtu.be/tFqOc9hKA5c`
+**URL:** 
 ### AWS
-**URL:** `http://54.215.234.136:8080/cs122b-project2/`
+**URL:** 
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
-**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
+**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`
 ## Additional Notes
 ### Substring Matching Design
   - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
   - LIKE '%AB%'
+### Files with Prepared Statements
+  - [GenreResultServlet.java](src/GenreResultServlet.java)
+  - [StartTitleResultServlet.java](src/StartTitleResultServlet.java)
+  - [SearchResultServlet.java](src/SearchResultServlet.java)
+  - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+  - [SingleStarServlet.java](src/SingleStarServlet.java)
+  - [MoviesServlet.java](src/MoviesServlet.java)
+  - [PaymentServlet.java](src/PaymentServlet.java)
+  - [CartServlet.java](src/CartServlet.java)
+  - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+  - [MainInitServlet.java](src/MainInitServlet.java)
+  - [MetadataServlet.java](src/MetadataServlet.java)
+  - [AddGenreServlet.java](src/AddGenreServlet.java)
+  - [AddMovieServlet.java](src/AddMovieServlet.java)
+  - [AddStarServlet.java](src/AddStarServlet.java)
+### XMLParser
+There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
+#### Parsing Time Optimization Strategies
+  1. We used in memory hash maps to store information from the database and information we plan to insert into the database so we did not have to query against the database constantly in order to find duplicates or to find whether a movie/star/genre already exists. 
+  2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
 ## Contributions
 ### Vanessa
-  - Login Page (JS)
-  - Login Filter/Login Servlet
-  - Main Page (JS)
-  - Main Page Servlet
-  - Confirmation Page (HTML/JS)
-  - Confirmation Page Servlet
-  - Payment Page (HTML/CSS/JS)
-  - Payment Page Servlet
-  - Cart Page (HTML/JS)
-  - Cart Page Servlet
-  - Pagenation/Sorting
-  - Modifying SQL Queries
+  - reCaptcha Error Message
+  - HTTPS
+  - Encrypted Password Changes
+  - Prepared Statements
+  - Employees Login Filter
+  - Dashboard Home (HTML/CSS)
+  - Stored Procedures
+  - Add Star Servlet
+  - Add Genre Servlet
+  - Add Movie Page (HTML/CSS)
+  - Add Star Page (HTML/CSS/JS)
+  - Add Genre Page (HTML/CSS/JS)
+  - xmlParser
   - Making Revisions/Style Changes to Other Pages
   - Debugging
 ### Haver
-  - Login Page (HTML/CSS)
-  - Main Page (HTML/CSS)
-  - Main Page Servlet
-  - Confirmation Page Servlet
-  - Payment Page Servlet
-  - Cart Page Servlet
-  - Genre Results Servlet
-  - Start Title Servlet
-  - Search Result Servlet
-  - Modifying SQL Queries
+  - reCaptcha Setup
+  - Encrypted Password Changes
+  - Employees Login (HTML/CSS/JS)
+  - Employees Login Servlet/Filter
+  - Dashboard Home (HTML/CSS/JS)
+  - Metadata Servlet
+  - Stored Procedures
+  - Add Movie Servlet
+  - Add Movie Page (HTML/CSS/JS)
+  - Add Star Page (HTML/CSS)
+  - Add Genre Page (HTML/CSS)
+  - xmlParser
   - Making Revisions/Style Changes to Other Pages
   - Debugging

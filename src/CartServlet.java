@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -76,18 +77,27 @@ public class CartServlet extends HttpServlet {
             request.getServletContext().log("getting " + itemCart.size() + " items");
             JsonArray previousItemsJsonArray = new JsonArray();
 
+            String query = String.join("",
+                    "SELECT * ",
+                    "FROM movies as m ",
+                    "WHERE m.id = ?");
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
+
             for(Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet()){
                 String movieId = entry.getKey();
 //                System.out.println(movieId);
                 // Declare our statement
-                Statement statement = conn.createStatement();
 
-                String query = String.join("",
-                        "SELECT * ",
-                        "FROM movies as m ",
-                        "WHERE m.id = '", movieId, "';");
 
-                ResultSet rs = statement.executeQuery(query);
+//                String query = String.join("",
+//                        "SELECT * ",
+//                        "FROM movies as m ",
+//                        "WHERE m.id = '", movieId, "';");
+                statement.setString(1, movieId);
+
+                ResultSet rs = statement.executeQuery();
 
                 if (rs.next()) {
                     String movie_id = rs.getString("id");
@@ -102,8 +112,8 @@ public class CartServlet extends HttpServlet {
                     jsonArray.add(jsonObject);
                 }
                 rs.close();
-                statement.close();
             }
+            statement.close();
             responseJsonObject.addProperty("resultUrl", resultUrl);
 
             // write all the data into the jsonObject

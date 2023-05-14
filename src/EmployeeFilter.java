@@ -8,8 +8,8 @@ import java.util.ArrayList;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
-public class LoginFilter implements Filter {
+@WebFilter(filterName = "EmployeeFilter", urlPatterns = "/_dashboard/*")
+public class EmployeeFilter implements Filter {
     private final ArrayList<String> allowedURIs = new ArrayList<>();
 
     /**
@@ -30,8 +30,7 @@ public class LoginFilter implements Filter {
         }
 
         // Redirect to login page if the "user" attribute doesn't exist in session
-        if (httpRequest.getSession().getAttribute("user") == null &&
-                httpRequest.getSession().getAttribute("employee") == null) {
+        if (httpRequest.getSession().getAttribute("employee") == null) {
             httpResponse.sendRedirect("login.html");
         } else {
             chain.doFilter(request, response);
@@ -54,7 +53,6 @@ public class LoginFilter implements Filter {
         allowedURIs.add("login.css");
         allowedURIs.add("style.css");
         allowedURIs.add("api/login");
-
         allowedURIs.add("/_dashboard");
         allowedURIs.add("/_dashboard/login.html");
         allowedURIs.add("/_dashboard/login.js");

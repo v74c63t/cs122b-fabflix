@@ -1,4 +1,3 @@
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,8 +16,8 @@ import java.sql.ResultSet;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
-@WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "EmployeeLoginServlet", urlPatterns = "/api/employee-login")
+public class EmployeeLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 4L;
 
     // Create a dataSource which registered in web.xml
@@ -31,41 +30,6 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        PrintWriter out = response.getWriter();
-//
-//        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-//        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
-//
-//        // Verify reCAPTCHA
-//        try {
-//            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-//        } catch (Exception e) {
-////            out.println("<html>");
-////            out.println("<head><title>Error</title></head>");
-////            out.println("<body>");
-////            out.println("<p>recaptcha verification error</p>");
-////            out.println("<p>" + e.getMessage() + "</p>");
-////            out.println("</body>");
-////            out.println("</html>");
-//            JsonObject responseJsonObject = new JsonObject();
-//            // Login fail
-//            responseJsonObject.addProperty("status", "fail");
-//            // Log to localhost log
-//            request.getServletContext().log("Login failed");
-//
-//            responseJsonObject.addProperty("message", "ReCaptcha");
-//
-//            // Write JSON string to output
-//            response.getWriter().write(responseJsonObject.toString());
-//            // Set response status to 200 (OK)
-//            response.setStatus(200);
-//
-//            out.close();
-//            return;
-//        }
-//    }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -89,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             // Construct a query with parameter represented by "?"
             String query = String.join("",
                     "SELECT *",
-                    "FROM customers ",
+                    "FROM employees ",
                     "WHERE email=? ");
 
             // Declare our statement
@@ -103,15 +67,15 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-//                if (rs.getString("password").equals(password)) {
+                //                if (rs.getString("password").equals(password)) {
                 String encryptedPassword = rs.getString("password");
                 if(new StrongPasswordEncryptor().checkPassword(password, encryptedPassword)){
 
-                    int customerId = rs.getInt("id");
-                    String customerFirstName = rs.getString("firstName");
-                    String customerLastName = rs.getString("lastName");
+//                    int customerId = rs.getInt("id");
+//                    String customerFirstName = rs.getString("firstName");
+//                    String customerLastName = rs.getString("lastName");
                     // additional information is stored so it can be used for payment confirmation later
-                    request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
+                    request.getSession().setAttribute("employee", new User(email, "", "", -1));
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                     String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
@@ -157,26 +121,26 @@ public class LoginServlet extends HttpServlet {
                 responseJsonObject.addProperty("message", "User with that email doesn't exist");
 
             }
-        rs.close();
-        statement.close();
+            rs.close();
+            statement.close();
 
-        // Write JSON string to output
-        response.getWriter().write(responseJsonObject.toString());
-        // Set response status to 200 (OK)
-        response.setStatus(200);
+            // Write JSON string to output
+            response.getWriter().write(responseJsonObject.toString());
+            // Set response status to 200 (OK)
+            response.setStatus(200);
 
-    } catch (Exception e) {
-        // Write error message JSON object to output
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("errorMessage", e.getMessage());
-        out.write(jsonObject.toString());
+        } catch (Exception e) {
+            // Write error message JSON object to output
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("errorMessage", e.getMessage());
+            out.write(jsonObject.toString());
 
-        // Log error to localhost log
-        request.getServletContext().log("Error:", e);
-        // Set response status to 500 (Internal Server Error)
-        response.setStatus(500);
-    } finally {
-        out.close();
-    }
+            // Log error to localhost log
+            request.getServletContext().log("Error:", e);
+            // Set response status to 500 (Internal Server Error)
+            response.setStatus(500);
+        } finally {
+            out.close();
+        }
     }
 }

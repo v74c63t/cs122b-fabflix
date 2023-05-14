@@ -52,12 +52,15 @@ create table if not exists customers(
 );
 
 create table if not exists sales(
-   id integer primary key auto_increment,
-   customerId integer not null,
-   movieId varchar(10) not null,
-   saleDate date not null,
-   foreign key (customerId) references customers(id),
-   foreign key (movieId) references movies(id)
+    id integer primary key auto_increment,
+    customerId integer not null,
+    movieId varchar(10) not null,
+    saleDate date not null,
+    quantity INT,
+    price DECIMAL(10,2),
+    total DECIMAL(10,2),
+    foreign key (customerId) references customers(id),
+    foreign key (movieId) references movies(id)
 );
 
 create table if not exists ratings
@@ -65,9 +68,13 @@ create table if not exists ratings
     movieId  varchar(10) not null,
     rating   float       not null,
     numVotes integer     not null,
-    quantity INT,
-    price DECIMAL(10,2),
-    total DECIMAL(10,2),
     foreign key (movieId) references movies (id)
 );
+
+create table if not exists employees
+(
+    email varchar(50) primary key,
+    password varchar(20) not null,
+    fullname varchar(100)
+)
 

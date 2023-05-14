@@ -80,6 +80,32 @@ public class SingleMovieServlet extends HttpServlet {
 
             JsonArray jsonArray = new JsonArray();
 
+            // Construct query for getting all stars
+            // with parameter represented as "?"
+            query = String.join("",
+                    "SELECT s.id, s.name ",
+                    "FROM stars AS s, stars_in_movies AS sim ",
+                    "WHERE s.id IN (SELECT s.id ",
+                    "FROM stars AS s, stars_in_movies AS sim ",
+                    "WHERE sim.movieId=? ",
+                    "AND s.id=sim.starId) ",
+                    "AND s.id=sim.starId ",
+                    "GROUP BY s.id ",
+                    "ORDER BY COUNT(*) DESC, s.name ASC ");
+
+            // Declare statement for inner queries
+            PreparedStatement statement2 = conn.prepareStatement(query);
+
+            // Repeat query execution for genres
+            query = String.join("",
+                    "SELECT id, name ",
+                    "FROM genres AS g, genres_in_movies AS gim ",
+                    "WHERE gim.movieId=? ",
+                    "AND g.id=gim.genreId ",
+                    "ORDER BY name ");
+
+            PreparedStatement statement3 = conn.prepareStatement(query);
+
             // Iterate through each row of rs
             while (rs.next()) {
                 String movieId = rs.getString("movieId");
@@ -88,21 +114,6 @@ public class SingleMovieServlet extends HttpServlet {
                 String movieDirector = rs.getString("director");
                 String movieRating = rs.getString("rating");
 
-                // Construct query for getting all stars
-                // with parameter represented as "?"
-                query = String.join("",
-                        "SELECT s.id, s.name ",
-                        "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE s.id IN (SELECT s.id ",
-                        "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE sim.movieId=? ",
-                        "AND s.id=sim.starId) ",
-                        "AND s.id=sim.starId ",
-                        "GROUP BY s.id ",
-                        "ORDER BY COUNT(*) DESC, s.name ASC ");
-
-                // Declare statement for inner queries
-                PreparedStatement statement2 = conn.prepareStatement(query);
 
                 // Putting id value as parameter in query
                 statement2.setString(1, id);
@@ -116,20 +127,10 @@ public class SingleMovieServlet extends HttpServlet {
                     starsArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
-                statement2.close();
                 String stars = String.join(", ", starsArray);
 
-                // Repeat query execution for genres
-                query = String.join("",
-                        "SELECT id, name ",
-                        "FROM genres AS g, genres_in_movies AS gim ",
-                        "WHERE gim.movieId=? ",
-                        "AND g.id=gim.genreId ",
-                        "ORDER BY name ");
-
-                statement2 = conn.prepareStatement(query);
-                statement2.setString(1, id);
-                newRS = statement2.executeQuery();
+                statement3.setString(1, id);
+                newRS = statement3.executeQuery();
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
@@ -137,7 +138,6 @@ public class SingleMovieServlet extends HttpServlet {
                     genresArray.add(newRS.getString("id") + "|" + newRS.getString("name"));
                 }
                 newRS.close();
-                statement2.close();
                 String genres = String.join(", ", genresArray);
 
                 // Create a JsonObject based on the data we retrieve from rs
@@ -155,6 +155,8 @@ public class SingleMovieServlet extends HttpServlet {
             }
             rs.close();
             statement.close();
+            statement2.close();
+            statement3.close();
 
             // Write JSON string to output
             out.write(jsonArray.toString());

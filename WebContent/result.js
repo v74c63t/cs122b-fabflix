@@ -144,20 +144,24 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
         let genresArray = resultData[i]["movie_genres"].split(", ");
         rowHTML += "<th>";
-        for(let genres in genresArray) {
-            let genre = genresArray[genres].split("|");
-            rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + '&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' + "'>" + genre[1] + "</a>, ";
+        if(resultData[i]["movie_genres"] != "") {
+            for (let genres in genresArray) {
+                let genre = genresArray[genres].split("|");
+                rowHTML += "<a style='color:darkturquoise;' href='result.html?genreId=" + genre[0] + '&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0' + "'>" + genre[1] + "</a>, ";
+            }
+            rowHTML = rowHTML.substring(0,rowHTML.length-3);
         }
-        rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
         rowHTML += "<th>";
 
         // iterate through stars to link star names to their respective single star page
-        for (let stars in starsArray) {
-            let starsArr = starsArray[stars].split("|");
-            rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";
+        if(resultData[i]["movie_stars"] != "") {
+            for (let stars in starsArray) {
+                let starsArr = starsArray[stars].split("|");
+                rowHTML += htmlHREF("single-star", starsArr[0], starsArr[1]) + ", ";
+            }
+            rowHTML = rowHTML.substring(0,rowHTML.length-3);
         }
-        rowHTML = rowHTML.substring(0,rowHTML.length-3);
         rowHTML += "</th>";
         if(resultData[i]["movie_rating"] != null)
             rowHTML += "<th>" + resultData[i]["movie_rating"] +

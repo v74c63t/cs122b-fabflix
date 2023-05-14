@@ -2,7 +2,7 @@
 
 #main-widget {
     width: 550px;
-    height: 450px;
+    height: auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -103,4 +103,9 @@
 
 .signup-href:hover {
     cursor: pointer;
+}
+
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
 }
