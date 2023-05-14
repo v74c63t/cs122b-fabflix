@@ -52,15 +52,14 @@ public class MetadataServlet extends HttpServlet {
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-
-            // Declare our statement
-            Statement statement = conn.createStatement();
-
             // Query to get a list of tables in the database
             String query = "SHOW tables;";
 
+            // Declare our statement
+            PreparedStatement statement = conn.prepareStatement(query);
+
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 

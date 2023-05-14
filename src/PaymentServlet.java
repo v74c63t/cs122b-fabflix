@@ -119,16 +119,17 @@ public class PaymentServlet extends HttpServlet {
                         session.setAttribute("salesId", salesId);
                     }
 
+                    String insertQuery = String.join("",
+                            "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
+                            "VALUES (?, ?, ?, ?, ?, ?);");
+
+                    // Statement for inserting into table
+                    PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
+
                     // Iterate through each item in itemCart
                     //      to get sale info
                     for (Map.Entry<String,HashMap<String,Double>> entry: itemCart.entrySet() ) {
 
-                        String insertQuery = String.join("",
-                                "INSERT INTO sales (customerId, movieId, saleDate, quantity, price, total) ",
-                                "VALUES (?, ?, ?, ?, ?, ?);");
-
-                        // Statement for inserting into table
-                        PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
 
                         // Setting parameters for insert query
                         insertStatement.setString(1, String.valueOf(customerId));
@@ -141,14 +142,15 @@ public class PaymentServlet extends HttpServlet {
                         // Executes insert statement query
                         int updateRS = insertStatement.executeUpdate();
 
-                        // Create statement for getting last inserted id
-                        Statement getIdStatement = conn.createStatement();
-
                         // Query statement for getting last inserted id
                         String getIdQuery = "SELECT last_insert_id()";
 
+                        // Create statement for getting last inserted id
+                        PreparedStatement getIdStatement = conn.prepareStatement(getIdQuery);
+
+
                         // Execute statement for getting last inserted id
-                        ResultSet getIdRS = getIdStatement.executeQuery(getIdQuery);
+                        ResultSet getIdRS = getIdStatement.executeQuery();
 
                         // Get last inserted id to salesCart
                         if (getIdRS.next()) {
@@ -158,10 +160,10 @@ public class PaymentServlet extends HttpServlet {
                         session.setAttribute("salesId", salesId);
 
                         // Close all statements/executes
-                        insertStatement.close();
                         getIdStatement.close();
                         getIdRS.close();
                     }
+                    insertStatement.close();
 
                 } else {
                     responseJsonObject.addProperty("status", "fail");

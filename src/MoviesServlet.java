@@ -57,11 +57,6 @@ public class MoviesServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
 
-            // Declare our statement
-            Statement statement = conn.createStatement();
-            // Declare statement for inner query
-//            Statement statement2 = conn.createStatement();
-
             // Query to get top 20 movies
             String query = String.join("",
                     "SELECT rating, id, title, year, director ",
@@ -69,11 +64,37 @@ public class MoviesServlet extends HttpServlet {
                     "WHERE m.id=r.movieId ",
                     "ORDER BY rating DESC ",
                     "LIMIT 20");
+            // Declare our statement
+            PreparedStatement statement = conn.prepareStatement(query);
+            // Declare statement for inner query
+//            Statement statement2 = conn.createStatement();
+
 
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
+            // New Query for getting top 3 stars
+            query = String.join("",
+                    "SELECT s.id, s.name ",
+                    "FROM stars AS s, stars_in_movies AS sim ",
+                    "WHERE s.id IN (SELECT s.id ",
+                    "FROM stars AS s, stars_in_movies AS sim ",
+                    "WHERE sim.movieId=? ",
+                    "AND s.id=sim.starId) ",
+                    "AND s.id=sim.starId ",
+                    "GROUP BY s.id ",
+                    "ORDER BY COUNT(*) DESC, s.name ASC ",
+                    "LIMIT 3");
+            PreparedStatement statement2 = conn.prepareStatement(query);
+            query = String.join("",
+                    "SELECT id, name ",
+                    "FROM genres AS g, genres_in_movies AS gim ",
+                    "WHERE gim.movieId=? ",
+                    "AND g.id=gim.genreId ",
+                    "ORDER BY name ",
+                    "LIMIT 3;");
+            PreparedStatement statement3 = conn.prepareStatement(query);
 
             // Iterate through each row of rs
             while (rs.next()) {
@@ -83,20 +104,7 @@ public class MoviesServlet extends HttpServlet {
                 String movie_year = rs.getString("year");
                 String movie_director = rs.getString("director");
 
-                // New Query for getting top 3 stars
-                query = String.join("",
-                        "SELECT s.id, s.name ",
-                        "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE s.id IN (SELECT s.id ",
-                        "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE sim.movieId=? ",
-                        "AND s.id=sim.starId) ",
-                        "AND s.id=sim.starId ",
-                        "GROUP BY s.id ",
-                        "ORDER BY COUNT(*) DESC, s.name ASC ",
-                        "LIMIT 3");
-                PreparedStatement statement2 = conn.prepareStatement(query);
-                statement2.setString(1,movie_id);
+                statement2.setString(1, movie_id);
 
                 ResultSet newRS = statement2.executeQuery();
 
@@ -108,16 +116,10 @@ public class MoviesServlet extends HttpServlet {
                 newRS.close();
                 String stars = String.join(", ", starsArray);
 
-                // New Query for getting top 3 genres
-                query = String.join("",
-                        "SELECT id, name ",
-                        "FROM genres AS g, genres_in_movies AS gim ",
-                        "WHERE gim.movieId='", movie_id, "' ",
-                        "AND g.id=gim.genreId ",
-                        "ORDER BY name ",
-                        "LIMIT 3;");
 
-                newRS = statement2.executeQuery(query);
+                statement3.setString(1, movie_id);
+
+                newRS = statement3.executeQuery();
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
@@ -139,10 +141,11 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
-                statement2.close();
             }
             rs.close();
             statement.close();
+            statement2.close();
+            statement3.close();
 
 
             // Log to localhost log

@@ -156,6 +156,33 @@ public class SearchResultServlet extends HttpServlet {
 
             JsonArray jsonArray = new JsonArray();
 
+            // New Query for getting stars
+            query = String.join("",
+                    "SELECT s.id, s.name ",
+                    "FROM stars AS s, stars_in_movies AS sim ",
+                    "WHERE s.id IN (SELECT s.id ",
+                    "FROM stars AS s, stars_in_movies AS sim ",
+                    "WHERE sim.movieId=? ",
+                    "AND s.id=sim.starId) ",
+                    "AND s.id=sim.starId ",
+                    "GROUP BY s.id ",
+                    "ORDER BY COUNT(*) DESC, s.name ASC ",
+                    "LIMIT 3; ");
+
+            PreparedStatement statement2 = conn.prepareStatement(query);
+
+            // New Query for getting genres
+            query = String.join("",
+                    "select genreId, name ",
+                    "from genres AS g ",
+                    "join genres_in_movies AS gim ",
+                    "on  g.id = gim.genreId ",
+                    "WHERE gim.movieId=? ",
+                    "ORDER BY name ",
+                    "LIMIT 3; ");
+
+            PreparedStatement statement3 = conn.prepareStatement(query);
+
             while (rs.next()) {
                 String movie_rating = rs.getString("rating");
                 String movie_id = rs.getString("movieId");
@@ -164,20 +191,6 @@ public class SearchResultServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
                 String max_records = rs.getString("maxRecords");
 
-                // New Query for getting stars
-                query = String.join("",
-                        "SELECT s.id, s.name ",
-                        "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE s.id IN (SELECT s.id ",
-                        "FROM stars AS s, stars_in_movies AS sim ",
-                        "WHERE sim.movieId=? ",
-                        "AND s.id=sim.starId) ",
-                        "AND s.id=sim.starId ",
-                        "GROUP BY s.id ",
-                        "ORDER BY COUNT(*) DESC, s.name ASC ",
-                        "LIMIT 3; ");
-
-                PreparedStatement statement2 = conn.prepareStatement(query);
                 statement2.setString(1,movie_id);
 
                 ResultSet newRS = statement2.executeQuery();
@@ -190,20 +203,9 @@ public class SearchResultServlet extends HttpServlet {
                 newRS.close();
                 String stars = String.join(", ", starsArray);
 
-                // New Query for getting genres
-                query = String.join("",
-                        "select genreId, name ",
-                        "from genres AS g ",
-                        "join genres_in_movies AS gim ",
-                        "on  g.id = gim.genreId ",
-                        "WHERE gim.movieId=? ",
-                        "ORDER BY name ",
-                        "LIMIT 3; ");
+                statement3.setString(1,movie_id);
 
-                statement2 = conn.prepareStatement(query);
-                statement2.setString(1,movie_id);
-
-                newRS = statement2.executeQuery();
+                newRS = statement3.executeQuery();
 
                 ArrayList<String> genresArray = new ArrayList<>();
 
@@ -226,10 +228,12 @@ public class SearchResultServlet extends HttpServlet {
                 jsonObject.addProperty("resultUrl", resultUrl);
 
                 jsonArray.add(jsonObject);
-                statement2.close();
+
             }
             rs.close();
             statement.close();
+            statement2.close();
+            statement3.close();
 
             // Write JSON string to output
             out.write(jsonArray.toString());

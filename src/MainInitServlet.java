@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -57,14 +58,15 @@ public class MainInitServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
 
             // Declare our statement
-            Statement statement = conn.createStatement();
 
             String query = String.join("",
                     "SELECT * ",
                     "FROM genres;");
 
+            PreparedStatement statement = conn.prepareStatement(query);
+
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 
