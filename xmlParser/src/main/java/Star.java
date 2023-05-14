@@ -48,6 +48,7 @@ public class Star {
         StringBuffer sb = new StringBuffer();
         sb.append("Star Details - ");
         sb.append("Id:" + getId());
+        sb.append(", ");
         sb.append("Name:" + getName());
         sb.append(", ");
         sb.append("Birth Year:" + getBirthYear());
