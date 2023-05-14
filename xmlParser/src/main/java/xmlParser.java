@@ -54,6 +54,8 @@ public class xmlParser extends DefaultHandler {
 
     private int gimInserts = 0;
 
+    private int simInserts = 0;
+
     private int starInserts = 0;
 
     private String castMovieId;
@@ -215,7 +217,7 @@ public class xmlParser extends DefaultHandler {
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
         System.out.println("No of Inserted Stars: " + starInserts); // new stars size wont be accurate have to count whne writing to csv
         System.out.println("No of Duplicated Stars: " + starDupe);
-        System.out.println("No of Records Inserted into Stars_in_Movies: " + myMovies.size()); // have to count when writing to csv
+        System.out.println("No of Records Inserted into Stars_in_Movies: " + simInserts); // have to count when writing to csv
         System.out.println("No of Missing Movies: " + moviesNotFound);
         System.out.println("No of Missing Stars: " + starsNotFound);
     }
@@ -344,6 +346,7 @@ public class xmlParser extends DefaultHandler {
                     simWriter.write(",");
                     simWriter.write(starId);
                     simWriter.newLine();
+                    simInserts++;
                 }
             }
             simWriter.flush();
