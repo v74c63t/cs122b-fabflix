@@ -517,16 +517,23 @@ public class xmlParser extends DefaultHandler {
                 String starId = "nm" + String.format("%07d", availableStarId); // not sure if number of 0's is correct check
                 availableStarId++;
                 tempStar.setId(starId);
-                myStars.add(tempStar);
+                if(myStars.containsKey(tempStar.getName())){
+                    myStars.get(tempStar.getName()).add(tempStar);
+                }
+                else {
+                    myStars.put(tempStar.getName(), new ArrayList<Star>());
+                    myStars.get(tempStar.getName()).add(tempStar);
+                }
             }
 
         } else if (qName.equalsIgnoreCase("stagename")) {
             // might have to .lower() and .strip() to check if dupe? not sure if
             // everythign is capitalized properly
-            if( already exists previous in file or exists in db ) {
-                isDuplicate = true;
-                //write to star dupe file
-            }
+//            if( already exists previous in file or exists in db ) {
+//                isDuplicate = true;
+//                //write to star dupe file
+//            }
+            //duplicate check moved to when dob is obtained
             tempStar.setName(tempVal.strip());
 //            tempEmp.setName(tempVal);
         } else if (qName.equalsIgnoreCase("dob")) {
@@ -535,9 +542,20 @@ public class xmlParser extends DefaultHandler {
             try {
                 Integer.parseInt(tempVal.strip());
                 tempStar.setBirthYear(tempVal.strip());
+                if(myStars.containsKey(tempStar.getName())){
+                    for( Star s : myStars.get(tempStar.getName())) {
+                        if(tempVal.strip().equals(s.getBirthYear())) {
+                            isDuplicate = true;
+                            break;
+                        }
+                    }
+                }
             }
             catch(Exception e) {
                 // set null
+                if(myStars.containsKey(tempStar.getName())){
+                    isDuplicate = true;
+                }
                 tempStar.setBirthYear(null);
             }
 //            tempEmp.setId(Integer.parseInt(tempVal));
