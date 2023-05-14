@@ -195,24 +195,7 @@ public class SAXParser extends DefaultHandler {
         }
     }
 
-    // Since the Mains/Movie object holds an array of genres
-        // we can probably remove "fileName" from paramter
-        // and write to a preset file after check the object type
-            // Movie -
-                // movies.csv
-            // genres
-                // genres.csv --> update availableInt procedure
-                // ? get availableint and make hashmap from genreName -> id ?
-            // genres_in_movies
-                // for each Movie,
-                    // genreId lookup via name
-                    // add Movie.getId(), genreId
-            // Genre Hashmaps
-                // for existing genres in db -> genre name: genre id
-                // for new genres found while parsing -> genre name: genre id
-                // for genres in cat -> genre abbr: actual genre defined by cats def page or corresponding equivalent in db
-                    // first get actual genre here then check against existing and new genres
-                    // if no equivalent found here and fails above check just add as is to new genres
+    // Write into movies.csv and genres_in_movies.csv
     public void movieToCSV( ArrayList<Movie> movieArray ) {
         try {
             BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("movies.csv", true));
@@ -232,7 +215,7 @@ public class SAXParser extends DefaultHandler {
             gimWriter.write("movieId");
             gimWriter.newLine();
 
-            for (Movie movie : movieArray) { // will prob have to change so it writes properly to csv file currently doesn't
+            for (Movie movie : movieArray) { // for writing into movies
                 moviesWriter.write(movie.getId());
                 moviesWriter.write(",");
                 moviesWriter.write(movie.getTitle());
@@ -242,7 +225,7 @@ public class SAXParser extends DefaultHandler {
                 moviesWriter.write(movie.getDirector());
                 moviesWriter.newLine();
 
-                for (String genre: movie.getGenres()) {
+                for (String genre: movie.getGenres()) { // for writing into genres_in_movies
                     String genreId;
                     if ( existingGenres.containsKey(genre) ) {
                         genreId = Integer.toString(existingGenres.get(genre));
@@ -264,7 +247,7 @@ public class SAXParser extends DefaultHandler {
         }
     }
 
-    //
+    // Write into genres.csv
     public void genreToCSV( HashMap<String, int> genreMap ) {
         try {
             BufferedWriter gWriter = new BufferedWriter(new FileWriter("genres.csv", true));
@@ -272,7 +255,7 @@ public class SAXParser extends DefaultHandler {
             gWriter.write(",");
             gWriter.write("name");
             gWriter.newLine();
-            for (Map.entry<String, int> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
+            for (Map.entry<String, int> entry : genreMap.entrySet()) {
                 gWriter.write(Integer.toString(entry.getValue()));
                 gWriter.write(",");
                 gWriter.write(entry.getKey());
@@ -306,8 +289,6 @@ public class SAXParser extends DefaultHandler {
             tempSIM = new Stars_In_Movies();
         }
 
-        // Think
-
     }
 
     public void characters(char[] ch, int start, int length) throws SAXException {
@@ -335,19 +316,16 @@ public class SAXParser extends DefaultHandler {
                 movieInconsistent++;
                 writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
-            } else if(isDuplicate) {
+            } else if(isDuplicate) { // If movie is a duplicate
                 movieDupe++;
                 writeToTextFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
-                if(myMovies.getGenres.size() == 0) {
-                    // since some dont have <cat> tag only have empty <cats>
-                    // not sure if it will actually hit the null check if the tag doesnt exist
-                    // so check here to be safe
+                if(myMovies.getGenres.size() == 0) { // No genres associated with movie
                     movieInconsistent++;
                     writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
-                else if (director == null) {
+                else if (director == null) { // No director associated with movie
                     movieInconsistent++;
                     writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
@@ -358,17 +336,17 @@ public class SAXParser extends DefaultHandler {
 
         } else if (qName.equalsIgnoreCase("fid")) {
 
-            if( myMovies.containsKey(tempVal.strip()) ){ // check if dupe
+            if( myMovies.containsKey(tempVal.strip()) ){ // Check for duplicate
                 isDuplicate = true;
             }
-            tempMovie.setId(tempVal.strip()); // add id to current tempMovie
+            tempMovie.setId(tempVal.strip()); // Add id to current tempMovie
 
         } else if (qName.equalsIgnoreCase("t")) {
-            // store for dupe checking
-            if(tempVal.strip() == "") { // i mean title is required not to be null so this should be a fair assumption?
+
+            if(tempVal.strip() == "") { // No title associated with movie
                 isConsistent = false;
             }
-            else if(tempVal == null) {
+            else if(tempVal == null) { // No title associated with movie
                 isConsistent = false;
             }
             else {
@@ -383,22 +361,22 @@ public class SAXParser extends DefaultHandler {
             // dk how to deal with these b/c we cant set as null since tables require them to be not null
             // maybe report as inconsistent????
             // store for dupe checking
-            if(tempVal.strip() == "") { // i mean year is required not to be null so this should be a fair assumption?
+            if(tempVal.strip() == "") { // No year associated with movie
                 isConsistent = false;
             }
-            else if(tempVal == null) {
+            else if(tempVal == null) { // No year associated with movie
                 isConsistent = false;
             }
             else {
+                // Check for valid year
                 try (Integer.parseInt(tempVal.strip())) {
-                    // add to tempMovie
+
                 } catch (Exception e) {
-                    // report inconsistent i guess
                     isConsistent = false;
                 }
                 tempMovie.setYear(tempVal.strip())
             }
-//            tempEmp.setName(tempVal);
+
         } else if(qName.equalsIgnoreCase("cat")) {
             // need to do substring matching to check for if exists in db
             // need to use .lower() b/c 'dram', 'DRam', etc
