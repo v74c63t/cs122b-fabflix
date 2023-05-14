@@ -140,11 +140,11 @@ public class xmlParser extends DefaultHandler {
                 star.setBirthYear(Integer.toString(rs3.getInt("birthYear")));
 
                 // Check if name exists
-                if (existingStars.containsKey(rs3.getString("name").toLowerCase())) {
-                    existingStars.get(rs3.getString("name").toLowerCase()).add(star);
+                if (existingStars.containsKey(rs3.getString("name"))) {
+                    existingStars.get(rs3.getString("name")).add(star);
                 } else {
                     ArrayList<Star> starsArray = new ArrayList<Star>(){{add(star);}};
-                    existingStars.put(rs3.getString("name").toLowerCase(), starsArray);
+                    existingStars.put(rs3.getString("name"), starsArray);
                 }
             }
             rs3.close();
@@ -564,7 +564,7 @@ public class xmlParser extends DefaultHandler {
             try {
                 Integer.parseInt(tempVal.strip());
                 tempStar.setBirthYear(tempVal.strip());
-                if(myStars.containsKey(tempStar.getName())){
+                if(existingStars.containsKey(tempStar.getName())){
                     for( Star s : myStars.get(tempStar.getName())) {
                         if(tempVal.strip().equals(s.getBirthYear())) {
                             isDuplicate = true;
@@ -575,7 +575,7 @@ public class xmlParser extends DefaultHandler {
             }
             catch(Exception e) {
                 // set null
-                if(myStars.containsKey(tempStar.getName())){
+                if(existingStars.containsKey(tempStar.getName())){
                     isDuplicate = true;
                 }
                 tempStar.setBirthYear(null);
@@ -607,13 +607,18 @@ public class xmlParser extends DefaultHandler {
             // if not report as missing
             // if exists find id
             // ignore if 's a'
-            if ( myStars.containsKey(tempVal.strip()) ) {
+            if (myStars.containsKey(tempVal.strip()) ) {
+                String starId = myStars.get(tempVal.strip()).get(0).getId();//get star id
                 starsNotFound++;
-                // write to star missing file
+                // add to list
+            }
+            else if(existingStars.containsKey(tempVal.strip())) {
+                String starId = existingStars.get(tempVal.strip()).get(0).getId();//get star id
+                // add to list
             }
             else {
-                String starId = myStars.get(tempVal.strip()).get(0).getId();//get star id
-                // add to list
+                starsNotFound++;
+                // write to star missing file
             }
 
         }
