@@ -24,7 +24,6 @@ import java.sql.Statement;
 
 public class xmlParser extends DefaultHandler {
     HashMap<String, Movie> myMovies;
-    HashMap<String, ArrayList<Star>> myStars;
 
     private String tempVal;
 
@@ -205,7 +204,7 @@ public class xmlParser extends DefaultHandler {
         System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
-        System.out.println("No of Inserted Stars: " + myStars.size());
+        System.out.println("No of Inserted Stars: " + newStars.size());
         System.out.println("No of Duplicated Stars: " + starDupe);
         System.out.println("No of Records Inserted into Stars_in_Movies: " + myMovies.size());
         System.out.println("No of Missing Movies: " + moviesNotFound);
@@ -539,12 +538,12 @@ public class xmlParser extends DefaultHandler {
                 String starId = "nm" + String.format("%07d", availableStarId); // not sure if number of 0's is correct check
                 availableStarId++;
                 tempStar.setId(starId);
-                if(myStars.containsKey(tempStar.getName())){
-                    myStars.get(tempStar.getName()).add(tempStar);
+                if(newStars.containsKey(tempStar.getName())){
+                    newStars.get(tempStar.getName()).add(tempStar);
                 }
                 else {
-                    myStars.put(tempStar.getName(), new ArrayList<Star>());
-                    myStars.get(tempStar.getName()).add(tempStar);
+                    newStars.put(tempStar.getName(), new ArrayList<Star>());
+                    newStars.get(tempStar.getName()).add(tempStar);
                 }
             }
 
@@ -607,9 +606,8 @@ public class xmlParser extends DefaultHandler {
             // if not report as missing
             // if exists find id
             // ignore if 's a'
-            if (myStars.containsKey(tempVal.strip()) ) {
-                String starId = myStars.get(tempVal.strip()).get(0).getId();//get star id
-                starsNotFound++;
+            if (newStars.containsKey(tempVal.strip()) ) {
+                String starId = newStars.get(tempVal.strip()).get(0).getId();//get star id
                 // add to list
             }
             else if(existingStars.containsKey(tempVal.strip())) {
