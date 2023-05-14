@@ -507,19 +507,19 @@ public class SAXParser extends DefaultHandler {
             }
             else {
                 // generate an id for star using available int remember to update the id afterwards
-                // store somewhere for dupe checking
-                // tempStar.setName(tempVal.strip());
+                // set id
             }
+            tempStar.setName(tempVal.strip());
 //            tempEmp.setName(tempVal);
         } else if (qName.equalsIgnoreCase("dob")) {
             // if empty set null
             // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
             try (Integer.parseInt(tempVal.strip())) {
-                // tempStar.setBirthYear(tempVal.strip());
+                tempStar.setBirthYear(tempVal.strip());
             }
             catch(Exception e) {
                 // set null
-                // tempStar.setBirthYear(null);
+                tempStar.setBirthYear(null);
             }
 //            tempEmp.setId(Integer.parseInt(tempVal));
         } else if (qName.equalsIgnoreCase("filmc")) {
