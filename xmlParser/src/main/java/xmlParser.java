@@ -139,7 +139,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             ResultSet rs = statement.executeQuery(query);
 
             while(rs.next()) {
-                existingGenres.put(rs.getString("name").toLowerCase(), rs.getInt("id"));
+                existingGenres.put(rs.getString("name"), rs.getInt("id"));
             }
             rs.close();
 
@@ -276,7 +276,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
             statement.setString(1, csvPath);
 
-            statement.execute(query);
+            statement.execute();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -306,10 +306,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void writeToTextFile(String fileName, String content) {
         try {
-            File txtFile = new File(fileName);
-            txtFile.getParentFile().mkdirs();
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(txtFile, true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
             writer.write(content);
             writer.newLine();
             writer.close();
@@ -351,9 +348,9 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 for (String genre: entry.getValue().getGenres()) { // for writing into genres_in_movies
                     String genreId = "";
                     if ( existingGenres.containsKey(genre) ) {
-                        genreId = Integer.toString(existingGenres.get(genre.toLowerCase()));
+                        genreId = Integer.toString(existingGenres.get(genre));
                     } else {
-                        genreId = Integer.toString(newGenres.get(genre.toLowerCase()));
+                        genreId = Integer.toString(newGenres.get(genre));
                     }
                     gimWriter.write(genreId);
                     gimWriter.write(",");
@@ -406,8 +403,10 @@ public class xmlParser extends DefaultHandler implements Parameters {
                     sWriter.write(s.getId());
                     sWriter.write(",");
                     sWriter.write(s.getName());
-                    sWriter.write(",");
-                    sWriter.write(s.getBirthYear());
+                    if ( s.getBirthYear() != null ) {
+                        sWriter.write(",");
+                        sWriter.write(s.getBirthYear());
+                    }
                     sWriter.newLine();
                     starInserts++;
                 }
@@ -492,11 +491,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
             tempMovie.setDirector(director);
             if( !isConsistent ) { // If data is inconsistent
                 movieInconsistent++;
-                writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
             } else if(isDuplicate) { // If movie is a duplicate
                 movieDupe++;
-                writeToTextFile("/xmlParser/MovieDuplicate.txt", tempMovie.toString());
+                writeToTextFile("MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
                 if(tempMovie.getGenres().size() == 0) { // No genres associated with movie
@@ -504,11 +503,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
                     // not sure if it will actually hit the null check if the tag doesnt exist
                     // so check here to be safe
                     movieInconsistent++;
-                    writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 }
                 else if (director == null) { // No director associated with movie
                     movieInconsistent++;
-                    writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
                     String fid = tempMovie.getId();
@@ -579,7 +578,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                     }
                     else {
                         // get available int and assign to new genre
-                        newGenres.put(genre.toLowerCase(), availableGenreId);
+                        newGenres.put(genre, availableGenreId);
                         availableGenreId++;
                         tempMovie.addGenre(genre);
                     }
@@ -594,7 +593,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                                 tempMovie.addGenre(genre);
                             } else {
                                 // get available int and assign to new genre
-                                newGenres.put(genre.toLowerCase(), availableGenreId);
+                                newGenres.put(genre, availableGenreId);
                                 availableGenreId++;
                                 tempMovie.addGenre(genre);
                             }
@@ -605,7 +604,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                                 tempMovie.addGenre(g);
                             } else {
                                 // get available int and assign to new genre
-                                newGenres.put(g.toLowerCase(), availableGenreId);
+                                newGenres.put(g, availableGenreId);
                                 availableGenreId++;
                                 tempMovie.addGenre(g);
                             }
@@ -622,7 +621,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             if(isDuplicate) {
                 starDupe++;
                 //write to file
-                writeToTextFile("/xmlParser/StarDuplicate.txt", tempStar.toString());
+                writeToTextFile("StarDuplicate.txt", tempStar.toString());
                 isDuplicate = false;
             }
             else {
@@ -680,7 +679,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
             }
             else {
-                writeToTextFile("/xmlParser/MovieNotFound.txt", castMovieId + tempSIMStars.toString());
+                writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
             }
 
         } else if (qName.equalsIgnoreCase("f")) {
@@ -709,7 +708,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
                 // write to star missing file
-                writeToTextFile("/xmlParser/StarNotFound.txt", castMovieId + " " + tempVal.strip());
+                writeToTextFile("StarNotFound.txt", castMovieId + " " + tempVal.strip());
             }
 
         }
