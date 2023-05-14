@@ -565,7 +565,7 @@ public class xmlParser extends DefaultHandler {
                 Integer.parseInt(tempVal.strip());
                 tempStar.setBirthYear(tempVal.strip());
                 if(existingStars.containsKey(tempStar.getName())){
-                    for( Star s : myStars.get(tempStar.getName())) {
+                    for( Star s : existingStars.get(tempStar.getName())) {
                         if(tempVal.strip().equals(s.getBirthYear())) {
                             isDuplicate = true;
                             break;
