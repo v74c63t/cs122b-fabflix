@@ -19,5 +19,7 @@
 - Assume all movies are not already in our database
 #### Casts
 - Assume Director/Movie is correctly associated in "casts" xml file
+- Assume all actor names are correctly formatted
 #### Actors
 - An actor is still considered valid even if dob is in an incorrect format, it will simply be set as null
+- Assume all stage names are correctly formatted
