@@ -56,9 +56,6 @@ create table if not exists sales(
     customerId integer not null,
     movieId varchar(10) not null,
     saleDate date not null,
-    quantity INT,
-    price DECIMAL(10,2),
-    total DECIMAL(10,2),
     foreign key (customerId) references customers(id),
     foreign key (movieId) references movies(id)
 );
