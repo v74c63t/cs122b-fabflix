@@ -370,7 +370,8 @@ public class xmlParser extends DefaultHandler {
                 isConsistent = false;
             }
             else {
-                try (Integer.parseInt(tempVal.strip())) {
+                try {
+                    Integer.parseInt(tempVal.strip());
                 } catch (Exception e) {
                     isConsistent = false;
                 }
@@ -515,7 +516,8 @@ public class xmlParser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("dob")) {
             // if empty set null
             // if not valid set null?? not too sure dont rly get what to report for inconsistency stuff
-            try (Integer.parseInt(tempVal.strip())) {
+            try {
+                Integer.parseInt(tempVal.strip());
                 tempStar.setBirthYear(tempVal.strip());
             }
             catch(Exception e) {
