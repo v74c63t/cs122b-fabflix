@@ -214,6 +214,11 @@ public class xmlParser extends DefaultHandler {
         // depending on when we load csv we may want diff print functions for each file
         // if we load after we finish each file might need diff functions
         // if we load after all files are done parsing can just keep one
+        loadData("/xmlParser/genres.csv", "genres");
+        loadData("/xmlParser/movies.csv", "movies");
+        loadData("/xmlParser/genres_in_movies.csv", "genres_in_movies");
+        loadData("/xmlParser/stars.csv", "stars");
+        loadData("/xmlParser/stars_in_movies.csv", "stars_in_movies");
 
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
@@ -228,6 +233,28 @@ public class xmlParser extends DefaultHandler {
         System.out.println("No of Records Inserted into Stars_in_Movies: " + simInserts); // have to count when writing to csv
         System.out.println("No of Missing Movies: " + moviesNotFound);
         System.out.println("No of Missing Stars: " + starsNotFound);
+    }
+
+    public void loadData ( String csvPath, String tableName ) {
+        try (Connection conn = dataSource.getConnection()) {
+
+            // Construct a query with parameter represented by g"?"
+            String query = "LOAD DATA INFILE ?" +
+                            "INTO TABLE ?" +
+                            "FIELDS TERMINATED BY ','" +
+                            "LINES TERMINATED BY '\\n'" +
+                            "IGNORE 1 ROWS;";
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            statement.setString(1, csvPath);
+            statement.setString(1, tableName);
+
+            statement.execute(query);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void writeToTextFile( String fileName, String content ) {
