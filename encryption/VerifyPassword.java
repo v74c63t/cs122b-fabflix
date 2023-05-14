@@ -19,12 +19,14 @@ public class VerifyPassword {
      */
     public static void main(String[] args) throws Exception {
 
-        System.out.println(verifyCredentials("a@email.com", "a2"));
-        System.out.println(verifyCredentials("a@email.com", "a3"));
+        System.out.println(verifyCredentials("cust", "a@email.com", "a2"));
+        System.out.println(verifyCredentials("cust", "a@email.com", "a3"));
+        System.out.println(verifyCredentials("emp", "classta@email.edu", "classta"));
+        System.out.println(verifyCredentials("emp", "classta@email.edu", "ta"));
 
     }
 
-    private static boolean verifyCredentials(String email, String password) throws Exception {
+    private static boolean verifyCredentials(String user, String email, String password) throws Exception {
 
         String loginUser = "mytestuser";
         String loginPasswd = "My6$Password";
@@ -34,7 +36,12 @@ public class VerifyPassword {
         Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
         Statement statement = connection.createStatement();
 
-        String query = String.format("SELECT * from customers where email='%s'", email);
+        String query;
+        if ( user.equals("cust") ) {
+            query = String.format("SELECT * from customers where email='%s'", email);
+        } else {
+            query = String.format("SELECT * from employees where email='%s'", email);
+        }
 
         ResultSet rs = statement.executeQuery(query);
 
