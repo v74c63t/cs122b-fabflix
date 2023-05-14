@@ -21,7 +21,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Map;
 
 public class xmlParser extends DefaultHandler {
     HashMap<String, Movie> myMovies;
@@ -93,6 +92,9 @@ public class xmlParser extends DefaultHandler {
     private HashMap<String, Integer> existingGenres = new HashMap<String, Integer>();
     private HashMap<String, Integer> newGenres = new HashMap<String, Integer>();
 
+    private HashMap<String, ArrayList<Star>> existingStars = new HashMap<String, ArrayList<Star>>();
+    private HashMap<String, ArrayList<Star>> newStars = new HashMap<String, ArrayList<Star>>();
+
     private DataSource dataSource;
 
     public xmlParser() {
@@ -126,6 +128,26 @@ public class xmlParser extends DefaultHandler {
                 availableStarId = rs2.getInt("star");
             }
             rs2.close();
+
+            query = "SELECT * FROM stars;";
+
+            ResultSet rs3 = statement.executeQuery(query);
+
+            if (rs3.next()) {
+                Star star = new Star();
+                star.setId(rs3.getString("id"));
+                star.setName(rs3.getString("name"));
+                star.setBirthYear(Integer.toString(rs3.getInt("birthYear")));
+
+                // Check if name exists
+                if (existingStars.containsKey(rs3.getString("name").toLowerCase())) {
+                    existingStars.get(rs3.getString("name").toLowerCase()).add(star);
+                } else {
+                    ArrayList<Star> starsArray = new ArrayList<Star>(){{add(star);}};
+                    existingStars.put(rs3.getString("name").toLowerCase(), starsArray);
+                }
+            }
+            rs3.close();
 
 
             statement.close();
