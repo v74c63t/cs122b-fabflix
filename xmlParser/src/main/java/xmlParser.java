@@ -240,15 +240,14 @@ public class xmlParser extends DefaultHandler {
 
             // Construct a query with parameter represented by g"?"
             String query = "LOAD DATA INFILE ?" +
-                            "INTO TABLE ?" +
-                            "FIELDS TERMINATED BY ','" +
-                            "LINES TERMINATED BY '\\n'" +
+                            "INTO TABLE " + tableName + " " +
+                            "FIELDS TERMINATED BY ',' " +
+                            "LINES TERMINATED BY '\\n' " +
                             "IGNORE 1 ROWS;";
 
             PreparedStatement statement = conn.prepareStatement(query);
 
             statement.setString(1, csvPath);
-            statement.setString(1, tableName);
 
             statement.execute(query);
 
