@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class xmlParser extends DefaultHandler {
     HashMap<String, Movie> myMovies;
-    HashMap<String, Star> myStars;
+    HashMap<String, ArrayList<Star>> myStars;
 
     private String tempVal;
 
