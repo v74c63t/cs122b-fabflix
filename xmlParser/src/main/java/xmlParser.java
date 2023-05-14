@@ -459,7 +459,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
             tempStar = new Star();
-        } else if (qName.equalsIgnoreCase("m")) { // not too sure
+        } else if (qName.equalsIgnoreCase("filmc")) { // not too sure
             //create a new instance of employee
             // figure out how to store everything in hashmap i guess
             tempSIMStars = new ArrayList<String>();
