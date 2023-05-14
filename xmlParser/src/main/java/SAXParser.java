@@ -508,7 +508,8 @@ public class SAXParser extends DefaultHandler {
             else {
                 // generate an id for star using available int remember to update the id afterwards
                 // set id
-                String starId = // concat with nm and LPAD
+                // concat with nm and LPAD
+                String starId = "nm" + String.format("%07d", availableStarId); // not sure if number of 0's is correct check
                 availableStarId++;
                 tempStar.setId(starId);
             }
