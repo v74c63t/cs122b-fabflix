@@ -83,7 +83,7 @@ public class xmlParser extends DefaultHandler {
         put("camp now", "Camp");
         put("disa", "Disaster");
         put("epic", "Epic");
-        put("surl", "Sureal");
+        put("surl", "Surreal");
         put("avga", "Avant Garde");
         put("avant garde", "Avant Garde");
         put("ctxx", "Uncategorized");
