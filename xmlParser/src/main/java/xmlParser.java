@@ -220,6 +220,8 @@ public class xmlParser extends DefaultHandler {
         loadData("/xmlParser/stars.csv", "stars");
         loadData("/xmlParser/stars_in_movies.csv", "stars_in_movies");
 
+        updateAvailableInt();
+
         // also need ot print dupes/inconsistencies
         // in this set write to csv file i guess
         // then load data
@@ -239,7 +241,7 @@ public class xmlParser extends DefaultHandler {
         try (Connection conn = dataSource.getConnection()) {
 
             // Construct a query with parameter represented by g"?"
-            String query = "LOAD DATA INFILE ?" +
+            String query = "LOAD DATA INFILE ? " +
                             "INTO TABLE " + tableName + " " +
                             "FIELDS TERMINATED BY ',' " +
                             "LINES TERMINATED BY '\\n' " +
@@ -250,6 +252,26 @@ public class xmlParser extends DefaultHandler {
             statement.setString(1, csvPath);
 
             statement.execute(query);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAvailableInt () {
+        try (Connection conn = dataSource.getConnection()) {
+
+            // Construct a query with parameter represented by g"?"
+            String query = "SET SQL_SAFE_UPDATES = 0; " +
+                    "UPDATE availableInt " +
+                    "SET movie = (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM movies), " +
+                    "star = (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM stars), " +
+                    "genre = (SELECT MAX(id) + 1 FROM genres);" +
+                    "SET SQL_SAFE_UPDATES = 1; ";
+
+            Statement statement = conn.createStatement();
+
+            int rs = statement.executeUpdate(query);
 
         } catch (Exception e) {
             e.printStackTrace();
