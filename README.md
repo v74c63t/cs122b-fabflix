@@ -20,6 +20,15 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - SearchResultServlet.java
   - SingleMovieServlet.java
   - SingleStarServlet.java
+  - MoviesServlet.java
+  - PaymentServlet.java
+  - CartServlet.java
+  - ConfirmationServlet.java
+  - MainInitServlet.java
+  - MetadataServlet.java
+  - AddGenreServlet.java
+  - AddMovieServlet.java
+  - AddStarServlet.java
 ### XMLParser
 There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
 #### Parsing Time Optimization Strategies
