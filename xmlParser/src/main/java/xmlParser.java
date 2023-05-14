@@ -623,6 +623,7 @@ public class xmlParser extends DefaultHandler {
             else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
                 // write to star missing file
+                writeToTextFile("StarNotFound.txt", castMovieId + " " + tempVal.strip());
             }
 
         }
