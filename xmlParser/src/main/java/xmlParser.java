@@ -238,11 +238,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
         // depending on when we load csv we may want diff print functions for each file
         // if we load after we finish each file might need diff functions
         // if we load after all files are done parsing can just keep one
-        loadData("/xmlParser/genres.csv", "genres");
-        loadData("/xmlParser/movies.csv", "movies");
-        loadData("/xmlParser/genres_in_movies.csv", "genres_in_movies");
-        loadData("/xmlParser/stars.csv", "stars");
-        loadData("/xmlParser/stars_in_movies.csv", "stars_in_movies");
+        loadData("genres.csv", "genres");
+        loadData("movies.csv", "movies");
+        loadData("genres_in_movies.csv", "genres_in_movies");
+        loadData("stars.csv", "stars");
+        loadData("stars_in_movies.csv", "stars_in_movies");
 
         updateAvailableInt();
 
@@ -262,11 +262,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
     }
 
     public void loadData ( String csvPath, String tableName ) {
-        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
+        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?useSSL=false&allowLoadLocalInfile=true",
                 Parameters.username, Parameters.password);) {
 
             // Construct a query with parameter represented by g"?"
-            String query = "LOAD DATA INFILE ? " +
+            String query = "LOAD DATA LOCAL INFILE ? " +
                             "INTO TABLE " + tableName + " " +
                             "FIELDS TERMINATED BY ',' " +
                             "LINES TERMINATED BY '\\n' " +
@@ -284,20 +284,17 @@ public class xmlParser extends DefaultHandler implements Parameters {
     }
 
     public void updateAvailableInt () {
-        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false?allowLoadLocalInfile=true",
+        try (Connection conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
                 Parameters.username, Parameters.password);) {
 
-            // Construct a query with parameter represented by g"?"
-            String query = "SET SQL_SAFE_UPDATES = 0; " +
-                    "UPDATE availableInt " +
+            Statement statement = conn.createStatement();
+
+            statement.execute("SET SQL_SAFE_UPDATES = 0;");
+            statement.execute("UPDATE availableInt " +
                     "SET movie = (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM movies), " +
                     "star = (SELECT CAST(SUBSTRING(MAX(id),3) AS UNSIGNED)+1 FROM stars), " +
-                    "genre = (SELECT MAX(id) + 1 FROM genres);" +
-                    "SET SQL_SAFE_UPDATES = 1; ";
-
-            PreparedStatement statement = conn.prepareStatement(query);
-
-            int rs = statement.executeUpdate();
+                    "genre = (SELECT MAX(id) + 1 FROM genres);");
+            statement.execute("SET SQL_SAFE_UPDATES = 1;");
 
         } catch (Exception e) {
             e.printStackTrace();
