@@ -84,6 +84,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
         put("tv", "TV Show");
         put("tvs", "TV Series");
         put("tvm", "TV Miniseries");
+        put("tvm", "TV Miniseries");
         put("actn", "Action");
         put("cart", "Cartoon");
         put("crim", "Crime");
@@ -216,11 +217,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
      */
     private void printData() {
         // Load all data into database
-        loadData("genres.csv", "genres");
-        loadData("movies.csv", "movies");
-        loadData("genres_in_movies.csv", "genres_in_movies");
-        loadData("stars.csv", "stars");
-        loadData("stars_in_movies.csv", "stars_in_movies");
+        loadData("xmlParser/genres.csv", "genres");
+        loadData("xmlParser/movies.csv", "movies");
+        loadData("xmlParser/genres_in_movies.csv", "genres_in_movies");
+        loadData("xmlParser/stars.csv", "stars");
+        loadData("xmlParser/stars_in_movies.csv", "stars_in_movies");
 
         updateAvailableInt();
 
@@ -289,8 +290,8 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void movieToCSV( HashMap<String, Movie> movieMap ) {
         try {
-            BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("movies.csv", true));
-            BufferedWriter gimWriter = new BufferedWriter(new FileWriter("genres_in_movies.csv", true));
+            BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("xmlParser/movies.csv", true));
+            BufferedWriter gimWriter = new BufferedWriter(new FileWriter("xmlParser/genres_in_movies.csv", true));
 
             moviesWriter.write("id");
             moviesWriter.write(",");
@@ -343,7 +344,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
     //
     public void genreToCSV( HashMap<String, Integer> genreMap ) {
         try {
-            BufferedWriter gWriter = new BufferedWriter(new FileWriter("genres.csv", true));
+            BufferedWriter gWriter = new BufferedWriter(new FileWriter("xmlParser/genres.csv", true));
             gWriter.write("id");
             gWriter.write(",");
             gWriter.write("name");
@@ -363,7 +364,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void starToCSV( HashMap<String, ArrayList<Star>> starMap ) { // check if correct
         try {
-            BufferedWriter sWriter = new BufferedWriter(new FileWriter("stars.csv", true));
+            BufferedWriter sWriter = new BufferedWriter(new FileWriter("xmlParser/stars.csv", true));
             sWriter.write("id");
             sWriter.write(",");
             sWriter.write("name");
@@ -396,7 +397,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void simToCSV( HashMap<String, ArrayList<String>> simMap ) { // check if correct
         try {
-            BufferedWriter simWriter = new BufferedWriter(new FileWriter("stars_in_movies.csv", true));
+            BufferedWriter simWriter = new BufferedWriter(new FileWriter("xmlParser/stars_in_movies.csv", true));
             simWriter.write("starId");
             simWriter.write(",");
             simWriter.write("movieId");
@@ -461,20 +462,20 @@ public class xmlParser extends DefaultHandler implements Parameters {
             tempMovie.setDirector(director);
             if( !isConsistent ) { // If data is inconsistent
                 movieInconsistent++;
-                writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
+                writeToTextFile("xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
             } else if(isDuplicate) { // If movie is a duplicate
                 movieDupe++;
-                writeToTextFile("MovieDuplicate.txt", tempMovie.toString());
+                writeToTextFile("xmlParser/MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
                 if(tempMovie.getGenres().size() == 0) { // No genres associated with movie
                     movieInconsistent++;
-                    writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else if (director == null) { // No director associated with movie
                     movieInconsistent++;
-                    writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
                     String fid = tempMovie.getId();
@@ -585,7 +586,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             if(isDuplicate) {
                 starDupe++;
                 //write to file
-                writeToTextFile("StarDuplicate.txt", tempStar.toString());
+                writeToTextFile("xmlParser/StarDuplicate.txt", tempStar.toString());
                 isDuplicate = false;
             }
             else {
@@ -635,7 +636,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
             }
             else {
-                writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
+                writeToTextFile("xmlParser/MovieNotFound.txt", castMovieId + tempSIMStars.toString());
                 moviesNotFound++;
                 isFound = true;
             }
@@ -665,7 +666,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
                 // write to star missing file
-                writeToTextFile("StarNotFound.txt", castMovieId + " " + tempVal.strip());
+                writeToTextFile("xmlParser/StarNotFound.txt", castMovieId + " " + tempVal.strip());
             }
 
         }

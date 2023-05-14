@@ -76,6 +76,7 @@ public class LoginServlet extends HttpServlet {
 
         String email= request.getParameter("email");
         String password = request.getParameter("password");
+        System.out.println(email + " " + password);
         response.setContentType("application/json"); // Response mime type
         // The log message can be found in localhost log
         request.getServletContext().log("getting email: " + email);
