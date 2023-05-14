@@ -678,16 +678,18 @@ public class xmlParser extends DefaultHandler implements Parameters {
             // maybe another boolean var
             if ( isFound ) {
                 mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
+
             }
             else {
                 writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
+                moviesNotFound++;
+                isFound = true;
             }
 
         } else if (qName.equalsIgnoreCase("f")) {
             // check if exists
             // if not report as missing
             if ( !myMovies.containsKey(tempVal.strip()) ) {
-                moviesNotFound++;
                 isFound = false;
             }
             castMovieId = tempVal.strip();
