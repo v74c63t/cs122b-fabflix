@@ -52,6 +52,8 @@ public class xmlParser extends DefaultHandler {
 
     private int availableStarId;
 
+    private int availableMovieId;
+
     private int gimInserts = 0;
 
     private int simInserts = 0;
@@ -136,6 +138,7 @@ public class xmlParser extends DefaultHandler {
             if (rs2.next()) {
                 availableGenreId = rs2.getInt("genre");
                 availableStarId = rs2.getInt("star");
+                availableMovieId = rs2.getInt("movie");
             }
             rs2.close();
 
@@ -426,7 +429,11 @@ public class xmlParser extends DefaultHandler {
                     writeToTextFile("/xmlParser/MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
-                    myMovies.put(tempMovie.getId(), tempMovie);
+                    String fid = tempMovie.getId();
+                    String movieId = "tt" + String.format("%07d", availableMovieId); // not sure if number of 0's is correct check
+                    availableMovieId++;
+                    tempMovie.setId(movieId);
+                    myMovies.put(fid, tempMovie);
                 }
             }
 
@@ -655,7 +662,7 @@ public class xmlParser extends DefaultHandler {
             // get smth to tell this to skip record if movie or star not found
             // maybe another boolean var
             if ( isFound ) {
-                mySIMs.put(castMovieId,tempSIMStars);
+                mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
             }
             else {
                 writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
