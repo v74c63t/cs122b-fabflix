@@ -88,6 +88,7 @@ public class xmlParser extends DefaultHandler {
     private DataSource dataSource;
 
     public xmlParser() {
+        myMovies = new HashMap<String, Movie>();
         try {
             dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
         } catch (NamingException e) {
