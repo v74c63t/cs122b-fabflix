@@ -428,9 +428,9 @@ public class xmlParser extends DefaultHandler implements Parameters {
             simWriter.newLine();
             for (Map.Entry<String, ArrayList<String>> entry : simMap.entrySet()) {
                 for(String starId : entry.getValue()) {
-                    simWriter.write(entry.getKey());
-                    simWriter.write(",");
                     simWriter.write(starId);
+                    simWriter.write(",");
+                    simWriter.write(entry.getKey());
                     simWriter.newLine();
                     simInserts++;
                 }
