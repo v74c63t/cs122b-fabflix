@@ -384,7 +384,6 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 gWriter.write(",");
                 gWriter.write(entry.getKey());
                 gWriter.newLine();
-                starInserts++;
             }
             gWriter.flush();
             gWriter.close();
@@ -410,6 +409,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                     sWriter.write(",");
                     sWriter.write(s.getBirthYear());
                     sWriter.newLine();
+                    starInserts++;
                 }
             }
             sWriter.flush();
