@@ -7,7 +7,7 @@
 - Movie does not have any genres associated with it
 - Movie does not have a director (ex: director is listed as unknown)
 #### MovieNotFound.txt
-- When parsing casts, the fid listed is not associated with any movies that were inserted
+- When parsing casts, the fid listed is not associated with any movies that were inserted from the mains xml file
 #### StarDuplicates.txt
 - Star has name/birth year that was previously found in the xml file or already in the movie db
 #### StarNotFound.txt
