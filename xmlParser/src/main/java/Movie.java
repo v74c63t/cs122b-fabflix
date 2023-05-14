@@ -6,6 +6,9 @@ public class Movie {
     private String director;
     private ArrayList<String> genres;
 
+    public Movie() {
+        this.genres = new ArrayList<String>();
+    }
 
     public Movie (String id, String title, String year, String director) {
         this.id = id;
