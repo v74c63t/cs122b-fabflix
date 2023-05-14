@@ -269,9 +269,9 @@ public class xmlParser extends DefaultHandler {
                     "genre = (SELECT MAX(id) + 1 FROM genres);" +
                     "SET SQL_SAFE_UPDATES = 1; ";
 
-            Statement statement = conn.createStatement();
+            PreparedStatement statement = conn.prepareStatement(query);
 
-            int rs = statement.executeUpdate(query);
+            int rs = statement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
