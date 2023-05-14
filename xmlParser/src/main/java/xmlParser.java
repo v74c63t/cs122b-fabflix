@@ -299,6 +299,32 @@ public class xmlParser extends DefaultHandler {
         }
     }
 
+    public void starToCSV( HashMap<String, ArrayList<Star>> starMap ) { // check if correct
+        try {
+            BufferedWriter sWriter = new BufferedWriter(new FileWriter("stars.csv", true));
+            sWriter.write("id");
+            sWriter.write(",");
+            sWriter.write("name");
+            sWriter.write(",");
+            sWriter.write("birthYear");
+            sWriter.newLine();
+            for (Map.Entry<String, ArrayList<Star>> entry : starMap.entrySet()) {
+                for(Star s : entry.getValue()) {
+                    sWriter.write(s.getId());
+                    sWriter.write(",");
+                    sWriter.write(s.getName());
+                    sWriter.write(",");
+                    sWriter.write(s.getBirthYear());
+                    sWriter.newLine();
+                }
+            }
+            sWriter.flush();
+            sWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     //Event Handlers
