@@ -204,6 +204,8 @@ public class xmlParser extends DefaultHandler {
         }
     }
 
+
+
     /**
      * Iterate through the list and print
      * the contents
