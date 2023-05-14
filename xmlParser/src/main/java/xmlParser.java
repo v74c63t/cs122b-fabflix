@@ -380,6 +380,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                     gimWriter.write(",");
                     gimWriter.write(entry.getValue().getId());
                     moviesWriter.newLine();
+                    gimWriter.newLine();
                     gimInserts++;
                 }
             }
