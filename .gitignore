@@ -210,8 +210,13 @@ buildNumber.properties
 # End of https://www.gitignore.io/api/java,maven,eclipse,java-web,intellij
 
 xmlParser/stanford-movies
-xmlParser/genres.csv
-xmlParser/movies.csv
-xmlParser/genres_in_movies.csv
-xmlParser/stars.csv
-xmlParser/stars_in_movies.csv
+genres.csv
+movies.csv
+genres_in_movies.csv
+stars.csv
+stars_in_movies.csv
+MovieDuplicate.txt
+MovieInconsistent.txt
+MovieNotFound.txt
+StarDuplicate.txt
+StarNotFound.txt
