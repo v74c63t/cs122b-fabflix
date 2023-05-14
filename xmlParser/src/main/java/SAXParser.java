@@ -495,6 +495,12 @@ public class SAXParser extends DefaultHandler {
                 isDuplicate = false;
             }
             else {
+                // generate an id for star using available int remember to update the id afterwards
+                // set id
+                // concat with nm and LPAD
+                String starId = "nm" + String.format("%07d", availableStarId); // not sure if number of 0's is correct check
+                availableStarId++;
+                tempStar.setId(starId);
                 myStars.add(tempStar);
             }
 
@@ -504,14 +510,6 @@ public class SAXParser extends DefaultHandler {
             if( already exists previous in file or exists in db ) {
                 isDuplicate = true;
                 //write to star dupe file
-            }
-            else {
-                // generate an id for star using available int remember to update the id afterwards
-                // set id
-                // concat with nm and LPAD
-                String starId = "nm" + String.format("%07d", availableStarId); // not sure if number of 0's is correct check
-                availableStarId++;
-                tempStar.setId(starId);
             }
             tempStar.setName(tempVal.strip());
 //            tempEmp.setName(tempVal);
