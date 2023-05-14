@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -70,18 +71,20 @@ public class ConfirmationServlet extends HttpServlet {
 
         try (Connection conn = dataSource.getConnection()) {
 
+            String query = String.join("",
+                    "SELECT s.id, s.movieId, m.title, s.quantity, s.price, s.total ",
+                    "FROM sales as s, movies as m ",
+                    "WHERE s.id = ? AND s.movieId = m.id;");
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
             // Log to localhost log
             for (int saleId : saleIds) {
 
                 // Declare our statement
-                Statement statement = conn.createStatement();
+                statement.setInt(1, saleId);
 
-                String query = String.join("",
-                        "SELECT s.id, s.movieId, m.title, s.quantity, s.price, s.total ",
-                        "FROM sales as s, movies as m ",
-                        "WHERE s.id = ", String.valueOf(saleId), " AND s.movieId = m.id;");
-
-                ResultSet rs = statement.executeQuery(query);
+                ResultSet rs = statement.executeQuery();
 
                 if (rs.next()) {
                     int sale_id = rs.getInt("id");
@@ -102,11 +105,11 @@ public class ConfirmationServlet extends HttpServlet {
                     jsonArray.add(jsonObject);
                 }
                 rs.close();
-                statement.close();
             }
             session.removeAttribute("itemCart");
             session.removeAttribute("salesId");
             response.getWriter().write(jsonArray.toString());
+            statement.close();
 
         } catch (Exception e) {
 
