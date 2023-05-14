@@ -213,51 +213,73 @@ public class SAXParser extends DefaultHandler {
                 // for genres in cat -> genre abbr: actual genre defined by cats def page or corresponding equivalent in db
                     // first get actual genre here then check against existing and new genres
                     // if no equivalent found here and fails above check just add as is to new genres
-    public void movieToCSV( String fileName, ArrayList<Movie> movieArray ) {
+    public void movieToCSV( ArrayList<Movie> movieArray ) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            // should write a header
-            writer.write("id");
-            writer.write(",");
-            writer.write("title");
-            writer.write(",");
-            writer.write("year");
-            writer.write(",");
-            writer.write("director");
-            writer.newLine();
+            BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("movies.csv", true));
+            BufferedWriter gimWriter = new BufferedWriter(new FileWriter("genres_in_movies.csv", true));
+
+            moviesWriter.write("id");
+            moviesWriter.write(",");
+            moviesWriter.write("title");
+            moviesWriter.write(",");
+            moviesWriter.write("year");
+            moviesWriter.write(",");
+            moviesWriter.write("director");
+            moviesWriter.newLine();
+
+            gimWriter.write("genreId");
+            gimWriter.write(",");
+            gimWriter.write("movieId");
+            gimWriter.newLine();
+
             for (Movie movie : movieArray) { // will prob have to change so it writes properly to csv file currently doesn't
-                writer.write(movie.getId());
-                writer.write(",");
-                writer.write(movie.getTitle());
-                writer.write(",");
-                writer.write(movie.getYear());
-                writer.write(",");
-                writer.write(movie.getDirector());
-                writer.newLine();
+                moviesWriter.write(movie.getId());
+                moviesWriter.write(",");
+                moviesWriter.write(movie.getTitle());
+                moviesWriter.write(",");
+                moviesWriter.write(movie.getYear());
+                moviesWriter.write(",");
+                moviesWriter.write(movie.getDirector());
+                moviesWriter.newLine();
+
+                for (String genre: movie.getGenres()) {
+                    String genreId;
+                    if ( existingGenres.containsKey(genre) ) {
+                        genreId = Integer.toString(existingGenres.get(genre));
+                    } else {
+                        genreId = Integer.toString(newGenres.get(genre));
+                    }
+                    gimWriter.write(genreId);
+                    gimWriter.write(",");
+                    gimWriter.write(movie.getId());
+                    moviesWriter.newLine();
+                }
             }
-            writer.flush();
-            writer.close();
+            moviesWriter.flush();
+            moviesWriter.close();
+            gimWriter.flush();
+            gimWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     //
-    public void genreToCSV( String fileName, HashMap<String, int> genreMap ) {
+    public void genreToCSV( HashMap<String, int> genreMap ) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            writer.write("id");
-            writer.write(",");
-            writer.write("name");
-            writer.newLine();
+            BufferedWriter gWriter = new BufferedWriter(new FileWriter("genres.csv", true));
+            gWriter.write("id");
+            gWriter.write(",");
+            gWriter.write("name");
+            gWriter.newLine();
             for (Map.entry<String, int> entry : genreMap.entrySet()) { // will prob have to change so it writes properly to csv file currently doesnt
-                writer.write(Integer.toString(entry.getValue()));
-                writer.write(",");
-                writer.write(entry.getKey());
-                writer.newLine();
+                gWriter.write(Integer.toString(entry.getValue()));
+                gWriter.write(",");
+                gWriter.write(entry.getKey());
+                gWriter.newLine();
             }
-            writer.flush();
-            writer.close();
+            gWriter.flush();
+            gWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
