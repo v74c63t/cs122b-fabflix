@@ -7,7 +7,7 @@ public class Movie {
     private ArrayList<String> genres;
 
     public Movie() {
-
+        this.genres = new ArrayList<String>();
     }
 
     public Movie (String id, String title, String year, String director, String genre) {
@@ -15,7 +15,7 @@ public class Movie {
         this.title = title;
         this.year = year;
         this.director = director;
-        this.genres = new ArrayList<String>();
+        this.genres = new ArrayList<String>() {{add.(genre);}};
 
     }
 
