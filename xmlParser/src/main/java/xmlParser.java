@@ -49,6 +49,8 @@ public class xmlParser extends DefaultHandler {
 
     private int availableStarId;
 
+    private int gimInserts = 0;
+
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
         put("susp", "Thriller");
         put("cnr", "Crime");
@@ -201,12 +203,12 @@ public class xmlParser extends DefaultHandler {
         // then load data
         System.out.println("No of Inserted Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: " + newGenres.size());
-        System.out.println("No of Records Inserted into Genres_in_Movies: " + myMovies.size());
+        System.out.println("No of Records Inserted into Genres_in_Movies: " + gimInserts);
         System.out.println("No of Duplicated Movies: " + movieDupe);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
-        System.out.println("No of Inserted Stars: " + newStars.size());
+        System.out.println("No of Inserted Stars: " + newStars.size()); // new stars size wont be accurate have to count whne writing to csv
         System.out.println("No of Duplicated Stars: " + starDupe);
-        System.out.println("No of Records Inserted into Stars_in_Movies: " + myMovies.size());
+        System.out.println("No of Records Inserted into Stars_in_Movies: " + myMovies.size()); // have to count when writing to csv
         System.out.println("No of Missing Movies: " + moviesNotFound);
         System.out.println("No of Missing Stars: " + starsNotFound);
     }
@@ -262,6 +264,7 @@ public class xmlParser extends DefaultHandler {
                     gimWriter.write(",");
                     gimWriter.write(movie.getId());
                     moviesWriter.newLine();
+                    gimInserts++;
                 }
             }
             moviesWriter.flush();
