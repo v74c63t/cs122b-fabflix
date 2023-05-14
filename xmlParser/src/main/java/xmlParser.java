@@ -51,6 +51,8 @@ public class xmlParser extends DefaultHandler {
 
     private int gimInserts = 0;
 
+    private String castMovieId;
+
     private HashMap<String, String> catToGenreMap = new HashMap<String, String>() {{
         put("susp", "Thriller");
         put("cnr", "Crime");
@@ -604,6 +606,7 @@ public class xmlParser extends DefaultHandler {
                 // should we continue checking in this case?
                 // get something to tell it not to add this entry
             }
+            castMovieId = tempVal.strip();
         }else if (qName.equalsIgnoreCase("a")) {
             // check if exists
             // if not report as missing
