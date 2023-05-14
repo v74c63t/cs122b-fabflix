@@ -617,7 +617,7 @@ public class xmlParser extends DefaultHandler {
                 String starId = existingStars.get(tempVal.strip()).get(0).getId();//get star id
                 // add to list
             }
-            else {
+            else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
                 // write to star missing file
             }
