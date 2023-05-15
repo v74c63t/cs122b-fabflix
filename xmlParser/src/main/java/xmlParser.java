@@ -247,9 +247,9 @@ public class xmlParser extends DefaultHandler implements Parameters {
             SAXParser sp = spf.newSAXParser();
 
             //parse the file and also register this class for call backs
-            sp.parse("xmlParser/stanford-movies/mains243.xml", this);
-            sp.parse("xmlParser/stanford-movies/actors63.xml", this);
-            sp.parse("xmlParser/stanford-movies/casts124.xml", this);
+            sp.parse("stanford-movies/mains243.xml", this);
+            sp.parse("stanford-movies/actors63.xml", this);
+            sp.parse("stanford-movies/casts124.xml", this);
 
         } catch (SAXException se) {
             se.printStackTrace();
