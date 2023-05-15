@@ -558,9 +558,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
         }else if (qName.equalsIgnoreCase("year")) {
             // there are some with invalid ints ex: 199x, 19yy, etc
-            // dk how to deal with these b/c we cant set as null since tables require them to be not null
-            // maybe report as inconsistent????
-            // store for dupe checking
+            // report as inconsistent
             if(tempVal.strip().equals("")) { // No year associated with movie
                 isConsistent = false;
             }
@@ -583,7 +581,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             } else {
                 // add to tempMovie
                 // have to check genre before adding
-                // have to .strip() b/c trailing spaces and .lower()
+                // have to .strip() b/c trailing spaces and .toLowerCase()
                 if(catToGenreMap.containsKey(tempVal.strip().toLowerCase())){
                     String genre = catToGenreMap.get(tempVal.strip().toLowerCase());
                     if(existingGenres.containsKey(genre)) {
@@ -632,7 +630,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
         } else if (qName.equalsIgnoreCase("actor")) {
             //add it to the list
             // check if dupe
-            // if dupe write to stars dupe file the name and birthyear of star (make sure to check with db info too)
+            // if dupe write to stars dupe file the name and birthyear of star
             // if not add to hashmap
             if(isDuplicate) {
                 starDupe++;
@@ -644,7 +642,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 // generate an id for star using available int remember to update the id afterwards
                 // set id
                 // concat with nm and LPAD
-                String starId = "nm" + String.format("%07d", availableStarId); // not sure if number of 0's is correct check
+                String starId = "nm" + String.format("%07d", availableStarId);
                 availableStarId++;
                 tempStar.setId(starId);
                 if(newStars.containsKey(tempStar.getName())){
@@ -680,7 +678,6 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 }
                 tempStar.setBirthYear(null);
             }
-//            tempEmp.setId(Integer.parseInt(tempVal));
         } else if (qName.equalsIgnoreCase("filmc")) {
             //
             if ( isFound ) {
