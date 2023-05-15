@@ -512,20 +512,20 @@ public class xmlParser extends DefaultHandler implements Parameters {
             tempMovie.setDirector(director);
             if( !isConsistent ) { // If data is inconsistent
                 movieInconsistent++;
-                writeToTextFile("xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 isConsistent = true;
             } else if(isDuplicate) { // If movie is a duplicate
                 movieDupe++;
-                writeToTextFile("xmlParser/MovieDuplicate.txt", tempMovie.toString());
+                writeToTextFile("MovieDuplicate.txt", tempMovie.toString());
                 isDuplicate = false;
             }else {
                 if(tempMovie.getGenres().size() == 0) { // No genres associated with movie
                     movieInconsistent++;
-                    writeToTextFile("xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 }
                 else if (director == null) { // No director associated with movie
                     movieInconsistent++;
-                    writeToTextFile("xmlParser/MovieInconsistent.txt", tempMovie.toString());
+                    writeToTextFile("MovieInconsistent.txt", tempMovie.toString());
                 }
                 else { // Add to myMovies HashMap
                     String fid = tempMovie.getId();
@@ -634,7 +634,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             if(isDuplicate) {
                 starDupe++;
                 //write to file
-                writeToTextFile("xmlParser/StarDuplicate.txt", tempStar.toString());
+                writeToTextFile("StarDuplicate.txt", tempStar.toString());
                 isDuplicate = false;
             }
             else {
@@ -683,7 +683,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                 mySIMs.put(myMovies.get(castMovieId).getId(),tempSIMStars);
             }
             else {
-                writeToTextFile("xmlParser/MovieNotFound.txt", castMovieId + tempSIMStars.toString());
+                writeToTextFile("MovieNotFound.txt", castMovieId + tempSIMStars.toString());
                 moviesNotFound++;
                 isFound = true;
             }
@@ -713,7 +713,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             else if(!tempVal.strip().equals("s a")){
                 starsNotFound++;
                 // write to star missing file
-                writeToTextFile("xmlParser/StarNotFound.txt", castMovieId + " " + tempVal.strip());
+                writeToTextFile("StarNotFound.txt", castMovieId + " " + tempVal.strip());
             }
 
         }
