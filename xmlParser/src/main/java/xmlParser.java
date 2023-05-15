@@ -295,7 +295,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             // Construct a query with parameter represented by g"?"
             String query = "LOAD DATA LOCAL INFILE ? " +
                             "INTO TABLE " + tableName + " " +
-                            "FIELDS TERMINATED BY ',' " +
+                            "FIELDS TERMINATED BY '|' " +
                             "LINES TERMINATED BY '\\n' " +
                             "IGNORE 1 ROWS;";
 
@@ -345,27 +345,27 @@ public class xmlParser extends DefaultHandler implements Parameters {
             BufferedWriter gimWriter = new BufferedWriter(new FileWriter("xmlParser/genres_in_movies.csv", true));
 
             moviesWriter.write("id");
-            moviesWriter.write(",");
+            moviesWriter.write("|");
             moviesWriter.write("title");
-            moviesWriter.write(",");
+            moviesWriter.write("|");
             moviesWriter.write("year");
-            moviesWriter.write(",");
+            moviesWriter.write("|");
             moviesWriter.write("director");
             moviesWriter.newLine();
 
             gimWriter.write("genreId");
-            gimWriter.write(",");
+            gimWriter.write("|");
             gimWriter.write("movieId");
             gimWriter.newLine();
 
             for (Map.Entry<String, Movie> entry : movieMap.entrySet()) { // for writing into movies
 
                 moviesWriter.write(entry.getValue().getId());
-                moviesWriter.write(",");
+                moviesWriter.write("|");
                 moviesWriter.write(entry.getValue().getTitle());
-                moviesWriter.write(",");
+                moviesWriter.write("|");
                 moviesWriter.write(entry.getValue().getYear());
-                moviesWriter.write(",");
+                moviesWriter.write("|");
                 moviesWriter.write(entry.getValue().getDirector());
                 moviesWriter.newLine();
 
@@ -377,7 +377,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
                         genreId = Integer.toString(newGenres.get(genre));
                     }
                     gimWriter.write(genreId);
-                    gimWriter.write(",");
+                    gimWriter.write("|");
                     gimWriter.write(entry.getValue().getId());
                     gimWriter.newLine();
                     gimInserts++;
@@ -397,12 +397,12 @@ public class xmlParser extends DefaultHandler implements Parameters {
         try {
             BufferedWriter gWriter = new BufferedWriter(new FileWriter("xmlParser/genres.csv", true));
             gWriter.write("id");
-            gWriter.write(",");
+            gWriter.write("|");
             gWriter.write("name");
             gWriter.newLine();
             for (Map.Entry<String, Integer> entry : genreMap.entrySet()) {
                 gWriter.write(Integer.toString(entry.getValue()));
-                gWriter.write(",");
+                gWriter.write("|");
                 gWriter.write(entry.getKey());
                 gWriter.newLine();
             }
@@ -417,22 +417,22 @@ public class xmlParser extends DefaultHandler implements Parameters {
         try {
             BufferedWriter sWriter = new BufferedWriter(new FileWriter("xmlParser/stars.csv", true));
             sWriter.write("id");
-            sWriter.write(",");
+            sWriter.write("|");
             sWriter.write("name");
-            sWriter.write(",");
+            sWriter.write("|");
             sWriter.write("birthYear");
             sWriter.newLine();
             for (Map.Entry<String, ArrayList<Star>> entry : starMap.entrySet()) {
                 for(Star s : entry.getValue()) {
                     sWriter.write(s.getId());
-                    sWriter.write(",");
+                    sWriter.write("|");
                     sWriter.write(s.getName());
                     if ( s.getBirthYear() != null ) {
-                        sWriter.write(",");
+                        sWriter.write("|");
                         sWriter.write(s.getBirthYear());
                     }
                     else{
-                        sWriter.write(",");
+                        sWriter.write("|");
                         sWriter.write("");
                     }
                     sWriter.newLine();
@@ -450,13 +450,13 @@ public class xmlParser extends DefaultHandler implements Parameters {
         try {
             BufferedWriter simWriter = new BufferedWriter(new FileWriter("xmlParser/stars_in_movies.csv", true));
             simWriter.write("starId");
-            simWriter.write(",");
+            simWriter.write("|");
             simWriter.write("movieId");
             simWriter.newLine();
             for (Map.Entry<String, ArrayList<String>> entry : simMap.entrySet()) {
                 for(String starId : entry.getValue()) {
-                    simWriter.write(starId+);
-                    simWriter.write(",");
+                    simWriter.write(starId);
+                    simWriter.write("|");
                     simWriter.write(entry.getKey());
                     simWriter.newLine();
                     simInserts++;
