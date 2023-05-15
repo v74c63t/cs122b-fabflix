@@ -3,9 +3,9 @@
 ### Deployment
 Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
 ### Demo
-**URL:** 
+**URL:** `https://youtu.be/gNNIp_vyORI`
 ### AWS
-**URL:** 
+**URL:** `https://54.176.198.22:8443/cs122b-project3/`
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
@@ -29,6 +29,10 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - [AddGenreServlet.java](src/AddGenreServlet.java)
   - [AddMovieServlet.java](src/AddMovieServlet.java)
   - [AddStarServlet.java](src/AddStarServlet.java)
+### Stored Procedures
+  - Existing Star: Both the star name and the star birth year inputted matches a star in the database
+  - Existing Movie: The title, director, and year inputted matches a movie in the database
+  - Existing Genre: The name inputted matches a genre in the database
 ### XMLParser
 There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
 #### Parsing Time Optimization Strategies
