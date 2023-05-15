@@ -215,9 +215,9 @@ xmlParser/movies.csv
 xmlParser/genres_in_movies.csv
 xmlParser/stars.csv
 xmlParser/stars_in_movies.csv
-xmlParser/MovieDuplicate.txt
-xmlParser/MovieInconsistent.txt
-xmlParser/MovieNotFound.txt
-xmlParser/StarDuplicate.txt
-xmlParser/StarNotFound.txt
+#xmlParser/MovieDuplicate.txt
+#xmlParser/MovieInconsistent.txt
+#xmlParser/MovieNotFound.txt
+#xmlParser/StarDuplicate.txt
+#xmlParser/StarNotFound.txt
 
