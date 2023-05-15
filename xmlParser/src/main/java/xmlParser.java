@@ -268,17 +268,17 @@ public class xmlParser extends DefaultHandler implements Parameters {
      */
     private void printData() {
         // Load all data into database
-        loadData("xmlParser/genres.csv", "genres");
-        loadData("xmlParser/stars.csv", "stars");
-        loadData("xmlParser/movies.csv", "movies");
-        updateAvailableInt();
-        loadData("xmlParser/genres_in_movies.csv", "genres_in_movies");
-        loadData("xmlParser/stars_in_movies.csv", "stars_in_movies");
-
+        loadData("movies.csv", "movies");
         System.out.println("No of Inserted Movies: " + myMovies.size());
+        loadData("genres.csv", "genres");
         System.out.println("No of Inserted Genres: " + newGenres.size());
+        loadData("stars.csv", "stars");
         System.out.println("No of Inserted Stars: " + starInserts);
+        updateAvailableInt();
+        loadData("genres_in_movies.csv", "genres_in_movies");
         System.out.println("No of Records Inserted into Genres_in_Movies: " + gimInserts);
+        loadData("stars_in_movies.csv", "stars_in_movies");
+
         System.out.println("No of Records Inserted into Stars_in_Movies: " + simInserts);
         System.out.println("No of Movie Inconsistencies: " + movieInconsistent);
         System.out.println("No of Duplicated Movies: " + movieDupe);
@@ -295,7 +295,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             String query = "LOAD DATA LOCAL INFILE ? " +
                             "INTO TABLE " + tableName + " " +
                             "FIELDS TERMINATED BY '|' " +
-                            "LINES TERMINATED BY '\r\n' " +
+                            "LINES TERMINATED BY '\n' " +
                             "IGNORE 1 ROWS;";
 
             PreparedStatement statement = conn.prepareStatement(query);
@@ -340,8 +340,8 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void movieToCSV( HashMap<String, Movie> movieMap ) {
         try {
-            BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("xmlParser/movies.csv", true));
-            BufferedWriter gimWriter = new BufferedWriter(new FileWriter("xmlParser/genres_in_movies.csv", true));
+            BufferedWriter moviesWriter = new BufferedWriter(new FileWriter("movies.csv", true));
+            BufferedWriter gimWriter = new BufferedWriter(new FileWriter("genres_in_movies.csv", true));
 
             moviesWriter.write("id");
             moviesWriter.write("|");
@@ -394,7 +394,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
     //
     public void genreToCSV( HashMap<String, Integer> genreMap ) {
         try {
-            BufferedWriter gWriter = new BufferedWriter(new FileWriter("xmlParser/genres.csv", true));
+            BufferedWriter gWriter = new BufferedWriter(new FileWriter("genres.csv", true));
             gWriter.write("id");
             gWriter.write("|");
             gWriter.write("name");
@@ -414,7 +414,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void starToCSV( HashMap<String, ArrayList<Star>> starMap ) { // check if correct
         try {
-            BufferedWriter sWriter = new BufferedWriter(new FileWriter("xmlParser/stars.csv", true));
+            BufferedWriter sWriter = new BufferedWriter(new FileWriter("stars.csv", true));
             sWriter.write("id");
             sWriter.write("|");
             sWriter.write("name");
@@ -447,7 +447,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
 
     public void simToCSV( HashMap<String, ArrayList<String>> simMap ) { // check if correct
         try {
-            BufferedWriter simWriter = new BufferedWriter(new FileWriter("xmlParser/stars_in_movies.csv", true));
+            BufferedWriter simWriter = new BufferedWriter(new FileWriter("stars_in_movies.csv", true));
             simWriter.write("starId");
             simWriter.write("|");
             simWriter.write("movieId");
