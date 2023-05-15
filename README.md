@@ -29,6 +29,10 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
   - [AddGenreServlet.java](src/AddGenreServlet.java)
   - [AddMovieServlet.java](src/AddMovieServlet.java)
   - [AddStarServlet.java](src/AddStarServlet.java)
+### Stored Procedures
+  - Existing Star: Both the star name and the star birth year inputted matches a star in the database
+  - Existing Movie: The title, director, and year inputted matches a movie in the database
+  - Existing Genre: The name inputted matches a genre in the database
 ### XMLParser
 There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
 #### Parsing Time Optimization Strategies
