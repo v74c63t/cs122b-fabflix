@@ -20,18 +20,18 @@ No of Missing Stars: 13931
 ```
 
 ## Inconsistency Files
-### MovieDuplicates.txt
+### [MovieDuplicates.txt](MovieDuplicate.txt)
 - When parsing mains, movie has a fid that belongs to a movie that was already seen before in the xml file
-### MovieInconsistent.txt
+### [MovieInconsistent.txt](MovieInconsistent.txt)
 - Movie contains invalid year that is not an integer (ex: 19yy, 199x)
 - Movie does not have any genres associated with it
 - Movie does not have a director (ex: director is listed as unknown)
-### MovieNotFound.txt
+### [MovieNotFound.txt](MovieNotFound.txt)
 - When parsing casts, the fid listed is not associated with any movies that were inserted from the mains xml file
-### StarDuplicates.txt
+### [StarDuplicates.txt](StarDuplicates.txt)
 - When parsing actors, star has a name and birth year that was already found in the database
 - When parsing actors, star has a name that was already found in the database and a null birth year
-### StarNotFound.txt
+### [StarNotFound.txt](StarNotFound.txt)
 - When parsing casts, the name of the star is not found in the database or the actors xml file
 
 
