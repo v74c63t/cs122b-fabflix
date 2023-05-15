@@ -28,32 +28,33 @@
 ### Cat to Genres
 ***Note***: *This is how we interpreted the genres from \<cat> when parsing the mains xml file. These are largely based off of the 3.13 Categories table and the 4.4 Categories table from http://infolab.stanford.edu/pub/movies/doc.html. We have also decided to combine certain genres with already existing genres in the database because of their similarities.*
 - Susp -> Thriller
-- CnR/CnRb -> Cops and Robbers -> Crime
-- Dram -> Drama
-- West -> Western
-- Myst -> Mystery
-- S.F./ScFi -> Sci-Fi
-- Advt -> Adventure
-- Horr -> Horror
-- Romt -> Romantic -> Romance
-- Comd -> Comedy
-- Musc/Stage Musical -> Musical
-- Docu -> Documentary
-- Porn -> Adult
+- CnR/CnRb/cmr/cnrbb -> Cops and Robbers -> Crime
+- Dram/dramd/drama/dram>/anti-dram/dram.actn\/draam -> Drama
+- West/west1 -> Western
+- Myst/mystp -> Mystery
+- S.F./ScFi/scif/sxfi -> Sci-Fi
+- Advt/adctx/adct -> Adventure
+- Horr/hor -> Horror
+- Romt/romtx/ront/ram/romt.\/romtadvt -> Romantic -> Romance
+- Comd/cond/comdx -> Comedy
+- Musc/Stage Musical/muusc/muscl/scat -> Musical
+- Docu/duco/ducu/dicu -> Documentary
+- Porn/porb/kinky -> Adult
 - Noir -> Noir
-- Bio -> Biography
-- BioP -> Biographical Picture -> Biography
+- Bio/biog/biob -> Biography
+- BioP/biopx/biopp -> Biographical Picture -> Biography
 - TV -> TV Show
 - TVs -> TV Series
-- TVm -> TV Miniseries
-- Actn -> Violence -> Action
-- Cart -> Cartoon
-- Camp now -> Camp
+- TVm/tvmini -> TV Miniseries
+- Actn/viol/sctn/axtn/act -> Violence -> Action
+- Cart/cartoon -> Cartoon
+- Camp now/camp -> Camp
 - Crim -> Crime
 - Faml -> Family
-- Fant -> Fantasy
+- Fant/fanth* -> Fantasy
 - Hist -> History
-- Disa -> Disaster
+- Disa/dist -> Disaster
 - Epic -> Epic
-- Surl -> Surreal
+- Surl/surr/surreal -> Surreal
 - AvGa/Avant Garde -> Avant Garde
+- ctxx/ctcxx/ctxxx/txx/h/h0/h*/h** -> Uncategorized
