@@ -1,0 +1,34 @@
+Movie Details - Id:CC80, Title:Limelight, Year:1952, Director:Chaplin, Genres:[Drama].
+Movie Details - Id:FB21, Title:Liliom, Year:1930, Director:Borzage, Genres:[].
+Movie Details - Id:FNm10, Title:Doctor Jack, Year:1922, Director:Newmeyer, Genres:[Comedy].
+Movie Details - Id:MLR6, Title:Five Star Final, Year:1932, Director:M.LeRoy, Genres:[].
+Movie Details - Id:OP13, Title:Forever Amber, Year:1947, Director:Preminger, Genres:[Drama].
+Movie Details - Id:GSt3, Title:The Nitwits, Year:1935, Director:G.Stevens~sr., Genres:[Comedy].
+Movie Details - Id:ChC12, Title:Law and Disorder, Year:1958, Director:Ch.Crichton, Genres:[].
+Movie Details - Id:PaJ2, Title:Ferry Pilot, Year:1941, Director:P.Jackson, Genres:[Documentary, Drama].
+Movie Details - Id:FZ8, Title:The Men, Year:1950, Director:Zinneman, Genres:[Drama, Documentary].
+Movie Details - Id:LAl4, Title:Those Endearing Young Charms, Year:1946, Director:L.Allan, Genres:[].
+Movie Details - Id:NR1, Title:They Live By Night, Year:1947, Director:N.Ray, Genres:[Drama].
+Movie Details - Id:HyC10, Title:Last Holiday, Year:1950, Director:Cass, Genres:[Drama, Romance].
+Movie Details - Id:JLT50, Title:Allan Quatermain and the Lost City of Gold, Year:1986, Director:LeeThompson, Genres:[Adventure].
+Movie Details - Id:JIv42, Title:The Remains of the Day, Year:1993, Director:Ivory, Genres:[Drama].
+Movie Details - Id:GeP15, Title:Murder Most Foul, Year:1964, Director:Pollock, Genres:[Mystery].
+Movie Details - Id:ArH205, Title:The Klansmen, Year:1968, Director:Hiller, Genres:[Drama].
+Movie Details - Id:MBo12, Title:The Legend of Aneus, Year:1962, Director:Bonnard, Genres:[History].
+Movie Details - Id:HiT10, Title:Pitfall, Year:1961, Director:Teshigahara, Genres:[].
+Movie Details - Id:JaS13, Title:The Dark Pool, Year:1963, Director:Smight, Genres:[Thriller].
+Movie Details - Id:KRu25, Title:Rainbow, Year:1989, Director:K.Russell, Genres:[Drama].
+Movie Details - Id:MAp43, Title:Moving the Mountain, Year:1994, Director:Apted, Genres:[Documentary].
+Movie Details - Id:JRl10, Title:Virgins and Vampires, Year:1972, Director:Rollin, Genres:[Adult].
+Movie Details - Id:MeW10, Title:Daughter of Frankenstein, Year:1972, Director:M.Welles, Genres:[].
+Movie Details - Id:JKp35, Title:Brokedown Palace, Year:1999, Director:J.Kaplan, Genres:[Thriller].
+Movie Details - Id:GeM17, Title:Lorenzo's Oil, Year:1992, Director:Geo.Miller, Genres:[Documentary, Thriller, Drama].
+Movie Details - Id:NiM30, Title:Star Trek, Generations, Year:1994, Director:N.Meyer, Genres:[Sci-Fi].
+Movie Details - Id:FOR12, Title:Scream Queen Hot Tub Party, Year:1984, Director:F.O.Ray, Genres:[Adult].
+Movie Details - Id:PAl4, Title:Matador, Year:1985, Director:Almodovar, Genres:[Comedy].
+Movie Details - Id:BLe5, Title:Tin Men, Year:1987, Director:B.Levinson, Genres:[Comedy].
+Movie Details - Id:KaK10, Title:Another Way, Year:1982, Director:? [Makk, Genres:[Thriller].
+Movie Details - Id:AKo15, Title:The Inner Circle, Year:1992, Director:Konchalovsky, Genres:[Epic].
+Movie Details - Id:MiM10, Title:I Got the Hook-Up, Year:1998, Director:M.Martin, Genres:[Comedy].
+Movie Details - Id:NtB10, Title:On the Ropes, Year:1999, Director:Burstein, Genres:[Documentary].
+Movie Details - Id:SfG1, Title:Lost in Translation, Year:2003, Director:Sofia~Coppola, Genres:[Romance].
