@@ -269,12 +269,11 @@ public class xmlParser extends DefaultHandler implements Parameters {
     private void printData() {
         // Load all data into database
         loadData("xmlParser/genres.csv", "genres");
-        loadData("xmlParser/movies.csv", "movies");
-        loadData("xmlParser/genres_in_movies.csv", "genres_in_movies");
         loadData("xmlParser/stars.csv", "stars");
-        loadData("xmlParser/stars_in_movies.csv", "stars_in_movies");
-
+        loadData("xmlParser/movies.csv", "movies");
         updateAvailableInt();
+        loadData("xmlParser/genres_in_movies.csv", "genres_in_movies");
+        loadData("xmlParser/stars_in_movies.csv", "stars_in_movies");
 
         System.out.println("No of Inserted Movies: " + myMovies.size());
         System.out.println("No of Inserted Genres: " + newGenres.size());
@@ -296,7 +295,7 @@ public class xmlParser extends DefaultHandler implements Parameters {
             String query = "LOAD DATA LOCAL INFILE ? " +
                             "INTO TABLE " + tableName + " " +
                             "FIELDS TERMINATED BY '|' " +
-                            "LINES TERMINATED BY '\\n' " +
+                            "LINES TERMINATED BY '\r\n' " +
                             "IGNORE 1 ROWS;";
 
             PreparedStatement statement = conn.prepareStatement(query);
