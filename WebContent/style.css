@@ -4,7 +4,7 @@
 }
 
 #full-text {
-    width: 350px;
+    width: 600px;
     border-radius: 5px;
 }
 
@@ -79,6 +79,43 @@ tbody {
 table{
     border: 3px solid darkgray;
     border-collapse: collapse;
+}
+
+.search-component form {
+    display: flex;
+    align-items: center;
+}
+
+.search-component > label{
+    margin: 0 0.25rem;
+    outline: none;
+}
+
+.search-component input,button{
+    padding: 0 3px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.search-component input:focus,button:focus{
+    outline: none;
+}
+
+.search-component input[type=text],button[type=submit]{
+    padding: 2px 6px;
+}
+
+.search-component button{
+    width: 35px;
+    margin-left: 6px;
+    color: #ff8c00;
+    background: azure;
+}
+
+.search-component button:hover{
+    cursor: pointer;
+    color: #ffc107!important;
+    background: darkgray;
 }
 
 
