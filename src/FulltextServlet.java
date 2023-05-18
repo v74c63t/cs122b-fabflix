@@ -54,21 +54,22 @@ public class FulltextServlet extends HttpServlet {
         String sortBy = request.getParameter("sortBy");
         String[] sort = sortBy.split(" ");
 
+        // Output stream to STDOUT
+        PrintWriter out = response.getWriter();
+
         try (Connection conn = dataSource.getConnection()) {
-            if(sort[0].equals("title")) {
-                if(!sort[2].equals("rating")) {
+            if (sort[0].equals("title")) {
+                if (!sort[2].equals("rating")) {
                     throw new Exception("Invalid sorting criteria");
                 }
-            }
-            else if(sort[0].equals("rating")) {
-                if(!sort[2].equals("title")) {
+            } else if (sort[0].equals("rating")) {
+                if (!sort[2].equals("title")) {
                     throw new Exception("Invalid sorting criteria");
                 }
-            }
-            else {
+            } else {
                 throw new Exception("Invalid sorting criteria");
             }
-            if(!(sort[1].equals("ASC") || sort[1].equals("DESC")) && !(sort[3].equals("ASC") || sort[3].equals("DESC"))){
+            if (!(sort[1].equals("ASC") || sort[1].equals("DESC")) && !(sort[3].equals("ASC") || sort[3].equals("DESC"))) {
                 throw new Exception("Invalid sorting criteria");
             }
 
@@ -142,17 +143,17 @@ public class FulltextServlet extends HttpServlet {
             // Set all parameters denoted "?" with associated token
             int i;
             for (i = 0; i < queries.length; ++i) {
-                statement.setString(i+1,"+" + queries[i] + "*");
+                statement.setString(i + 1, "+" + queries[i] + "*");
             }
-            statement.setInt(i+1, Integer.parseInt(numRecords));
-            statement.setInt(i+2, Integer.parseInt(firstRecord));
+            statement.setInt(i + 1, Integer.parseInt(numRecords));
+            statement.setInt(i + 2, Integer.parseInt(firstRecord));
 
             // Execute query
             ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray1 = new JsonArray();
 
-            while ( rs.next() ) {
+            while (rs.next()) {
                 String movie_rating = rs.getString("rating");
                 String movie_id = rs.getString("movieId");
                 String movie_title = rs.getString("title");
@@ -160,7 +161,7 @@ public class FulltextServlet extends HttpServlet {
                 String movie_director = rs.getString("director");
                 String max_records = rs.getString("maxRecords");
 
-                statement2.setString(1,movie_id);
+                statement2.setString(1, movie_id);
                 ResultSet newRS = statement2.executeQuery();
 
                 ArrayList<String> starsArray = new ArrayList<>();
@@ -171,7 +172,7 @@ public class FulltextServlet extends HttpServlet {
                 newRS.close();
                 String stars = String.join(", ", starsArray);
 
-                statement3.setString(1,movie_id);
+                statement3.setString(1, movie_id);
 
                 newRS = statement3.executeQuery();
 
@@ -197,11 +198,39 @@ public class FulltextServlet extends HttpServlet {
 
                 jsonArray.add(jsonObject);
             }
+            rs.close();
+            statement.close();
+            statement2.close();
+            statement3.close();
 
-            response.getWriter().write(jsonArray.toString());
+//            response.getWriter().write(jsonArray.toString());
+
+            // Write JSON string to output
+            out.write(jsonArray.toString());
+            // Set response status to 200 (OK)
+            response.setStatus(200);
+
         } catch (Exception e) {
-            System.out.println(e);
-            response.sendError(500, e.getMessage());
+            // Write error message JSON object to output
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("errorMessage", e.getMessage());
+            out.write(jsonObject.toString());
+
+            // Log error to localhost log
+            request.getServletContext().log("Error:", e);
+            // Set response status to 500 (Internal Server Error)
+            response.setStatus(500);
+        } finally {
+            out.close();
         }
+
+        // Always remember to close db connection after usage. Here it's done by try-with-resources
+
     }
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            response.sendError(500, e.getMessage());
+//        }
+//    }
 }
