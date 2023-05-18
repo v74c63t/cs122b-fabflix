@@ -103,7 +103,7 @@ public class FulltextServlet extends HttpServlet {
             // TODO: in project 4, you should do full text search with MySQL to find the matches on movies and stars
 
             // Get a list of tokens from input query
-            String[] queries = query.split(" ");
+            String[] queries = query.split("\\s+");
 
             // Construct a string for each token parameter
             StringBuffer numQueries = new StringBuffer();
