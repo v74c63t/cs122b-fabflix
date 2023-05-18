@@ -60,6 +60,14 @@ public class FulltextServlet extends HttpServlet {
                     throw new Exception("Invalid sorting criteria");
                 }
             }
+            else if(sort[0].equals("rating")) {
+                if(!sort[2].equals("title")) {
+                    throw new Exception("Invalid sorting criteria");
+                }
+            }
+            else {
+                throw new Exception("Invalid sorting criteria");
+            }
             if(!(sort[1].equals("ASC") || sort[1].equals("DESC")) && !(sort[3].equals("ASC") || sort[3].equals("DESC"))){
                 throw new Exception("Invalid sorting criteria");
             }

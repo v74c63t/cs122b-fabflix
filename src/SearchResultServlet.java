@@ -123,6 +123,22 @@ public class SearchResultServlet extends HttpServlet {
                     }else if (entry.getKey().equals("sortBy")) {
                         query = query.concat(") SELECT COUNT(*) over() AS maxRecords, movieId, title, year, director, rating FROM distinctResult ");
                         String[] sort = entry.getValue()[0].split(" ");
+                        if(sort[0].equals("title")) {
+                            if(!sort[2].equals("rating")) {
+                                throw new Exception("Invalid sorting criteria");
+                            }
+                        }
+                        else if(sort[0].equals("rating")) {
+                            if(!sort[2].equals("title")) {
+                                throw new Exception("Invalid sorting criteria");
+                            }
+                        }
+                        else {
+                            throw new Exception("Invalid sorting criteria");
+                        }
+                        if(!(sort[1].equals("ASC") || sort[1].equals("DESC")) && !(sort[3].equals("ASC") || sort[3].equals("DESC"))){
+                            throw new Exception("Invalid sorting criteria");
+                        }
                         order = "ORDER BY " + sort[0] + " " + sort[1] + ", " + sort[2] + " " + sort[3] + " ";
                         query = query.concat(order);
 
