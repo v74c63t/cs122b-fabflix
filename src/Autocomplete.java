@@ -83,7 +83,7 @@ public class Autocomplete extends HttpServlet {
             // Query for full-text search
                 // Not sure about  "*"
                 // Maybe just title if we are only getting title for suggestions
-            String sqlQuery = "SELECT id, title FROM movies WHERE MATCH(title) AGAINST(" + numQueries + "IN BOOLEAN MODE) LIMIT 10;";
+            String sqlQuery = "SELECT id, title FROM movies WHERE MATCH(title) AGAINST(" + numQueries + "IN BOOLEAN MODE) LIMIT 10 ORDER BY title;";
 
             // Create a statement
             PreparedStatement statement = conn.prepareStatement(sqlQuery);
