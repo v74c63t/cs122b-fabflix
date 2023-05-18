@@ -1,8 +1,10 @@
 /* =========================  Handle Autocomplete ========================= */
 
 const handleLookup = (query, doneCallback) => {
+    console.log("Autocomplete initiated");
     if (typeof(Storage) !== "undefined") {
         if (localStorage.getItem(query) === null) {
+            console.log("Sending ajax request to backend servlet");
             jQuery.ajax({
                 "method": "GET",
                 // generate the request url from the query.
@@ -19,6 +21,8 @@ const handleLookup = (query, doneCallback) => {
             })
         } else {
             // Use suggestions from localStorage
+            console.log("Using cached results");
+            handleLookupAjaxSuccess(localStorage.getItem(query), query, doneCallback)
         }
     } else {
         // Web Storage isn't supported
@@ -33,12 +37,15 @@ const handleLookupAjaxSuccess = (data, query, doneCallback) => {
     console.log(jsonData);
 
     // Store query and suggestions in localStorage
-        // localStorage.setItem(query, suggestions);
+    if (localStorage.getItem(query) === null) {
+        localStorage.setItem(query, data);
+    }
     doneCallback( { suggestions: jsonData } );
 }
 
 const handleSelectSuggestion = (suggestion) => {
     console.log("You have selected " + suggestion["value"]);
+    console.log("single-movie page: single-movie.html?id=" + suggestion["data"]["movieId"]);
 }
 
 $('#full-text').autocomplete({
