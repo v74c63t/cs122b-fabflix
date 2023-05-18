@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
 
         String email= request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println(email + " " + password);
+//        System.out.println(email + " " + password);
         response.setContentType("application/json"); // Response mime type
         // The log message can be found in localhost log
         request.getServletContext().log("getting email: " + email);
@@ -116,7 +116,7 @@ public class LoginServlet extends HttpServlet {
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                     String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-                    System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+//                    System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
 
                     // Verify reCAPTCHA
                     try {
