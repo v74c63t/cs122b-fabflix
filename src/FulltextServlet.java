@@ -49,8 +49,21 @@ public class FulltextServlet extends HttpServlet {
 
         // Get the most recent result page url
         String resultUrl = (String) session.getAttribute("resultUrl");
+        String firstRecord = request.getParameter("firstRecord");
+        String numRecords = request.getParameter("numRecords");
+        String sortBy = request.getParameter("sortBy");
+        String[] sort = sortBy.split(" ");
 
         try (Connection conn = dataSource.getConnection()) {
+            if(sort[0].equals("title")) {
+                if(!sort[2].equals("rating")) {
+                    throw new Exception("Invalid sorting criteria");
+                }
+            }
+            if(!(sort[1].equals("ASC") || sort[1].equals("DESC")) && !(sort[3].equals("ASC") || sort[3].equals("DESC"))){
+                throw new Exception("Invalid sorting criteria");
+            }
+
             // setup the response json arrray
             JsonArray jsonArray = new JsonArray();
 
@@ -79,12 +92,21 @@ public class FulltextServlet extends HttpServlet {
             // Query for full-text search
             // Not sure about  "*"
             // Maybe just title if we are only getting title for suggestions
-            String sqlQuery = "SELECT * FROM movies WHERE MATCH(title) AGAINST(" + numQueries + "IN BOOLEAN MODE) LIMIT 10;";
+//            String sqlQuery = "SELECT * FROM movies WHERE MATCH(title) AGAINST(" + numQueries + "IN BOOLEAN MODE) LIMIT 10;";
+            String sqlQuery = String.join("",
+                    "SELECT COUNT(*) over() AS maxRecords, m.id AS movieId, title, year, director, rating ",
+                    "FROM movies AS m ",
+                    "LEFT JOIN ratings AS r ",
+                    "ON r.movieId = m.id ",
+                    "WHERE MATCH(title) AGAINST(", numQueries, "IN BOOLEAN MODE) ",
+                    "ORDER BY ", sort[0], " ", sort[1], ",", sort[2], " ", sort[3], " ",
+                    "LIMIT ? ",
+                    "OFFSET ? ");
 
             // Create a statement
             PreparedStatement statement = conn.prepareStatement(sqlQuery);
 
-            query = String.join("",
+            sqlQuery = String.join("",
                     "SELECT s.id, s.name ",
                     "FROM stars AS s, stars_in_movies AS sim ",
                     "WHERE s.id IN (SELECT s.id ",
@@ -95,10 +117,10 @@ public class FulltextServlet extends HttpServlet {
                     "GROUP BY s.id ",
                     "ORDER BY COUNT(*) DESC, s.name ASC ",
                     "LIMIT 3;");
-            PreparedStatement statement2 = conn.prepareStatement(query);
+            PreparedStatement statement2 = conn.prepareStatement(sqlQuery);
 
             // New Query for getting genres
-            query = String.join("",
+            sqlQuery = String.join("",
                     "select genreId, name ",
                     "from genres AS g ",
                     "join genres_in_movies AS gim ",
@@ -107,12 +129,15 @@ public class FulltextServlet extends HttpServlet {
                     "ORDER BY name ",
                     "LIMIT 3;");
 
-            PreparedStatement statement3 = conn.prepareStatement(query);
+            PreparedStatement statement3 = conn.prepareStatement(sqlQuery);
 
             // Set all parameters denoted "?" with associated token
-            for (int i = 0; i < queries.length; ++i) {
+            int i;
+            for (i = 0; i < queries.length; ++i) {
                 statement.setString(i+1,"+" + queries[i] + "*");
             }
+            statement.setInt(i+1, Integer.parseInt(numRecords));
+            statement.setInt(i+2, Integer.parseInt(firstRecord));
 
             // Execute query
             ResultSet rs = statement.executeQuery();
