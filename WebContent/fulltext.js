@@ -44,8 +44,9 @@ const handleLookupAjaxSuccess = (data, query, doneCallback) => {
 }
 
 const handleSelectSuggestion = (suggestion) => {
-    console.log("You have selected " + suggestion["value"]);
-    console.log("single-movie page: single-movie.html?id=" + suggestion["data"]["movieId"]);
+    // console.log("You have selected " + suggestion["value"]);
+    // console.log("single-movie page: single-movie.html?id=" + suggestion["data"]["movieId"]);
+    window.location.replace("single-movie.html?id=" + suggestion["data"]["movieId"]);
 }
 
 $('#full-text').autocomplete({
