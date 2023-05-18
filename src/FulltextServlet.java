@@ -48,7 +48,20 @@ public class FulltextServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         // Get the most recent result page url
+//        String resultUrl = (String) session.getAttribute("resultUrl");
+
+        // Create an attribute "resultUrl" if it doesn't exists
         String resultUrl = (String) session.getAttribute("resultUrl");
+
+        if (resultUrl == null) {
+            resultUrl = "";
+            session.setAttribute("resultUrl", resultUrl);
+        }
+
+        // Set the resultUrl to the current url
+        resultUrl = request.getQueryString();
+        session.setAttribute("resultUrl", resultUrl);
+
         String firstRecord = request.getParameter("firstRecord");
         String numRecords = request.getParameter("numRecords");
         String sortBy = request.getParameter("sortBy");
