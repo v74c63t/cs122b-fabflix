@@ -7,7 +7,7 @@ const handleLookup = (query, doneCallback) => {
                 "method": "GET",
                 // generate the request url from the query.
                 // escape the query string to avoid errors caused by special characters
-                "url": "autocomplete?query=" + escape(query),
+                "url": "autocomplete?query=" + encodeURIComponent(query),
                 "success": function(data) {
                     // pass the data, query, and doneCallback function into the success handler
                     handleLookupAjaxSuccess(data, query, doneCallback)
@@ -58,12 +58,15 @@ $('#full-text').autocomplete({
 
 /* =========================  Handle Search ========================= */
 const handleNormalSearch = (query) => {
-    console.log("FULLTEXT SEARCH");
-    console.log("FULLTEXT SEARCH");
+    console.log("PRESSED ENTER AND QUERY IS " + query);
+
+    let url =  "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0";
+    window.location.replace("result.html?" + url);
 }
 
 $('#full-text').keypress((event) => {
     if (event.keyCode == 13) {
+        event.preventDefault();
         handleNormalSearch($("#full-text").val());
     }
 })
