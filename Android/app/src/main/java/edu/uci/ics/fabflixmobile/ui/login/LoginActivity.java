@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import edu.uci.ics.fabflixmobile.data.NetworkManager;
 import edu.uci.ics.fabflixmobile.databinding.ActivityLoginBinding;
 import edu.uci.ics.fabflixmobile.ui.movielist.MovieListActivity;
+import edu.uci.ics.fabflixmobile.ui.movielist.Search;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,9 +72,9 @@ public class LoginActivity extends AppCompatActivity {
                             //Complete and destroy login activity once successful
                             finish();
                             // initialize the activity(page)/destination
-                            Intent MovieListPage = new Intent(LoginActivity.this, MovieListActivity.class);
+                            Intent SearchPage = new Intent(LoginActivity.this, Search.class);
                             // activate the list page.
-                            startActivity(MovieListPage);
+                            startActivity(SearchPage);
                         }
                         else {
                             message.setText(results.getString("message"));
