@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+												   xmlns:app="http://schemas.android.com/apk/res-auto"
+												   xmlns:tools="http://schemas.android.com/tools"
+												   android:id="@+id/container"
+												   android:layout_width="match_parent"
+												   android:layout_height="match_parent"
+												   android:paddingLeft="@dimen/activity_horizontal_margin"
+												   android:paddingTop="@dimen/activity_vertical_margin"
+												   android:paddingRight="@dimen/activity_horizontal_margin"
+												   android:paddingBottom="@dimen/activity_vertical_margin"
+												   tools:context=".ui.login.LoginActivity" android:background="#778899"
+><![CDATA[>
+
+
+
+
+
+	]]>
+	<Button
+			android:id="@+id/searchBtn"
+			android:layout_width="0dp"
+			android:layout_height="64dp"
+			android:layout_gravity="start"
+			android:layout_marginTop="16dp"
+			android:text="Search"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintVertical_bias="0.809"
+			app:layout_constraintTop_toTopOf="parent"
+			android:layout_marginEnd="64dp" android:layout_marginStart="64dp"
+			app:layout_constraintHorizontal_bias="0.0"/>
+	<TextView
+			android:id="@+id/title3"
+			android:layout_width="175dp"
+			android:layout_height="82dp"
+			android:layout_centerHorizontal="true"
+			android:text="@string/fabflix"
+			android:textColor="#FF8C00"
+			android:textSize="50sp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="128dp"
+			android:textStyle="italic" android:textAlignment="center"/>
+	<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content" android:id="@+id/tempTextView"
+			app:layout_constraintTop_toBottomOf="@+id/title3"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/searchBtn" app:layout_constraintHorizontal_bias="0.502"
+			app:layout_constraintVertical_bias="0.751" android:layout_marginStart="64dp"
+			android:layout_marginEnd="64dp"/>
+	<com.google.android.material.textfield.TextInputLayout
+			android:layout_width="409dp"
+			android:layout_height="wrap_content"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent">
+
+		<com.google.android.material.textfield.TextInputEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="Fulltext Search" android:id="@+id/query_input"/>
+	</com.google.android.material.textfield.TextInputLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
