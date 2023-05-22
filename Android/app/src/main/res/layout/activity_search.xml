@@ -16,6 +16,9 @@
 
 
 
+
+
+
 	]]>
 	<Button
 			android:id="@+id/searchBtn"
@@ -27,10 +30,10 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintVertical_bias="0.809"
+			app:layout_constraintVertical_bias="0.471"
 			app:layout_constraintTop_toTopOf="parent"
 			android:layout_marginEnd="64dp" android:layout_marginStart="64dp"
-			app:layout_constraintHorizontal_bias="0.0"/>
+			android:backgroundTint="#00008B"/>
 	<TextView
 			android:id="@+id/title3"
 			android:layout_width="175dp"
@@ -41,25 +44,30 @@
 			android:textSize="50sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="128dp"
-			android:textStyle="bold|italic" android:textAlignment="center"/>
+			app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="92dp"
+			android:textStyle="bold|italic" android:textAlignment="center" android:fontFamily="sans-serif"/>
 	<TextView
 			android:layout_width="0dp"
 			android:layout_height="wrap_content" android:id="@+id/tempTextView"
 			app:layout_constraintTop_toBottomOf="@+id/title3"
 			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/searchBtn" app:layout_constraintHorizontal_bias="0.502"
-			app:layout_constraintVertical_bias="0.751" android:layout_marginStart="64dp"
-			android:layout_marginEnd="64dp"/>
+			app:layout_constraintBottom_toTopOf="@+id/searchBtn"
+			app:layout_constraintVertical_bias="0.79" android:layout_marginStart="64dp"
+			android:layout_marginEnd="64dp" android:textAlignment="center"/>
 	<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="409dp"
 			android:layout_height="wrap_content"
 			app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent">
+			app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="16dp"
+			app:layout_constraintVertical_bias="0.459">
 
-		<com.google.android.material.textfield.TextInputEditText
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:hint="Fulltext Search" android:id="@+id/query_input"/>
 	</com.google.android.material.textfield.TextInputLayout>
+	<com.google.android.material.textfield.TextInputEditText
+			android:layout_width="429dp"
+			android:layout_height="42dp"
+			android:hint="Full Text Search" android:id="@+id/query_input"
+			tools:layout_editor_absoluteX="16dp" android:background="@color/white"
+			app:layout_constraintTop_toBottomOf="@+id/title3" android:layout_marginTop="36dp"
+			app:layout_constraintBottom_toTopOf="@+id/tempTextView" app:layout_constraintVertical_bias="0.0"
+			android:textAlignment="textStart"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
