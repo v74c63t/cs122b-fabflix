@@ -40,6 +40,14 @@ There is a [README file](xmlParser/README.md) in the xmlParser directory that de
   2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
 ## Contributions
 ### Vanessa
+  - Full Text/Autocomplete
+  - Login
   - 
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
 ### Haver
+  - Full Text/Autocomplete
+  - Search
   - 
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
