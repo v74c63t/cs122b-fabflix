@@ -14,12 +14,15 @@ import com.android.volley.toolbox.StringRequest;
 import edu.uci.ics.fabflixmobile.data.NetworkManager;
 import edu.uci.ics.fabflixmobile.databinding.ActivityLoginBinding;
 import edu.uci.ics.fabflixmobile.ui.movielist.MovieListActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText username;
+    private EditText email;
     private EditText password;
     private TextView message;
 
@@ -40,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         // upon creation, inflate and initialize the layout
         setContentView(binding.getRoot());
 
-        username = binding.username;
+        email = binding.username;
         password = binding.password;
         message = binding.message;
         final Button loginButton = binding.login;
@@ -51,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void login() {
-        message.setText("Trying to login");
+//        message.setText("Trying to login");
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         // request type is POST
@@ -61,13 +64,23 @@ public class LoginActivity extends AppCompatActivity {
                 response -> {
                     // TODO: should parse the json response to redirect to appropriate functions
                     //  upon different response value.
-                    Log.d("login.success", response);
-                    //Complete and destroy login activity once successful
-                    finish();
-                    // initialize the activity(page)/destination
-                    Intent MovieListPage = new Intent(LoginActivity.this, MovieListActivity.class);
-                    // activate the list page.
-                    startActivity(MovieListPage);
+                    try {
+                        JSONObject results = new JSONObject(response);
+                        if(results.getString("status").equals("success")) {
+                            Log.d("login.success", response);
+                            //Complete and destroy login activity once successful
+                            finish();
+                            // initialize the activity(page)/destination
+                            Intent MovieListPage = new Intent(LoginActivity.this, MovieListActivity.class);
+                            // activate the list page.
+                            startActivity(MovieListPage);
+                        }
+                        else {
+                            message.setText(results.getString("message"));
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 },
                 error -> {
                     // error
@@ -77,8 +90,9 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // POST request form data
                 final Map<String, String> params = new HashMap<>();
-                params.put("username", username.getText().toString());
+                params.put("email", email.getText().toString());
                 params.put("password", password.getText().toString());
+                params.put("device", "Android");
                 return params;
             }
         };
