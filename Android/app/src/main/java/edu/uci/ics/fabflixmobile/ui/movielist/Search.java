@@ -52,7 +52,7 @@ public class Search extends AppCompatActivity{
 
     @SuppressLint("SetTextI18n")
     public void search(EditText query, TextView tv) {
-        tv.setText("TEST");
+//        tv.setText("TEST");
         // need to change firstRecord
         String parameters = "query=" + query.getText() + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=0";
 //        tv.setText(query.getText());
@@ -75,14 +75,14 @@ public class Search extends AppCompatActivity{
                         }
 
                         // Need testing/adjustments below
-                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
-                        ListView listView = findViewById(R.id.list);
-                        listView.setAdapter(adapter);
-                        listView.setOnItemClickListener((parent, view, position, id) -> {
-                            Movie movie = movies.get(position);
-                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                        });
+//                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
+//                        ListView listView = findViewById(R.id.list);
+//                        listView.setAdapter(adapter);
+//                        listView.setOnItemClickListener((parent, view, position, id) -> {
+//                            Movie movie = movies.get(position);
+//                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
+//                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+//                        });
 
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
