@@ -74,15 +74,16 @@ public class Search extends AppCompatActivity{
                                     jsonObj.getString("movie_director"), jsonObj.getString("movie_genres"), jsonObj.getString("movie_stars")));
                         }
 
+                        setContentView(R.layout.activity_movielist);
                         // Need testing/adjustments below
-//                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
-//                        ListView listView = findViewById(R.id.list);
-//                        listView.setAdapter(adapter);
-//                        listView.setOnItemClickListener((parent, view, position, id) -> {
-//                            Movie movie = movies.get(position);
-//                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
-//                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-//                        });
+                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
+                        ListView listView = findViewById(R.id.list);
+                        listView.setAdapter(adapter);
+                        listView.setOnItemClickListener((parent, view, position, id) -> {
+                            Movie movie = movies.get(position);
+                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        });
 
                     } catch (JSONException e) {
                         throw new RuntimeException(e);

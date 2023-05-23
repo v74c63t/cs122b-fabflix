@@ -30,7 +30,7 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintVertical_bias="0.471"
+			app:layout_constraintVertical_bias="0.596"
 			app:layout_constraintTop_toTopOf="parent"
 			android:layout_marginEnd="64dp" android:layout_marginStart="64dp"
 			android:backgroundTint="#00008B"/>
@@ -52,16 +52,8 @@
 			app:layout_constraintTop_toBottomOf="@+id/title3"
 			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toTopOf="@+id/searchBtn"
-			app:layout_constraintVertical_bias="0.79" android:layout_marginStart="64dp"
+			app:layout_constraintVertical_bias="0.666" android:layout_marginStart="64dp"
 			android:layout_marginEnd="64dp" android:textAlignment="center"/>
-	<com.google.android.material.textfield.TextInputLayout
-			android:layout_width="409dp"
-			android:layout_height="wrap_content"
-			app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="16dp"
-			app:layout_constraintVertical_bias="0.459">
-
-	</com.google.android.material.textfield.TextInputLayout>
 	<com.google.android.material.textfield.TextInputEditText
 			android:layout_width="429dp"
 			android:layout_height="42dp"
