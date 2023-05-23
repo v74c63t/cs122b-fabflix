@@ -23,7 +23,6 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
         TextView director;
         TextView genres;
         TextView stars;
-        TextView rating;
     }
 
     public MovieListViewAdapter(Context context, ArrayList<Movie> movies) {
@@ -48,8 +47,6 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
             viewHolder.director = convertView.findViewById(R.id.director);
             viewHolder.genres = convertView.findViewById(R.id.genres);
             viewHolder.stars = convertView.findViewById(R.id.stars);
-            viewHolder.rating = convertView.findViewById(R.id.rating);
-
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
@@ -59,11 +56,10 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
         // Populate the data from the data object via the viewHolder object
         // into the template view.
         viewHolder.title.setText(movie.getTitle());
-        viewHolder.year.setText(movie.getYear());
+        viewHolder.year.setText(movie.getYear() + "");
         viewHolder.director.setText(movie.getDirector());
         viewHolder.genres.setText(movie.getGenres());
         viewHolder.stars.setText(movie.getStars());
-        viewHolder.rating.setText(movie.getRating());
         // Return the completed view to render on screen
         return convertView;
     }

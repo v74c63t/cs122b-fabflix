@@ -1,8 +1,5 @@
 package edu.uci.ics.fabflixmobile.data.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Movie class that captures movie information for movies retrieved from MovieListActivity
  */
@@ -13,16 +10,28 @@ public class Movie {
     String director;
     String genres;
     String stars;
-    String rating;
 
-    public Movie(String title, String id, String year, String director, String genres, String stars, String rating) {
+    public Movie(String title, String id, String year, String director, String genres, String stars) {
         this.title = title;
         this.id = id;
         this.year = year;
         this.director = director;
-        this.genres = genres;
-        this.stars = stars;
-        this.rating = rating;
+        String[] parsed = genres.split(", ");
+        this.genres = "";
+        for( String p : parsed) {
+            String[] parsed2 = p.split("\\|");
+            this.genres += parsed2[1] + ", ";
+        }
+        this.genres = this.genres.substring(0, this.genres.length()-3);
+        parsed = stars.split(", ");
+        this.stars = "";
+        for( String p : parsed) {
+            String[] parsed2 = p.split("\\|");
+            this.stars += parsed2[1] + ", ";
+        }
+        this.stars = this.stars.substring(0, this.stars.length()-3);
+//        this.genres = genres;
+//        this.stars = stars;
     }
 
     public String getTitle() {return title;}
@@ -34,28 +43,11 @@ public class Movie {
     public String getDirector() {return director;}
 
     public String getGenres() {
-        ArrayList<String> splitGenres = new ArrayList<String>(Arrays.asList(genres.split(",")));
-        StringBuilder genresString = new StringBuilder();
-        for (int i=0; i < splitGenres.size(); ++i) {
-            if ( i != 0) {
-                genresString.append(", ");
-            }
-            genresString.append(splitGenres.get(i).split("\\|")[1]);
-        }
-        return genresString.toString();
+
+        return genres;
     }
 
     public String getStars() {
-        ArrayList<String> splitStars = new ArrayList<String>(Arrays.asList(stars.split(",")));
-        StringBuilder starsString = new StringBuilder();
-        for (int i=0; i < splitStars.size(); ++i) {
-            if ( i != 0) {
-                starsString.append(", ");
-            }
-            starsString.append(splitStars.get(i).split("\\|")[1]);
-        }
-        return starsString.toString();
+        return stars;
     }
-
-    public String getRating() {return rating;}
 }
