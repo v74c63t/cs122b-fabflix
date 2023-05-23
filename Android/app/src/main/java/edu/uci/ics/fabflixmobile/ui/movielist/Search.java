@@ -7,6 +7,7 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import com.google.gson.Gson;
 import edu.uci.ics.fabflixmobile.data.model.Movie;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -67,23 +68,27 @@ public class Search extends AppCompatActivity{
                         JSONArray jsonArr = new JSONArray(response);
                         final ArrayList<Movie> movies = new ArrayList<>();
                         // Testing if title of movie is displayed on TextView
-                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
+//                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
                         for ( int i = 0; i < jsonArr.length(); ++i ) {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
                             movies.add(new Movie(jsonObj.getString("movie_title"), jsonObj.getString("movie_id"), jsonObj.getString("movie_year"),
                                     jsonObj.getString("movie_director"), jsonObj.getString("movie_genres"), jsonObj.getString("movie_stars"), jsonObj.getString("movie_rating")));
                         }
-
-                        setContentView(R.layout.activity_movielist);
-                        // Need testing/adjustments below
-                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
-                        ListView listView = findViewById(R.id.list);
-                        listView.setAdapter(adapter);
-                        listView.setOnItemClickListener((parent, view, position, id) -> {
-                            Movie movie = movies.get(position);
-                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                        });
+                        Gson gson = new Gson();
+                        String moviesJsonStr = gson.toJson(movies);
+                        Intent MovieListPage = new Intent(Search.this, MovieListActivity.class);
+                        MovieListPage.putExtra("movies", moviesJsonStr);
+                        startActivity(MovieListPage);
+//                        setContentView(R.layout.activity_movielist);
+//                        // Need testing/adjustments below
+//                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
+//                        ListView listView = findViewById(R.id.list);
+//                        listView.setAdapter(adapter);
+//                        listView.setOnItemClickListener((parent, view, position, id) -> {
+//                            Movie movie = movies.get(position);
+//                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
+//                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+//                        });
 
                     } catch (JSONException e) {
                         throw new RuntimeException(e);

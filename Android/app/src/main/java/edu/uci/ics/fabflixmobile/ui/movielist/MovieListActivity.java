@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import edu.uci.ics.fabflixmobile.R;
 import edu.uci.ics.fabflixmobile.data.model.Movie;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -20,9 +23,17 @@ public class MovieListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movielist);
         // TODO: this should be retrieved from the backend server
-        final ArrayList<Movie> movies = new ArrayList<>();
+//        final ArrayList<Movie> movies = new ArrayList<>();
+//        Type type = new ArrayList<Movie>().get;
 //        movies.add(new Movie("The Terminal", "2004"));
 //        movies.add(new Movie("The Final Season", "2007"));
+        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+            String jsonStr = extras.getString("movies");
+            //The key argument here must match that used in the other activity
+            Gson gson = new Gson();
+            final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
+        //}
         MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
         ListView listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
