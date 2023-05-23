@@ -15,20 +15,8 @@
             android:layout_marginRight="5dp"/>
 
     <TextView
-<<<<<<< HEAD
-=======
-            android:id="@+id/year"
-            tools:text="year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
-
-    <TextView
             android:id="@+id/director"
             tools:text="director"
->>>>>>> 6d9a0894085c22ab0ea22f7fd9f3b91050cf3266
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
