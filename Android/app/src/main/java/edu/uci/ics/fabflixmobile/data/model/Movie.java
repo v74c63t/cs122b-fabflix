@@ -10,8 +10,9 @@ public class Movie {
     String director;
     String genres;
     String stars;
+    String rating;
 
-    public Movie(String title, String id, String year, String director, String genres, String stars) {
+    public Movie(String title, String id, String year, String director, String genres, String stars, String rating) {
         this.title = title;
         this.id = id;
         this.year = year;
@@ -32,6 +33,7 @@ public class Movie {
         this.stars = this.stars.substring(0, this.stars.length()-2);
 //        this.genres = genres;
 //        this.stars = stars;
+        this.rating = rating;
     }
 
     public String getTitle() {return title;}
@@ -42,12 +44,9 @@ public class Movie {
 
     public String getDirector() {return director;}
 
-    public String getGenres() {
+    public String getGenres() {return genres;}
 
-        return genres;
-    }
+    public String getStars() {return stars;}
 
-    public String getStars() {
-        return stars;
-    }
+    public String getRating() {return rating;}
 }

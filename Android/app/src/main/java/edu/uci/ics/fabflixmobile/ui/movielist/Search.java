@@ -71,7 +71,7 @@ public class Search extends AppCompatActivity{
                         for ( int i = 0; i < jsonArr.length(); ++i ) {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
                             movies.add(new Movie(jsonObj.getString("movie_title"), jsonObj.getString("movie_id"), jsonObj.getString("movie_year"),
-                                    jsonObj.getString("movie_director"), jsonObj.getString("movie_genres"), jsonObj.getString("movie_stars")));
+                                    jsonObj.getString("movie_director"), jsonObj.getString("movie_genres"), jsonObj.getString("movie_stars"), jsonObj.getString("movie_rating")));
                         }
 
                         setContentView(R.layout.activity_movielist);
