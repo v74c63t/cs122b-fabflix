@@ -40,7 +40,7 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.movielist_row, parent, false);
             viewHolder.title = convertView.findViewById(R.id.title);
-            viewHolder.subtitle = convertView.findViewById(R.id.subtitle);
+            viewHolder.subtitle = convertView.findViewById(R.id.year);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
