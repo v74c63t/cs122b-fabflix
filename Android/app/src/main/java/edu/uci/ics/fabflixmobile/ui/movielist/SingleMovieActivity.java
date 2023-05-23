@@ -68,9 +68,9 @@ public class SingleMovieActivity extends AppCompatActivity {
                         JSONObject jsonObj = new JSONObject(response);
                         titleView.setText(jsonObj.getString("movie_title"));
                         yearView.setText(jsonObj.getString("movie_year"));
-                        directorView.setText(jsonObj.getString("movie_director"));
-                        genresView.setText(jsonObj.getString("movie_genres"));
-                        starsView.setText(jsonObj.getString("movie_stars"));
+                        directorView.setText("Director: " + jsonObj.getString("movie_director"));
+                        genresView.setText("Genres: " + jsonObj.getString("movie_genres"));
+                        starsView.setText("Stars: " + jsonObj.getString("movie_stars"));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
