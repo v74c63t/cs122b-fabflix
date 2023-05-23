@@ -35,7 +35,7 @@ public class MovieListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Movie movie = movies.get(position);
-            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %d", position, movie.getTitle(), movie.getYear());
+            @SuppressLint("DefaultLocale") String message = String.format("Clicked on movie id: %s", movie.getId());
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         });
     }
