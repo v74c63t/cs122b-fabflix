@@ -7,10 +7,10 @@
 
     <TextView
             android:id="@+id/title"
+            tools:text="Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/teal_200"
-            android:textSize="20sp" tools:text="Title"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" android:textStyle="bold"/>
 
