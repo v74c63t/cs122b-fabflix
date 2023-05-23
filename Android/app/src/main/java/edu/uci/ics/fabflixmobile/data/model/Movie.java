@@ -16,8 +16,22 @@ public class Movie {
         this.id = id;
         this.year = year;
         this.director = director;
-        this.genres = genres;
-        this.stars = stars;
+        String[] parsed = genres.split(", ");
+        this.genres = "";
+        for( String p : parsed) {
+            String[] parsed2 = p.split("\\|");
+            this.genres += parsed2[1] + ", ";
+        }
+        this.genres = this.genres.substring(0, this.genres.length()-3);
+        parsed = stars.split(", ");
+        this.stars = "";
+        for( String p : parsed) {
+            String[] parsed2 = p.split("\\|");
+            this.stars += parsed2[1] + ", ";
+        }
+        this.stars = this.stars.substring(0, this.stars.length()-3);
+//        this.genres = genres;
+//        this.stars = stars;
     }
 
     public String getTitle() {return title;}
@@ -28,7 +42,12 @@ public class Movie {
 
     public String getDirector() {return director;}
 
-    public String getGenres() {return genres;}
+    public String getGenres() {
 
-    public String getStars() {return stars;}
+        return genres;
+    }
+
+    public String getStars() {
+        return stars;
+    }
 }
