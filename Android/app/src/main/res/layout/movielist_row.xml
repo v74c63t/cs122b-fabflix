@@ -10,28 +10,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="25sp" tools:text="Title"/>
+            android:textSize="25sp" tools:text="Title"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
     <TextView
             android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white" android:text="year"/>
+            android:textColor="@color/white" android:text="year"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/director" android:textColor="@color/white"
-            android:text="director"/>
+            android:text="director"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     <TextView
             android:text="genres"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/genres" android:textColor="@color/white"/>
+            android:layout_height="wrap_content" android:id="@+id/genres" android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     <TextView
             android:text="stars"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/stars" android:textColor="@color/white"/>
+            android:layout_height="wrap_content" android:id="@+id/stars" android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     <TextView
             android:text="rating"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/rating" android:textColor="@color/white"/>
+            android:layout_height="wrap_content" android:id="@+id/rating" android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
 </LinearLayout>
