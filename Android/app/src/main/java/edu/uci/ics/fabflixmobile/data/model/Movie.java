@@ -22,14 +22,14 @@ public class Movie {
             String[] parsed2 = p.split("\\|");
             this.genres += parsed2[1] + ", ";
         }
-        this.genres = this.genres.substring(0, this.genres.length()-3);
+        this.genres = this.genres.substring(0, this.genres.length()-2);
         parsed = stars.split(", ");
         this.stars = "";
         for( String p : parsed) {
             String[] parsed2 = p.split("\\|");
             this.stars += parsed2[1] + ", ";
         }
-        this.stars = this.stars.substring(0, this.stars.length()-3);
+        this.stars = this.stars.substring(0, this.stars.length()-2);
 //        this.genres = genres;
 //        this.stars = stars;
     }
