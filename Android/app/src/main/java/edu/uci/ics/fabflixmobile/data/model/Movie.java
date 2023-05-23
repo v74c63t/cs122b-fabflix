@@ -33,9 +33,29 @@ public class Movie {
 
     public String getDirector() {return director;}
 
-    public String getGenres() {return genres;}
+    public String getGenres() {
+        ArrayList<String> splitGenres = new ArrayList<String>(Arrays.asList(genres.split(",")));
+        StringBuilder genresString = new StringBuilder();
+        for (int i=0; i < splitGenres.size(); ++i) {
+            if ( i != 0) {
+                genresString.append(", ");
+            }
+            genresString.append(splitGenres.get(i).split("\\|")[1]);
+        }
+        return genresString.toString();
+    }
 
-    public String getStars() {return stars;}
+    public String getStars() {
+        ArrayList<String> splitStars = new ArrayList<String>(Arrays.asList(stars.split(",")));
+        StringBuilder starsString = new StringBuilder();
+        for (int i=0; i < splitStars.size(); ++i) {
+            if ( i != 0) {
+                starsString.append(", ");
+            }
+            starsString.append(splitStars.get(i).split("\\|")[1]);
+        }
+        return starsString.toString();
+    }
 
     public String getRating() {return rating;}
 }
