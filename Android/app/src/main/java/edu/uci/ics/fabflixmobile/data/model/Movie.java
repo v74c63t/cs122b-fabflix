@@ -1,5 +1,8 @@
 package edu.uci.ics.fabflixmobile.data.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Movie class that captures movie information for movies retrieved from MovieListActivity
  */
@@ -10,14 +13,16 @@ public class Movie {
     String director;
     String genres;
     String stars;
+    String rating;
 
-    public Movie(String title, String id, String year, String director, String genres, String stars) {
+    public Movie(String title, String id, String year, String director, String genres, String stars, String rating) {
         this.title = title;
         this.id = id;
         this.year = year;
         this.director = director;
         this.genres = genres;
         this.stars = stars;
+        this.rating = rating;
     }
 
     public String getTitle() {return title;}
@@ -31,4 +36,6 @@ public class Movie {
     public String getGenres() {return genres;}
 
     public String getStars() {return stars;}
+
+    public String getRating() {return rating;}
 }
