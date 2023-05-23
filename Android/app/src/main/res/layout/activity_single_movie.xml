@@ -24,8 +24,8 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/single_title"
 					android:textColor="@color/teal_200"
-					android:textStyle="bold"
-					android:layout_margin="10dp"/>
+					android:textStyle="bold|italic"
+					android:layout_margin="10dp" android:textSize="24sp"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -38,7 +38,7 @@
 					android:text="Year"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/single_year"
-					android:layout_margin="10dp"/>
+					android:layout_margin="10dp" android:textColor="@color/white"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -51,7 +51,7 @@
 					android:text="Director"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/single_director"
-					android:layout_margin="10dp"/>
+					android:layout_margin="10dp" android:textColor="@color/white"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -64,7 +64,7 @@
 					android:text="Genres"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/single_genres"
-					android:layout_margin="10dp"/>
+					android:layout_margin="10dp" android:textColor="@color/white"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -78,7 +78,7 @@
 					android:text="Stars"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/single_stars"
-					android:layout_margin="10dp"/>
+					android:layout_margin="10dp" android:textColor="@color/white"/>
 		</FrameLayout>
 	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
