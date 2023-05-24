@@ -13,7 +13,7 @@
     <ListView
             android:id="@+id/list"
             android:layout_width="380dp"
-            android:layout_height="637dp" tools:layout_editor_absoluteY="6dp" tools:layout_editor_absoluteX="1dp"/>
+            android:layout_height="637dp" tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="-1dp"/>
     <Button
             android:text="Next"
             android:layout_width="wrap_content"
