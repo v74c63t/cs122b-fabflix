@@ -50,23 +50,28 @@ public class MovieListActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         offset = extras.getInt("offset");
         int pageNum = offset/20 + 1;
-        maxRecords = extras.getInt("maxRecords");
         query = extras.getString("query");
         pageView.setText("Page " + Integer.toString(pageNum));
         String jsonStr = extras.getString("movies");
         Gson gson = new Gson();
         final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
-        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
-        ListView listView = findViewById(R.id.list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Movie movie = movies.get(position);
-//            @SuppressLint("DefaultLocale") String message = String.format("Clicked on movie id: %s", movie.getId());
-//            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            Intent SingleMoviePage = new Intent(MovieListActivity.this, SingleMovieActivity.class);
-            SingleMoviePage.putExtra("movieId", movie.getId());
-            startActivity(SingleMoviePage);
-        });
+        if(movies.size() > 0) {
+            maxRecords = extras.getInt("maxRecords");
+            MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
+            ListView listView = findViewById(R.id.list);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener((parent, view, position, id) -> {
+                Movie movie = movies.get(position);
+                //            @SuppressLint("DefaultLocale") String message = String.format("Clicked on movie id: %s", movie.getId());
+                //            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                Intent SingleMoviePage = new Intent(MovieListActivity.this, SingleMovieActivity.class);
+                SingleMoviePage.putExtra("movieId", movie.getId());
+                startActivity(SingleMoviePage);
+            });
+        }
+        else {
+            maxRecords = 0;
+        }
         nextButton = findViewById(R.id.next);
         prevButton = findViewById(R.id.prev);
         nextButton.setOnClickListener(view -> next());

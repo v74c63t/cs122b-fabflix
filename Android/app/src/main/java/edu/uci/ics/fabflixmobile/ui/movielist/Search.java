@@ -74,7 +74,10 @@ public class Search extends AppCompatActivity{
                         final ArrayList<Movie> movies = new ArrayList<>();
                         // Testing if title of movie is displayed on TextView
 //                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
-                        String maxRecords = jsonArr.getJSONObject(0).getString("max_records");
+                        String maxRecords = "0";
+                        if(jsonArr.length() > 0) {
+                           maxRecords = jsonArr.getJSONObject(0).getString("max_records");
+                        }
                         for ( int i = 0; i < jsonArr.length(); ++i ) {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
                             String rating = "";
@@ -95,8 +98,10 @@ public class Search extends AppCompatActivity{
                         Intent MovieListPage = new Intent(Search.this, MovieListActivity.class);
                         MovieListPage.putExtra("movies", moviesJsonStr);
                         MovieListPage.putExtra("offset", 0);
-                        MovieListPage.putExtra("maxRecords", Integer.parseInt(maxRecords));
                         MovieListPage.putExtra("query", queryStr);
+                        if(movies.size() > 0) {
+                            MovieListPage.putExtra("maxRecords", Integer.parseInt(maxRecords));
+                        }
                         startActivity(MovieListPage);
 //                        setContentView(R.layout.activity_movielist);
 //                        // Need testing/adjustments below
