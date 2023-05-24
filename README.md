@@ -11,6 +11,8 @@ Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./t
 ### MySQL
 **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`
 ## Additional Notes
+### Android
+  - The device we chose for our android emulator for testing was the **Pixel 2XL**
 ### Substring Matching Design
   - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
   - LIKE '%AB%'
