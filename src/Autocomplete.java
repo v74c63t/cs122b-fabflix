@@ -35,13 +35,11 @@ public class Autocomplete extends HttpServlet {
 
     /*
      *
-     * Match the query against superheroes and return a JSON response.
+     * Match the query against movie titles and return a JSON response.
      *
-     * For example, if the query is "super":
      * The JSON response look like this:
      * [
-     * 	{ "value": "Superman", "data": { "heroID": 101 } },
-     * 	{ "value": "Supergirl", "data": { "heroID": 113 } }
+     * 	{ "value": title(year), "data": { "movieId": movieId } },
      * ]
      *
      * The format is like this because it can be directly used by the
@@ -67,8 +65,6 @@ public class Autocomplete extends HttpServlet {
                 return;
             }
 
-            // search on superheroes and add the results to JSON Array
-            // this example only does a substring match
             // TODO: in project 4, you should do full text search with MySQL to find the matches on movies and stars
 
             // Get a list of tokens from input query
@@ -81,8 +77,6 @@ public class Autocomplete extends HttpServlet {
             }
 
             // Query for full-text search
-                // Not sure about  "*"
-                // Maybe just title if we are only getting title for suggestions
             String sqlQuery = "SELECT id, title, year FROM movies WHERE MATCH(title) AGAINST(" + numQueries + "IN BOOLEAN MODE) ORDER BY title LIMIT 10;";
 
             // Create a statement
@@ -96,14 +90,11 @@ public class Autocomplete extends HttpServlet {
             // Execute query
             ResultSet rs = statement.executeQuery();
 
-            JsonArray jsonArray1 = new JsonArray();
 
             while ( rs.next() ) {
                 String movieId = rs.getString("id");
                 String title = rs.getString("title");
                 String year = rs.getString("year");
-//                String value = title + " (" + year + ")";
-//                System.out.println(value);
 
                 JsonObject jsonObject = new JsonObject();
                 JsonObject dataJsonObject = new JsonObject();
@@ -121,24 +112,6 @@ public class Autocomplete extends HttpServlet {
         }
     }
 
-    /*
-     * Generate the JSON Object from hero to be like this format:
-     * {
-     *   "value": "Iron Man",
-     *   "data": { "heroID": 11 }
-     * }
-     *
-     */
-    private static JsonObject generateJsonObject(Integer heroID, String heroName) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("value", heroName);
-
-        JsonObject additionalDataJsonObject = new JsonObject();
-        additionalDataJsonObject.addProperty("heroID", heroID);
-
-        jsonObject.add("data", additionalDataJsonObject);
-        return jsonObject;
-    }
 
 
 }
