@@ -20,7 +20,7 @@
 				android:layout_marginRight="8dp"
 				android:layout_marginTop="8dp">
 			<TextView
-					android:text="Title"
+					android:text="Title (Year)"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/single_title"
 					android:textColor="@color/teal_200"
@@ -35,9 +35,9 @@
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp">
 			<TextView
-					android:text="Year"
+					android:text="Rating"
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:id="@+id/single_year"
+					android:layout_height="wrap_content" android:id="@+id/single_rating"
 					android:layout_margin="10dp" android:textColor="@color/white"/>
 		</FrameLayout>
 		<FrameLayout
