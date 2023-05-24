@@ -71,8 +71,18 @@ public class Search extends AppCompatActivity{
 //                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
                         for ( int i = 0; i < jsonArr.length(); ++i ) {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
+                            String rating = "";
+                            if(jsonObj.getString("movie_rating").equals("null")) {
+                                rating = "0.0";
+                            }
+                            else if(jsonObj.getString("movie_rating") == null) {
+                                rating = "0.0";
+                            }
+                            else {
+                                rating = jsonObj.getString("movie_rating");
+                            }
                             movies.add(new Movie(jsonObj.getString("movie_title"), jsonObj.getString("movie_id"), jsonObj.getString("movie_year"),
-                                    jsonObj.getString("movie_director"), jsonObj.getString("movie_genres"), jsonObj.getString("movie_stars"), jsonObj.getString("movie_rating")));
+                                    jsonObj.getString("movie_director"), jsonObj.getString("movie_genres"), jsonObj.getString("movie_stars"), rating));
                         }
                         Gson gson = new Gson();
                         String moviesJsonStr = gson.toJson(movies);
