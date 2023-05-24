@@ -21,16 +21,24 @@ public class Movie {
         this.genres = "";
         for( String p : parsed) {
             String[] parsed2 = p.split("\\|");
-            this.genres += parsed2[1] + ", ";
+            if(parsed2.length > 1){
+                this.genres += parsed2[1] + ", ";
+            }
         }
-        this.genres = this.genres.substring(0, this.genres.length()-2);
+        if(this.genres != "") {
+            this.genres = this.genres.substring(0, this.genres.length()-2);
+        }
         parsed = stars.split(", ");
         this.stars = "";
         for( String p : parsed) {
             String[] parsed2 = p.split("\\|");
-            this.stars += parsed2[1] + ", ";
+            if(parsed2.length > 1) {
+                this.stars += parsed2[1] + ", ";
+            }
         }
-        this.stars = this.stars.substring(0, this.stars.length()-2);
+        if(this.stars != "") {
+            this.stars = this.stars.substring(0, this.stars.length()-2);
+        }
 //        this.genres = genres;
 //        this.stars = stars;
         this.rating = rating;

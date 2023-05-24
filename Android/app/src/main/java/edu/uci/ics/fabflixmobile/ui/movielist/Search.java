@@ -59,6 +59,8 @@ public class Search extends AppCompatActivity{
         // need to change firstRecord
         queryStr = String.valueOf(query.getText());
         String parameters = "query=" + query.getText() + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=0";
+//        @SuppressLint("DefaultLocale") String message = String.format("params: %s", parameters);
+//        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 //        tv.setText(query.getText());
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
@@ -76,10 +78,10 @@ public class Search extends AppCompatActivity{
                         for ( int i = 0; i < jsonArr.length(); ++i ) {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
                             String rating = "";
-                            if(jsonObj.getString("movie_rating").equals("null")) {
+                            if(jsonObj.getString("movie_rating") == null) {
                                 rating = "0.0";
                             }
-                            else if(jsonObj.getString("movie_rating") == null) {
+                            else if(jsonObj.getString("movie_rating").equals("null")) {
                                 rating = "0.0";
                             }
                             else {
