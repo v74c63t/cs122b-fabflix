@@ -3,6 +3,7 @@ package edu.uci.ics.fabflixmobile.ui.movielist;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,15 +20,20 @@ import java.util.ArrayList;
 
 public class MovieListActivity extends AppCompatActivity {
 
+    TextView pageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movielist);
+        pageView = findViewById(R.id.page);
         // TODO: this should be retrieved from the backend server
 //        final ArrayList<Movie> movies = new ArrayList<>();
 //        movies.add(new Movie("The Terminal", "2004"));
 //        movies.add(new Movie("The Final Season", "2007"));
         Bundle extras = getIntent().getExtras();
+        int pageNum = extras.getInt("offset")/20 + 1;
+        pageView.setText("Page " + Integer.toString(pageNum));
         String jsonStr = extras.getString("movies");
         Gson gson = new Gson();
         final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
