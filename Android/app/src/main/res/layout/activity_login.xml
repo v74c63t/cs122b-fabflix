@@ -13,8 +13,8 @@
 
     <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="284dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:text="@string/fabflix"
             android:textColor="@color/yellow"
@@ -71,7 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintVertical_bias="0.149" app:layout_constraintHorizontal_bias="0.497"
-            android:backgroundTint="#454343"/>
+            android:backgroundTint="#6C6969"/>
     <TextView
             android:id="@+id/message"
             android:layout_width="wrap_content"
