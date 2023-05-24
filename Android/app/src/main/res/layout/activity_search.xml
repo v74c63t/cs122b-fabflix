@@ -37,16 +37,16 @@
 			android:backgroundTint="#00008B"/>
 	<TextView
 			android:id="@+id/title3"
-			android:layout_width="175dp"
-			android:layout_height="82dp"
+			android:layout_width="285dp"
+			android:layout_height="78dp"
 			android:layout_centerHorizontal="true"
 			android:text="@string/fabflix"
 			android:textColor="#00008B"
-			android:textSize="50sp"
+			android:textSize="60sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="92dp"
-			android:textStyle="bold|italic" android:textAlignment="center" android:fontFamily="sans-serif"/>
+			android:textStyle="bold|italic" android:textAlignment="center" android:fontFamily="monospace"/>
 	<TextView
 			android:layout_width="0dp"
 			android:layout_height="wrap_content" android:id="@+id/tempTextView"

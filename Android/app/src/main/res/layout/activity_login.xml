@@ -22,7 +22,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="44dp"
-            app:layout_constraintHorizontal_bias="0.498" android:textStyle="bold" android:fontFamily="monospace"/>
+            app:layout_constraintHorizontal_bias="0.498" android:textStyle="bold|italic"
+            android:fontFamily="monospace"/>
 
     <EditText
             android:id="@+id/username"
