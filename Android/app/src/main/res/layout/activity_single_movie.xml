@@ -35,10 +35,11 @@
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp">
 			<TextView
-					android:text="Rating"
+					android:text="Director"
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:id="@+id/single_rating"
-					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"/>
+					android:layout_height="wrap_content"
+					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"
+					android:id="@+id/single_director"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -48,10 +49,11 @@
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp">
 			<TextView
-					android:text="Director"
+					android:text="Genres"
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:id="@+id/single_director"
-					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"/>
+					android:layout_height="wrap_content"
+					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"
+					android:id="@+id/single_genres"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -61,10 +63,11 @@
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp">
 			<TextView
-					android:text="Genres"
+					android:text="Stars"
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:id="@+id/single_genres"
-					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"/>
+					android:layout_height="wrap_content"
+					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"
+					android:id="@+id/single_stars"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
@@ -75,9 +78,9 @@
 				android:layout_marginRight="8dp"
 				android:layout_marginBottom="8dp">
 			<TextView
-					android:text="Stars"
+					android:text="Rating"
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:id="@+id/single_stars"
+					android:layout_height="wrap_content" android:id="@+id/single_rating"
 					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"/>
 		</FrameLayout>
 	</LinearLayout>
