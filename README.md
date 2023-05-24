@@ -42,12 +42,13 @@ There is a [README file](xmlParser/README.md) in the xmlParser directory that de
 ### Vanessa
   - Full Text/Autocomplete
   - Login
-  - 
+  - Movie List Page
+  - Single Movie Page
   - Making Revisions/Style Changes to Other Pages
   - Debugging
 ### Haver
   - Full Text/Autocomplete
   - Search
-  - 
+  - Movie List Page
   - Making Revisions/Style Changes to Other Pages
   - Debugging
