@@ -64,7 +64,7 @@ public class SingleMovieActivity extends AppCompatActivity {
                         JSONObject jsonObj = jsonArray.getJSONObject(0);
                         titleView.setText(jsonObj.getString("movie_title") + " (" + jsonObj.getString("movie_year") + ")");
                         if(jsonObj.getString("movie_rating").equals("null")) {
-                            ratingView.setText("Rating: 0.0");
+                            ratingView.setText("Rating: 0.0 \u2605");
                         }
                         else if(jsonObj.getString("movie_rating") == null) {
                             ratingView.setText("Rating: 0.0 \u2605");
