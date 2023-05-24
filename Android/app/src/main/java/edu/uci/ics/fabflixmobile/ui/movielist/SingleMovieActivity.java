@@ -67,10 +67,10 @@ public class SingleMovieActivity extends AppCompatActivity {
                             ratingView.setText("Rating: 0.0");
                         }
                         else if(jsonObj.getString("movie_rating") == null) {
-                            ratingView.setText("Rating: 0.0");
+                            ratingView.setText("Rating: 0.0 \u2605");
                         }
                         else {
-                            ratingView.setText("Rating: " + jsonObj.getString("movie_rating"));
+                            ratingView.setText("Rating: " + jsonObj.getString("movie_rating") + " \u2605");
                         }
                         directorView.setText("Director: " + jsonObj.getString("movie_director"));
                         String[] parsed = jsonObj.getString("movie_genres").split(", ");

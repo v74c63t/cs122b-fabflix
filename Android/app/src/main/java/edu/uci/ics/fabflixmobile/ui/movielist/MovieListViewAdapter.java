@@ -62,7 +62,7 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
         viewHolder.director.setText("Director: " + movie.getDirector());
         viewHolder.genres.setText("Genres: " + movie.getGenres());
         viewHolder.stars.setText("Stars: " + movie.getStars());
-        viewHolder.rating.setText("Rating: " + movie.getRating());
+        viewHolder.rating.setText("Rating: " + movie.getRating() + " \u2605");
 
         // Return the completed view to render on screen
         return convertView;
