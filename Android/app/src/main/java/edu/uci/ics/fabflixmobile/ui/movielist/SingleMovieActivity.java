@@ -1,8 +1,5 @@
 package edu.uci.ics.fabflixmobile.ui.movielist;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.*;
 
@@ -13,21 +10,15 @@ import android.os.Bundle;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import edu.uci.ics.fabflixmobile.R;
 import edu.uci.ics.fabflixmobile.data.NetworkManager;
-import edu.uci.ics.fabflixmobile.data.model.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class SingleMovieActivity extends AppCompatActivity {
     TextView titleView;
-    TextView yearView;
+    TextView ratingView;
     TextView directorView;
     TextView genresView;
     TextView starsView;
@@ -40,22 +31,25 @@ public class SingleMovieActivity extends AppCompatActivity {
     private final String serverEndpoint = "/api/single-movie?";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain + serverEndpoint;
 
-    public SingleMovieActivity(String movieId) {
-        this.movieId = movieId;
-    }
+//    public SingleMovieActivity(String movieId) {
+//        this.movieId = movieId;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_movie);
         titleView = findViewById(R.id.single_title);
-        yearView = findViewById(R.id.single_year);
+        ratingView = findViewById(R.id.single_rating);
         directorView = findViewById(R.id.single_director);
         genresView = findViewById(R.id.single_genres);
         starsView = findViewById(R.id.single_stars);
 
+        Bundle extras = getIntent().getExtras();
+        movieId = extras.getString("movieId");
 
         String parameters = "id=" + movieId;
+//        titleView.setText(baseURL + parameters);
 
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
@@ -65,12 +59,36 @@ public class SingleMovieActivity extends AppCompatActivity {
                 baseURL + parameters,
                 response -> {
                     try {
-                        JSONObject jsonObj = new JSONObject(response);
-                        titleView.setText(jsonObj.getString("movie_title"));
-                        yearView.setText(jsonObj.getString("movie_year"));
+//                        titleView.setText(response);
+                        JSONArray jsonArray = new JSONArray(response);
+                        JSONObject jsonObj = jsonArray.getJSONObject(0);
+                        titleView.setText(jsonObj.getString("movie_title") + " (" + jsonObj.getString("movie_year") + ")");
+                        if(jsonObj.getString("movie_rating").equals("null")) {
+                            ratingView.setText("Rating: 0.0");
+                        }
+                        else if(jsonObj.getString("movie_rating") == null) {
+                            ratingView.setText("Rating: 0.0");
+                        }
+                        else {
+                            ratingView.setText("Rating: " + jsonObj.getString("movie_rating"));
+                        }
                         directorView.setText("Director: " + jsonObj.getString("movie_director"));
-                        genresView.setText("Genres: " + jsonObj.getString("movie_genres"));
-                        starsView.setText("Stars: " + jsonObj.getString("movie_stars"));
+                        String[] parsed = jsonObj.getString("movie_genres").split(", ");
+                        String genres = "";
+                        for( String p : parsed) {
+                            String[] parsed2 = p.split("\\|");
+                            genres += parsed2[1] + ", ";
+                        }
+                        genres = genres.substring(0, genres.length()-2);
+                        parsed = jsonObj.getString("movie_stars").split(", ");
+                        String stars = "";
+                        for( String p : parsed) {
+                            String[] parsed2 = p.split("\\|");
+                            stars += parsed2[1] + ", ";
+                        }
+                        stars = stars.substring(0, stars.length()-2);
+                        genresView.setText("Genres: " + genres);
+                        starsView.setText("Stars: " + stars);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

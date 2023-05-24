@@ -1,6 +1,7 @@
 package edu.uci.ics.fabflixmobile.ui.movielist;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,8 +36,11 @@ public class MovieListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Movie movie = movies.get(position);
-            @SuppressLint("DefaultLocale") String message = String.format("Clicked on movie id: %s", movie.getId());
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+//            @SuppressLint("DefaultLocale") String message = String.format("Clicked on movie id: %s", movie.getId());
+//            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            Intent SingleMoviePage = new Intent(MovieListActivity.this, SingleMovieActivity.class);
+            SingleMoviePage.putExtra("movieId", movie.getId());
+            startActivity(SingleMoviePage);
         });
     }
 }
