@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class MovieListActivity extends AppCompatActivity {
 
     TextView pageView;
+    TextView noResultsView;
     int maxRecords;
     int offset;
     Button nextButton;
@@ -71,6 +72,8 @@ public class MovieListActivity extends AppCompatActivity {
         }
         else {
             maxRecords = 0;
+            noResultsView = findViewById(R.id.noResults);
+            noResultsView.setText("There are no results for the query '" + query + "'" );
         }
         nextButton = findViewById(R.id.next);
         prevButton = findViewById(R.id.prev);

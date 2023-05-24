@@ -35,4 +35,9 @@
             android:textStyle="bold" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/list" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/noResults" tools:layout_editor_absoluteY="5dp"
+            tools:layout_editor_absoluteX="194dp" android:textColor="@color/yellow" android:textStyle="bold"
+            android:textSize="20sp" android:textAlignment="center"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
