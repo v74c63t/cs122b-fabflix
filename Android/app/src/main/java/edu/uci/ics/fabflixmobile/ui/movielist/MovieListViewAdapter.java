@@ -44,7 +44,6 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.movielist_row, parent, false);
             viewHolder.title = convertView.findViewById(R.id.title);
-//            viewHolder.year = convertView.findViewById(R.id.year);
             viewHolder.director = convertView.findViewById(R.id.director);
             viewHolder.genres = convertView.findViewById(R.id.genres);
             viewHolder.stars = convertView.findViewById(R.id.stars);
@@ -58,7 +57,6 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> {
         // Populate the data from the data object via the viewHolder object
         // into the template view.
         viewHolder.title.setText(movie.getTitle() + " (" + movie.getYear() + ")");
-//        viewHolder.year.setText(movie.getYear() + "");
         viewHolder.director.setText("Director: " + movie.getDirector());
         viewHolder.genres.setText("Genres: " + movie.getGenres());
         viewHolder.stars.setText("Stars: " + movie.getStars());

@@ -39,8 +39,6 @@ public class Movie {
         if(this.stars != "") {
             this.stars = this.stars.substring(0, this.stars.length()-2);
         }
-//        this.genres = genres;
-//        this.stars = stars;
         this.rating = rating;
     }
 

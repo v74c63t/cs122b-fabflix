@@ -49,17 +49,14 @@ public class SingleMovieActivity extends AppCompatActivity {
         movieId = extras.getString("movieId");
 
         String parameters = "id=" + movieId;
-//        titleView.setText(baseURL + parameters);
 
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
-        // request type is POST
         final StringRequest ajaxRequest = new StringRequest(
                 Request.Method.GET,
                 baseURL + parameters,
                 response -> {
                     try {
-//                        titleView.setText(response);
                         JSONArray jsonArray = new JSONArray(response);
                         JSONObject jsonObj = jsonArray.getJSONObject(0);
                         titleView.setText(jsonObj.getString("movie_title") + " (" + jsonObj.getString("movie_year") + ")");
@@ -95,7 +92,7 @@ public class SingleMovieActivity extends AppCompatActivity {
                 },
                 error -> {
                     // error
-                    Log.d("login.error", error.toString());
+                    Log.d("singlemovie.error", error.toString());
                 }) {
         };
         // important: queue.add is where the login request is actually sent

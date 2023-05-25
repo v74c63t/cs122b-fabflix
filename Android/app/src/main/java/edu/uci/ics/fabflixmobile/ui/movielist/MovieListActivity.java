@@ -48,9 +48,6 @@ public class MovieListActivity extends AppCompatActivity {
         pageView = findViewById(R.id.page);
         numResultsView = findViewById(R.id.numResults);
         // TODO: this should be retrieved from the backend server
-//        final ArrayList<Movie> movies = new ArrayList<>();
-//        movies.add(new Movie("The Terminal", "2004"));
-//        movies.add(new Movie("The Final Season", "2007"));
         Bundle extras = getIntent().getExtras();
         offset = extras.getInt("offset");
         int pageNum = offset/20 + 1;
@@ -61,7 +58,12 @@ public class MovieListActivity extends AppCompatActivity {
         final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
         if(movies.size() > 0) {
             maxRecords = extras.getInt("maxRecords");
-            numResultsView.setText("Found " + maxRecords + " Results for '" + query + "'" );
+            if(maxRecords == 1) {
+                numResultsView.setText("Found " + maxRecords + " Result for '" + query + "'" );
+            }
+            else {
+                numResultsView.setText("Found " + maxRecords + " Results for '" + query + "'" );
+            }
             MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
             ListView listView = findViewById(R.id.list);
             listView.setAdapter(adapter);
@@ -87,8 +89,6 @@ public class MovieListActivity extends AppCompatActivity {
     }
     @SuppressLint("SetTextI18n")
     public void prev() {
-//        tv.setText("TEST");
-        // need to change firstRecord
         if(offset - 20 >= 0) {
             // use the same network queue across our application
             final RequestQueue queue = NetworkManager.sharedManager(this).queue;
@@ -96,15 +96,13 @@ public class MovieListActivity extends AppCompatActivity {
 //            @SuppressLint("DefaultLocale") String message = String.format("Param: %s", parameters);
 //             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             // request type is POST
-            final StringRequest loginRequest = new StringRequest(
+            final StringRequest movieRequest = new StringRequest(
                     Request.Method.GET,
                     baseURL + parameters,
                     response -> {
                         try {
                             JSONArray jsonArr = new JSONArray(response);
                             final ArrayList<Movie> movies = new ArrayList<>();
-                            // Testing if title of movie is displayed on TextView
-//                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
                             int maxRecords = jsonArr.getJSONObject(0).getInt("max_records");
                             for ( int i = 0; i < jsonArr.length(); ++i ) {
                                 JSONObject jsonObj = jsonArr.getJSONObject(i);
@@ -136,25 +134,20 @@ public class MovieListActivity extends AppCompatActivity {
                     },
                     error -> {
                         // error
-                        Log.d("login.error", error.toString());
+                        Log.d("movie.error", error.toString());
                     }) {
             };
-            queue.add(loginRequest);
+            queue.add(movieRequest);
         }
-//        tv.setText(query.getText());
-        // important: queue.add is where the login request is actually sent
 
     }
     public void next() {
-//        tv.setText("TEST");
-        // need to change firstRecord
         if(offset + 20 < maxRecords) {
             // use the same network queue across our application
             final RequestQueue queue = NetworkManager.sharedManager(this).queue;
             String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=" + Integer.toString(offset + 20);
 //            @SuppressLint("DefaultLocale") String message = String.format("Param: %s", parameters);
 //             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            // request type is POST
             final StringRequest loginRequest = new StringRequest(
                     Request.Method.GET,
                     baseURL + parameters,
@@ -162,8 +155,6 @@ public class MovieListActivity extends AppCompatActivity {
                         try {
                             JSONArray jsonArr = new JSONArray(response);
                             final ArrayList<Movie> movies = new ArrayList<>();
-                            // Testing if title of movie is displayed on TextView
-//                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
                             int maxRecords = jsonArr.getJSONObject(0).getInt("max_records");
                             for ( int i = 0; i < jsonArr.length(); ++i ) {
                                 JSONObject jsonObj = jsonArr.getJSONObject(i);
@@ -200,7 +191,6 @@ public class MovieListActivity extends AppCompatActivity {
             };
             queue.add(loginRequest);
         }
-//        tv.setText(query.getText());
         // important: queue.add is where the login request is actually sent
 
     }

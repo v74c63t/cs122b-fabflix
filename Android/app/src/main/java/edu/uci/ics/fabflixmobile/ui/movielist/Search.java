@@ -55,8 +55,6 @@ public class Search extends AppCompatActivity{
 
     @SuppressLint("SetTextI18n")
     public void search(EditText query, TextView tv) {
-//        tv.setText("TEST");
-        // need to change firstRecord
         queryStr = String.valueOf(query.getText());
         String parameters = "query=" + query.getText() + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=0";
 //        @SuppressLint("DefaultLocale") String message = String.format("params: %s", parameters);
@@ -64,16 +62,13 @@ public class Search extends AppCompatActivity{
 //        tv.setText(query.getText());
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
-        // request type is POST
-        final StringRequest loginRequest = new StringRequest(
+        final StringRequest searchRequest = new StringRequest(
                 Request.Method.GET,
                 baseURL + parameters,
                 response -> {
                     try {
                         JSONArray jsonArr = new JSONArray(response);
                         final ArrayList<Movie> movies = new ArrayList<>();
-                        // Testing if title of movie is displayed on TextView
-//                        tv.setText(jsonArr.getJSONObject(0).getString("movie_title"));
                         String maxRecords = "0";
                         if(jsonArr.length() > 0) {
                            maxRecords = jsonArr.getJSONObject(0).getString("max_records");
@@ -103,16 +98,6 @@ public class Search extends AppCompatActivity{
                             MovieListPage.putExtra("maxRecords", Integer.parseInt(maxRecords));
                         }
                         startActivity(MovieListPage);
-//                        setContentView(R.layout.activity_movielist);
-//                        // Need testing/adjustments below
-//                        MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
-//                        ListView listView = findViewById(R.id.list);
-//                        listView.setAdapter(adapter);
-//                        listView.setOnItemClickListener((parent, view, position, id) -> {
-//                            Movie movie = movies.get(position);
-//                            @SuppressLint("DefaultLocale") String message = String.format("Clicked on position: %d, name: %s, %s", position, movie.getTitle(), movie.getYear());
-//                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-//                        });
 
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -120,18 +105,10 @@ public class Search extends AppCompatActivity{
                 },
                 error -> {
                     // error
-                    Log.d("login.error", error.toString());
+                    Log.d("search.error", error.toString());
                 }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                // POST request form data
-//                final Map<String, String> params = new HashMap<>();
-//                params.put("email", email.getText().toString());
-//                params.put("password", password.getText().toString());
-//                return params;
-//            }
         };
         // important: queue.add is where the login request is actually sent
-        queue.add(loginRequest);
+        queue.add(searchRequest);
     }
 }
