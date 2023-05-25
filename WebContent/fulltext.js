@@ -66,7 +66,6 @@ $('#full-text').autocomplete({
 
 /* =========================  Handle Search ========================= */
 const handleNormalSearch = (query) => {
-    console.log("PRESSED ENTER AND QUERY IS " + query);
 
     let url =  "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=25&firstRecord=0";
     window.location.replace("result.html?" + url);

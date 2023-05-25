@@ -47,8 +47,6 @@ public class FulltextServlet extends HttpServlet {
         // Get instance of current session
         HttpSession session = request.getSession();
 
-        // Get the most recent result page url
-//        String resultUrl = (String) session.getAttribute("resultUrl");
 
         // Create an attribute "resultUrl" if it doesn't exists
         String resultUrl = (String) session.getAttribute("resultUrl");
@@ -112,9 +110,6 @@ public class FulltextServlet extends HttpServlet {
             }
 
             // Query for full-text search
-            // Not sure about  "*"
-            // Maybe just title if we are only getting title for suggestions
-//            String sqlQuery = "SELECT * FROM movies WHERE MATCH(title) AGAINST(" + numQueries + "IN BOOLEAN MODE) LIMIT 10;";
             String sqlQuery = String.join("",
                     "SELECT COUNT(*) over() AS maxRecords, m.id AS movieId, title, year, director, rating ",
                     "FROM movies AS m ",
@@ -164,7 +159,6 @@ public class FulltextServlet extends HttpServlet {
             // Execute query
             ResultSet rs = statement.executeQuery();
 
-            JsonArray jsonArray1 = new JsonArray();
 
             while (rs.next()) {
                 String movie_rating = rs.getString("rating");
@@ -216,7 +210,6 @@ public class FulltextServlet extends HttpServlet {
             statement2.close();
             statement3.close();
 
-//            response.getWriter().write(jsonArray.toString());
 
             // Write JSON string to output
             out.write(jsonArray.toString());
@@ -240,10 +233,4 @@ public class FulltextServlet extends HttpServlet {
         // Always remember to close db connection after usage. Here it's done by try-with-resources
 
     }
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//            response.sendError(500, e.getMessage());
-//        }
-//    }
 }
