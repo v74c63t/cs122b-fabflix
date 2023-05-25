@@ -20,7 +20,7 @@
     <ListView
             android:id="@+id/list"
             android:layout_width="380dp"
-            android:layout_height="620dp" tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="-1dp"
+            android:layout_height="520dp" tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="-1dp"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@id/numResults"/>
     <Button
