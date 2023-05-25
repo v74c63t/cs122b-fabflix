@@ -50,7 +50,7 @@ public class MovieListActivity extends AppCompatActivity {
         // TODO: this should be retrieved from the backend server
         Bundle extras = getIntent().getExtras();
         offset = extras.getInt("offset");
-        int pageNum = offset/20 + 1;
+        int pageNum = offset/10 + 1;
         query = extras.getString("query");
         pageView.setText("Page " + Integer.toString(pageNum));
         String jsonStr = extras.getString("movies");
@@ -89,10 +89,10 @@ public class MovieListActivity extends AppCompatActivity {
     }
     @SuppressLint("SetTextI18n")
     public void prev() {
-        if(offset - 20 >= 0) {
+        if(offset - 10 >= 0) {
             // use the same network queue across our application
             final RequestQueue queue = NetworkManager.sharedManager(this).queue;
-            String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=" + Integer.toString(offset - 20);
+            String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=10&firstRecord=" + Integer.toString(offset - 10);
 //            @SuppressLint("DefaultLocale") String message = String.format("Param: %s", parameters);
 //             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             // request type is POST
@@ -123,7 +123,7 @@ public class MovieListActivity extends AppCompatActivity {
                             String moviesJsonStr = gson.toJson(movies);
                             Intent MovieListPage = new Intent(MovieListActivity.this, MovieListActivity.class);
                             MovieListPage.putExtra("movies", moviesJsonStr);
-                            MovieListPage.putExtra("offset", offset-20);
+                            MovieListPage.putExtra("offset", offset-10);
                             MovieListPage.putExtra("maxRecords", maxRecords);
                             MovieListPage.putExtra("query", query);
                             startActivity(MovieListPage);
@@ -142,10 +142,10 @@ public class MovieListActivity extends AppCompatActivity {
 
     }
     public void next() {
-        if(offset + 20 < maxRecords) {
+        if(offset + 10 < maxRecords) {
             // use the same network queue across our application
             final RequestQueue queue = NetworkManager.sharedManager(this).queue;
-            String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=" + Integer.toString(offset + 20);
+            String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=10&firstRecord=" + Integer.toString(offset + 10);
 //            @SuppressLint("DefaultLocale") String message = String.format("Param: %s", parameters);
 //             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             final StringRequest loginRequest = new StringRequest(
@@ -175,7 +175,7 @@ public class MovieListActivity extends AppCompatActivity {
                             String moviesJsonStr = gson.toJson(movies);
                             Intent MovieListPage = new Intent(MovieListActivity.this, MovieListActivity.class);
                             MovieListPage.putExtra("movies", moviesJsonStr);
-                            MovieListPage.putExtra("offset", offset+20);
+                            MovieListPage.putExtra("offset", offset+10);
                             MovieListPage.putExtra("maxRecords", maxRecords);
                             MovieListPage.putExtra("query", query);
                             startActivity(MovieListPage);

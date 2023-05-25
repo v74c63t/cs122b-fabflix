@@ -56,7 +56,7 @@ public class Search extends AppCompatActivity{
     @SuppressLint("SetTextI18n")
     public void search(EditText query, TextView tv) {
         queryStr = String.valueOf(query.getText());
-        String parameters = "query=" + query.getText() + "&sortBy=title+ASC+rating+ASC&numRecords=20&firstRecord=0";
+        String parameters = "query=" + query.getText() + "&sortBy=title+ASC+rating+ASC&numRecords=10&firstRecord=0";
 //        @SuppressLint("DefaultLocale") String message = String.format("params: %s", parameters);
 //        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 //        tv.setText(query.getText());
