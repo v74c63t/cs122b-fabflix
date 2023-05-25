@@ -75,7 +75,7 @@ public class MovieListActivity extends AppCompatActivity {
             });
         }
         else {
-            numResultsView.setVisibility(View.);
+            numResultsView.setVisibility(View.GONE);
             maxRecords = 0;
             noResultsView = findViewById(R.id.noResults);
             noResultsView.setText("There are no results for the query '" + query + "'" );
