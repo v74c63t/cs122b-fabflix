@@ -6,15 +6,15 @@
 
 	<LinearLayout
 			android:orientation="vertical"
-			android:layout_width="409dp"
+			android:layout_width="match_parent"
 			android:background="#1E1E1E"
-			android:layout_height="729dp" tools:layout_editor_absoluteY="1dp" tools:layout_editor_absoluteX="1dp"
+			android:layout_height="match_parent" tools:layout_editor_absoluteY="1dp" tools:layout_editor_absoluteX="1dp"
 			android:padding="10dp">
 
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:layout_weight="1"
+				android:layout_weight="0.7"
 				android:background="#3E3E3E"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp"
@@ -30,7 +30,7 @@
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:layout_weight="1"
+				android:layout_weight="0.5"
 				android:background="#505050"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp">
@@ -44,8 +44,21 @@
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:layout_weight="1"
+				android:layout_weight="0.5"
 				android:background="#5F5F5F"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp">
+			<TextView
+					android:text="Rating"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:id="@+id/single_rating"
+					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"/>
+		</FrameLayout>
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_weight="0.8"
+				android:background="#505050"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp">
 			<TextView
@@ -59,29 +72,16 @@
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
 				android:layout_weight="1"
-				android:background="#505050"
+				android:background="#5F5F5F"
 				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp">
+				android:layout_marginRight="8dp"
+				android:layout_marginBottom="8dp">
 			<TextView
 					android:text="Stars"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"
 					android:id="@+id/single_stars"/>
-		</FrameLayout>
-		<FrameLayout
-				android:layout_width="match_parent"
-				android:layout_height="0dp"
-				android:layout_weight="1"
-				android:background="#5F5F5F"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-				android:layout_marginBottom="8dp">
-			<TextView
-					android:text="Rating"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:id="@+id/single_rating"
-					android:layout_margin="10dp" android:textColor="@color/white" android:textSize="20sp"/>
 		</FrameLayout>
 	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
