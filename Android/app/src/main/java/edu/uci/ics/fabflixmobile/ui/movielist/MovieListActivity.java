@@ -61,7 +61,7 @@ public class MovieListActivity extends AppCompatActivity {
         final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
         if(movies.size() > 0) {
             maxRecords = extras.getInt("maxRecords");
-            numResultsView.setText(maxRecords + " Results" );
+            numResultsView.setText("Found " + maxRecords + " Results for '" + query + "'" );
             MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
             ListView listView = findViewById(R.id.list);
             listView.setAdapter(adapter);
