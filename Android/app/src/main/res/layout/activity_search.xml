@@ -41,7 +41,7 @@
 			android:layout_height="78dp"
 			android:layout_centerHorizontal="true"
 			android:text="@string/fabflix"
-			android:textColor="#00008B"
+			android:textColor="@color/yellow"
 			android:textSize="60sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
