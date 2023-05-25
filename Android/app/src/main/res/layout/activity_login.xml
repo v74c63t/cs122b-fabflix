@@ -21,16 +21,15 @@
             android:textSize="60sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="44dp"
-            app:layout_constraintHorizontal_bias="0.498" android:textStyle="bold|italic"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="36dp"
+            app:layout_constraintHorizontal_bias="0.496" android:textStyle="bold|italic"
             android:fontFamily="monospace"/>
-
     <EditText
             android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="24dp"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
@@ -70,7 +69,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.149" app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintVertical_bias="0.098" app:layout_constraintHorizontal_bias="0.497"
             android:backgroundTint="#6C6969"/>
     <TextView
             android:id="@+id/message"
@@ -82,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.305" app:layout_constraintBottom_toTopOf="@+id/login"
+            app:layout_constraintVertical_bias="0.729" app:layout_constraintBottom_toTopOf="@+id/login"
             android:background="#9F0202" android:backgroundTint="#9F0202" android:textColor="#FFFFFF"
             android:textColorHint="#FBFBFB" app:layout_constraintHorizontal_bias="0.498"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
