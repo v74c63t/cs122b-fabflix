@@ -27,6 +27,7 @@ public class MovieListActivity extends AppCompatActivity {
 
     TextView pageView;
     TextView noResultsView;
+    TextView numResultsView;
     int maxRecords;
     int offset;
     Button nextButton;
@@ -58,6 +59,8 @@ public class MovieListActivity extends AppCompatActivity {
         final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
         if(movies.size() > 0) {
             maxRecords = extras.getInt("maxRecords");
+            numResultsView = findViewById(R.id.numResults);
+            numResultsView.setText(maxRecords + " Results" );
             MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
             ListView listView = findViewById(R.id.list);
             listView.setAdapter(adapter);
