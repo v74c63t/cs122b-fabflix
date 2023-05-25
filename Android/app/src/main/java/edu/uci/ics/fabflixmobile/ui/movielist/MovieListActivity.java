@@ -3,6 +3,7 @@ package edu.uci.ics.fabflixmobile.ui.movielist;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class MovieListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movielist);
         pageView = findViewById(R.id.page);
+        numResultsView = findViewById(R.id.numResults);
         // TODO: this should be retrieved from the backend server
 //        final ArrayList<Movie> movies = new ArrayList<>();
 //        movies.add(new Movie("The Terminal", "2004"));
@@ -59,7 +61,6 @@ public class MovieListActivity extends AppCompatActivity {
         final ArrayList<Movie> movies = gson.fromJson(jsonStr, new TypeToken<ArrayList<Movie>>(){}.getType());
         if(movies.size() > 0) {
             maxRecords = extras.getInt("maxRecords");
-            numResultsView = findViewById(R.id.numResults);
             numResultsView.setText(maxRecords + " Results" );
             MovieListViewAdapter adapter = new MovieListViewAdapter(this, movies);
             ListView listView = findViewById(R.id.list);
@@ -74,6 +75,7 @@ public class MovieListActivity extends AppCompatActivity {
             });
         }
         else {
+            numResultsView.setVisibility(View.);
             maxRecords = 0;
             noResultsView = findViewById(R.id.noResults);
             noResultsView.setText("There are no results for the query '" + query + "'" );
