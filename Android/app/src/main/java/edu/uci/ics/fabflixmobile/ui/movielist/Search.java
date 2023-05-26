@@ -26,9 +26,7 @@ import static java.sql.DriverManager.println;
 
 public class Search extends AppCompatActivity{
     EditText query_input;
-    TextView textView;
     Button searchButton;
-
     String queryStr;
 
     /*
@@ -46,20 +44,16 @@ public class Search extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        textView = findViewById(R.id.tempTextView);
         query_input = findViewById(R.id.query_input);
         searchButton = findViewById(R.id.searchBtn);
 
-        searchButton.setOnClickListener(view -> search(query_input, textView));
+        searchButton.setOnClickListener(view -> search(query_input));
     }
 
     @SuppressLint("SetTextI18n")
-    public void search(EditText query, TextView tv) {
+    public void search(EditText query) {
         queryStr = String.valueOf(query.getText());
         String parameters = "query=" + query.getText() + "&sortBy=title+ASC+rating+ASC&numRecords=10&firstRecord=0";
-//        @SuppressLint("DefaultLocale") String message = String.format("params: %s", parameters);
-//        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-//        tv.setText(query.getText());
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         final StringRequest searchRequest = new StringRequest(
@@ -108,7 +102,6 @@ public class Search extends AppCompatActivity{
                     Log.d("search.error", error.toString());
                 }) {
         };
-        // important: queue.add is where the login request is actually sent
         queue.add(searchRequest);
     }
 }

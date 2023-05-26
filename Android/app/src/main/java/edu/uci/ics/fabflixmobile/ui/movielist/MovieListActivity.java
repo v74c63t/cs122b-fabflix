@@ -69,8 +69,6 @@ public class MovieListActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
             listView.setOnItemClickListener((parent, view, position, id) -> {
                 Movie movie = movies.get(position);
-                //            @SuppressLint("DefaultLocale") String message = String.format("Clicked on movie id: %s", movie.getId());
-                //            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 Intent SingleMoviePage = new Intent(MovieListActivity.this, SingleMovieActivity.class);
                 SingleMoviePage.putExtra("movieId", movie.getId());
                 startActivity(SingleMoviePage);
@@ -93,8 +91,7 @@ public class MovieListActivity extends AppCompatActivity {
             // use the same network queue across our application
             final RequestQueue queue = NetworkManager.sharedManager(this).queue;
             String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=10&firstRecord=" + Integer.toString(offset - 10);
-//            @SuppressLint("DefaultLocale") String message = String.format("Param: %s", parameters);
-//             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
             // request type is POST
             final StringRequest movieRequest = new StringRequest(
                     Request.Method.GET,
@@ -146,8 +143,7 @@ public class MovieListActivity extends AppCompatActivity {
             // use the same network queue across our application
             final RequestQueue queue = NetworkManager.sharedManager(this).queue;
             String parameters = "query=" + query + "&sortBy=title+ASC+rating+ASC&numRecords=10&firstRecord=" + Integer.toString(offset + 10);
-//            @SuppressLint("DefaultLocale") String message = String.format("Param: %s", parameters);
-//             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
             final StringRequest loginRequest = new StringRequest(
                     Request.Method.GET,
                     baseURL + parameters,

@@ -31,10 +31,6 @@ public class SingleMovieActivity extends AppCompatActivity {
     private final String serverEndpoint = "/api/single-movie?";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain + serverEndpoint;
 
-//    public SingleMovieActivity(String movieId) {
-//        this.movieId = movieId;
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +91,6 @@ public class SingleMovieActivity extends AppCompatActivity {
                     Log.d("singlemovie.error", error.toString());
                 }) {
         };
-        // important: queue.add is where the login request is actually sent
         queue.add(ajaxRequest);
     }
 }
