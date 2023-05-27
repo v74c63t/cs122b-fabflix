@@ -1,11 +1,11 @@
-# CS122B Project 3
+# CS122B Project 4
 ## Instructions
 ### Deployment
 Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
 ### Demo
-**URL:** `https://youtu.be/gNNIp_vyORI`
+**URL:** 
 ### AWS
-**URL:** `https://54.176.198.22:8443/cs122b-project3/`
+**URL:** 
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
@@ -40,33 +40,16 @@ There is a [README file](xmlParser/README.md) in the xmlParser directory that de
   2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
 ## Contributions
 ### Vanessa
-  - reCaptcha Error Message
-  - HTTPS
-  - Encrypted Password Changes
-  - Prepared Statements
-  - Employees Login Filter
-  - Dashboard Home (HTML/CSS)
-  - Stored Procedures
-  - Add Star Servlet
-  - Add Genre Servlet
-  - Add Movie Page (HTML/CSS)
-  - Add Star Page (HTML/CSS/JS)
-  - Add Genre Page (HTML/CSS/JS)
-  - xmlParser
+  - Full Text(JS)
+  - Android Login Page
+  - Android Movie List Page
+  - Android Single Movie Page
   - Making Revisions/Style Changes to Other Pages
   - Debugging
 ### Haver
-  - reCaptcha Setup
-  - Encrypted Password Changes
-  - Employees Login (HTML/CSS/JS)
-  - Employees Login Servlet/Filter
-  - Dashboard Home (HTML/CSS/JS)
-  - Metadata Servlet
-  - Stored Procedures
-  - Add Movie Servlet
-  - Add Movie Page (HTML/CSS/JS)
-  - Add Star Page (HTML/CSS)
-  - Add Genre Page (HTML/CSS)
-  - xmlParser
+  - Full Text(JS/Servlet)
+  - Autocomplete
+  - Android Search Page
+  - Android Movie List Page
   - Making Revisions/Style Changes to Other Pages
   - Debugging

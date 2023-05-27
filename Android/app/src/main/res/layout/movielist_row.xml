@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:background="#1E1E1E"
+              android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/title"
+            tools:text="Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/teal_200"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" android:textStyle="bold|italic" android:textSize="20sp"/>
+
+    <TextView
+            android:id="@+id/director"
+            tools:text="director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" android:textSize="15sp"/>
+    <TextView
+            android:id="@+id/genres"
+            tools:text="genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" android:textSize="15sp"/>
+    <TextView
+            android:id="@+id/stars"
+            tools:text="stars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" android:textSize="15sp"/>
+    <TextView
+            android:id="@+id/rating"
+            tools:text="rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" android:textSize="15sp"/>
+
+</LinearLayout>

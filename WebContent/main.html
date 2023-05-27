@@ -44,37 +44,49 @@
                 </li>
             </ul>
         </div>
-        <div id="search-component">
-            <form id="movie-search-form" action="#" method="GET">
-                <input  class="search-item" type="text" id="search-title" name="title" placeholder="Title">
-                <input  class="search-item" type="text" id="search-year" name="year" placeholder="Year">
-                <input  class="search-item" type="text" id="search-director" name="director" placeholder="Director">
-                <input  class="search-item" type="text" id="search-star" name="star" placeholder="Star">
+        <div class="search-component">
+            <form id="full-text-form" action="#" method="GET">
+                <input class="search-item" type="text" id="full-text" name="full-text" placeholder="Full Text Search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
     </nav>
 </header>
 
+<h1 class="page-headers"><strong><i>Advanced Search</i></strong></h1>
+<div style="margin-left: 80px; margin-right: 80px; padding-bottom: 30px;" class="advanced-search">
+    <div class="search-component">
+        <form id="movie-search-form" action="#" method="GET">
+            <input  class="search-item" type="text" id="search-title" name="title" placeholder="Title">
+            <input  class="search-item" type="text" id="search-year" name="year" placeholder="Year">
+            <input  class="search-item" type="text" id="search-director" name="director" placeholder="Director">
+            <input  class="search-item" type="text" id="search-star" name="star" placeholder="Star">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+</div>
+
 <h1 class="page-headers"><strong><i>Browse by Genre</i></strong></h1>
-<div style="margin-left: 80px; margin-right: 80px;" class="genre-browse">
+<div style="margin-left: 80px; margin-right: 80px; padding-bottom: 30px;" class="genre-browse">
     <div id="genre-list" class="genre-list" style="background-color:#242428;border: 3px solid darkgray; padding-top: 20px">
     </div>
 </div>
 
 <h1 class="page-headers"><strong><i>Browse by Title</i></strong></h1>
-<div style="margin-left: 80px; margin-right: 80px;" class="title-browse">
+<div style="margin-left: 80px; margin-right: 80px; padding-bottom: 30px;" class="title-browse">
     <div id="alphanum-list" class="alphanum-list" style="background-color:#242428;border: 3px solid darkgray; padding-top: 20px;"></div>
 </div>
 <!-- Load jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
 
 <!-- Load our own JS file -->
 <!-- The path is relative to main.html, since these two files are in the same directory -->
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
 <script src="main.js"></script>
+<script src="fulltext.js"></script>
 </body>
 </html>

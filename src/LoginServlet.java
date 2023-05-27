@@ -76,7 +76,11 @@ public class LoginServlet extends HttpServlet {
 
         String email= request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println(email + " " + password);
+        String device = "";
+        if(request.getParameter("device") != null) {
+            device = request.getParameter("device");
+        }
+//        System.out.println(email + " " + password + " " + device);
         response.setContentType("application/json"); // Response mime type
         // The log message can be found in localhost log
         request.getServletContext().log("getting email: " + email);
@@ -115,28 +119,30 @@ public class LoginServlet extends HttpServlet {
                     request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
-                    String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-                    System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+                    if(!device.equals("Android")) {
+                        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+                        //                    System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
 
-                    // Verify reCAPTCHA
-                    try {
-                        RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-                    }  catch (Exception e) {
-//                        JsonObject responseJsonObject = new JsonObject();
-                        // Login fail
-                        responseJsonObject.addProperty("status", "fail");
-                        // Log to localhost log
-                        request.getServletContext().log("Login failed");
+                        // Verify reCAPTCHA
+                        try {
+                            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+                        } catch (Exception e) {
+                            //                        JsonObject responseJsonObject = new JsonObject();
+                            // Login fail
+                            responseJsonObject.addProperty("status", "fail");
+                            // Log to localhost log
+                            request.getServletContext().log("Login failed");
 
-                        responseJsonObject.addProperty("message", "reCaptcha Verification Error");
+                            responseJsonObject.addProperty("message", "reCaptcha Verification Error");
 
-                        // Write JSON string to output
-                        response.getWriter().write(responseJsonObject.toString());
-                        // Set response status to 200 (OK)
-                        response.setStatus(200);
+                            // Write JSON string to output
+                            response.getWriter().write(responseJsonObject.toString());
+                            // Set response status to 200 (OK)
+                            response.setStatus(200);
 
-                        out.close();
-                        return;
+                            out.close();
+                            return;
+                        }
                     }
                 }
                 else {

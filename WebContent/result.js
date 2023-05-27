@@ -214,7 +214,10 @@ if ( getParameterByName('genreId') ) {
 }else if ( getParameterByName('startTitle') ) {
     urlRequest = 'startTitle=' + getParameterByName('startTitle') + '&sortBy=' + getParameterByName('sortBy') + '&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
     servletUrl += 'api/by-start-title?';
-}else {
+}else if ( getParameterByName('query') ) {
+    urlRequest = 'query=' + getParameterByName('query') + '&sortBy=' + getParameterByName('sortBy') + '&numRecords='+getParameterByName('numRecords')+'&firstRecord='+getParameterByName('firstRecord');
+    servletUrl += 'api/fulltext?';
+} else {
     let obj = {}
     if ( getParameterByName('title') ) { obj['title'] = getParameterByName('title'); }
     if ( getParameterByName('director') ) { obj['director'] = getParameterByName('director'); }
