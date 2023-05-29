@@ -1,11 +1,11 @@
-# CS122B Project 4
+# CS122B Project 5
 ## Instructions
 ### Deployment
 Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
 ### Demo
-**URL:** `https://youtu.be/SvKjiEYw5qw`
+**URL:** ` `
 ### AWS
-**URL:** `https://13.52.75.242:8443/cs122b-project4/`
+**URL:** ` `
 ### TomCat
 **Username:** `admin`<br>**Password:** `mypassword`
 ### MySQL
@@ -40,16 +40,6 @@ There is a [README file](xmlParser/README.md) in the xmlParser directory that de
   2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
 ## Contributions
 ### Vanessa
-  - Full Text(JS)
-  - Android Login Page
-  - Android Movie List Page
-  - Android Single Movie Page
-  - Making Revisions/Style Changes to Other Pages
-  - Debugging
+  - 
 ### Haver
-  - Full Text(JS/Servlet)
-  - Autocomplete
-  - Android Search Page
-  - Android Movie List Page
-  - Making Revisions/Style Changes to Other Pages
-  - Debugging
+  - 
