@@ -16,6 +16,7 @@
 
 - # Connection Pooling
     - #### Include the filename/path of all code/configuration files in GitHub of using JDBC Connection Pooling.
+        - Any servlet file that needs to access the database should be using JDBC Connection Pooling
     
     - #### Explain how Connection Pooling is utilized in the Fabflix code.
     
