@@ -16,9 +16,28 @@
 
 - # Connection Pooling
     - #### Include the filename/path of all code/configuration files in GitHub of using JDBC Connection Pooling.
-        - Any servlet file that needs to access the database should be using JDBC Connection Pooling
+        - [GenreResultServlet.java](src/GenreResultServlet.java)
+        - [StartTitleResultServlet.java](src/StartTitleResultServlet.java)
+        - [SearchResultServlet.java](src/SearchResultServlet.java)
+        - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+        - [SingleStarServlet.java](src/SingleStarServlet.java)
+        - [MoviesServlet.java](src/MoviesServlet.java)
+        - [PaymentServlet.java](src/PaymentServlet.java)
+        - [CartServlet.java](src/CartServlet.java)
+        - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+        - [MainInitServlet.java](src/MainInitServlet.java)
+        - [MetadataServlet.java](src/MetadataServlet.java)
+        - [AddGenreServlet.java](src/AddGenreServlet.java)
+        - [AddMovieServlet.java](src/AddMovieServlet.java)
+        - [AddStarServlet.java](src/AddStarServlet.java)
+        - [Autocomplete.java](src/Autocomplete.java)
+        - [FulltextServlet.java](src/FulltextServlet.java)
+        - [LoginServlet.java](src/LoginServlet.java)
+        - [EmployeeLoginServlet.java](src/EmployeeLoginServlet.java)
     
     - #### Explain how Connection Pooling is utilized in the Fabflix code.
+        - Any servlet file in the src directory that needs to access the database should be using JDBC Connection Pooling
+        - (add more)
     
     - #### Explain how Connection Pooling works with two backend SQL.
     
