@@ -51,6 +51,7 @@ public class FulltextServlet extends HttpServlet {
      */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long startTime = System.nanoTime();
 
         // Get instance of current session
         HttpSession session = request.getSession();
@@ -236,6 +237,9 @@ public class FulltextServlet extends HttpServlet {
             response.setStatus(500);
         } finally {
             out.close();
+            long endTime = System.nanoTime();
+            long ts = endTime - startTime; // check if correct
+            // write time to logs/log.txt
         }
 
         // Always remember to close db connection after usage. Here it's done by try-with-resources
