@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -239,7 +241,19 @@ public class FulltextServlet extends HttpServlet {
             out.close();
             long endTime = System.nanoTime();
             long ts = endTime - startTime; // check if correct
+            long tj = 0; //temp figure out how to measure tj
             // write time to logs/log.txt
+            String contextPath = getServletContext().getRealPath("/logs");
+            String logFile = contextPath + "log.txt";
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
+                writer.write(ts + " " + tj);
+                writer.newLine();
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         // Always remember to close db connection after usage. Here it's done by try-with-resources
