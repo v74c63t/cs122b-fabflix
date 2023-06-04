@@ -10,7 +10,7 @@
         **Username:** `admin`<br>**Password:** `mypassword`
       - #### MySQL
         **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`<br>**Create Index File:** `create_index.sql`
-
+      - (add more if needed)
     - #### Collaborations and Work Distribution:
 
 
@@ -46,10 +46,17 @@
     - #### Include the filename/path of all code/configuration files in GitHub of routing queries to Master/Slave SQL.
 
     - #### How read/write requests were routed to Master/Slave SQL?
-    
+        - Read requests should go to either the master or slave SQL
+        - Write requests should only go to the master SQL so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the master SQL to do the insertion
+        - (add more)
 
 - # JMeter TS/TJ Time Logs
     - #### Instructions of how to use the `log_processing.*` script to process the JMeter logs.
+        - Make sure the logs to be processed is placed in the logs directory
+        - Either one or two logs can be provided as input
+        - Cd into the logs directory: `cd logs`
+        - For the case for single instance run `log_processing.py single.txt` (assuming the file name is single.txt) in the terminal
+        - For the case for master and slave instances run `log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
 
 
 - # JMeter TS/TJ Time Measurement Report
