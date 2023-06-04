@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Random;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-movie"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
@@ -26,9 +27,16 @@ public class SingleMovieServlet extends HttpServlet {
     // Create a dataSource which registered in web.xml
     private DataSource dataSource;
 
+    String[] datasources = {"java:comp/env/jdbc/moviedb_master", "java:comp/env/jdbc/moviedb_slave"};
+
+    Random random = new Random();
+
     public void init(ServletConfig config) {
         try {
-            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+            int rIndex = random.nextInt(datasources.length);
+            String ds = datasources[rIndex];
+
+            dataSource = (DataSource) new InitialContext().lookup(ds);
         } catch (NamingException e) {
             e.printStackTrace();
         }

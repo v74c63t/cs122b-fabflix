@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.Math;
 
+import java.util.Random;
+
 /**
  * This IndexServlet is declared in the web annotation below,
  * which is mapped to the URL pattern /api/index.
@@ -34,9 +36,16 @@ public class CartServlet extends HttpServlet {
     private static final long serialVersionUID = 10L;
     private DataSource dataSource;
 
+    String[] datasources = {"java:comp/env/jdbc/moviedb_master", "java:comp/env/jdbc/moviedb_slave"};
+
+    Random random = new Random();
+
     public void init(ServletConfig config) {
         try {
-            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+            int rIndex = random.nextInt(datasources.length);
+            String ds = datasources[rIndex];
+
+            dataSource = (DataSource) new InitialContext().lookup(ds);
         } catch (NamingException e) {
             e.printStackTrace();
         }

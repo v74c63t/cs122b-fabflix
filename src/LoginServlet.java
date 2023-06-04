@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Random;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -24,9 +25,16 @@ public class LoginServlet extends HttpServlet {
     // Create a dataSource which registered in web.xml
     private DataSource dataSource;
 
+    String[] datasources = {"java:/comp/env/jdbc/moviedb_master", "java:/comp/env/jdbc/moviedb_slave"};
+
+    Random random = new Random();
+
     public void init(ServletConfig config) {
         try {
-            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
+            int rIndex = random.nextInt(datasources.length);
+            String ds = datasources[rIndex];
+
+            dataSource = (DataSource) new InitialContext().lookup(ds);
         } catch (NamingException e) {
             e.printStackTrace();
         }

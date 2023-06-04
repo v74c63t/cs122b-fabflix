@@ -25,7 +25,7 @@ public class SingleMovieActivity extends AppCompatActivity {
 
     String movieId;
 
-    private final String host = "13.52.75.242";
+    private final String host = "54.183.170.147";
     private final String port = "8443";
     private final String domain = "cs122b-project4";
     private final String serverEndpoint = "/api/single-movie?";
