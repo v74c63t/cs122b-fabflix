@@ -44,6 +44,13 @@
 
 - # Master/Slave
     - #### Include the filename/path of all code/configuration files in GitHub of routing queries to Master/Slave SQL.
+        - [context.xml](WebContent/META-INF/context.xml) define the datasources for routing queries
+        - These files have their queries routed to the Master SQL because of inserting data into the database:
+            - [PaymentServlet.java](src/PaymentServlet.java)
+            - [AddGenreServlet.java](src/AddGenreServlet.java)
+            - [AddMovieServlet.java](src/AddMovieServlet.java)
+            - [AddStarServlet.java](src/AddStarServlet.java)
+        - (add more)
 
     - #### How read/write requests were routed to Master/Slave SQL?
         - Read requests should go to either the master or slave SQL
@@ -56,7 +63,7 @@
         - Either one or two logs can be provided as input
         - Cd into the logs directory: `cd logs`
         - For the case for single instance run `log_processing.py single.txt` (assuming the file name is single.txt) in the terminal
-        - For the case for master and slave instances run `log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
+        - For the case for scaled instance run `log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
 
 
 - # JMeter TS/TJ Time Measurement Report
