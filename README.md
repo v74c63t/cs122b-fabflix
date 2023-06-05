@@ -58,7 +58,7 @@
         - (add more)
 
 - # JMeter TS/TJ Time Logs
-    - #### Instructions of how to use the `log_processing.*` script to process the JMeter logs.
+    - #### Instructions of how to use the [`log_processing.py`](logs/log_processing.py) script to process the JMeter logs.
         - Make sure the logs to be processed is placed in the logs directory
         - Either one or two logs can be provided as input
         - Cd into the logs directory: `cd logs`
