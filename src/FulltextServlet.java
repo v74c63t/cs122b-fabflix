@@ -247,15 +247,15 @@ public class FulltextServlet extends HttpServlet {
             // write time to logs/log.txt
             String contextPath = getServletContext().getRealPath("/logs");
             String logFile = contextPath + "log.txt";
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
-                writer.write(ts + " " + tj);
-                writer.newLine();
-                writer.flush();
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
+//                writer.write(ts + " " + tj);
+//                writer.newLine();
+//                writer.flush();
+//                writer.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
         // Always remember to close db connection after usage. Here it's done by try-with-resources
