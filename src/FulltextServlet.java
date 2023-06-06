@@ -79,6 +79,8 @@ public class FulltextServlet extends HttpServlet {
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
+        long tj = 0;
+
         try (Connection conn = dataSource.getConnection()) {
             if (sort[0].equals("title")) {
                 if (!sort[2].equals("rating")) {
@@ -168,7 +170,10 @@ public class FulltextServlet extends HttpServlet {
             statement.setInt(i + 2, Integer.parseInt(firstRecord));
 
             // Execute query
+            long tjStart = System.nanoTime();
             ResultSet rs = statement.executeQuery();
+            long tjEnd = System.nanoTime();
+            tj = tjEnd-tjStart;
 
 
             while (rs.next()) {
@@ -180,7 +185,10 @@ public class FulltextServlet extends HttpServlet {
                 String max_records = rs.getString("maxRecords");
 
                 statement2.setString(1, movie_id);
+                tjStart=System.nanoTime();
                 ResultSet newRS = statement2.executeQuery();
+                tjEnd = System.nanoTime();
+                tj += (tjEnd-tjStart);
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
@@ -191,9 +199,10 @@ public class FulltextServlet extends HttpServlet {
                 String stars = String.join(", ", starsArray);
 
                 statement3.setString(1, movie_id);
-
+                tjStart=System.nanoTime();
                 newRS = statement3.executeQuery();
-
+                tjEnd = System.nanoTime();
+                tj += (tjEnd-tjStart);
                 ArrayList<String> genresArray = new ArrayList<>();
 
                 while (newRS.next()) {
@@ -242,7 +251,7 @@ public class FulltextServlet extends HttpServlet {
             long endTime = System.nanoTime();
             long ts = endTime - startTime; // check if correct
             ts /= (double) 1000000; // converting to ms? not sure if correct
-            long tj = 0; //temp figure out how to measure tj
+//            long tj = 0; //temp figure out how to measure tj
             tj /= (double) 1000000; // converting to ms? not sure if correct
             // write time to logs/log.txt
             String contextPath = getServletContext().getRealPath("/logs");
