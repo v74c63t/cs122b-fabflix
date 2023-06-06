@@ -12,6 +12,11 @@
         **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`<br>**Create Index File:** `create_index.sql`
       - (add more if needed)
     - #### Collaborations and Work Distribution:
+        - Vanessa
+            - Log Processing
+            - README
+        - Haver
+            - AWS Setup
 
 
 - # Connection Pooling
@@ -54,14 +59,14 @@
 
     - #### How read/write requests were routed to Master/Slave SQL?
         - Read requests should go to either the master or slave SQL
-        - Write requests should only go to the master SQL so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the master SQL to do the insertion
+        - Write requests should only go to the master SQL so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the Master SQL to do the insertion
         - (add more)
 
 - # JMeter TS/TJ Time Logs
     - #### Instructions of how to use the [`log_processing.py`](logs/log_processing.py) script to process the JMeter logs.
         - Make sure the logs to be processed is placed in the logs directory
         - Either one or two logs can be provided as input
-        - Cd into the logs directory: `cd logs`
+        - Cd into the [logs](logs) directory: `cd logs`
         - For the case for single instance run `log_processing.py single.txt` (assuming the file name is single.txt) in the terminal
         - For the case for scaled instance run `log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
 
@@ -80,7 +85,7 @@
 | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 | Case 3: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-- # Additional Notes
+- # Additional Notes from Previous Projects
   ### Substring Matching Design
     - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
     - LIKE '%AB%'
