@@ -18,8 +18,8 @@ def process_log(file1, file2=Path()):
                 count += 1
                 times = line.split()
                 # assuming each line is structured like 'ts tj'
-                ts += times[0]
-                tj += times[1]
+                ts += float(times[0])
+                tj += float(times[1])
     avg_ts = ts/count
     avg_tj = tj/count
     print(f'average TS: {avg_ts} ms')
