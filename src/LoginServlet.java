@@ -40,40 +40,6 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        PrintWriter out = response.getWriter();
-//
-//        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-//        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
-//
-//        // Verify reCAPTCHA
-//        try {
-//            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-//        } catch (Exception e) {
-////            out.println("<html>");
-////            out.println("<head><title>Error</title></head>");
-////            out.println("<body>");
-////            out.println("<p>recaptcha verification error</p>");
-////            out.println("<p>" + e.getMessage() + "</p>");
-////            out.println("</body>");
-////            out.println("</html>");
-//            JsonObject responseJsonObject = new JsonObject();
-//            // Login fail
-//            responseJsonObject.addProperty("status", "fail");
-//            // Log to localhost log
-//            request.getServletContext().log("Login failed");
-//
-//            responseJsonObject.addProperty("message", "ReCaptcha");
-//
-//            // Write JSON string to output
-//            response.getWriter().write(responseJsonObject.toString());
-//            // Set response status to 200 (OK)
-//            response.setStatus(200);
-//
-//            out.close();
-//            return;
-//        }
-//    }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -127,7 +93,7 @@ public class LoginServlet extends HttpServlet {
                     request.getSession().setAttribute("user", new User(email, customerFirstName, customerLastName, customerId));
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
-                    if(!device.equals("Android")) {
+                    if(!device.equals("Android")&&!device.equals("JMeter")) {
                         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
                         //                    System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
 
