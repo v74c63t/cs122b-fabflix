@@ -42,6 +42,12 @@
     
     - #### Explain how Connection Pooling is utilized in the Fabflix code.
         - Any servlet file in the src directory that needs to access the database should be using JDBC Connection Pooling
+        - Multiple connections are established with a pool which saves having to open and close a connection each time a computation is done
+        - When a connection is need to do a computation, an available connection from the pool is used and then it is put back after the computation is complete
+        - For each datasource based on how they are defined in [context.xml](WebContent/META-INF/context.xml):
+            - There will be at most 100 connections (maxTotal)
+            - If more than 30 connections are not used, some of the connections will be closed to save resources (maxIdle)
+            - The connection will timeout and fail after waiting for 10000 ms (maxWaitMillis)
         - (add more)
     
     - #### Explain how Connection Pooling works with two backend SQL.
@@ -72,17 +78,18 @@
             - [StartTitleResultServlet](src/StartTitleResultServlet.java)
 
     - #### How read/write requests were routed to Master/Slave SQL?
-        - Read requests should go to either the master or slave SQL
-        - Write requests should only go to the master SQL so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the Master SQL to do the insertion
+        - Read requests should go to either the Master or Slave SQL since it does not involve making any changes to the database
+        - Write requests should only go to the Master SQL because only changes made in the master will be replicated to the slave and changes in slave will not be replicated to the master, so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the Master SQL to do the insertion so both databases will remain identical
         - (add more)
 
 - # JMeter TS/TJ Time Logs
     - #### Instructions of how to use the [`log_processing.py`](logs/log_processing.py) script to process the JMeter logs.
-        - Make sure the logs to be processed is placed in the logs directory
+        - Make sure the logs to be processed are placed in the logs directory
         - Either one or two logs can be provided as input
         - Cd into the [logs](logs) directory: `cd logs`
         - For the case for single instance run `log_processing.py single.txt` (assuming the file name is single.txt) in the terminal
         - For the case for scaled instance run `log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
+        - The average TS and average TJ times will calculated from looking through the logs provided and the final results will printed out into the terminal
 
 
 - # JMeter TS/TJ Time Measurement Report
