@@ -55,7 +55,21 @@
             - [AddGenreServlet.java](src/AddGenreServlet.java)
             - [AddMovieServlet.java](src/AddMovieServlet.java)
             - [AddStarServlet.java](src/AddStarServlet.java)
-        - (add more)
+        - These files have their queries routed to the localhost which is randomized by the load balancer:
+            - [Autocomplete.java](src/Autocomplete.java)
+            - [CartServlet.java](src/CartServlet.java)
+            - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+            - [EmployeeLoginServlet.java](src/EmployeeLoginServlet.java)
+            - [FulltextServlet.java](src/FulltextServlet.java)
+            - [GenreResultServlet.java](src/GenreResultServlet.java)
+            - [LoginServlet.java](src/LoginServlet.java)
+            - [MainInitServlet.java](src/MainInitServlet.java)
+            - [MetadataServlet.java](src/MainInitServlet.java)
+            - [MoviesServlet.java](src/MoviesServlet.java)
+            - [SearchResultServlet.java](src/SearchResultServlet.java)
+            - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+            - [SingleStarServlet.java](src/SingleStarServlet.java)
+            - [StartTitleResultServlet](src/StartTitleResultServlet.java)
 
     - #### How read/write requests were routed to Master/Slave SQL?
         - Read requests should go to either the master or slave SQL
