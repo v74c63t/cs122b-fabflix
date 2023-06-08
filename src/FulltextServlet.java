@@ -175,7 +175,7 @@ public class FulltextServlet extends HttpServlet {
             tjStart = System.nanoTime();
             ResultSet rs = statement.executeQuery();
             tjEnd = System.nanoTime();
-            tj = tjEnd-tjStart;
+            tj += (tjEnd-tjStart);
 
 
             while (rs.next()) {
@@ -233,7 +233,7 @@ public class FulltextServlet extends HttpServlet {
             statement2.close();
             statement3.close();
             tjEnd = System.nanoTime();
-            tj = tjEnd-tjStart;
+            tj += (tjEnd-tjStart);
 
             // Write JSON string to output
             out.write(jsonArray.toString());
@@ -260,15 +260,15 @@ public class FulltextServlet extends HttpServlet {
             // write time to logs/log.txt
             String contextPath = getServletContext().getRealPath("/logs");
             String logFile = contextPath + "log.txt";
-//            try {
-//                BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
-//                writer.write(ts + " " + tj);
-//                writer.newLine();
-//                writer.flush();
-//                writer.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
+                writer.write(ts + " " + tj);
+                writer.newLine();
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         // Always remember to close db connection after usage. Here it's done by try-with-resources
