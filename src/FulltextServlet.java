@@ -127,10 +127,7 @@ public class FulltextServlet extends HttpServlet {
                     "OFFSET ? ");
 
             // Create a statement
-            long tjStart=System.nanoTime();
             PreparedStatement statement = conn.prepareStatement(sqlQuery);
-            long tjEnd = System.nanoTime();
-            tj += (tjEnd-tjStart);
 
             sqlQuery = String.join("",
                     "SELECT s.id, s.name ",
@@ -143,10 +140,7 @@ public class FulltextServlet extends HttpServlet {
                     "GROUP BY s.id ",
                     "ORDER BY COUNT(*) DESC, s.name ASC ",
                     "LIMIT 3;");
-            tjStart=System.nanoTime();
             PreparedStatement statement2 = conn.prepareStatement(sqlQuery);
-            tjEnd = System.nanoTime();
-            tj += (tjEnd-tjStart);
 
             // New Query for getting genres
             sqlQuery = String.join("",
@@ -158,10 +152,7 @@ public class FulltextServlet extends HttpServlet {
                     "ORDER BY name ",
                     "LIMIT 3;");
 
-            tjStart=System.nanoTime();
             PreparedStatement statement3 = conn.prepareStatement(sqlQuery);
-            tjEnd = System.nanoTime();
-            tj += (tjEnd-tjStart);
 
             // Set all parameters denoted "?" with associated token
             int i;
@@ -172,9 +163,9 @@ public class FulltextServlet extends HttpServlet {
             statement.setInt(i + 2, Integer.parseInt(firstRecord));
 
             // Execute query
-            tjStart = System.nanoTime();
+            long tjStart = System.nanoTime();
             ResultSet rs = statement.executeQuery();
-            tjEnd = System.nanoTime();
+            long tjEnd = System.nanoTime();
             tj += (tjEnd-tjStart);
 
 
@@ -227,13 +218,10 @@ public class FulltextServlet extends HttpServlet {
 
                 jsonArray.add(jsonObject);
             }
-            tjStart = System.nanoTime();
             rs.close();
             statement.close();
             statement2.close();
             statement3.close();
-            tjEnd = System.nanoTime();
-            tj += (tjEnd-tjStart);
 
             // Write JSON string to output
             out.write(jsonArray.toString());
