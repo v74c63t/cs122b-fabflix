@@ -92,8 +92,8 @@
         - Make sure the logs to be processed are placed in the logs directory
         - Either one or two logs can be provided as input
         - Cd into the [logs](logs) directory: `cd logs`
-        - For the case for single instance run `log_processing.py single.txt` (assuming the file name is single.txt) in the terminal
-        - For the case for scaled instance run `log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
+        - For the case for single instance run `python log_processing.py single.txt` (assuming the file name is single.txt) in the terminal
+        - For the case for scaled instance run `python log_processing.py master.txt slave.txt` (assuming the files names are master.txt and slave.txt) in the terminal
         - The average TS and average TJ times will calculated from looking through the logs provided and the final results will printed out into the terminal
 
 
