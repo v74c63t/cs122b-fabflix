@@ -15,3 +15,5 @@ CREATE INDEX movieIdIndex ON movies(id);
 CREATE INDEX ratingIndex ON ratings(rating);
 
 CREATE INDEX titleIndex ON movies(title);
+
+CREATE INDEX genreNameIdx ON genres(name);
