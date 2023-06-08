@@ -258,11 +258,10 @@ public class FulltextServlet extends HttpServlet {
 //            long tj = 0; //temp figure out how to measure tj
             tj /= (double) 1000000; // converting to ms? not sure if correct
             // write time to logs/log.txt
-            String contextPath = request.getServletContext().getRealPath("/logs");
-            String logFile = contextPath + "/log.txt";
+            String contextPath = request.getServletContext().getRealPath("/");
+            String logFile = contextPath + "log.txt";
 //            System.out.println(logFile);
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
                 writer.write(ts + " " + tj);
                 writer.newLine();
                 writer.flush();
