@@ -26,8 +26,6 @@ public class AddGenreServlet extends HttpServlet{
     // Create a dataSource which registered in web.xml
     private DataSource dataSource;
 
-//    String[] datasources = {"java:comp/env/jdbc/moviedb_master", "java:comp/env/jdbc/moviedb_slave"};
-
     public void init(ServletConfig config) {
         try {
             dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb_master");
