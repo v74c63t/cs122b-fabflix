@@ -90,8 +90,7 @@
 
 - # JMeter TS/TJ Time Logs
     - #### Instructions of how to use the [`log_processing.py`](logs/log_processing.py) script to process the JMeter logs.
-        - We are assuming the times in the log files are already converted to ms
-        - In the FulltextServlet, we convert the time from ns to ms before writing it to log.txt
+        - The times in the log files are in ns with each line containing the ts of the query and the tj of the query
         - Make sure the logs to be processed are placed in the logs directory
         - Either one or two logs can be provided as input
         - Cd into the [logs](logs) directory: `cd logs`
