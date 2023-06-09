@@ -50,13 +50,15 @@
         - Any servlet file in the src directory that needs to access the database should be using JDBC Connection Pooling
         - Multiple connections are established with a pool which saves having to open and close a connection each time a computation is done
         - When a connection is need to do a computation, an available connection from the pool is used and then it is put back after the computation is complete
+        - (add more)
+    
+    - #### Explain how Connection Pooling works with two backend SQL.
+        - Since there are two backend SQL (Master and Slave), there will be a connection pool for each of them meaning there are two separate connection pools, one for Master and one for Slave
         - For each datasource based on how they are defined in [context.xml](WebContent/META-INF/context.xml):
             - There will be at most 100 connections (maxTotal)
             - If more than 30 connections are not used, some of the connections will be closed to save resources (maxIdle)
             - The connection will timeout and fail after waiting for 10000 ms (maxWaitMillis)
         - (add more)
-    
-    - #### Explain how Connection Pooling works with two backend SQL.
     
 
 - # Master/Slave
