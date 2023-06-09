@@ -242,9 +242,9 @@ public class FulltextServlet extends HttpServlet {
             out.close();
             long endTime = System.nanoTime();
             long ts = endTime - startTime; // check if correct
-            ts /= (double) 1000000; // converting to ms? not sure if correct
-//            long tj = 0; //temp figure out how to measure tj
-            tj /= (double) 1000000; // converting to ms? not sure if correct
+//            ts /= (double) 1000000; // converting to ms? not sure if correct
+////            long tj = 0; //temp figure out how to measure tj
+//            tj /= (double) 1000000; // converting to ms? not sure if correct
             // write time to logs/log.txt
             String contextPath = request.getServletContext().getRealPath("/");
             String logFile = contextPath + "log.txt";
