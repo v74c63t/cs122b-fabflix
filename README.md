@@ -22,6 +22,7 @@
             - README
         - Haver
             - AWS Setup
+            - JMeter Setup
 
 
 - # Connection Pooling
@@ -89,6 +90,8 @@
 
 - # JMeter TS/TJ Time Logs
     - #### Instructions of how to use the [`log_processing.py`](logs/log_processing.py) script to process the JMeter logs.
+        - We are assuming the times in the log files are already converted to ms
+        - In the FulltextServlet, we convert the time from ns to ms before writing it to log.txt
         - Make sure the logs to be processed are placed in the logs directory
         - Either one or two logs can be provided as input
         - Cd into the [logs](logs) directory: `cd logs`
@@ -111,6 +114,7 @@
 | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 | Case 3: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+
 - # Additional Notes from Previous Projects
   ### Substring Matching Design
     - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
