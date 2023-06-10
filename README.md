@@ -10,12 +10,11 @@
         **Username:** `admin`<br>**Password:** `mypassword`
       - #### MySQL
         **Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`<br>**Create Index File:** `create_index.sql`
-      - #### Deployment (not sure if this is needed)
+      - #### Deployment
            - In both the master and slave instance: 
                 - Run `mvn package` in the directory where pom.xml is located. 
                 - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
            - Set up Apache2 webserver on the load balance instance by creating a load balancer proxy for the master and slave instance and make it so it is configured to enable load balancing, Connection Pooling, and sticky sessions.
-      - (add more if needed)
     - #### Collaborations and Work Distribution:
         - Vanessa
             - Log Processing
@@ -50,7 +49,6 @@
         - Any servlet file in the src directory that needs to access the database should be using JDBC Connection Pooling
         - Multiple connections are established with a pool which saves having to open and close a connection each time a computation is done
         - When a connection is need to do a computation, an available connection from the pool is used and then it is put back after the computation is complete
-        - (add more)
     
     - #### Explain how Connection Pooling works with two backend SQL.
         - Since there are two backend SQL (Master and Slave), there will be a connection pool for each of them meaning there are two separate connection pools, one for Master and one for Slave
@@ -58,7 +56,6 @@
             - There will be at most 100 connections (maxTotal)
             - If more than 30 connections are not used, some of the connections will be closed to save resources (maxIdle)
             - The connection will timeout and fail after waiting for 10000 ms (maxWaitMillis)
-        - (add more)
     
 
 - # Master/Slave
@@ -86,13 +83,12 @@
             - [StartTitleResultServlet](src/StartTitleResultServlet.java)
 
     - #### How read/write requests were routed to Master/Slave SQL?
-        - Read requests should go to either the Master or Slave SQL since it does not involve making any changes to the database
+        - Read requests should go to either the Master or Slave SQL since it does not involve making any changes to the database this is done by the load balancer
         - Write requests should only go to the Master SQL because only changes made in the master will be replicated to the slave and changes in slave will not be replicated to the master, so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the Master SQL to do the insertion so both databases will remain identical
-        - (add more)
 
 - # JMeter TS/TJ Time Logs
     - #### Instructions of how to use the [`log_processing.py`](logs/log_processing.py) script to process the JMeter logs.
-        - The times in the log files are in ns with each line containing the ts of the query and the tj of the query
+        - The times in the log files are in nanoseconds with each line containing the ts of the query and the tj of the query
         - Make sure the logs to be processed are placed in the logs directory
         - Either one or two logs can be provided as input
         - Cd into the [logs](logs) directory: `cd logs`
