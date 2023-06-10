@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -20,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/movies"
@@ -43,6 +46,7 @@ public class FulltextServlet extends HttpServlet {
      */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long startTime = System.nanoTime();
 
         // Get instance of current session
         HttpSession session = request.getSession();
@@ -67,6 +71,8 @@ public class FulltextServlet extends HttpServlet {
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
+
+        long tj = 0;
 
         try (Connection conn = dataSource.getConnection()) {
             if (sort[0].equals("title")) {
@@ -157,7 +163,10 @@ public class FulltextServlet extends HttpServlet {
             statement.setInt(i + 2, Integer.parseInt(firstRecord));
 
             // Execute query
+            long tjStart = System.nanoTime();
             ResultSet rs = statement.executeQuery();
+            long tjEnd = System.nanoTime();
+            tj += (tjEnd-tjStart);
 
 
             while (rs.next()) {
@@ -169,7 +178,10 @@ public class FulltextServlet extends HttpServlet {
                 String max_records = rs.getString("maxRecords");
 
                 statement2.setString(1, movie_id);
+                tjStart=System.nanoTime();
                 ResultSet newRS = statement2.executeQuery();
+                tjEnd = System.nanoTime();
+                tj += (tjEnd-tjStart);
 
                 ArrayList<String> starsArray = new ArrayList<>();
 
@@ -180,9 +192,10 @@ public class FulltextServlet extends HttpServlet {
                 String stars = String.join(", ", starsArray);
 
                 statement3.setString(1, movie_id);
-
+                tjStart=System.nanoTime();
                 newRS = statement3.executeQuery();
-
+                tjEnd = System.nanoTime();
+                tj += (tjEnd-tjStart);
                 ArrayList<String> genresArray = new ArrayList<>();
 
                 while (newRS.next()) {
@@ -210,7 +223,6 @@ public class FulltextServlet extends HttpServlet {
             statement2.close();
             statement3.close();
 
-
             // Write JSON string to output
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)
@@ -228,6 +240,23 @@ public class FulltextServlet extends HttpServlet {
             response.setStatus(500);
         } finally {
             out.close();
+            long endTime = System.nanoTime();
+            long ts = endTime - startTime; // check if correct
+//            ts /= (double) 1000000; // converting to ms? not sure if correct
+////            long tj = 0; //temp figure out how to measure tj
+//            tj /= (double) 1000000; // converting to ms? not sure if correct
+            // write time to logs/log.txt
+            String contextPath = request.getServletContext().getRealPath("/");
+            String logFile = contextPath + "log.txt";
+//            System.out.println(logFile);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+                writer.write(ts + " " + tj);
+                writer.newLine();
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         // Always remember to close db connection after usage. Here it's done by try-with-resources

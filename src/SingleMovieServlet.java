@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Random;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-movie"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")

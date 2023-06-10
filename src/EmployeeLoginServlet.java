@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Random;
+
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 @WebServlet(name = "EmployeeLoginServlet", urlPatterns = "/api/employee-login")

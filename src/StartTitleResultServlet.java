@@ -20,6 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Random;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "StartTitleResultServlet", urlPatterns = "/api/by-start-title")

@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/movies"
