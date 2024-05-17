@@ -1,6 +1,8 @@
 # Fabflix
+
 ## About
 TODO
+
 ## Configuration
 ### TomCat
   - **Username:** `admin`
@@ -12,11 +14,18 @@ TODO
   - **Update Sales Table File:** [update_table.sql](update_sales_table.sql)
   - **Stored Procedures Files:** [stored-procedure.sql](stored-procedure.sql)
   - **Create Index File:** [create_index.sql](create_index.sql)
+
 ## Deployment
+### AWS
+#### Single Instance
+  - Run `mvn package` in the directory where pom.xml is located
+  - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps
+#### Scaling up
   - In both the master and slave instance:
-    - Run `mvn package` in the directory where pom.xml is located. 
-    - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
+    - Run `mvn package` in the directory where pom.xml is located
+    - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps
   - Set up Apache2 webserver on the load balance instance by creating a load balancer proxy for the master and slave instance and make it so it is configured to enable load balancing, Connection Pooling, and sticky sessions
+
 ## Walkthrough
 ### Fabflix Desktop
   - Fabflix Desktop General User Demo: [https://youtu.be/8nQBS5R8PmY](https://youtu.be/8nQBS5R8PmY)
@@ -24,6 +33,12 @@ TODO
 ### Fabflix Mobile
 <img src='img/fabflix-mobile-demo.gif' height=420 width=auto alt='fabflix mobile video walkthrough'/>
 
+## Team
+Vanessa Tang
+
+Haver Ho
+
+## Previous READMEs
 <details>
     <summary>Project 5 README</summary>
     
