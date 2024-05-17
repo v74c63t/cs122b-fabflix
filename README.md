@@ -25,6 +25,9 @@ TODO
     - Run `mvn package` in the directory where pom.xml is located
     - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps
   - Set up Apache2 webserver on the load balance instance by creating a load balancer proxy for the master and slave instance and make it so it is configured to enable load balancing, Connection Pooling, and sticky sessions
+### Android
+  - If the server is running on localhost, the Android app should be able to run properly without needing any changes
+  - If the server is running on AWS, the urls will need to be changed in each of the files so it can make calls to the server
 
 ## Walkthrough
 ### Fabflix Desktop
