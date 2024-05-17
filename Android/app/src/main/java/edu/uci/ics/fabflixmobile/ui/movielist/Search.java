@@ -42,7 +42,7 @@ public class Search extends AppCompatActivity{
     //    private final String domain = "cs122b-project4";
     private final String domain = "fabflix_war";
     private final String serverEndpoint = "/api/fulltext?";
-    private final String baseURL = "https://" + host + ":" + port + "/" + domain + serverEndpoint;
+    private final String baseURL = "http://" + host + ":" + port + "/" + domain + serverEndpoint;
 
 
     @Override
