@@ -1,3 +1,32 @@
+# Fabflix
+## About
+TODO
+## Configuration
+### TomCat
+  - **Username:** `admin`
+  - **Password:** `mypassword`
+### MySQL
+  - **Username:** `mytestuser`
+  - **Password:** `My6$Password`
+  - **Create Database File:** [create_table.sql](create_table.sql)
+  - **Update Sales Table File:** [update_table.sql](update_sales_table.sql)
+  - **Stored Procedures Files:** [stored-procedure.sql](stored-procedure.sql)
+  - **Create Index File:** [create_index.sql](create_index.sql)
+## Deployment
+  - In both the master and slave instance:
+    - Run `mvn package` in the directory where pom.xml is located. 
+    - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
+  - Set up Apache2 webserver on the load balance instance by creating a load balancer proxy for the master and slave instance and make it so it is configured to enable load balancing, Connection Pooling, and sticky sessions
+## Walkthrough
+### Fabflix Desktop
+  - Fabflix Desktop General User Demo: [https://youtu.be/8nQBS5R8PmY](https://youtu.be/8nQBS5R8PmY)
+  - YouTube Playlist of Previous Demos: [https://www.youtube.com/playlist?list=PL1J9ZWxAQEApzhaZzw-9r8DWgL3SLbRZs](https://www.youtube.com/playlist?list=PL1J9ZWxAQEApzhaZzw-9r8DWgL3SLbRZs)
+### Fabflix Mobile
+<img src='img/fabflix-mobile-demo.gif' height=420 width=auto alt='fabflix mobile video walkthrough'/>
+
+<details>
+    <summary>Project 5 README</summary>
+    
 - # General
     - #### Team#: v
     
@@ -137,3 +166,219 @@
     - Existing Genre: The name inputted matches a genre in the database
   ### XMLParser
   There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
+</details>
+<details>
+    <summary>Project 4 README</summary>
+
+# CS122B Project 4
+## Instructions
+### Deployment
+Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
+### Demo
+**URL:** `https://youtu.be/SvKjiEYw5qw`
+### AWS
+**URL:** `https://13.52.75.242:8443/cs122b-project4/`
+### TomCat
+**Username:** `admin`<br>**Password:** `mypassword`
+### MySQL
+**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`
+## Additional Notes
+### Substring Matching Design
+  - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
+  - LIKE '%AB%'
+### Files with Prepared Statements
+  - [GenreResultServlet.java](src/GenreResultServlet.java)
+  - [StartTitleResultServlet.java](src/StartTitleResultServlet.java)
+  - [SearchResultServlet.java](src/SearchResultServlet.java)
+  - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+  - [SingleStarServlet.java](src/SingleStarServlet.java)
+  - [MoviesServlet.java](src/MoviesServlet.java)
+  - [PaymentServlet.java](src/PaymentServlet.java)
+  - [CartServlet.java](src/CartServlet.java)
+  - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+  - [MainInitServlet.java](src/MainInitServlet.java)
+  - [MetadataServlet.java](src/MetadataServlet.java)
+  - [AddGenreServlet.java](src/AddGenreServlet.java)
+  - [AddMovieServlet.java](src/AddMovieServlet.java)
+  - [AddStarServlet.java](src/AddStarServlet.java)
+### Stored Procedures
+  - Existing Star: Both the star name and the star birth year inputted matches a star in the database
+  - Existing Movie: The title, director, and year inputted matches a movie in the database
+  - Existing Genre: The name inputted matches a genre in the database
+### XMLParser
+There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
+#### Parsing Time Optimization Strategies
+  1. We used in memory hash maps to store information from the database and information we plan to insert into the database so we did not have to query against the database constantly in order to find duplicates or to find whether a movie/star/genre already exists. 
+  2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
+## Contributions
+### Vanessa
+  - Full Text(JS)
+  - Android Login Page
+  - Android Movie List Page
+  - Android Single Movie Page
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+### Haver
+  - Full Text(JS/Servlet)
+  - Autocomplete
+  - Android Search Page
+  - Android Movie List Page
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+</details>
+<details>
+    <summary>Project 3 README</summary>
+
+# CS122B Project 3
+## Instructions
+### Deployment
+Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
+### Demo
+**URL:** `https://youtu.be/gNNIp_vyORI`
+### AWS
+**URL:** `https://54.176.198.22:8443/cs122b-project3/`
+### TomCat
+**Username:** `admin`<br>**Password:** `mypassword`
+### MySQL
+**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`<br>**Stored Procedures File:** `stored-procedure.sql`
+## Additional Notes
+### Substring Matching Design
+  - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
+  - LIKE '%AB%'
+### Files with Prepared Statements
+  - [GenreResultServlet.java](src/GenreResultServlet.java)
+  - [StartTitleResultServlet.java](src/StartTitleResultServlet.java)
+  - [SearchResultServlet.java](src/SearchResultServlet.java)
+  - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+  - [SingleStarServlet.java](src/SingleStarServlet.java)
+  - [MoviesServlet.java](src/MoviesServlet.java)
+  - [PaymentServlet.java](src/PaymentServlet.java)
+  - [CartServlet.java](src/CartServlet.java)
+  - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+  - [MainInitServlet.java](src/MainInitServlet.java)
+  - [MetadataServlet.java](src/MetadataServlet.java)
+  - [AddGenreServlet.java](src/AddGenreServlet.java)
+  - [AddMovieServlet.java](src/AddMovieServlet.java)
+  - [AddStarServlet.java](src/AddStarServlet.java)
+### Stored Procedures
+  - Existing Star: Both the star name and the star birth year inputted matches a star in the database
+  - Existing Movie: The title, director, and year inputted matches a movie in the database
+  - Existing Genre: The name inputted matches a genre in the database
+### XMLParser
+There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
+#### Parsing Time Optimization Strategies
+  1. We used in memory hash maps to store information from the database and information we plan to insert into the database so we did not have to query against the database constantly in order to find duplicates or to find whether a movie/star/genre already exists. 
+  2. We wrote the data that was parsed from the xml files to csv files (one csv file for each table that is going to be inserted into) so we can use LOAD DATA from SQL to load all the information into each of the tables all at once instead of having to send multiple insert queries throughout parsing to the database. 
+## Contributions
+### Vanessa
+  - reCaptcha Error Message
+  - HTTPS
+  - Encrypted Password Changes
+  - Prepared Statements
+  - Employees Login Filter
+  - Dashboard Home (HTML/CSS)
+  - Stored Procedures
+  - Add Star Servlet
+  - Add Genre Servlet
+  - Add Movie Page (HTML/CSS)
+  - Add Star Page (HTML/CSS/JS)
+  - Add Genre Page (HTML/CSS/JS)
+  - xmlParser
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+### Haver
+  - reCaptcha Setup
+  - Encrypted Password Changes
+  - Employees Login (HTML/CSS/JS)
+  - Employees Login Servlet/Filter
+  - Dashboard Home (HTML/CSS/JS)
+  - Metadata Servlet
+  - Stored Procedures
+  - Add Movie Servlet
+  - Add Movie Page (HTML/CSS/JS)
+  - Add Star Page (HTML/CSS)
+  - Add Genre Page (HTML/CSS)
+  - xmlParser
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+</details>
+<details>
+    <summary>Project 2 README</summary>
+    
+# CS122B Project 2
+## Instructions
+### Deployment
+Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
+### Demo
+**URL:** `https://youtu.be/tFqOc9hKA5c`
+### AWS
+**URL:** `http://54.215.234.136:8080/cs122b-project2/`
+### TomCat
+**Username:** `admin`<br>**Password:** `mypassword`
+### MySQL
+**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
+## Additional Notes
+### Substring Matching Design
+  - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
+  - LIKE '%AB%'
+## Contributions
+### Vanessa
+  - Login Page (JS)
+  - Login Filter/Login Servlet
+  - Main Page (JS)
+  - Main Page Servlet
+  - Confirmation Page (HTML/JS)
+  - Confirmation Page Servlet
+  - Payment Page (HTML/CSS/JS)
+  - Payment Page Servlet
+  - Cart Page (HTML/JS)
+  - Cart Page Servlet
+  - Pagenation/Sorting
+  - Modifying SQL Queries
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+### Haver
+  - Login Page (HTML/CSS)
+  - Main Page (HTML/CSS)
+  - Main Page Servlet
+  - Confirmation Page Servlet
+  - Payment Page Servlet
+  - Cart Page Servlet
+  - Genre Results Servlet
+  - Start Title Servlet
+  - Search Result Servlet
+  - Modifying SQL Queries
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+</details>
+<details>
+    <summary>Project 1 README</summary>
+
+# CS122B Project 1
+## Instructions
+### Deployment
+Run `mvn package` in the directory where pom.xml is located.<br>Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps.
+### Demo
+**URL:** `https://youtu.be/qxnNAQztqiU` 
+### AWS
+**URL:** `http://54.67.91.117:8080/cs122b-project1`
+### TomCat
+**Username:** `admin`<br>**Password:** `mypassword`
+### MySQL
+**Username:** `mytestuser`<br>**Password:** `My6$Password`<br>**Create Database File:** `create_table.sql`
+## Contributions
+### Vanessa
+  - SQL Tables
+  - Project Setup
+  - Single Move Page, Single Star Page (HTML/js)
+  - CSS Stylesheet
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+### Haver
+  - SQL Tables
+  - Servlets
+  - Top 20 Page (HTML/js)
+  - CSS Stylesheet
+  - Making Revisions/Style Changes to Other Pages
+  - Debugging
+</details>
