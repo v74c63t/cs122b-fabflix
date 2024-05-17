@@ -35,9 +35,14 @@ public class MovieListActivity extends AppCompatActivity {
     Button prevButton;
     String query;
 
-    private final String host = "54.183.170.147";
-    private final String port = "8443";
-    private final String domain = "cs122b-project4";
+    //    private final String host = "54.183.170.147";
+    private final String host = "10.0.2.2";
+//    private final String port = "8443";
+
+    private final String port = "8080";
+
+    //    private final String domain = "cs122b-project4";
+    private final String domain = "fabflix_war";
     private final String serverEndpoint = "/api/fulltext?";
     private final String baseURL = "https://" + host + ":" + port + "/" + domain + serverEndpoint;
 
