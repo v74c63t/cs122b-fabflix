@@ -11,9 +11,26 @@ TODO
   - **Username:** `mytestuser`
   - **Password:** `My6$Password`
   - **Create Database File:** [create_table.sql](create_table.sql)
-  - **Update Sales Table File:** [update_table.sql](update_sales_table.sql)
+  - **Update Sales Table File:** [update_sales_table.sql](update_sales_table.sql)
   - **Stored Procedures Files:** [stored-procedure.sql](stored-procedure.sql)
   - **Create Index File:** [create_index.sql](create_index.sql)
+#### Instructions
+  1. Create the database
+     ```
+     mysql -u mytestuser -p < create_table.sql
+     ```
+  2. Update the sales table
+     ```
+     mysql -u mytestuser -p < update_sales_table.sql
+     ```
+  3. Add stored procedures
+     ```
+     mysql -u mytestuser -p < stored-procedure.sql
+     ```
+  5. Create indexes
+     ```
+     mysql -u mytestuser -p < create_index.sql
+     ```
 
 ## Deployment
 ### AWS
