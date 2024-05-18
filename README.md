@@ -1,51 +1,125 @@
 # Fabflix
 
 ## About
-TODO
+Fabflix is an AWS hosted full stack web app that allows logged-in users to browse and purchase movies using Tomcat and a MySQL database. There is also a simplified [Android version](/Android) that communicates with the backend api to perform fulltext search. On top of that, this repo includes an [XML parser](/xmlParser) capable of parsing XML files containing movies, stars, and genres to add into the database.
 
 ## Configuration
+
 ### TomCat
   - **Username:** `admin`
   - **Password:** `mypassword`
+
 ### MySQL
   - **Username:** `mytestuser`
   - **Password:** `My6$Password`
-#### Instructions
-  1. Create the database
-     ```
-     mysql -u mytestuser -p < create_table.sql
-     ```
-  2. Update the sales table
-     ```
-     mysql -u mytestuser -p < update_sales_table.sql
-     ```
-  3. Add stored procedures
-     ```
-     mysql -u mytestuser -p < stored-procedure.sql
-     ```
-  5. Create indexes
-     ```
-     mysql -u mytestuser -p < create_index.sql
-     ```
+
+#### Set Up
+    
+   1. Create the database
+      ```
+      mysql -u mytestuser -p < create_table.sql
+      ```
+   2. Update the sales table
+      ```
+      mysql -u mytestuser -p < update_sales_table.sql
+      ```
+   3. Add stored procedures
+      ```
+      mysql -u mytestuser -p < stored-procedure.sql
+      ```
+   4. Create indexes
+      ```
+      mysql -u mytestuser -p < create_index.sql
+      ```
 
 ## Deployment
+
 ### AWS
+
 #### Single Instance
   - Run `mvn package` in the directory where pom.xml is located
   - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps
+
 #### Scaling up
   - In both the master and slave instance:
     - Run `mvn package` in the directory where pom.xml is located
     - Then run `cp ./target/*.war /var/lib/tomcat/webapps/` to copy the war file into tomcat/webapps
   - Set up Apache2 webserver on the load balance instance by creating a load balancer proxy for the master and slave instance and make it so it is configured to enable load balancing, Connection Pooling, and sticky sessions
+
 ### Android
   - If the server is running on localhost, the Android app should be able to run properly without needing any changes
   - If the server is running on AWS, the urls will need to be changed in each of the files so it can make calls to the server
 
+## Features
+
+### Fabflix Desktop
+  <details> <summary><strong>General User</strong></summary>
+    
+  - Login
+  - Login Filter
+  - reCaptcha Verification
+  - Top 20 Movies Page
+  - Single Movie Page
+  - Single Star Page
+  - Search by Genre
+  - Search by Start Character
+  - Advanced Search
+    - Search by Title, Director, Year, and/or Star
+  - Fulltext Search
+  - Search Autocomplete
+  - Persisting Search Results Page
+    - Even if the user navigates to a different page, their previous search results will be kept and can be accessed on the search results page
+  - Search Results Pagination
+  - Search Results Filters
+    - Sorting
+      - Sort by Title
+      - Sort by Rating
+      - Any combination of sorting ascending or descending can be applied
+    - Page Size Limits
+  - Add Movie to Cart
+  - Movie Cart Page
+    - Users can increment/decrement the copies of a movie in their cart
+    - Users can delete a movie from their cart
+  - Payment Page
+  - Payment Confirmation Page
+  </details>
+ 
+  <details><summary><strong>Employees/Developers</strong></summary>
+    
+  - Employee Login
+  - Employee Login Filter
+  - reCaptcha Verifications
+  - Database Metadata Page
+  - Database Modifications using Stored Procedures
+    - Adding a New Movie
+    - Adding a New Star
+    - Adding a New Genre
+  </details>
+
+  <details><summary><strong>Others</strong></summary>
+    
+  - XML Parser
+    - To find more information about this, refer to the [XML Parser README](/xmlParser/README.md)
+  - Password Encryption
+  - Prepared Statements
+  - Connection Pooling
+  - Master/Slave Setup
+  - Load Balancer
+  - JMeter Logs Processing
+  </details>
+
+### Fablix Mobile
+  - Login
+  - Fulltext Search
+  - Search Result Pagination
+  - Single Movie Page
+
 ## Walkthrough
+
 ### Fabflix Desktop
   - Fabflix Desktop General User Demo: [https://youtu.be/8nQBS5R8PmY](https://youtu.be/8nQBS5R8PmY)
   - YouTube Playlist of Previous Demos: [https://www.youtube.com/playlist?list=PL1J9ZWxAQEApzhaZzw-9r8DWgL3SLbRZs](https://www.youtube.com/playlist?list=PL1J9ZWxAQEApzhaZzw-9r8DWgL3SLbRZs)
+
 ### Fabflix Mobile
 <img src='img/fabflix-mobile-demo.gif' height=420 width=auto alt='fabflix mobile video walkthrough'/>
 
