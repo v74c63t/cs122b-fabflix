@@ -31,6 +31,7 @@
 #### Case 1: HTTP - 1 Thread
 
 **Results**
+
 ![](../img/single-http-1.png)
 
 <table>
@@ -53,6 +54,7 @@
 #### Case 2: HTTP - 10 Threads
 
 **Results**
+
 ![](../img/single-http-10.png)
 
 <table>
@@ -75,6 +77,7 @@
 #### Case 3: HTTPS - 10 Threads
 
 **Results**
+
 ![](../img/single-https-10.png)
 
 <table>
@@ -97,6 +100,7 @@
 #### Case 4: HTTP - 10 Threads - No Connection Pooling
 
 **Results**
+
 ![](../img/single-http-np-10.png)
 
 <table>
@@ -121,6 +125,7 @@
 #### Case 1: HTTP - 1 Thread
 
 **Results**
+
 ![](../img/scaled-1.png)
 
 <table>
@@ -143,6 +148,7 @@
 #### Case 2: HTTP - 10 Threads
 
 **Results**
+
 ![](../img/scaled-10.png)
 
 <table>
@@ -165,6 +171,7 @@
 #### Case 3: HTTP - 10 Threads - No Connection Pooling
 
 **Results**
+
 ![](../img/scaled-np-10.png)
 
 <table>
