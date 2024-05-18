@@ -10,10 +10,6 @@ TODO
 ### MySQL
   - **Username:** `mytestuser`
   - **Password:** `My6$Password`
-  - **Create Database File:** [create_table.sql](create_table.sql)
-  - **Update Sales Table File:** [update_sales_table.sql](update_sales_table.sql)
-  - **Stored Procedures Files:** [stored-procedure.sql](stored-procedure.sql)
-  - **Create Index File:** [create_index.sql](create_index.sql)
 #### Instructions
   1. Create the database
      ```
@@ -53,7 +49,7 @@ TODO
 ### Fabflix Mobile
 <img src='img/fabflix-mobile-demo.gif' height=420 width=auto alt='fabflix mobile video walkthrough'/>
 
-## Team
+## Contributors
 Vanessa Tang
 
 Haver Ho
