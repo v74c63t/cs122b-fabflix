@@ -102,8 +102,83 @@ Fabflix is an AWS hosted full stack web app that allows logged-in users to brows
     - To find more information about this, refer to the [XML Parser README](/xmlParser/README.md)
   - Password Encryption
   - Prepared Statements
+    - Files with Prepared Statements
+      - [GenreResultServlet.java](src/GenreResultServlet.java)
+      - [StartTitleResultServlet.java](src/StartTitleResultServlet.java)
+      - [SearchResultServlet.java](src/SearchResultServlet.java)
+      - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+      - [SingleStarServlet.java](src/SingleStarServlet.java)
+      - [MoviesServlet.java](src/MoviesServlet.java)
+      - [PaymentServlet.java](src/PaymentServlet.java)
+      - [CartServlet.java](src/CartServlet.java)
+      - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+      - [MainInitServlet.java](src/MainInitServlet.java)
+      - [MetadataServlet.java](src/MetadataServlet.java)
+      - [AddGenreServlet.java](src/AddGenreServlet.java)
+      - [AddMovieServlet.java](src/AddMovieServlet.java)
+      - [AddStarServlet.java](src/AddStarServlet.java)
   - Connection Pooling
+    - All code/configuration files using JDBC Connection Pooling
+        - [GenreResultServlet.java](src/GenreResultServlet.java)
+        - [StartTitleResultServlet.java](src/StartTitleResultServlet.java)
+        - [SearchResultServlet.java](src/SearchResultServlet.java)
+        - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+        - [SingleStarServlet.java](src/SingleStarServlet.java)
+        - [MoviesServlet.java](src/MoviesServlet.java)
+        - [PaymentServlet.java](src/PaymentServlet.java)
+        - [CartServlet.java](src/CartServlet.java)
+        - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+        - [MainInitServlet.java](src/MainInitServlet.java)
+        - [MetadataServlet.java](src/MetadataServlet.java)
+        - [AddGenreServlet.java](src/AddGenreServlet.java)
+        - [AddMovieServlet.java](src/AddMovieServlet.java)
+        - [AddStarServlet.java](src/AddStarServlet.java)
+        - [Autocomplete.java](src/Autocomplete.java)
+        - [FulltextServlet.java](src/FulltextServlet.java)
+        - [LoginServlet.java](src/LoginServlet.java)
+        - [EmployeeLoginServlet.java](src/EmployeeLoginServlet.java)
+    
+    - How is Connection Pooling utlized in the code?
+        - Any servlet file in the src directory that needs to access the database should be using JDBC Connection Pooling
+        - Multiple connections are established with a pool which saves having to open and close a connection each time a computation is done
+        - When a connection is need to do a computation, an available connection from the pool is used and then it is put back after the computation is complete
+    
+    - How does Connection Pooling works with the two backend SQLs
+        - Since there are two backend SQL (Master and Slave), there will be a connection pool for each of them meaning there are two separate connection pools, one for Master and one for Slave
+        - For each datasource based on how they are defined in [context.xml](WebContent/META-INF/context.xml):
+            - There will be at most 100 connections (maxTotal)
+            - If more than 30 connections are not used, some of the connections will be closed to save resources (maxIdle)
+            - The connection will timeout and fail after waiting for 10000 ms (maxWaitMillis)
+  
   - Master/Slave Setup
+    - All code/configuration files that contains routing queries to Master/Slave SQL.
+        - [context.xml](WebContent/META-INF/context.xml) define the datasources for routing queries
+          - *Note: This is currently set to localhost. To use this, the master SQL url has to be changed*
+        - These files have their queries routed to the Master SQL because of inserting data into the database:
+            - [PaymentServlet.java](src/PaymentServlet.java)
+            - [AddGenreServlet.java](src/AddGenreServlet.java)
+            - [AddMovieServlet.java](src/AddMovieServlet.java)
+            - [AddStarServlet.java](src/AddStarServlet.java)
+        - These files have their queries routed to the localhost which is randomized by the load balancer:
+            - [Autocomplete.java](src/Autocomplete.java)
+            - [CartServlet.java](src/CartServlet.java)
+            - [ConfirmationServlet.java](src/ConfirmationServlet.java)
+            - [EmployeeLoginServlet.java](src/EmployeeLoginServlet.java)
+            - [FulltextServlet.java](src/FulltextServlet.java)
+            - [GenreResultServlet.java](src/GenreResultServlet.java)
+            - [LoginServlet.java](src/LoginServlet.java)
+            - [MainInitServlet.java](src/MainInitServlet.java)
+            - [MetadataServlet.java](src/MainInitServlet.java)
+            - [MoviesServlet.java](src/MoviesServlet.java)
+            - [SearchResultServlet.java](src/SearchResultServlet.java)
+            - [SingleMovieServlet.java](src/SingleMovieServlet.java)
+            - [SingleStarServlet.java](src/SingleStarServlet.java)
+            - [StartTitleResultServlet](src/StartTitleResultServlet.java)
+
+    - #### How are read/write requests routed to Master/Slave SQL?
+        - Read requests should go to either the Master or Slave SQL since it does not involve making any changes to the database this is done by the load balancer
+        - Write requests should only go to the Master SQL because only changes made in the master will be replicated to the slave and changes in slave will not be replicated to the master, so for when a record is inserted into the databases (ex. payment, adding movie/star/genre) it will directly call the Master SQL to do the insertion so both databases will remain identical
+  
   - Load Balancer
   - JMeter Logs Processing
   </details>
@@ -122,6 +197,17 @@ Fabflix is an AWS hosted full stack web app that allows logged-in users to brows
 
 ### Fabflix Mobile
 <img src='img/fabflix-mobile-demo.gif' height=420 width=auto alt='fabflix mobile video walkthrough'/>
+
+## Additional Notes
+### Substring Matching Design
+  - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
+  - LIKE '%AB%'
+### Stored Procedures
+  - Existing Star: Both the star name and the star birth year inputted matches a star in the database
+  - Existing Movie: The title, director, and year inputted matches a movie in the database
+  - Existing Genre: The name inputted matches a genre in the database
+### XMLParser
+  - There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
 
 ## Contributors
 Vanessa Tang
