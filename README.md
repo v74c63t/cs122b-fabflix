@@ -3,6 +3,15 @@
 ## About
 Fabflix is an AWS hosted full stack web app that allows logged-in users to browse and purchase movies using Tomcat and a MySQL database. There is also a simplified [Android version](/Android) that communicates with the backend api to perform fulltext search. On top of that, this repo includes an [XML parser](/xmlParser) capable of parsing XML files containing movies, stars, and genres to add into the database.
 
+## Database Schema
+
+<img width="1122" alt="Screenshot 2024-05-18 at 3 46 09 AM" src="https://github.com/v74c63t/fabflix/assets/78942001/96a51db6-6e17-4e7c-87d2-bef9e7f32924">
+
+*Database schema diagram created using [QuickDBD](https://app.quickdatabasediagrams.com/)*
+
+## API Endpoints
+TODO
+
 ## Configuration
 
 ### TomCat
