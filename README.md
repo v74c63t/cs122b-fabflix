@@ -10,7 +10,23 @@ Fabflix is an AWS hosted full stack web app that allows logged-in users to brows
 *Database schema diagram created using [QuickDBD](https://app.quickdatabasediagrams.com/)*
 
 ## API Endpoints
-TODO
+
+### [`/api/add-genre`](src/AddGenreServlet.java)
+### [`/api/add-movie`](src/AddMovieServlet.java)
+### [`/api/add-star`](src/AddStarServlet.java)
+### [`/api/cart`](src/CartServlet.java)
+### [`/api/employee-login`](src/EmployeeLoginServlet.java)
+### [`/api/fulltext`](src/FulltextServlet.java)
+### [`/api/by-genre`](src/GenreResultServlet.java)
+### [`/api/login`](src/LoginServlet.java)
+### [`/api/maininit`](src/MainInitServlet.java)
+### [`/api/metadata`](src/MetadataServlet.java)
+### [`/api/movies`](src/MoviesServlet.java)
+### [`/api/payment`](src/PaymentServlet.java)
+### [`/api/by-search`](SearchResultServlet.java)
+### [`/api/single-movie`](SingleMovieServlet.java)
+### [`/api/single-star`](SingleStarServlet.java)
+### [`/api/by-start-title`](StartTitleResultServlet.java)
 
 ## Configuration
 
@@ -74,6 +90,9 @@ TODO
   - Search by Start Character
   - Advanced Search
     - Search by Title, Director, Year, and/or Star
+    - Substring Matching Design
+      - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
+      - LIKE '%AB%'
   - Fulltext Search
   - Search Autocomplete
   - Persisting Search Results Page
@@ -101,14 +120,17 @@ TODO
   - Database Metadata Page
   - Database Modifications using Stored Procedures
     - Adding a New Movie
+      - Existing Movie: The title, director, and year inputted matches a movie in the database
     - Adding a New Star
+      - Existing Star: Both the star name and the star birth year inputted matches a star in the database
     - Adding a New Genre
+      - Existing Genre: The name inputted matches a genre in the database
   </details>
 
   <details><summary><strong>Others</strong></summary>
     
   - XML Parser
-    - To find more information about this, refer to the [XML Parser README](/xmlParser/README.md)
+    - To find more information about this, refer to the [XML Parser README](xmlParser/README.md)
   - Password Encryption
   - Prepared Statements
     - Files with Prepared Statements
@@ -190,6 +212,7 @@ TODO
   
   - Load Balancer
   - JMeter Logs Processing
+    - To find more information about this, refer to the [JMeter Logs Processor README](logs/README.md)
   </details>
 
 ### Fablix Mobile
@@ -201,22 +224,20 @@ TODO
 ## Walkthrough
 
 ### Fabflix Desktop
-  - Fabflix Desktop General User Demo: [https://youtu.be/8nQBS5R8PmY](https://youtu.be/8nQBS5R8PmY)
+  - General User Demo: [https://youtu.be/8nQBS5R8PmY](https://youtu.be/8nQBS5R8PmY)
+  - XML Parser + Employees Demo: [https://www.youtube.com/watch?v=SvKjiEYw5qw](https://www.youtube.com/watch?v=SvKjiEYw5qw)
+  - JMeter + Log Processing Demo: [https://www.youtube.com/watch?v=8HXejHavZqo](https://www.youtube.com/watch?v=8HXejHavZqo)
   - YouTube Playlist of Previous Demos: [https://www.youtube.com/playlist?list=PL1J9ZWxAQEApzhaZzw-9r8DWgL3SLbRZs](https://www.youtube.com/playlist?list=PL1J9ZWxAQEApzhaZzw-9r8DWgL3SLbRZs)
+  - ***Note:** Some of the demos were recorded before all the features were implemented, which is why some features are missing in some videos*
 
 ### Fabflix Mobile
 <img src='img/fabflix-mobile-demo.gif' height=420 width=auto alt='fabflix mobile video walkthrough'/>
 
 ## Additional Notes
-### Substring Matching Design
-  - %AB%: For a query 'AB', it will return all strings the contain the pattern 'AB' in the results
-  - LIKE '%AB%'
-### Stored Procedures
-  - Existing Star: Both the star name and the star birth year inputted matches a star in the database
-  - Existing Movie: The title, director, and year inputted matches a movie in the database
-  - Existing Genre: The name inputted matches a genre in the database
 ### XMLParser
-  - There is a [README file](xmlParser/README.md) in the xmlParser directory that details what each inconsistency file contains and what assumptions were made when parsing the xml files.
+  - There is a [README file](xmlParser/README.md) in the `xmlParser` directory with additional information about how to run the parser, the assumptions made while parsing the files, and the inconsistency files logged during parsing
+### JMeter Log Processing
+  - There is a [README file](logs/README.md) in the `logs` directory with additional information about how to run the JMeter logs processor and JMeter measurements for the web app
 
 ## Contributors
 Vanessa Tang
