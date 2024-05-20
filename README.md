@@ -214,7 +214,7 @@ Fabflix is an AWS hosted full stack web app that allows logged-in users to brows
 ### JMeter Log Processing
   - There is a [README file](logs/README.md) in the `logs` directory with additional information about how to run the JMeter logs processor and JMeter measurements for the web app
 ### API + Database
-  - Refer to [API.md](API.md) for more information about the API endpoints and database schema
+  - Refer to [DOCS.md](DOCS.md) for more information about the API endpoints and the database schema
 
 ## Contributors
 Vanessa Tang [@v74c63t](https://github.com/v74c63t)
