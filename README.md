@@ -3,31 +3,6 @@
 ## About
 Fabflix is an AWS hosted full stack web app that allows logged-in users to browse and purchase movies using Tomcat and a MySQL database. There is also a simplified [Android version](/Android) that communicates with the backend api to perform fulltext search. On top of that, this repo includes an [XML parser](/xmlParser) capable of parsing XML files containing movies, stars, and genres to add into the database.
 
-## Database Schema
-
-<img width="1122" alt="Screenshot 2024-05-18 at 3 46 09 AM" src="https://github.com/v74c63t/fabflix/assets/78942001/96a51db6-6e17-4e7c-87d2-bef9e7f32924">
-
-*Database schema diagram created using [QuickDBD](https://app.quickdatabasediagrams.com/)*
-
-## API Endpoints
-
-### [`/api/add-genre`](src/AddGenreServlet.java)
-### [`/api/add-movie`](src/AddMovieServlet.java)
-### [`/api/add-star`](src/AddStarServlet.java)
-### [`/api/cart`](src/CartServlet.java)
-### [`/api/employee-login`](src/EmployeeLoginServlet.java)
-### [`/api/fulltext`](src/FulltextServlet.java)
-### [`/api/by-genre`](src/GenreResultServlet.java)
-### [`/api/login`](src/LoginServlet.java)
-### [`/api/maininit`](src/MainInitServlet.java)
-### [`/api/metadata`](src/MetadataServlet.java)
-### [`/api/movies`](src/MoviesServlet.java)
-### [`/api/payment`](src/PaymentServlet.java)
-### [`/api/by-search`](SearchResultServlet.java)
-### [`/api/single-movie`](SingleMovieServlet.java)
-### [`/api/single-star`](SingleStarServlet.java)
-### [`/api/by-start-title`](StartTitleResultServlet.java)
-
 ## Configuration
 
 ### TomCat
@@ -238,8 +213,10 @@ Fabflix is an AWS hosted full stack web app that allows logged-in users to brows
   - There is a [README file](xmlParser/README.md) in the `xmlParser` directory with additional information about how to run the parser, the assumptions made while parsing the files, and the inconsistency files logged during parsing
 ### JMeter Log Processing
   - There is a [README file](logs/README.md) in the `logs` directory with additional information about how to run the JMeter logs processor and JMeter measurements for the web app
+### API + Database
+  - Refer to [API.md](API.md) for more information about the API endpoints and database schema
 
 ## Contributors
-Vanessa Tang
+Vanessa Tang [@v74c63t](https://github.com/v74c63t)
 
-Haver Ho
+Haver Ho [@haverh](https://github.com/haverh)
