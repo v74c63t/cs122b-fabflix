@@ -1,5 +1,32 @@
 # API Reference
 
+  - [API Reference](#api-reference)
+    - [Authentication](#authentication)
+      - [`/api/login`](#apilogin)
+      - [`/api/employee-login`](#apiemployee-login)
+    - [Employee Dashboard](#employee-dashboard)
+      - [`/api/add-genre`](#apiadd-genre)
+      - [`/api/add-movie`](#apiadd-movie)
+      - [`/api/add-star`](#apiadd-star)
+      - [`/api/metadata`](#apimetadata)
+    - [Main Page](#main-page)
+      - [`/api/maininit`](#apimaininit)
+    - [Shopping Cart + Payment](#shopping-cart--payment)
+      - [`/api/cart`](#apicart)
+      - [`/api/confirmation`](#apiconfirmation)
+      - [`/api/payment`](#apipayment)
+    - [Search](#search)
+      - [`/api/fulltext`](#apifulltext)
+      - [`/api/by-genre`](#apiby-genre)
+      - [`/api/by-search`](#apiby-search)
+      - [`/api/by-start-title`](#apiby-start-title)
+    - [Single Movie Page](#single-movie-page)
+      - [`/api/single-movie`](#apisingle-movie)
+    - [Single Star Page](#single-star-page)
+      - [`/api/single-star`](#apisingle-star)
+    - [Top 20 Page](#top-20-page)
+      - [`/api/movies`](#apimovies)
+
 ## Authentication
 
 ### [`/api/login`](src/LoginServlet.java)
@@ -111,18 +138,30 @@
 
 ### [`/api/confirmation`](src/ConfirmationServlet.java)
 
-  - Input
   - Output
     - Success
+      - Array of JSON objects
+        - sale_id: String
+        - movie_id: String
+        - movie_title: String
+        - movie_quantity: int
+        - movie_price: float
+        - movie_total: float
     - Fail
       - errorMessage: any error caused by an exception
 
 ### [`/api/payment`](src/PaymentServlet.java)
 
   - Input
+    - ccId: String
+    - firstName: String
+    - lastName: String
+    - expirationDate: String
   - Output
     - Success
+      - N/A
     - Fail
+      - message: the error message shown to the user | ("Cart is empty", "Invalid credit card information")
       - errorMessage: any error caused by an exception
 
 ## Search
@@ -130,32 +169,83 @@
 ### [`/api/fulltext`](src/FulltextServlet.java)
 
   - Input
+    - query: String
+    - sortBy: String
+    - numRecords: int
+    - firstRecord: int
   - Output
     - Success
+      - movie_id: String
+      - movie_title: String
+      - movie_year: int
+      - movie_director: String
+      - movie_rating: float | NULL
+      - movie_stars: Array(String)
+      - movie_genres: Array(String)
+      - max_records: int
     - Fail
       - errorMessage: any error caused by an exception
 
 ### [`/api/by-genre`](src/GenreResultServlet.java)
 
   - Input
+    - genreId: int
+    - sortBy: String
+    - numRecords: int
+    - firstRecord: int
   - Output
     - Success
+      - movie_id: String
+      - movie_title: String
+      - movie_year: int
+      - movie_director: String
+      - movie_rating: float | NULL
+      - movie_stars: Array(String)
+      - movie_genres: Array(String)
+      - max_records: int
     - Fail
       - errorMessage: any error caused by an exception
 
 ### [`/api/by-search`](src/SearchResultServlet.java)
 
   - Input
+    - title: String
+    - year: int
+    - director: String
+    - star: String
+    - sortBy: String
+    - numRecords: int
+    - firstRecord: int
   - Output
     - Success
+      - movie_id: String
+      - movie_title: String
+      - movie_year: int
+      - movie_director: String
+      - movie_rating: float | NULL
+      - movie_stars: Array(String)
+      - movie_genres: Array(String)
+      - max_records: int
     - Fail
       - errorMessage: any error caused by an exception
 
 ### [`/api/by-start-title`](src/StartTitleResultServlet.java)
 
   - Input
+    - startTitle: char | [A-Z, 0-9, *]
+    - sortBy: String
+    - numRecords: int
+    - firstRecord: int
   - Output
     - Success
+      - movie_id: String
+      - movie_title: String
+      - movie_year: int
+      - movie_director: String
+      - movie_rating: float | NULL
+      - movie_stars: Array(String)
+      - movie_genres: Array(String)
+      - max_records: int
     - Fail
       - errorMessage: any error caused by an exception
 
@@ -164,8 +254,16 @@
 ### [`/api/single-movie`](src/SingleMovieServlet.java)
 
   - Input
+    - id: movie id | String
   - Output
     - Success
+      - movie_id: String
+      - movie_title: String
+      - movie_year: int
+      - movie_director: String
+      - movie_rating: float | NULL
+      - movie_stars: Array(String)
+      - movie_genres: Array(String)
     - Fail
       - errorMessage: any error caused by an exception
 
@@ -174,8 +272,17 @@
 ### [`/api/single-star`](src/SingleStarServlet.java)
 
   - Input
+    - id: star id | String
   - Output
     - Success
+      - Array of JSON objects of the movies that the star was in
+        - star_id: String
+        - star_name: String
+        - star_dob: int
+        - movie_id: String
+        - movie_title: String
+        - movie_year: int
+        - movie_director: String
     - Fail
       - errorMessage: any error caused by an exception
 
@@ -183,9 +290,15 @@
 
 ### [`/api/movies`](src/MoviesServlet.java)
 
-  - Input
   - Output
     - Success
+      - movie_id: String
+      - movie_title: String
+      - movie_year: int
+      - movie_director: String
+      - movie_rating: float | NULL
+      - movie_stars: Array(String)
+      - movie_genres: Array(String)
     - Fail
       - errorMessage: any error caused by an exception
 
