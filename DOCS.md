@@ -31,11 +31,11 @@
 
 ### [`/api/login`](src/LoginServlet.java)
 
+  - Description: This is for general user login. It checks to make sure that there exists a customer with the email provided and the password matches. Depending on the device sending the request, it will also check to make sure the user completed the reCaptcha. For the Android app and JMeter accessing the site, reCaptcha verification is not done.
   - Input
     - email: String
     - password: String
     - device: the device sending the login request | ("Android", "JMeter", NULL)
-      - Android and JMeter do not need reCaptcha verification so it is skipped in those cases
   - Ouput
     - Success
       - N/A
@@ -45,6 +45,7 @@
 
 ### [`/api/employee-login`](src/EmployeeLoginServlet.java)
 
+  - Description: This is for employee login. It checks to make sure that there exists a employee with the email provided and the password matches. It also makes sure that the user has completed the reCaptcha.
   - Input
     - email: String
     - password: String
@@ -59,6 +60,7 @@
 
 ### [`/api/add-genre`](src/AddGenreServlet.java)
 
+  - Description: This is for an employee to add a new genre into the database. If the genre does not already exist, it will be added to the database and its genre id will be returned.
   - Input
     - genre: String
   - Output
@@ -70,6 +72,7 @@
 
 ### [`/api/add-movie`](src/AddMovieServlet.java)
 
+  - Description: This is for an employee to add a new movie to the database. If the movie does not already exist, it will be added to the database and its movie id will be returned. On top of that, if the star and the genre in the input does not already exist in the database, those will be added too and their ids will also be returned.
   - Input
     - movie_title: String
     - movie_year: int
@@ -86,6 +89,7 @@
 
 ### [`/api/add-star`](src/AddStarServlet.java)
 
+  - Description: This is for an employee to add a new star to the database. Once the star is added to the database, their associated id will be returned.
   - Input
     - star_name: String
     - star_birth_year: int
@@ -98,6 +102,7 @@
 
 ### [`/api/metadata`](src/MetadataServlet.java)
 
+  - Description: This shows the metadata of the database meaning it returns all the tables with their fields and their field types.
   - Output
     - Success
       - Array of JSON objects
@@ -111,6 +116,7 @@
 
 ### [`/api/maininit`](src/MainInitServlet.java)
 
+  - Description: This helps initialize the main page. It returns all the current genres in the database and their ids to populate the browse by genre component. 
   - Output
     - Success
       - Array of JSON objects
@@ -123,6 +129,7 @@
 
 ### [`/api/cart`](src/CartServlet.java)
 
+  - Description: This endpoint is called to add movies to the shopping cart. It will calculate the price of depending on the quantity of the movie and return the current list of movies in the shopping cart alongside the newly added item.
   - Input
     - item: movie id | String
     - quantity: int
@@ -138,6 +145,7 @@
 
 ### [`/api/confirmation`](src/ConfirmationServlet.java)
 
+  - Description: This is used to populate the confirmation page with the purchased items and their information.
   - Output
     - Success
       - Array of JSON objects
@@ -152,6 +160,7 @@
 
 ### [`/api/payment`](src/PaymentServlet.java)
 
+  - Description: This verifies the credentials of the credit card information provided and process the payment if all the information is correct.
   - Input
     - ccId: String
     - firstName: String
@@ -168,6 +177,7 @@
 
 ### [`/api/fulltext`](src/FulltextServlet.java)
 
+  - Description: This performs a full text search based on the query provided and returns a list of movies based on the sorting and filtering criterias.
   - Input
     - query: String
     - sortBy: String
@@ -188,6 +198,7 @@
 
 ### [`/api/by-genre`](src/GenreResultServlet.java)
 
+  - Description: This searchs for any movies with the genre provided and returns a list of movies based on the sorting and filtering criterias.
   - Input
     - genreId: int
     - sortBy: String
@@ -208,6 +219,7 @@
 
 ### [`/api/by-search`](src/SearchResultServlet.java)
 
+  - Description: This searchs for any movies with a particular title, year, director, and/or star and returns a list of movies based on the sorting and filtering criterias. The matching for this uses `%LIKE%` to find valid movies.
   - Input
     - title: String
     - year: int
@@ -231,6 +243,7 @@
 
 ### [`/api/by-start-title`](src/StartTitleResultServlet.java)
 
+  - Description: This searchs for any movies that starts with the character provided and returns a list of movies based on the sorting and filtering criterias.
   - Input
     - startTitle: char | [A-Z, 0-9, *]
     - sortBy: String
@@ -253,6 +266,7 @@
 
 ### [`/api/single-movie`](src/SingleMovieServlet.java)
 
+  - Description: This retrieves information about the movie associated with the provided id.
   - Input
     - id: movie id | String
   - Output
@@ -271,6 +285,7 @@
 
 ### [`/api/single-star`](src/SingleStarServlet.java)
 
+  - Description: This retrieves information about the star associated with the provided id. It returns their general information and the movies they starred in.
   - Input
     - id: star id | String
   - Output
@@ -290,6 +305,7 @@
 
 ### [`/api/movies`](src/MoviesServlet.java)
 
+  - Description: This retrieves the top 20 rated movies alongside their 3 most popular stars and all the movie's genres to display on the top 20 page.
   - Output
     - Success
       - movie_id: String
